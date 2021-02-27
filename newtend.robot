@@ -333,9 +333,37 @@ set_dk_dkpp
   Click Element     ${search_field}
   Input Text        ${search_field}   ${tender_uaid}
   Click Element     xpath=//button[@ng-click="search()"]
+  Sleep     30
+
+  Reload Page
+  Wait Until Page Contains Element    xpath=//input[@ng-model="searchData.query"]   10
+  ${search_field}=  Get Webelement    xpath=//input[@ng-model="searchData.query"]
+  Click Element     ${search_field}
+  Input Text        ${search_field}   ${tender_uaid}
+  Click Element     xpath=//button[@ng-click="search()"]
+
   Wait Until Page Contains Element    xpath=//a[@class="row tender-info ng-scope"]    10
+
+#  : FOR   ${INDEX}   IN RANGE    1    30
+#  \   Click Element     xpath=//button[@ng-click="search()"]
+#  \   Wait Until Page Contains Element    xpath=//a[@class="row tender-info ng-scope"]    10
+#  \   ${count}=   Get Matching Xpath Count   xpath=//a[@class="row tender-info ng-scope"]
+#  \   Exit For Loop If   '${count}' == '0'
+
+
+
   ${plan_raw}=  Get Webelement   xpath=//a[@class="row tender-info ng-scope"]/..//span[contains(text(), '${tender_uaid}')]
   Click Element     ${plan_raw}
+#========================================
+
+
+
+#   Click Element                      id=no-docs-btn
+#  : FOR   ${INDEX}   IN RANGE    1    30
+#  \   Log To Console   .   no_newline=true
+#  \   Sleep     3
+#  \   ${count}=   Get Matching Xpath Count   xpath=//div[@class="modal-body ng-binding"]
+#  \   Exit For Loop If   '${count}' == '0'
 
 
 Отримати інформацію із плану
@@ -486,7 +514,8 @@ set_dk_dkpp
 # Removing READONLY attribute from datepicker field
   Run Keyword If   '${procurementMethodType}' in ['belowThreshold', 'defense', 'aboveThresholdEU', 'aboveThresholdUA']   Execute Javascript    window.document.getElementById('input-date-tender-enquiryPeriod-endDate').removeAttribute("readonly")
   Run Keyword If   '${procurementMethodType}' in ['belowThreshold', 'defense', 'aboveThresholdEU', 'aboveThresholdUA']   Input Text    xpath=//input[@id="input-date-tender-enquiryPeriod-endDate"]     ${tenderingEnd_date_date}
-  ${tenderingEnd_date_hours}=    Run Keyword If    '${procurementMethodType}' in ['belowThreshold', 'defense', 'aboveThresholdEU', 'aboveThresholdUA']   Get Webelements   xpath=//table[@ng-model="tender.tenderPeriod.endDate"]/.//input[@ng-change="updateHours()"]
+  ${tenderingEnd_date_hours}=    Run Keyword If    '${procurementMethodType}' in ['belowThreshold', 'defense', 'aboveThresholdEU', 'aboveThresholdUA']   Get Webelements   xpath=//input[@id="input-date-tender-tenderPeriod-endDate"]
+  #/.//input[@ng-change="updateHours()"]
   Run Keyword If   '${procurementMethodType}' in ['belowThreshold', 'defense', 'aboveThresholdEU', 'aboveThresholdUA']   Input Text    ${tenderingEnd_date_hours[-1]}       ${tenderingEnd_hours}
   ${tenderingEnd_date_minutes}=  Run Keyword If    '${procurementMethodType}' in ['belowThreshold', 'defense', 'aboveThresholdEU', 'aboveThresholdUA']  Get Webelements   xpath=//table[@ng-model="tender.tenderPeriod.endDate"]/.//input[@ng-change="updateMinutes()"]
   Run Keyword If   '${procurementMethodType}' in ['belowThreshold', 'defense', 'aboveThresholdEU', 'aboveThresholdUA']   Input Text    ${tenderingEnd_date_minutes[-1]}     ${tenderingEnd_minutes}
@@ -659,16 +688,16 @@ Lot Dict
   \   Input Text    xpath=//input[@ng-model="vm.item.description"]     ${item_description}
   \   Input text    xpath=//input[@ng-model="vm.item.quantity"]        ${item_quantity}
   #   :TODO Fix the QUANTITY field locator and then - uncomment below' string
-#  \   Input text   id=quantity${INDEX}          ${item_quantity}
-#  \   Input text   id=itemDescription${INDEX}   ${item_description}
+  \   Input text   id=quantity-${INDEX}          ${item_quantity}
+  \   Input text   id=itemDescription-${INDEX}   ${item_description}
 
 # Set CPV
   \   Wait Until Page Contains Element   xpath=//input[contains(@id,'classifier-cpv-')]   5
   \   Click Element                      xpath=//input[contains(@id,'classifier-cpv-')]
-#  \   Click Element                      id=classifier-1-${INDEX}
+  \   Click Element                      id=classifier-cpv-${INDEX}
 
-#  \   Wait Until Page Contains Element   id=classifier-1-${INDEX}
-#  \   Click Element                      id=classifier-1-${INDEX}
+  \   Wait Until Page Contains Element   id=classifier-cpv-${INDEX}
+  \   Click Element                      id=classifier-cpv-${INDEX}
   \   Wait Until Page Contains Element   id=classifier-search-field   100
   \   Input text                         id=classifier-search-field   ${classification_id}
   \   Wait Until Page Contains Element   xpath=//span[contains(text(),'${classification_id}')]   20
@@ -680,11 +709,11 @@ Lot Dict
   \   Run Keyword If   '${classification_id}' == '99999999-9'    Set DKPP      ${add_classification_id}
 # Set Delivery Address
   \   Fill The Delivery Fields  ${deliveryaddress_countryname}  ${deliveryaddress_postalcode}  ${deliveryaddress_region}   ${deliveryaddress_locality}   ${deliveryaddress_streetaddress}
-#  \   Focus                 xpath=//input[contains(@id, 'deliveryAddress-')]
-#  \   Click Element         xpath=//input[contains(@id, 'deliveryAddress-')]
-#  \   Wait Until Page Contains Element      xpath=//md-radio-button[@aria-label="Відповідно до документації"]   4
-#  \   Click Element                         xpath=//md-radio-button[@aria-label="Відповідно до документації"]
-#  \   Click Element                      id=deliveryAddress${INDEX}
+  \   Focus                 xpath=//input[contains(@id, 'deliveryAddress-')]
+  \   Click Element         xpath=//input[contains(@id, 'deliveryAddress-')]
+  \   Wait Until Page Contains Element      xpath=//md-radio-button[@aria-label="Відповідно до документації"]   4
+  \   Click Element                         xpath=//md-radio-button[@aria-label="Відповідно до документації"]
+#  \   Click Element                      id=deliveryAddress-${INDEX}
 #  \   Wait Until Page Contains Element   xpath=//input[@name="postal-code"]   20
 #  \   Sleep     2
 #  \   Input Text                         xpath=//input[@name="country_name"]      ${deliveryaddress_countryname}
@@ -692,9 +721,9 @@ Lot Dict
 #  \   Input Text                         xpath=//input[@name="delivery-region"]   ${deliveryaddress_region}
 #  \   Input Text                         xpath=//input[@name="company-city"]      ${deliveryaddress_locality}
 #  \   Input Text                         xpath=//input[@name="street_address"]    ${deliveryaddress_streetaddress}
-#  \   Sleep     2
-#  \   Click Element                      xpath=//button[@ng-click="vm.save()"]
-#  \   Sleep     4
+  \   Sleep     2
+  \   Click Element                      xpath=//button[@ng-click="vm.save()"]
+  \   Sleep     4
 # Selecting Item's relation to LOT From Drop Down
   \   ${lot_relations}=   Run Keyword If    '${procurementMethodType}' in ['defense', 'aboveThresholdEU', 'aboveThresholdUA']   Get Webelements     xpath=//select[@ng-model="item.relatedLot"]
   \   Sleep     2
