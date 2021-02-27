@@ -107,6 +107,7 @@ Login
   [ARGUMENTS]   @{ARGUMENTS}
   [Documentation]
   ...      ${ARGUMENTS[0]} == username
+  Maximize Browser Window
   Wait Until Page Contains Element   ${locator.login_btn}   20
   Click Element   ${locator.login_btn}
   Sleep     2
@@ -333,7 +334,9 @@ set_dk_dkpp
   Click Element     ${search_field}
   Input Text        ${search_field}   ${tender_uaid}
   Click Element     xpath=//button[@ng-click="search()"]
-  Sleep     30
+#  Sleep     30
+  Reload Page
+  Login
 
   Reload Page
   Wait Until Page Contains Element    xpath=//input[@ng-model="searchData.query"]   10
