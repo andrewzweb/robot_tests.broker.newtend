@@ -256,9 +256,11 @@ Login
     \   Input Text  id=quantity0             ${plan_item_quantity_string}
     \   ${measure_list}=    Get Webelement   id=measure-list
     \   Click Element       ${measure_list}
-    \   ${measure_name}=    Get Webelements   xpath=//a[@id="measure-list"]/..//a[contains(text(), '${plan_item_unit}')]
+    \   ${measure_name}=    Get Webelements   xpath=//*[@id="measure-list"]/..//a[contains(text(), '${plan_item_unit}')]
+#    \   ${measure_name}=    Get Webelements   xpath=//a[@id="measure-list"]/..//a[contains(text(), '${plan_item_unit}')]
     \   Click Element       ${measure_name[-1]}
     \   Sleep     1
+
     # Item classifiers
     \   ${item_dk_value}=   Get From Dictionary     ${plan_items_block[${I}].classification}   id
     \   Focus       id=classifier1${I}
@@ -334,17 +336,7 @@ set_dk_dkpp
   Click Element     ${search_field}
   Input Text        ${search_field}   ${tender_uaid}
   Click Element     xpath=//button[@ng-click="search()"]
-#  Sleep     30
-  Reload Page
-  Login
-
-  Reload Page
-  Wait Until Page Contains Element    xpath=//input[@ng-model="searchData.query"]   10
-  ${search_field}=  Get Webelement    xpath=//input[@ng-model="searchData.query"]
-  Click Element     ${search_field}
-  Input Text        ${search_field}   ${tender_uaid}
-  Click Element     xpath=//button[@ng-click="search()"]
-
+  Sleep     30
   Wait Until Page Contains Element    xpath=//a[@class="row tender-info ng-scope"]    10
 
 #  : FOR   ${INDEX}   IN RANGE    1    30
@@ -714,7 +706,8 @@ Lot Dict
   \   Fill The Delivery Fields  ${deliveryaddress_countryname}  ${deliveryaddress_postalcode}  ${deliveryaddress_region}   ${deliveryaddress_locality}   ${deliveryaddress_streetaddress}
   \   Focus                 xpath=//input[contains(@id, 'deliveryAddress-')]
   \   Click Element         xpath=//input[contains(@id, 'deliveryAddress-')]
-  \   Wait Until Page Contains Element      xpath=//md-radio-button[@aria-label="Відповідно до документації"]   4
+  \   Sleep     10
+  \   Wait Until Page Contains Element      xpath=//md-radio-button[@aria-label="Відповідно до документації"]   10
   \   Click Element                         xpath=//md-radio-button[@aria-label="Відповідно до документації"]
 #  \   Click Element                      id=deliveryAddress-${INDEX}
 #  \   Wait Until Page Contains Element   xpath=//input[@name="postal-code"]   20
@@ -806,7 +799,7 @@ Fill The Delivery Fields
 #  Input Text                         xpath=//input[@name="company-city"]      ${deliveryaddress_locality}
 #  Input Text                         xpath=//input[@name="street_address"]    ${deliveryaddress_streetaddress}
 #  Sleep     2
-
+  Sleep     5
   Click Element        xpath=//md-radio-button[@aria-label="Відповідно до документації"]
 
   Click Element        xpath=//button[@ng-click="vm.save()"]
@@ -1595,15 +1588,23 @@ Edit date
   Sleep     1
 
 Edit some field
-  [Arguments]   @{arguments}
-  ...    ${ARGUMENTS[0]} == fieldName - description, might be
-  ...    ${ARGUMENTS[1]} == fieldValue
-  Focus     ${locator.edit.${ARGUMENTS[0]}}
+  [Arguments]   ${fieldName}   ${fieldValue}
+  Focus     ${locator.edit.${fieldName}}
   Sleep     1
-  Clear Element Text    ${locator.edit.${ARGUMENTS[0]}}
+  Clear Element Text    ${locator.edit.${fieldName}}
   Sleep     2
-  Input Text    ${locator.edit.${ARGUMENTS[0]}}     ${ARGUMENTS[1]}
+  Input Text    ${locator.edit.${fieldName}}     ${fieldValue}
   Sleep     2
+
+#  [Arguments]   @{arguments}
+#  ...    ${ARGUMENTS[0]} == fieldName - description, might be
+#  ...    ${ARGUMENTS[1]} == fieldValue
+#  Focus     ${locator.edit.${ARGUMENTS[0]}}
+#  Sleep     1
+#  Clear Element Text    ${locator.edit.${ARGUMENTS[0]}}
+#  Sleep     2
+#  Input Text    ${locator.edit.${ARGUMENTS[0]}}     ${ARGUMENTS[1]}
+#  Sleep     2
 
 Змінити лот
   [Arguments]  @{ARGUMENTS}
