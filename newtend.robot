@@ -255,9 +255,10 @@ Login
     \   Input Text  id=itemDescription0      ${plan_item_description}
     \   Input Text  id=quantity0             ${plan_item_quantity_string}
     \   ${measure_list}=    Get Webelement   id=measure-list
+    \   Focus   ${measure_list}
     \   Click Element       ${measure_list}
-    \   ${measure_name}=    Get Webelements   xpath=//*[@id="measure-list"]/..//a[contains(text(), '${plan_item_unit}')]
-#    \   ${measure_name}=    Get Webelements   xpath=//a[@id="measure-list"]/..//a[contains(text(), '${plan_item_unit}')]
+    \   ${measure_name}=    Get Webelements   xpath=//a[@id="measure-list"]/..//a[contains(text(), '${plan_item_unit}')]
+    \   Focus   ${measure_name[-1]}
     \   Click Element       ${measure_name[-1]}
     \   Sleep     1
 
@@ -445,7 +446,7 @@ set_dk_dkpp
 # Selecting procedure according to needs
 #  ${procedures_dropdown}=   Get Webelement  xpath=//select[@name="tenderProcedure"]
 
-  Run Keyword If   '${procurementMethodType}' == 'reporting'          Click Element   xpath=//md-option[@value="reporting"]
+#  Run Keyword If   '${procurementMethodType}' == 'reporting'          Click Element   xpath=//md-option[@value="reporting"]
   Run Keyword If   '${procurementMethodType}' == 'negotiation'        Click Element   xpath=//md-option[@value="negotiation"]
   Run Keyword If   '${procurementMethodType}' == 'negotiation'        Sleep   2
   Run Keyword If   '${procurementMethodType}' == 'negotiation'        Click Element   xpath=//md-radio-button[@value="singlelot"]
@@ -454,11 +455,13 @@ set_dk_dkpp
   Sleep     2
 
 # Confirming procedure selection
-  Run Keyword If   '${procurementMethodType}' in ['reporting', 'negotiation', 'defense', 'aboveThresholdEU', 'aboveThresholdUA']  Click Element     xpath=//button[@ng-click="vm.createTender(vm.tenderProcedure, vm.tenderLots)"]
+#  Run Keyword If   '${procurementMethodType}' in ['reporting', 'negotiation', 'defense', 'aboveThresholdEU', 'aboveThresholdUA']  Click Element     xpath=//button[@ng-click="vm.createTender(vm.tenderProcedure, vm.tenderLots)"]
   Run Keyword If   '${procurementMethodType}' in ['reporting', 'negotiation', 'defense', 'aboveThresholdEU', 'aboveThresholdUA']  Sleep     7
 
   # Direct navigating to Lotless belowUA creation' page
   Run Keyword If   '${procurementMethodType}' == 'belowThreshold'     Go To     https://dev23.newtend.com/opc/provider/create-tender/singlelot/belowThreshold/tender/
+  Run Keyword If   '${procurementMethodType}' == 'reporting'     Go To     https://dev23.newtend.com/opc/provider/create-tender/singlelot/reporting/tender/
+
   Wait Until Page Contains Element  id=tender-title     5
 
   # Getting Data to fill inside the tender
