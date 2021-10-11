@@ -46,7 +46,7 @@ Resource  ./awards/awards.robot
   [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
   ...      ${user} ==  username
   Відкрити браузер  '${user}'
-  Встановити розміри браузера  '${user}'
+  #Встановити розміри браузера  '${user}'
   Check user if him reg to login  ${user}
   Change Language to UKR
   Add Cookie  autotest  1  domain=dev23.newtend.com  expiry=2021-10-30 16:21:35
