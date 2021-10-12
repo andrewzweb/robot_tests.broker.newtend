@@ -21,15 +21,34 @@ Add Quilificaton Comission Document
   ${locator.upload_file}=  Set Variable  xpath=//*[@ng-click="upload()"]
   Wait And Click  ${locator.upload_file}
 
+  Sleep  5
+
+  ${locator.close_popup}=  Set Variable  xpath=//div[@class="modal-footer layout-row"]/div[2]/button
+  Wait And Click  ${locator.close_popup}
+
   Sleep  3
 
-  # click confirm
-  ${locator.accept_qulification}=  Set Variable  xpath=//*[@ng-click="accept()"]
-  Wait Until Element Is Enabled  ${locator.accept_qulification}
-  Wait And Click  ${locator.accept_qulification}
+Confirm Bid
+  # click to popup download
+  ${locator.apply_decision}=  Set Variable  xpath=//*[@ng-click="decide('active')"]
+  Wait And Click  ${locator.apply_decision}
+
+  Sleep  2
+  ${bid_accept}=  Get WebElement  xpath=//button[@ng-click="accept()"]
+
+  # remove disabled
+  #Execute Javascript  arguments[0].removeAttribute("disabled");  ARGUMENTS    ${bid_accept}
+  Execute Javascript
+  ...  var element=document.querySelector("button[ng-click='accept()']");
+  ...  element.removeAttribute("disabled");
+  # Execute Javascript  arguments[0].click();     ARGUMENTS    ${bid_accept}
+
+  Wait And Click  ${bid_accept}
+  Sleep  2
 
 Choise Bid
   [Arguments]  ${bid_id}
+  Log To Console  [+] _ choise number ${bid_id}
   Sleep  3
   ${locator.bids}=  Set Variable  xpath=//*[@ng-repeat="bid in tenderBids"]
   ${element_bids}=  Get WebElements  ${locator.bids}

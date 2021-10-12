@@ -46,7 +46,7 @@ Resource  ./awards/awards.robot
   [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
   ...      ${user} ==  username
   Відкрити браузер  '${user}'
-  #Встановити розміри браузера  '${user}'
+  Встановити розміри браузера  '${user}'
   Check user if him reg to login  ${user}
   Change Language to UKR
   Add Cookie  autotest  1  domain=dev23.newtend.com  expiry=2021-10-30 16:21:35
@@ -362,18 +362,49 @@ Resource  ./awards/awards.robot
 #                                                              #
 ################################################################
 Завантажити документ рішення кваліфікаційної комісії
-  [Arguments]  ${user}  ${document_file}  ${tender_id}  ${bid_id}
-
+  [Arguments]  ${username}  ${document_file}  ${tender_id}  ${bid_id}  @{ARGS}
+  Log To Console  [+] Add Doc Qulification
+  Log To Console  ${username}
+  Log To Console  ${document_file}
+  Log To Console  ${tender_id}
+  Log To Console  ${bid_id}
+  Find Tender By Id  ${tender_id}
   Go To Auction
-
+  # wait all download
+  Sleep  5
   Choise Bid  ${bid_id}
-
   Add Quilificaton Comission Document  ${document_file}
+  Reload Page
 
 Підтвердити постачальника
-  [Arguments]  ${username}  ${tender_id}  ${bid_id}
+  [Arguments]  ${username}  ${tender_id}  ${bid_id}  @{ARGS}
+  Log To Console  [+] Aprove Qulification
+  Log To Console  ${username}
+  Log To Console  ${tender_id}
+  Log To Console  ${bid_id}
+  Find Tender By Id  ${tender_id}
+  Go To Auction
+  Sleep  5
+  Choise Bid  ${bid_id}
+  Confirm Bid
 
-  Log To Console  [+] Done
+Відxилити постачальника
+  [Arguments]  ${username}  ${tender_id}  ${bid_id}  @{ARGS}
+  Log To Console  [+] Aprove Qulification
+  Log To Console  ${username}
+  Log To Console  ${tender_id}
+  Log To Console  ${bid_id}
+
+  Find Tender By Id  ${tender_id}
+  Go To Auction
+  Sleep  5
+
+  # choise accept button
+  ${button_open_popup_approve_suplier}=  Set Variable  xpath=//button[@ng-click="decide('active')"]
+  ${bid_decline}=  Get WebElement  xpath=//button[@ng-click="decide('unsuccessful')"]
+  Wait And Click  ${bid_decline}
+
+
   
 ################################################################
 #                                                              #
