@@ -3,14 +3,17 @@ Resource  ../../newtend.robot
 
 *** Keywords ***
 
-#Подати цінову пропозицію
-#  [Arguments]  @{ARGUMENTS}
-
+Подати цінову пропозицію
+  [Arguments]  @{ARGS}
+  Log To Console  [+] Make price bid
+  Print Args  ${ARGS}
+  Make bid  ${ARGS}
 
 Додати позицію
-###  Не видно контролів додати пропозицію в хромі, потрібно скролити, скрол не працює. Обхід: додати лише 1 пропозицію + редагувати description для скролу.
-  Click Element    ${locator.edit.add_item}
-  Додати придмет   ${items[1]}   1
+  [Arguments]  @{ARGS}
+  Log To Console  [+] Add bid
+  Print Args  ${ARGS}
+  Make bid  ${ARGS}
 
 Забрати позицію
   Click Element   xpath=//a[@title="Добавить лот"]/preceding-sibling::a
@@ -90,41 +93,68 @@ Create suplier and add docs and confier him
 
 Підтвердити підписання контракту
   [Arguments]   @{ARGUMENTS}
-  [Documentation]   For Reporting procedure flow, pressing finish btn in Trades tab
-  ...      ${ARGUMENTS[0]} == username
-  ...      ${ARGUMENTS[1]} == ${TENDER_UAID}
-  ...      ${ARGUMENTS[2]} == file_path
-  log to console   arg0 - ${ARGUMENTS[0]}
-  log to console   arg1 - ${ARGUMENTS[1]}
-  log to console   arg2 - ${ARGUMENTS[2]}
-  Wait Until Page Contains Element  xpath=//a[@ui-sref="tenderView.auction"]
-  Click Element     xpath=//a[@ui-sref="tenderView.auction"]
+  Log To Console  [+] Confirm contract
+  Print Args  ${ARGS}
 
-  Reload Page
-# TODO: delete this part if OK
-#  Sleep     3
-#  : FOR   ${INDEX}   IN RANGE    1    10
-#  \   Reload Page
-#  \   Log To Console   .   no_newline=true
-#  \   Sleep     3
-#  \   ${count}=   Get Matching Xpath Count    xpath=//button[@ng-click="closeBids(lot.awardId, lot.contractId)"]
-#  \   Exit For Loop If   '${count}' > '0'
-  Wait Until Page Contains Element  xpath=//button[@ng-click="closeBids(lot.awardId, lot.contractId)"]  20
-  Click Element     xpath=//button[@ng-click="closeBids(lot.awardId, lot.contractId)"]
-  # Waiting for Contracts Confirm modal window appear
-  : FOR   ${INDEX}   IN RANGE    1    30
-  \   Log To Console   .   no_newline=true
-  \   Sleep     2
-  \   ${count}=   Get Matching Xpath Count   xpath=//form[@name="closeBidsForm"]
-  \   Exit For Loop If   '${count}' > '0'
-  # ${contruct_number}=    Convert To String    ${ARGUMENTS[2]}
-  Input Text    id=contractNumber   'contruct_number'
-  Sleep     20
-  Click Element     xpath=//button[@ng-click="closeBids()"]
-  # Waiting for Contracts Finish modal window hide
-  : FOR   ${INDEX}   IN RANGE    1    30
-  \   #Log To Console   .   no_newline=true
-  \   Sleep     2
-  \   ${count}=   Get Matching Xpath Count   xpath=//form[@name="closeBidsForm"]
-  \   Exit For Loop If   '${count}' < '1'
-  Sleep     2
+Make bid
+  [Arguments]  @{ARGS}
+  ${tender_id}=  Set Variable  ${ARGS[0]}  
+  ${bid_data}=  Set Variable  ${ARGS[1]}  
+  ${bid_amount}=  Get From Dictionary  ${bid_data}  amount
+  
+  # go to tender
+  Find Tender By Id  ${tender_id}
+
+  # click to make bid
+  ${locator.button_popup_make_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
+  Wait And Click  ${locator.button_popup_make_bid}
+
+  # wait popup
+  ${locator.popup_make_bid}=  Set Variable  xpath//div[@class="modal-content"]
+  Wait Until Element Is Visible  ${locator.popup_make_bid}
+
+  # click agree
+  ${locator.button_agree_with_publish}=  Set Variable  xpath=//input[@ng-model="agree.value"]
+  Wait And Click  ${locator.button_agree_with_publish}
+
+  # click self qulified
+  ${locator.button_agree_selt_quliffied}= xpath=//input[@ng-model="agree.selfQualified"]
+  Wait And Click  ${locator.button_agree_selt_quliffied}
+
+  # choise from lots
+  ${locator.bids_lots}=  Set Variable  xpath=//div[@ng-repeat="lot in lots track by $index"]
+
+  ${locator.button_for_make_bid_in_lot}=  Set Variable  xpath=//div[@ng-repeat="lot in lots track by $index"]/div/div/button[@ng-click="showBid($index)"]
+
+  # for example we choise first lot
+  ${elements_lot}=  Get WebElements  ${locator.button_for_make_bid_in_lot}
+  Wait And Click  ${elements_lot[0]}
+  
+  # input count
+  ${locator.input_bid_amount}=  Set Variable  xpath=//input[@name="amount"]
+  Wait And Type  ${locator.input_bid_amount}  ${bid_amount}
+
+  # confirm bid
+  ${locator.place_a_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
+  Wait And Click  ${locator.place_a_bid}
+
+  # Wait page reload
+  Sleep  3
+
+  # potom menya perekidivaet na big page 
+
+  # add doc vidpovidnist
+  # choise type
+  # save doc
+
+  
+  # need choise all criteria
+
+  # choise first
+  # and again choise first
+
+  # save all criteria
+
+  # pusblish bid
+
+  # singin bid

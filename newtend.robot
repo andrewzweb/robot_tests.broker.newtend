@@ -386,7 +386,10 @@ Resource  ./awards/awards.robot
   Go To Auction
   Sleep  5
   Choise Bid  ${bid_id}
-  Confirm Bid
+  ${bool_confirm_bid}=  Run Keyword And Return Status  Confirm Bid
+  Log To Console  [+] _Confirm bid status: ${bool_confirm_bid}
+  ${bool_finish_torgi}=  Run Keyword And Return Status  Finish Torgi
+  Log To Console  [+] _Finish torgi status: ${bool_finish_torgi}
 
 Відxилити постачальника
   [Arguments]  ${username}  ${tender_id}  ${bid_id}  @{ARGS}
@@ -404,8 +407,30 @@ Resource  ./awards/awards.robot
   ${bid_decline}=  Get WebElement  xpath=//button[@ng-click="decide('unsuccessful')"]
   Wait And Click  ${bid_decline}
 
+Відхилити кваліфікацію
+  [Arguments]    @{ARGS}
+  Log To Console  [+] Decline qulification
+  # TODO
+  Print Args  @{ARGS}
 
-  
+Скасувати кваліфікацію
+  [Arguments]    @{ARGS}
+  Log To Console  [+] Canceled qulification
+  # TODO
+  Print Args  @{ARGS}
+
+Підтвердити кваліфікацію
+  [Arguments]    @{ARGS}
+  Log To Console  [+] Confirm qulification
+  # TODO
+  Print Args  @{ARGS}
+
+Затвердити остаточне рішення кваліфікації
+  [Arguments]    @{ARGS}
+  Log To Console  [+] Approve qulification
+  # TODO
+  Print Args  @{ARGS}
+
 ################################################################
 #                                                              #
 #                    END Qualification                         #
@@ -420,6 +445,8 @@ Resource  ./awards/awards.robot
 
 Завантажити документ у кваліфікацію
   [Arguments]  ${username}  ${document_file}  ${tender_uaid}  ${qualification_num}  @{args}
+  Log To Console  [+] Download doc in qulification
+
   Log To Console  Username ${username}
   Log To Console  Doc ${document_file}
   Log To Console  Tender ${tender_uaid}
@@ -433,6 +460,7 @@ Resource  ./awards/awards.robot
 
 Підтвердити підписання контракту
   [Arguments]    ${username}  ${tender_uaid}  ${contract_num}
+  Log To Console  [+] Confirm contract
   Log To Console  ARG 0 - ${username}
   Log To Console  ARG 1 - ${tender_uaid}
   Log To Console  ARG 2 - ${contract_num}
@@ -441,13 +469,16 @@ Resource  ./awards/awards.robot
   Find Tender By Id  ${tender_uaid}
 
   # go to contracts
-  Go To Auction
+  Go To Contracts
 
+
+Finish Torgi
+  [Arguments]
   ${locator.end_torgi}=  Set Variable  xpath=//button[@ng-click="closeBids(lot.awardId, lot.contractId)"]
   Wait And Click  ${locator.end_torgi}
 
   ${locator.input_contract_number}=  Set Variable  xpath=//input[@id="contractNumber"]
-  Wait And Type  ${locator.input_contract_number}  ${contract_num}
+  Wait And Type  ${locator.input_contract_number}  0
 
   # change price
   Wait And Type  id=contractValueAmount  96
@@ -487,9 +518,26 @@ Resource  ./awards/awards.robot
 
 Отримати інформацію із нецінового показника
   [Arguments]    @{ARGS}
+  Log To Console  [+] Get Info From Reatures
   # TODO
   Print Args  @{ARGS}
   [Return]  1
+
+Додати неціновий показник на тендер
+  [Arguments]  ${username}  ${tender_id}  ${feature_date}
+  Log To Console  [+] Add features in tender
+  # TODO
+  Print Args  @{ARGS}
+
+  Find Tender By Id  ${tender_id}
+  Create Feature  ${feature_date}
+  Publish tender
+
+Видалити неціновий показник
+  [Arguments]    @{ARGS}
+  Log To Console  [+] Delete features in tender
+  # TODO
+  Print Args  @{ARGS}
 
 ################################################################
 #                                                              #
@@ -499,18 +547,15 @@ Resource  ./awards/awards.robot
 
 Редагувати угоду
   [Arguments]    @{ARGS}
+  Log To Console  [+] Edit contract
   # TODO
   Print Args  @{ARGS}
 
 Змінити лот
-  [Arguments]  @{ARGS}
+  [Arguments]  ${username}  ${tender_id}  ${lot_id}  ${variable_chould_change}  ${variable_value}
+
   # TODO
   Print Args  ${ARGS}
-  ${username}=  Set Variable  ${ARGS[0]}
-  ${tender_id}=  Set Variable  ${ARGS[1]}
-  ${lot_id}=  Set Variable  ${ARGS[2]}
-  ${variable_chould_change}=   Set Variable  ${ARGS[3]}
-  ${variable_value}=   Set Variable  ${ARGS[4]}
 
   Find Tender By Id  ${tender_id}
   Go To Edit Tender
@@ -518,46 +563,13 @@ Resource  ./awards/awards.robot
   Wait And Click  xpath=//input[@id="lot-id-0"]
 
   Publish tender
-  
  
-Додати неціновий показник на тендер  
-  [Arguments]    @{ARGS}
-  # TODO
-  Print Args  @{ARGS}
-
-  ${username}=  Set Variable  ${ARGS[0]}
-  ${tender_id}=  Set Variable  ${ARGS[1]}
-  ${feature_date}=  Set Variable  ${ARGS[2]}
-
-  Find Tender By Id  ${tender_id}
-  Create Feature  ${feature_date}
-  Publish tender
-
-Видалити неціновий показник
-  [Arguments]    @{ARGS}
-  # TODO
-  Print Args  @{ARGS}
+################################################################
+#                                                              #
+#                    Qulification                              #
+#                                                              #
+################################################################
   
-Відхилити кваліфікацію   
-  [Arguments]    @{ARGS}
-  # TODO
-  Print Args  @{ARGS}
-
-Скасувати кваліфікацію
-  [Arguments]    @{ARGS}
-  # TODO
-  Print Args  @{ARGS}
-
-Підтвердити кваліфікацію    
-  [Arguments]    @{ARGS}
-  # TODO
-  Print Args  @{ARGS}
-
-Затвердити остаточне рішення кваліфікації    
-  [Arguments]    @{ARGS}
-  # TODO
-  Print Args  @{ARGS}
-
 Отримати інформацію про contracts[0].value.amountNet
   [Arguments]    @{ARGS}
   # TODO
@@ -593,70 +605,6 @@ Resource  ./awards/awards.robot
   ${amount}= Get Text  xpath=//div[@id="view-contract-value"]
   [Return]  ${amount}
 
-
-Make bid
-  [Arguments]  @{ARGS}
-  ${tender_id}=  Set Variable  ${ARGS[0]}  
-  ${bid_data}=  Set Variable  ${ARGS[1]}  
-  ${bid_amount}=  Get From Dictionary  ${bid_data}  amount
-  
-  # go to tender
-  Find Tender By Id  ${tender_id}
-
-  # click to make bid
-  ${locator.button_popup_make_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
-  Wait And Click  ${locator.button_popup_make_bid}
-
-  # wait popup
-  ${locator.popup_make_bid}=  Set Variable  xpath//div[@class="modal-content"]
-  Wait Until Element Is Visible  ${locator.popup_make_bid}
-
-  # click agree
-  ${locator.button_agree_with_publish}=  Set Variable  xpath=//input[@ng-model="agree.value"]
-  Wait And Click  ${locator.button_agree_with_publish}
-
-  # click self qulified
-  ${locator.button_agree_selt_quliffied}= xpath=//input[@ng-model="agree.selfQualified"]
-  Wait And Click  ${locator.button_agree_selt_quliffied}
-
-  # choise from lots
-  ${locator.bids_lots}=  Set Variable  xpath=//div[@ng-repeat="lot in lots track by $index"]
-
-  ${locator.button_for_make_bid_in_lot}=  Set Variable  xpath=//div[@ng-repeat="lot in lots track by $index"]/div/div/button[@ng-click="showBid($index)"]
-
-  # for example we choise first lot
-  ${elements_lot}=  Get WebElements  ${locator.button_for_make_bid_in_lot}
-  Wait And Click  ${elements_lot[0]}
-  
-  # input count
-  ${locator.input_bid_amount}=  Set Variable  xpath=//input[@name="amount"]
-  Wait And Type  ${locator.input_bid_amount}  ${bid_amount}
-
-  # confirm bid
-  ${locator.place_a_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
-  Wait And Click  ${locator.place_a_bid}
-
-  # Wait page reload
-  Sleep  3
-
-  # potom menya perekidivaet na big page 
-
-  # add doc vidpovidnist
-  # choise type
-  # save doc
-
-  
-  # need choise all criteria
-
-  # choise first
-  # and again choise first
-
-  # save all criteria
-
-  # pusblish bid
-
-  # singin bid
-
 Отримати інформацію про complaintPeriod.endDate
   [Arguments]  @{ARGS}
   Print Args  ${ARGS}
@@ -666,3 +614,4 @@ Make bid
 Отримати інформацію із пропозиції
   [Arguments]  @{ARGS}
   Print Args  ${ARGS}
+  # TODO
