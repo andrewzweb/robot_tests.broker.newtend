@@ -118,7 +118,7 @@ Edit Tender Item Unit Measure
 
   # click to dropdown
   ${locator.measure_name_dropdown}=  Set Variable  xpath=//div[@id="item-${item_index}"]//a[@id="measure-list"]
-  ${new_focus}=  Set Variable  xpath=//label[@for="start-date-delivery0"]
+  ${new_focus}=  Set Variable  xpath=//input[@ng-model="vm.deliveryAddressTitle"]
   Focus  ${new_focus}
   Wait And Click  ${locator.measure_name_dropdown}
 
