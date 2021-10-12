@@ -16,6 +16,7 @@ Edit Tender Title and Description
 
   Edit Feasible Element  ${tender_data.data}  title_en  Input Text  ${locator.edit_tender_title_en}
   Edit Feasible Element  ${tender_data.data}  description_en  Input Text  ${locator.edit_tender_description_en}
+  CustomLog  [+] Edit Title And Description
 
 Edit Features
   [Arguments]  ${tender_data}
@@ -25,8 +26,8 @@ Edit Features
   ${data.features_data}=  Get From Dictionary  ${tender_data.data}  features
   ${data.feature_data}=  Get From List  ${data.features_data}  0
   Create Feature  ${data.feature_data}  ${procurementMethodType}
+  CustomLog  [+] Edit Features
   Sleep  3
-
 
 Create Feature
   [Arguments]  @{ARGS}
@@ -50,15 +51,20 @@ Create Feature
   ...        title_en: 'f-b360e661: Ad eos qui ut dicta.'
   ...        title_ru: 'f-360437d2: Рэктэквуэ ыёюз лыгимуз мэль ывыртятюр рыквюы.'
 
+  WrapLog  ${feature_data}
+
   # data
+  ${data}=  Set Variable  0
   ${data.feature_description}=  Get From Dictionary  ${feature_data}  description
   ${data.feature_relation_of}=  Get From Dictionary  ${feature_data}  featureOf
+  ${data.feature_title}=  Get From Dictionary  ${feature_data}  title
+  ${data.feature_description}=  Get From Dictionary  ${feature_data}  description
 
   # wait popUp form
   Focus  ${locator.edit_feature_add_button}
   Wait And Click  ${locator.edit_feature_add_button}
 
-  Wait And Type  ${locator.edit_feature_title}           ${data.feature_title}
+  Wait And Type  ${locator.edit_feature_title}  ${data.feature_title}
   Edit Feasible Element  ${feature_data}  title_en  Wait And Type  ${locator.edit_feature_title_en}
   Wait And Type  ${locator.edit_feature_description}     ${data.feature_description}
   Edit Feasible Element  ${feature_data}  description  Wait And Type  ${locator.edit_feature_description_en}
@@ -106,6 +112,8 @@ Edit Budget In Reporting
 
 Edit Budget In BelowThreshold
   [Arguments]  ${tender_data}
+  CustomLog  [+] Edit Budget in BelowThreshold
+
   Focus     id=with-nds
   Click Element     id=with-nds
   
@@ -120,6 +128,7 @@ Edit Budget In BelowThreshold
 
 Edit Choise Category Tender
   [Arguments]  ${tender_data}
+  CustomLog  [+] Edit Choise Category Tender
   # Filling the Main Procurement category
   ${procurementCategory}=  Get From Dictionary   ${tender_data.data}   mainProcurementCategory
   ${procurementCategory_field}=  Get Webelement  id=mainProcurementCategory
@@ -134,15 +143,17 @@ If negotiation
   Run Keyword If   '${procurementMethodType}' == 'negotiation'   Input text   ${locator.cause_descr}    ${cause_descr}
   Run Keyword If   '${procurementMethodType}' == 'negotiation'   Select From List By Value    xpath=//select[@id="reason"]  ${cause}
 
-Edit Date For Tender  
+Edit Date For Tender
   [Arguments]  ${tender_data}
+  CustomLog  [+] Edit Date For Tender
   ${procurementMethodType}=  Get From Dictionary   ${tender_data.data}   procurementMethodType
   ${exist_enquiry_period}=  Run Keyword And Return Status  Dictionary Should Contain Key   ${tender_data.data}   enquiryPeriod
   Run Keyword If  '${procurementMethodType}' not in ['competitiveDialogueEU', 'competitiveDialogueUA', 'defense', 'aboveThresholdEU', 'aboveThresholdUA', 'closeFrameworkAgreementUA', 'esco', 'reporting'] and ${exist_enquiry_period}  Edit Feasible Element  ${tender_data.data.enquiryPeriod}  endDate  Set Date Time  ${locator.enquiry_end_date}
   Run Keyword If  '${procurementMethodType}' not in ['competitiveDialogueEU', 'competitiveDialogueUA', 'defense', 'aboveThresholdEU', 'aboveThresholdUA', 'closeFrameworkAgreementUA', 'esco', 'reporting'] and ${exist_enquiry_period}  Edit Feasible Element  ${tender_data.data.tenderPeriod}  startDate  Set Date Time  ${locator.tender_start_date}
-  Run Keyword If  '${procurementMethodType}' not in ['esco', 'reporting']  Edit Feasible Element  ${tender_data.data.tenderPeriod}  endDate  Set Date Time  ${locator.tender_end_date}
+  Run Keyword If  '${procurementMethodType}' not in ['reporting']  Edit Feasible Element  ${tender_data.data.tenderPeriod}  endDate  Set Date Time  ${locator.tender_end_date}
 
 Choise Dont Add Document
+  CustomLog  [+] Choise Dont Add Document
   # Click to popup download document
   ${locator.button_tender_no_document}=  Set Variable  xpath=//div[@id="no-docs-btn"]
   Wait Until Page Contains Element  ${locator.button_tender_no_document}
@@ -150,6 +161,7 @@ Choise Dont Add Document
   Click Element  ${locator.button_tender_no_document}
 
 Set Created Tender ID In Global Variable
+  CustomLog  [+] Set Created Tender ID In Global Variable
   # Get Idsg
   Wait Until Page Contains Element   xpath=//span[@ng-if="tender.tenderID"]
   ${tender_uaid}=  Get Text   xpath=//span[@ng-if="tender.tenderID"]
@@ -158,6 +170,7 @@ Set Created Tender ID In Global Variable
   [Return]  ${tender_global}
 
 Publish tender
+  CustomLog  [+] Publish tender
   # Save tender
   Focus             ${locator.button_publish}
   Click Element     ${locator.button_publish}
@@ -237,6 +250,8 @@ Edit Criteria
   ...    source: winner
   ...    title: Розмір та умови надання забезпечення виконання договору
 
+  CustomLog  [+] Edit Feature
+
   ${procurementMethodType}=  Get From Dictionary   ${tender_data.data}   procurementMethodType
   ${criteria_items_data}=  Get From Dictionary  ${tender_data.data}  criteria
   ${criteria_count}=  Get Length  ${criteria_items_data}
@@ -246,10 +261,10 @@ Edit Criteria
 
 
   : FOR   ${item}  IN RANGE  ${criteria_count}
-  \  Log To Console  Item '${item}'
+  \  Log To Console  [+] Create Item '${item}'
   \  ${number_id}=  Evaluate  ${item}+${exist_before}
   \  ${number_id}=  Convert To Integer  ${number_id}
-  \  Log To Console  Number criteria: '${number_id}'
+  \  #Log To Console  Number criteria: '${number_id}'
   \
   \  # add criteria
   \  # ====== choise type ======
@@ -262,7 +277,7 @@ Edit Criteria
   \  Sleep  2
   \  ${criteria_items}=  Get WebElements  ${locator.criteria_items}
   \  ${criteria_element_count}=  Get Length  ${criteria_items}
-  \  Log To Console  Element Criteria on page ${criteria_element_count}
+  \  #Log To Console  Element Criteria on page ${criteria_element_count}
   \  Wait And CLick  ${criteria_items[${number_id}]}
   \  # ====== open form ======
   \
@@ -296,9 +311,9 @@ Edit Criteria
   \  Wait And Type  id=criteria_title_${number_id}_0_0_0  ${evidence_title}
   \  Wait And Type  id=criteria_description_${number_id}_0_0_0  ${evidence_description}
 
-
 Edit Guarentee
   [Arguments]  ${tender_data}
+  CustomLog  [+] Edit Guarentee
 
   ${guarantee_amount}=  Get From Dictionary  ${tender_data.data.guarantee}  amount
   ${guarantee_amount}=  convert_budget  ${guarantee_amount}
@@ -313,7 +328,7 @@ Edit Guarentee
 
 Edit Guarentee In Lot
   [Arguments]  ${tender_data}
-
+  CustomLog  [+] Edit Guarentee In Lot
   ${locator.edit_guarantee_dropdown_menu_lot}=  Set Variable  xpath=//select[@ng-model="guarantee"]
   ${locator.edit_guarantee_amount_lot}=  Set Variable  xpath=//input[@ng-model="lot.guarantee.amount"]
   ${locator.edit_guarantee_currency_lot}=  Set Variable  xpath=//select[@ng-model="lot.guarantee.currency"]
@@ -357,6 +372,7 @@ Input Custom Date
 
 Edit MainProcurementCategory
   [Arguments]  ${tender_data}
+  CustomLog  [+] Edit MainProcurementCategory
 
   ${locator.mainProcurementCategory}=  Set Variable  xpath=//select[@id="mainProcurementCategory"]
   Edit Feasible Element  ${tender_data.data}   mainProcurementCategory  Select From List By Value  ${locator.mainProcurementCategory}
@@ -405,6 +421,7 @@ Edit Supplement Criteria
 
 Edit Supplement Criteria New
   [Arguments]  ${tender_data}
+  CustomLog  [+] Collect Criteria
 
   # storage criterias
   ${storage_criteria}=  create_empty_list

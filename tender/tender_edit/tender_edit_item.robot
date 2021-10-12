@@ -52,7 +52,7 @@ Edit Item Basic Data
   # if in Item have description english when edit it
   Edit Feasible Element  ${items[${item_index}]}  description_en  Input Text  ${locator.edit_item_description_en}-${item_index}
   Run Keyword If  '${procurementMethodType}' != 'esco'
-  ...  Edit Item Unit Measure  ${item_index}  ${unit_name}
+  ...  Edit Tender Item Unit Measure  ${item_index}  ${unit_name}
 
 Edit Item Unit Data
   [Arguments]  ${items}  ${item_index}
@@ -113,17 +113,23 @@ Fill The Delivery Fields
   Click Element  xpath=//button[@ng-click="vm.save()"]
   Sleep  2
 
-
-Edit Item Unit Measure
+Edit Tender Item Unit Measure
   [Arguments]  ${item_index}  ${unit_name}
 
   # click to dropdown
   ${locator.measure_name_dropdown}=  Set Variable  xpath=//div[@id="item-${item_index}"]//a[@id="measure-list"]
+  ${new_focus}=  Set Variable  xpath=//label[@for="start-date-delivery0"]
+  Focus  ${new_focus}
   Wait And Click  ${locator.measure_name_dropdown}
 
   # click to element
-  ${locator.measure_name}=  Set Variable  xpath=//div[@id="item-${item_index}"]//a[contains(text(), '${unit_name}')]
-  Wait And Click  ${locator.measure_name}
+  Sleep  2
+  ${measure_name}=  Get Webelements  xpath=//a[@id="measure-list"]/..//a[contains(text(), '${unit_name}')]
+  Focus  ${measure_name[-1]}
+  Click Element  ${measure_name[-1]}
+  Sleep  1
+  #${locator.measure_name}=  Set Variable  xpath=//div[@id="item-${item_index}"]//a[contains(text(), '${unit_name}')]
+  #Wait And Click  ${locator.measure_name}
 
 Edit Item Classificator
   [Arguments]  ${items}  ${item_index}

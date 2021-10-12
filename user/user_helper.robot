@@ -2,6 +2,7 @@
 #Library  Selenium2Screenshots
 Library  String
 Library  DateTime
+Resource  ../newtend.robot
 
 *** Variables ***
 ${locator.login_email_field}            id=input_93
@@ -24,7 +25,7 @@ ${locator.login_action}      xpath=//button[@ng-click="vm.loginUser()"]
   [ARGUMENTS]   @{ARGUMENTS}
   Set Window Size       @{USERS.users[${ARGUMENTS[0]}].size}
   Set Window Position   @{USERS.users[${ARGUMENTS[0]}].position}
-  Maximize Browser Window
+  #Maximize Browser Window
 
 Check user if him reg to login  
   [ARGUMENTS]   ${current_user_type}
@@ -36,7 +37,8 @@ Login
   [Documentation]
   ...      ${ARGUMENTS[0]} == username
   #Log To Console  @{ARGUMENTS}
-  
+  Log To Console  [+] Login: ${user}
+
   ${alias}=   Catenate   SEPARATOR=   role_    ${user}
   Set Global Variable   ${BROWSER_ALIAS}   ${alias}
 
@@ -56,13 +58,18 @@ Login
   # Result
   Sleep  3
 
-Change Language to UKR  
+
+Change Language to UKR
+  Log To Console  [+] Change Language
+
+  Wait Bar Open
+
   # Change Language to Ukr in the UI
-  Sleep  1  # becouse sometimes test drops here and await dont help
   ${locator.change_language}=  Set Variable  xpath=//a[@ng-click="vm.setLanguage('uk')"]
+
+  # becouse sometimes test drops here and await dont help
   Wait Until Page Contains Element  ${locator.change_language}  
   Focus  ${locator.change_language}
-  Wait Until Element Is Enabled  ${locator.change_language}
   Click Element  ${locator.change_language}
   Sleep  2
 

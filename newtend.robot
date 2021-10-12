@@ -625,3 +625,13 @@ Make bid
   # pusblish bid
 
   # singin bid
+
+Отримати інформацію про complaintPeriod.endDate
+  [Arguments]  @{ARGS}
+  Print Args  ${ARGS}
+  ${complaintPeriod}=  Get Text  xpath=//div[@id="end-date-complaintPeriod"]
+  [Return]  ${complaintPeriod}
+
+Отримати інформацію із пропозиції
+  [Arguments]  @{ARGS}
+  Print Args  ${ARGS}

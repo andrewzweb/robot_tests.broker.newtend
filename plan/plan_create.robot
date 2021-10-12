@@ -80,6 +80,7 @@ Edit Plan Title And Description
 
 Edit Plan Type
   [Arguments]   ${plan_data}
+  Log To Console  [+] Edit Plan Type
   ${plan_budget_block}=   Get From Dictionary   ${plan_data.data}   budget
   ${plan_tender_block}=   Get From Dictionary     ${plan_data.data}    tender
 
@@ -89,6 +90,7 @@ Edit Plan Type
     
 Edit Plan Date
   [Arguments]   ${plan_data}
+  Log To Console  [+] Edit Plan Date
   ${plan_budget_block}=   Get From Dictionary   ${plan_data.data}   budget
   ${plan_tender_block}=   Get From Dictionary     ${plan_data.data}    tender
 
@@ -115,6 +117,7 @@ Edit Plan Date
 
 Edit Plan Budget
   [Arguments]   ${plan_data}
+  Log To Console  [+] Edit Plan Budget
   
   ${plan_budget_block}=   Get From Dictionary   ${plan_data.data}   budget
 
@@ -141,6 +144,7 @@ Edit Plan Budget
 
 Edit Plan Milestones
   [Arguments]   ${plan_data}
+  Log To Console  [+] Edit Plan Milestones
 
   ${plan_budget_block}=   Get From Dictionary   ${plan_data.data}   budget
 
@@ -171,6 +175,7 @@ Edit Plan Milestones
 
 Edit Plan Items
   [Arguments]   ${plan_data}
+  Log To Console  [+] Edit Plan Items
 
   ${plan_classification_block}=   Get From Dictionary     ${plan_data.data}   classification
 
@@ -206,7 +211,7 @@ Edit Plan Items
   \   Run Keyword If  ${key_exist} and ${locator_exist}  Input Text  id=quantity0  ${data_key}
   \
   \   ${locator_exist}=  Run Keyword And Return Status  Get WebElement  id=measure-list
-  \   Run Keyword If  ${locator_exist}  Edit Item Measure List  ${plan_item_unit}
+  \   Run Keyword If  ${locator_exist}  Edit Plan Item Measure List  ${plan_item_unit}
   \
   \   # Item classifiers
   \   ${item_dk_value}=   Get From Dictionary     ${plan_items_block[${I}].classification}   id
@@ -228,6 +233,7 @@ Edit Plan Items
   \   Input Text    ${item_deliveryDate_field}    ${item_deliveryEndDate}
 
 Publish Plan
+  Log To Console  [+] Publish Plan
   Wait Until Element Is Enabled  id=submit-btn
   Focus  id=submit-btn
   Click Element     id=submit-btn
@@ -235,6 +241,7 @@ Publish Plan
   Wait Until Page Contains Element    id=planID
 
 Get Plan ID and HashID
+  Log To Console  [+] Get Plan ID and HashID
   # set global var plan id hash for other tests
   # for get page plan in site
   ${plan_hash}=  Get Text  id=view-plan-id
@@ -246,6 +253,7 @@ Get Plan ID and HashID
 
 Change Decsription
   [Arguments]   ${plan_data}
+  Log To Console  [+] Change Decsription
   ${plan_budget_block}=   Get From Dictionary   ${plan_data.data}   budget
   # delete labal test from description
   Перейти до редагування плану  ${g_data.plan_id_hash}
@@ -257,6 +265,7 @@ Change Decsription
 
 Edit Project
   [Arguments]   ${plan_data}
+  Log To Console  [+] Edit Project
 
   ${plan_project_block}=   Get From Dictionary   ${plan_data.data.budget}  project
 
@@ -266,13 +275,15 @@ Edit Project
   Wait And Type  ${locator.edit_plan_project_id}  ${data.plan_project_id}
   Wait And Type  ${locator.edit_plan_project_name}  ${data.plan_project_name}
 
-Edit Item Measure List
+Edit Plan Item Measure List
   [Arguments]   ${plan_item_unit}
+  Log To Console  [+] Edit Plan Item Measure List
 
   ${measure_list}=    Get Webelement   id=measure-list
   Focus  id=measure-list
   Click Element       ${measure_list}
   ${measure_name}=  Get Webelements  xpath=//a[@id="measure-list"]/..//a[contains(text(), '${plan_item_unit}')]
+  Sleep  1
   Focus  ${measure_name[-1]}
   Click Element       ${measure_name[-1]}
   Sleep  1

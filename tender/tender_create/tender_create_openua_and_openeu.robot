@@ -21,6 +21,7 @@ Create OpenEU Tender
   ${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
   ${tender_data}=  change_minits_for_tests  ${tender_data}  0  5  8  35  36  55
   #${tender_data}=  create_custom_guranteee  ${tender_data}
+
   Go To Plan And SingUp
 
   ${locator.button_create_tender_from_plan}=  Set Variable  xpath=//button[@ng-click="createTenderFromPlan()"]

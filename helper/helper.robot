@@ -1,5 +1,8 @@
-** Settings ***
+*** Settings ***
 Resource  ./data.robot
+
+*** Variables ***
+${global_log}     True
 
 *** Keywords ***
 
@@ -50,23 +53,35 @@ Edit Feasible Element
   Run Keyword If  ${key_exist} and ${locator_exist}  ${keyword}  ${locator}  ${data_key}
 
 Go To Auction
+  Wait Bar Open
   Wait And Click  xpath=//a[@ui-sref="tenderView.auction"]
+  Wait Bar Close
 
 Go To Document Of Tender
+  Wait Bar Open
   Wait And Click  xpath=//a[@ui-sref="tenderView.documents"]
+  Wait Bar Close
 
 Go To Questions Of Tender
+  Wait Bar Open
   Wait And Click  xpath=//a[@ui-sref="tenderView.chat"]
+  Wait Bar Close
 
 Go To Complains Of Tender
+  Wait Bar Open
   Wait And Click  xpath=//a[@ui-sref="tenderView.complaint"]
+  Wait Bar Close
 
 Go To Contracts
+  Wait Bar Open
   Wait And Click  xpath=//a[@ui-sref="tenderView.contracts()"]
+  Wait Bar Close
 
 Go To Edit Tender
-    Wait And Click  xpath=//a[@id="edit-tender-btn"]
-  
+  Wait Bar Open
+  Wait And Click  xpath=//a[@id="edit-tender-btn"]
+  Wait Bar Close
+
 Print All Date
   [Arguments]  ${tender_data}
 
@@ -112,3 +127,25 @@ Print Args
   ${count_items}=  Get Length  ${ARGS}
   : FOR  ${i}  IN RANGE  ${count_items}
   \   Log To Console  ARG[${i}] - ${ARGS[${i}]}
+
+WrapLog
+  [Arguments]  ${log_me}
+  Run Keyword If  ${global_log} == True  Log To Console  ----------------------------
+  Run Keyword If  ${global_log} == True  Log To Console  ${log_me}
+  Run Keyword If  ${global_log} == True  Log To Console  ----------------------------
+
+CustomLog
+  [Arguments]  ${log_me}
+  Run Keyword If  ${global_log} == True  Log To Console  ${log_me}
+
+Wait Bar Open
+  Sleep  2
+  ${locator.side_bar_panel}=  Set Variable  xpath=//div[@ng-click="$root.toggleSidebar()"]
+  Run Keyword And Return Status  Click Element  ${locator.side_bar_panel}
+  Sleep  2
+
+Wait Bar Close
+  Sleep  2
+  ${locator.side_bar_panel}=  Set Variable  xpath=//div[@ng-click="$root.toggleSidebar()"]
+  Run Keyword And Return Status  Click Element  ${locator.side_bar_panel}
+  Sleep  2
