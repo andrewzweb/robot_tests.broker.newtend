@@ -36,12 +36,9 @@ Confirm Bid
   Sleep  2
   ${bid_accept}=  Get WebElement  xpath=//button[@ng-click="accept()"]
 
-  # remove disabled
-  #Execute Javascript  arguments[0].removeAttribute("disabled");  ARGUMENTS    ${bid_accept}
   Execute Javascript
   ...  var element=document.querySelector("button[ng-click='accept()']");
   ...  element.removeAttribute("disabled");
-  # Execute Javascript  arguments[0].click();     ARGUMENTS    ${bid_accept}
 
   Wait And Click  ${bid_accept}
   Sleep  2

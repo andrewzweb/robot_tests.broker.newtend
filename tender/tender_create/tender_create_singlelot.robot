@@ -10,7 +10,7 @@ Create SingleLot Tender
   Log To Console  [.] Creating SingleLot Tender
 
   ${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
-  ${tender_data}=  change_minits_for_tests  ${tender_data}  0  5  8  11  12  14
+  ${tender_data}=  change_minits_for_tests  ${tender_data}  0  7  10  13  13  15
 
   ${tender_data}=  Add Createria To Test Data  ${tender_data}
 
