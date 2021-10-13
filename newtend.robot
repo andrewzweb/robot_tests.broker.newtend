@@ -373,6 +373,7 @@ Resource  ./awards/awards.robot
   # wait all download
   Sleep  5
   Choise Bid  ${bid_id}
+  # SingUp Qulifiacation
   Add Quilificaton Comission Document  ${document_file}
   Reload Page
 
@@ -471,38 +472,11 @@ Resource  ./awards/awards.robot
   # go to contracts
   Go To Contracts
 
-
-Finish Torgi
-  [Arguments]
-  ${locator.end_torgi}=  Set Variable  xpath=//button[@ng-click="closeBids(lot.awardId, lot.contractId)"]
-  Wait And Click  ${locator.end_torgi}
-
-  ${locator.input_contract_number}=  Set Variable  xpath=//input[@id="contractNumber"]
-  Wait And Type  ${locator.input_contract_number}  0
-
-  # change price
-  Wait And Type  id=contractValueAmount  96
-  Wait And Type  id=contractValueAmountNet  80
-  Wait And Type  id=itemUnitValueAmount  1
-
-  Wait And Type  xpath=//button[@ng-click="closeBids()"]
-
-  Go To Contracts
+  # choice contract
+  Choise contract  ${contact_number}
   
-  # click to contract num
-  Click Element  xpath=//*[contains(text(), '${contract_num}')]
+  Confirm contract
 
-  # confirm contract
-  Wait And Type  xpath=button[@id="finish-contract-btn"]
-
-  # click to button save
-  Wait And Type  xpath=//button[@ng-click="save()"]
-
-  # singup contract
-  #SingUp Contract
-
-  # finish contract
-  Wait And Type  xpath=//button[@ng-click="terminateContract()"]
 
 ################################################################
 #                                                              #

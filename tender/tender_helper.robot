@@ -130,21 +130,31 @@ SingUp Entity
   Sleep  3  # add becouse some test drops here and wait don't help
   Wait And Click  ${locator.singup_button_singup_tender}
 
+SingUp Qulifiacation
+  # click singup qulification
+  Log To Console  [+] SingUp Qulification
+  Focus  xpath=//div[@class="languages"]
+  Wait And Click  xpath=//button[@ng-click="sign()"]
+  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
+  #SingUp Entity
+
 SingUp Tender
   # click singup tender
+  Log To Console  [+] SingUp Tender
   Wait And Click  ${locator.singup_tender_button_form}
   Wait And Click  xpath=//button[@ng-click="vm.sign()"]
   #SingUp Entity
 
 SingUp Contract
   # click singup tender
+  Log To Console  [+] SingUp Contract
   Wait And Click  ${locator.singup_tender_button_form}
   Wait And Click  xpath=//button[@ng-click="vm.sign()"]
   #SingUp Entity
 
 SingUp Plan
   # click singup plan
-
+  Log To Console  [+] SingUp Plan
   Wait And Click  ${locator.singup_plan_button_form}
   Wait And Click  xpath=//button[@ng-click="vm.sign()"]
   #SingUp Entity

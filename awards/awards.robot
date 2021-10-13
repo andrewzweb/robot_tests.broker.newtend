@@ -50,3 +50,27 @@ Choise Bid
   ${locator.bids}=  Set Variable  xpath=//*[@ng-repeat="bid in tenderBids"]
   ${element_bids}=  Get WebElements  ${locator.bids}
   Wait And Click  ${element_bids[${bid_id}]}
+
+
+Finish Torgi
+  [Arguments]
+  ${locator.end_torgi}=  Set Variable  xpath=//button[@data-test_id="close_tender"]
+  Wait And Click  ${locator.end_torgi}
+
+  ${locator.input_contract_number}=  Set Variable  xpath=//input[@id="contractNumber"]
+  Wait And Type  ${locator.input_contract_number}  0
+
+  # change price
+  Wait And Type  id=contractValueAmount  96
+  Wait And Type  id=contractValueAmountNet  80
+  Wait And Type  id=itemUnitValueAmount  1
+
+  Wait And Type  xpath=//button[@ng-click="closeBids()"]
+  Sleep  3
+
+Choise Contract
+  [Arguments]  ${contract_number}
+  ${element_contracts}=  Get WebElements  xpath=//a[@ui-sref="contract.overview({id: contract.id})"]
+
+  Wait And Click  ${element_contracts[${contract_number}]}
+
