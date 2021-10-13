@@ -24,8 +24,8 @@ Resource  ./document/document.robot
 # question
 Resource  ./question/question.robot
 
-# complains
-Resource  ./complains/complains.robot
+# contract
+Resource  ./contract/contract.robot
 
 # awards
 Resource  ./awards/awards.robot
