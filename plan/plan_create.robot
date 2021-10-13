@@ -10,7 +10,8 @@ Resource  ../helper/data.robot
     [ARGUMENTS]  ${plan_user}  ${plan_data}  @{ARGUMENTS}
 
     # change_data  procuringEntity.identifier.id  13313462
-    change_procuringEntity_identifier_id  ${plan_data}
+
+    ${plan_data}=  overwrite_procuringEntity_data  ${plan_data}
 
     ${plan_for_tender_type}=   Get From Dictionary   ${plan_data.data.tender}   procurementMethodType
 
@@ -30,18 +31,13 @@ Resource  ../helper/data.robot
     Run Keyword If  '${plan_for_tender_type}' != 'esco'  Edit Plan Budget  ${plan_data}
     Edit Plan Milestones  ${plan_data}
     Edit Plan Items  ${plan_data}
+    # Change Decsription  ${plan_data}
     Publish Plan
     Get Plan ID and HashID
-    Change Decsription  ${plan_data}
-    Publish Plan
-    
-    #
-    # TODO: here should be new singIn form in future
-    #
+    SingUp Plan
     ${tender_uaid}=  Set Variable  ${g_data.plan_id}
     # return id plan
     [Return]  ${tender_uaid}
-
 
 add_financer_press
     # Adding one more financer inside Planning creation
@@ -63,7 +59,8 @@ set_dk_dkpp
   Sleep     2
   Click Element                      xpath=//input[@ng-change="chooseClassificator(item)"]
   Sleep     1
-  Click Element                      id=select-classifier-btn
+  Cl
+  ick Element                      id=select-classifier-btn
   Sleep   3
 
 Go To Page Create Plan
@@ -75,6 +72,7 @@ Edit Plan Title And Description
   [Arguments]   ${plan_data}
   ${plan_budget_block}=   Get From Dictionary   ${plan_data.data}   budget
   # Plan description
+  Focus  id=plan-description
   Input Text   id=plan-description    ${plan_budget_block.description}
   Input Text   id=plan-notes          ${plan_budget_block.id}
 
@@ -282,8 +280,8 @@ Edit Plan Item Measure List
   ${measure_list}=    Get Webelement   id=measure-list
   Focus  id=measure-list
   Click Element       ${measure_list}
-  ${measure_name}=  Get Webelements  xpath=//a[@id="measure-list"]/..//a[contains(text(), '${plan_item_unit}')]
-  Sleep  1
-  Focus  ${measure_name[-1]}
-  Click Element       ${measure_name[-1]}
-  Sleep  1
+  Sleep  2
+  ${measure_item}=  Get Webelement  xpath=//a[contains(text(), '${plan_item_unit}')]
+  Focus  ${measure_item}
+  Click Element  ${measure_item}
+  #Change Value In Attribute  ${plan_item_unit}

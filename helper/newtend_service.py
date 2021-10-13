@@ -22,20 +22,26 @@ def change_procuringEntity_identifier_id(tender_data):
     return tender_data
 
 def overwrite_procuringEntity_data(tender_data):
-    tender_data['data']['procuringEntity']['name'] = u"Київський Тестовий Ліцей"
-    tender_data['data']['procuringEntity']['identifier']['id'] = u"00037256"
-    tender_data['data']['procuringEntity']['identifier']['legalName'] = u"Київський Тестовий Ліцей"
+    try:
+        tender_data['data']['procuringEntity']['name'] = u"Київський Тестовий Ліцей"
+        tender_data['data']['procuringEntity']['identifier']['id'] = u"00037256"
+        tender_data['data']['procuringEntity']['identifier']['legalName'] = u"Київський Тестовий Ліцей"
+    except: pass
     # adress
-    tender_data['data']['procuringEntity']['address']['postalCode'] = u"01453"
-    tender_data['data']['procuringEntity']['address']['region'] = u"Київська область"
-    tender_data['data']['procuringEntity']['address']['locality'] = u"Киев"
-    tender_data['data']['procuringEntity']['address']['streetAddress'] = u"Перемоги 1"
+    try:
+        tender_data['data']['procuringEntity']['address']['postalCode'] = u"01453"
+        tender_data['data']['procuringEntity']['address']['region'] = u"Київська область"
+        tender_data['data']['procuringEntity']['address']['locality'] = u"Киев"
+        tender_data['data']['procuringEntity']['address']['streetAddress'] = u"Перемоги 1"
+    except: pass
     # contact point
-    tender_data['data']['procuringEntity']['contactPoint']['email'] = u"e_mail_test@bigmir.net"
-    tender_data['data']['procuringEntity']['contactPoint']['faxNumber'] = u"088-111-22-33"
-    tender_data['data']['procuringEntity']['contactPoint']['name'] = u"Київський Тестовий Ліцей"
-    tender_data['data']['procuringEntity']['contactPoint']['telephone'] = u"+3808801234567"
-    tender_data['data']['procuringEntity']['contactPoint']['url'] = u"http://webpage.org.ua/"
+    try:
+        tender_data['data']['procuringEntity']['contactPoint']['email'] = u"e_mail_test@bigmir.net"
+        tender_data['data']['procuringEntity']['contactPoint']['faxNumber'] = u"088-111-22-33"
+        tender_data['data']['procuringEntity']['contactPoint']['name'] = u"Київський Тестовий Ліцей"
+        tender_data['data']['procuringEntity']['contactPoint']['telephone'] = u"+3808801234567"
+        tender_data['data']['procuringEntity']['contactPoint']['url'] = u"http://webpage.org.ua/"
+    except: pass
     return tender_data
 
 def overwrite_features_values(tender_data):
@@ -176,9 +182,8 @@ def convert_to_human_like_data(raw_key):
 
 dict_units = {
     # --- tender status ---
-    u'ПРОПОЗИЦІЇ': 'active.qualification',
     u'КВАЛІФІКАЦІЯ': 'active.qualification',
-    
+
     # --- bid status ---
     u'Отклонен': u'unsuccessful',
     u'Ожидает решение': u'pending',

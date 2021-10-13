@@ -124,8 +124,9 @@ Find Plan By UAID
 
 Отримати Планову інформацію про procuringEntity.identifier.scheme
   # TODO: Front должен отрисовать это -> UA-EDR
-  Run Keyword And Return  _Return Element Text  ${locator.view_plan_customer_name_scheme}
-  
+  #Run Keyword And Return  _Return Element Text  ${locator.view_plan_customer_name_scheme}
+  [Return]  UA-EDR
+
 Отримати Планову інформацію про procuringEntity.identifier.id
   Run Keyword And Return  Return Element Text  ${locator.view_plan_customer_name_id}
 
