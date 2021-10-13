@@ -59,8 +59,7 @@ set_dk_dkpp
   Sleep     2
   Click Element                      xpath=//input[@ng-change="chooseClassificator(item)"]
   Sleep     1
-  Cl
-  ick Element                      id=select-classifier-btn
+  Click Element                      id=select-classifier-btn
   Sleep   3
 
 Go To Page Create Plan
