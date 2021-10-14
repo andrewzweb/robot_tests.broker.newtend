@@ -2,6 +2,7 @@
 Resource  ../newtend.robot
 
 *** Keywords ***
+
 Add Quilificaton Comission Document
   [Arguments]  ${document_file}
 
@@ -67,10 +68,4 @@ Finish Torgi
 
   Wait And Type  xpath=//button[@ng-click="closeBids()"]
   Sleep  3
-
-Choise Contract
-  [Arguments]  ${contract_number}
-  ${element_contracts}=  Get WebElements  xpath=//a[@ui-sref="contract.overview({id: contract.id})"]
-
-  Wait And Click  ${element_contracts[${contract_number}]}
 

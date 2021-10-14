@@ -125,8 +125,6 @@ Resource  ./awards/awards.robot
 #                                                              #
 ################################################################ 
 
-
-
 Створити тендер
   [Arguments]  ${username}  ${tender_data}  ${plan_uaid}  ${criteria_guarantee}=None  ${criteria_lot}=None  ${criteria_llc}=None
   Create Tender  ${username}  ${tender_data}  ${plan_uaid}
@@ -142,9 +140,6 @@ Resource  ./awards/awards.robot
   Log To Console  ${criteria_lot}
   Log To Console  ${criteria_llc}
   Create Tender  ${username}  ${tender_data}  ${tender_id}
-  Log To Console  ===============================================
-  Log To Console  ${USERS.users['${username}'].tender_data}
-  Log To Console  ===============================================
   ${id}=  Set Variable  ${g_data.current_tender_id}
   [Return]  ${id}
 

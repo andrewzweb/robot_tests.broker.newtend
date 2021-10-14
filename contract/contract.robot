@@ -3,9 +3,11 @@ Resource  ../newtend.robot
 
 *** Keywords ***
 
-Choise contract
-  [Arguments]    @{ARGS}
-  ${contract_item}=  Set Variable  ${ARGS[0]}
+Choise Contract
+  [Arguments]  ${contract_number}
+  ${element_contracts}=  Get WebElements  xpath=//a[@ui-sref="contract.overview({id: contract.id})"]
+  Wait And Click  ${element_contracts[${contract_number}]}
+
 
 Confirm contract
   [Arguments]    @{ARGS}
