@@ -16,7 +16,7 @@ Resource  ./tender/tender_create.robot
 Resource  ./plan/plan.robot
 
 # user
-Resource  ./user/user_helper.robot
+Resource  ./user/user.robot
 
 # documents
 Resource  ./document/document.robot
@@ -35,6 +35,29 @@ Resource  ./awards/awards.robot
 
 *** Keywords ***
 
+Завантажити документ в ставку
+  [Arguments]  @{ARGS}
+  Print Args  ${ARGS}
+  Log To Console  [+] Download doc in bid
+  ${tender_id}=  Set Variable  ${ARGS}
+  ${document_file}=  Set Variable  ${ARGS[2]}
+  ${document_for}=  Set Variable  tender
+  ${document_type}=  Set Variable  bid
+
+  Find Tender By Id  ${ARGS[1]}
+
+  Go To Auction
+
+  Download Document  ${document_file}  ${document_for}  ${document_type}
+
+Подати цінову пропозицію
+  [Arguments]  @{ARGS}
+  Print Args  ${ARGS}
+
+Змінити документ в ставці
+  [Arguments]  @{ARGS}
+  Print Args  ${ARGS}
+
 ################################################################
 #                                                              #
 #             Start Подготовительные шаги                      #
@@ -50,7 +73,6 @@ Resource  ./awards/awards.robot
   Check user if him reg to login  ${user}
   Change Language to UKR
   Add Cookie  autotest  1  domain=dev23.newtend.com  expiry=2021-10-30 16:21:35
-
 
 ################################################################
 #                                                              #
@@ -584,3 +606,10 @@ Resource  ./awards/awards.robot
   [Arguments]  @{ARGS}
   Print Args  ${ARGS}
   # TODO
+
+Скасувати лот
+  [Arguments]  @{ARGS}
+  Print Args  ${ARGS}
+  # its in new complaints procedure
+
+

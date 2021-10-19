@@ -52,7 +52,6 @@ Choise Bid
   ${element_bids}=  Get WebElements  ${locator.bids}
   Wait And Click  ${element_bids[${bid_id}]}
 
-
 Finish Torgi
   [Arguments]
   ${locator.end_torgi}=  Set Variable  xpath=//button[@data-test_id="close_tender"]
@@ -68,4 +67,3 @@ Finish Torgi
 
   Wait And Type  xpath=//button[@ng-click="closeBids()"]
   Sleep  3
-
