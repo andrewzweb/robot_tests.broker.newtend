@@ -127,7 +127,7 @@ Set DKPP
   Sleep     1
   Click Element                      id=select-classifier-btn
   Sleep     2
-    
+
 ################################################################
 #                                                              #
 #             End Изменить информацию о тендере                #

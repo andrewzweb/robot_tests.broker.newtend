@@ -9,8 +9,8 @@ Create Funders Tender
 
   Go To  ${url.tender_multilots}
 
-  ${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
-  ${tender_data}=  change_minits_for_tests  ${tender_data}  0  4  8  14  15  17
+  #${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
+  #${tender_data}=  change_minits_for_tests  ${tender_data}  0  4  8  14  15  17
   ${tender_data}=  Add Createria To Test Data  ${tender_data}
 
   Edit Funders  ${tender_data}

@@ -27,8 +27,8 @@ Create Multilot Tender
 
   Choise Dont Add Document
 
-  ${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
-  ${tender_data}=  Input Custom Date  ${tender_data}
+  #${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
+  #${tender_data}=  Input Custom Date  ${tender_data}
 
   Run Keyword  SingUp Tender
 

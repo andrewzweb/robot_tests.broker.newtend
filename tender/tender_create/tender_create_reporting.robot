@@ -10,8 +10,8 @@ Create Reporting Tender
 
   Log To Console  [.] Creating Tender with criteria
 
-  ${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
-  ${tender_data}=  change_minits_for_tests  ${tender_data}  0  3  7  10  11  13
+  #${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
+  #${tender_data}=  change_minits_for_tests  ${tender_data}  0  3  7  10  11  13
   ${tender_data}=  overwrite_procuringEntity_data  ${tender_data}
 
   Go To   ${url.tender_reporting}

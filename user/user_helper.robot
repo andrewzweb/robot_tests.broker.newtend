@@ -43,11 +43,11 @@ Login
   Set Global Variable   ${BROWSER_ALIAS}   ${alias}
 
   # wait page download
-  Wait Until Page Contains Element   ${locator.login_open_modal}  10
+  Wait Until Page Contains Element   ${locator.login_open_modal}  20
   # click to popup
   Click Element   ${locator.login_open_modal}
   Wait Until Element Is Visible  ${locator.login_email_field}
-  Wait Until Page Contains Element  ${locator.login_email_field}  10
+  Wait Until Page Contains Element  ${locator.login_email_field}  20
   # input data
   Click Element   ${locator.login_email_field}
   Input text   ${locator.login_email_field}      ${USERS.users['${user}'].login}

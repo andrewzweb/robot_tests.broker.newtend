@@ -18,8 +18,8 @@ Create OpenEU Tender
   Log To Console  [.] Creating OpenUA Tender
 
   ${tender_data}=  overwrite_features_values  ${tender_data}
-  ${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
-  ${tender_data}=  change_minits_for_tests  ${tender_data}  0  5  8  35  36  55
+  #${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
+  #${tender_data}=  change_minits_for_tests  ${tender_data}  0  5  8  35  36  55
   #${tender_data}=  create_custom_guranteee  ${tender_data}
 
   Go To Plan And SingUp
@@ -51,7 +51,8 @@ Create OpenEU Tender
 
   Edit NDS  ${tender_data}
   
-  Edit Features  ${tender_data}
+  ${bool_features_exist}=  Exist key in dict  ${tender_data.data}  features
+  Run Keyword If  ${bool_features_exist}  Edit Features  ${tender_data}
 
   Edit Date For Tender  ${tender_data}
 
@@ -80,8 +81,8 @@ Create OpenUA Tender
   Go To Plan And SingUp
 
   ${tender_data}=  overwrite_features_values  ${tender_data}
-  ${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
-  ${tender_data}=  change_minits_for_tests  ${tender_data}  0  5  8  35  36  55
+  #${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
+  #${tender_data}=  change_minits_for_tests  ${tender_data}  0  5  8  35  36  55
 
   ${locator.button_create_tender_from_plan}=  Set Variable  xpath=//button[@ng-click="createTenderFromPlan()"]
   Wait And Click  ${locator.button_create_tender_from_plan}
@@ -121,4 +122,4 @@ Create OpenUA Tender
   
   Make Global Variable  ${username}  ${tender_data}
 
-  Run Keyword And Return  Set Created Tender ID In Global Variable
+  Run Keyword And Return  Set Created Tender ID In Global
