@@ -63,7 +63,7 @@ set_dk_dkpp
   Sleep   3
 
 Go To Page Create Plan
-  Go To   https://dev23.newtend.com/opc/provider/plans/create
+  Go To   https://autotest.newtend.com/opc/provider/plans/create
   Wait Until Page Contains Element    id=plan-description     5
     
   
