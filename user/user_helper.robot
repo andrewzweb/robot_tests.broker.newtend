@@ -43,11 +43,11 @@ Login
   Set Global Variable   ${BROWSER_ALIAS}   ${alias}
 
   # wait page download
-  Wait Until Page Contains Element   ${locator.login_open_modal}  20
+  Wait Until Page Contains Element   ${locator.login_open_modal}  30
   # click to popup
   Click Element   ${locator.login_open_modal}
   Wait Until Element Is Visible  ${locator.login_email_field}
-  Wait Until Page Contains Element  ${locator.login_email_field}  20
+  Wait Until Page Contains Element  ${locator.login_email_field}  30
   # input data
   Click Element   ${locator.login_email_field}
   Input text   ${locator.login_email_field}      ${USERS.users['${user}'].login}
@@ -63,6 +63,7 @@ Change Language to UKR
   Log To Console  [+] Change Language
 
   Wait Bar Open
+  Sleep  2
 
   # Change Language to Ukr in the UI
   ${locator.change_language}=  Set Variable  xpath=//a[@ng-click="vm.setLanguage('uk')"]

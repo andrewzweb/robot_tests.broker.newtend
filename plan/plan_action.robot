@@ -36,7 +36,7 @@ Find Plan By UAID
 
 Знайти и перейти до плану закупівлі
   [Arguments]  ${user}  ${tender_id}  @{data}
-  Go To  https://autotest.newtend.com/opc/provider/plans/all/?pageNum=1&query=${tender_id}&status=&procurementMethodType=&amount_gte=&amount_lte=&createReport=&create_gte=&create_lte=&tp_gte=&tp_lte=
+  Go To  https://dev23.newtend.com/opc/provider/plans/all/?pageNum=1&query=${tender_id}&status=&procurementMethodType=&amount_gte=&amount_lte=&createReport=&create_gte=&create_lte=&tp_gte=&tp_lte=
   Wait Until Page Contains Element  xpath=//a[@class="row tender-info ng-scope"]    10
   ${plan_raw}=  Get Webelement  xpath=//span[contains(text(), '${tender_uaid}')]
   Click Element  ${plan_raw}
@@ -44,7 +44,7 @@ Find Plan By UAID
 
 Перейти на сторінку редактування плану закупівлі
   [Arguments]  ${plan_id_hash}
-  Go To  https://dev23.newtend.com/opc/provider/plans/${plan_id_hash}/edit
+  Go To  https://dev23newtend.com/opc/provider/plans/${plan_id_hash}/edit
 
 ################################################################
 #                                                              #

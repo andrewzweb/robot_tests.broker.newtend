@@ -6,6 +6,8 @@ Resource  ../newtend.robot
 Add Quilificaton Comission Document
   [Arguments]  ${document_file}
 
+  Log To Console  [.] Add Quilificaton Comission Document
+
   # click to popup download
   ${locator.apply_decision}=  Set Variable  xpath=//*[@ng-click="decide('active')"]
   Wait And Click  ${locator.apply_decision}
@@ -27,10 +29,13 @@ Add Quilificaton Comission Document
   ${locator.close_popup}=  Set Variable  xpath=//div[@class="modal-footer layout-row"]/div[2]/button
   Wait And Click  ${locator.close_popup}
 
+  Log To Console  [+] Add Quilificaton Comission Document
+
   Sleep  3
 
 Confirm Bid
   # click to popup download
+  Log To Console  [.] Confirm bid
   ${locator.apply_decision}=  Set Variable  xpath=//*[@ng-click="decide('active')"]
   Wait And Click  ${locator.apply_decision}
 
@@ -42,6 +47,7 @@ Confirm Bid
   ...  element.removeAttribute("disabled");
 
   Wait And Click  ${bid_accept}
+  Log To Console  [+] Confirm bid
   Sleep  2
 
 Choise Bid
@@ -54,6 +60,12 @@ Choise Bid
 
 Finish Torgi
   [Arguments]
+  Log To Console  [.] Finish Torgi
+
+  Sleep  30
+  Reload Page
+  Sleep  15
+
   ${locator.end_torgi}=  Set Variable  xpath=//button[@data-test_id="close_tender"]
   Wait And Click  ${locator.end_torgi}
 
@@ -65,5 +77,6 @@ Finish Torgi
   Wait And Type  id=contractValueAmountNet  80
   Wait And Type  id=itemUnitValueAmount  1
 
-  Wait And Type  xpath=//button[@ng-click="closeBids()"]
+  Wait And Click  xpath=//button[@ng-click="closeBids()"]
+  Log To Console  [+] Finish Torgi
   Sleep  3
