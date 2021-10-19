@@ -20,7 +20,7 @@ Find Plan By UAID
   # go to search plan page 
   Go To  ${page.sarch_plans}
   # wait field search 
-  Wait Until Page Contains Element  ${locator.field_search_plan}  5
+  Wait Until Page Contains Element  ${locator.field_search_plan}  20
   # click field search
   Click Element  ${locator.field_search_plan}
   # input our tender id in search field 
@@ -28,7 +28,7 @@ Find Plan By UAID
   # click to search
   Click Element  ${locator.button_search_plan}
   # wait results 
-  Wait Until Page Contains Element  ${locator.result_plans_list}  15
+  Wait Until Page Contains Element  ${locator.result_plans_list}  20
   # we find plan
   ${locator.link_to_first_plan}=  Set Variable  xpath=//span[contains(text(), '${tender_uaid}')]
   # go to plan
@@ -37,7 +37,7 @@ Find Plan By UAID
 Знайти и перейти до плану закупівлі
   [Arguments]  ${user}  ${tender_id}  @{data}
   Go To  https://dev23.newtend.com/opc/provider/plans/all/?pageNum=1&query=${tender_id}&status=&procurementMethodType=&amount_gte=&amount_lte=&createReport=&create_gte=&create_lte=&tp_gte=&tp_lte=
-  Wait Until Page Contains Element  xpath=//a[@class="row tender-info ng-scope"]    10
+  Wait Until Page Contains Element  xpath=//a[@class="row tender-info ng-scope"]    20
   ${plan_raw}=  Get Webelement  xpath=//span[contains(text(), '${tender_uaid}')]
   Click Element  ${plan_raw}
   Sleep  1

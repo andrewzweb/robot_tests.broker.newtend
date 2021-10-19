@@ -64,7 +64,7 @@ set_dk_dkpp
 
 Go To Page Create Plan
   Go To   https://dev23.newtend.com/opc/provider/plans/create
-  Wait Until Page Contains Element    id=plan-description     5
+  Wait Until Page Contains Element    id=plan-description     20
     
   
 Edit Plan Title And Description
