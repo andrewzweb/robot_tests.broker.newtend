@@ -1,3 +1,5 @@
+# v1.01
+
 *** Settings ***
 Library  Collections
 Library  String
@@ -72,7 +74,7 @@ Resource  ./awards/awards.robot
   Встановити розміри браузера  '${user}'
   Check user if him reg to login  ${user}
   Change Language to UKR
-  Add Cookie  autotest  1  domain=dev23.newtend.com  expiry=2021-10-30 16:21:35
+  Add Cookie  autotest  1  domain=dev23.newtend.com  expiry=2021-11-30 16:21:35
 
 ################################################################
 #                                                              #

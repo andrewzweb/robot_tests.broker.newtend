@@ -4,7 +4,9 @@ Resource  ../tender.robot
 *** Keywords ***
 
 Create Funders Tender
-  [Arguments]  ${tender_data}
+  [Arguments]  @{ARGS}
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_data}=  Set Variable  ${ARGS[1]}
   Log To Console  [+] Create Reporting Tender
 
   Go To  ${url.tender_multilots}

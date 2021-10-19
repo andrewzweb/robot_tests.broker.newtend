@@ -31,7 +31,7 @@ Check and change date field
   [Arguments]  ${plan_id}
   
   # open search page with our plan_id
-  Go To  https://dev23newtend.com/opc/provider/plans/all/?pageNum=1&query=${plan_id}&status=&procurementMethodType=&amount_gte=&amount_lte=&createReport=&create_gte=&create_lte=&tp_gte=&tp_lte=
+  Go To  https://dev23.newtend.com/opc/provider/plans/all/?pageNum=1&query=${plan_id}&status=&procurementMethodType=&amount_gte=&amount_lte=&createReport=&create_gte=&create_lte=&tp_gte=&tp_lte=
 
   # select plan from list and click
   ${locator.plan_id_in_search}=  Get WebElement  xpath=//span[contains(text(), '${ARGUMENTS[1]}')]
@@ -43,4 +43,4 @@ Check and change date field
   [Arguments]  ${plan_id}
   
   # get edit PLAN page
-  Go To  https://dev23newtend.com/opc/provider/plans/${plan_id}/edit
+  Go To  https://dev23.newtend.com/opc/provider/plans/${plan_id}/edit

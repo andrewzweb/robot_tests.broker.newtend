@@ -8,7 +8,7 @@ ${data}                       hash
 
 Edit Tender Title and Description
   [Arguments]  ${tender_data}
-  Wait Until Page Contains Element  id=tender-title     5
+  Wait Until Page Contains Element  id=tender-title     20
   ${title}=         Get From Dictionary   ${tender_data.data}  title
   ${description}=   Get From Dictionary   ${tender_data.data}  description
   Input text   ${locator.title}  ${title}
@@ -182,7 +182,7 @@ Publish tender
 
 Змінити в тендері поле description і зберегти
   [Arguments]  ${description}
-  Wait Until Page Contains Element  id=tender-title     5
+  Wait Until Page Contains Element  id=tender-title     20
   Input text   ${locator.edit.description}   ${description}
 
 Edit Criteria
