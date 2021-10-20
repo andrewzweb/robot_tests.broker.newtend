@@ -453,3 +453,26 @@ Make Global Variable
   [Arguments]  ${username}  ${tender_data}
   Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender_data}
 
+Get Tender Internal Id
+  # return internal id
+  # https://dev23.newtend.com/opc/provider/tender/1195c9cda3fd45f6b5afd2df85aa044b/overview
+  Log To Console  [+] Get Tender Internal Id
+  ${now_url}=  Get Location
+  ${result}=  Get Substring  ${now_url}  -41  -9
+  [return]  ${result}
+
+Return Tender Obj
+  [Arguments]  ${tender_internal_id}
+  Log To Console  [+] Get Tender Data From Api
+  ${result}=  newtend_get_tender  ${tender_internal_id}
+  [return]  ${result}
+
+Put Tender In Global Verable
+  [Arguments]  ${username}
+  ${internal_id}=  Get Tender Internal Id
+  ${raw_tender_data}=  Return Tender Obj  ${internal_id}
+  ${tender_data}=  Get From Dictionary  ${raw_tender_data}  data
+  #Log To Console  ${tender_data}
+  Set To Dictionary  ${USERS.users['${username}'].tender_data}   data=${tender_data}
+  #Set Global Variable  ${USERS.users['${username}'].data}  ${tender_data}
+  Log To Console  [+] Put Tender Data Api In Storage

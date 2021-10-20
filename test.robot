@@ -3,9 +3,7 @@ Library  Collections
 Library  BuiltIn
 Library  String
 Library  OperatingSystem
-Library   ./helper/newtend_service.py
-Resource  ./tender/tender_helper.robot
-Resource  ./hepler/helper.robot
+Resource  newtend.robot
 
 *** Variables ***
 &{lots}  id=1  name=SOmeName
@@ -70,10 +68,26 @@ Cycle Count
   \  ${numb}=  Evaluate  ${item}
   \  Log To Console  Criteria ${numb}
 
+Get Tender
+  ${tender}=  newtend_get_tender  bd861e500f344165bb3ac0b8301292f8
+  Log To Console  ${tender}
+
+Get Interanal ID Test
+  ${now_url}=  Set Variable  https://dev23.newtend.com/opc/provider/tender/1195c9cda3fd45f6b5afd2df85aa044b/overview
+  ${result}=  Get Substring  ${now_url}  -41  -9
+  Log To Console  ${result}
+
+Converter
+   ${result}=  convert_for_robot  КВАЛІФІКАЦІЯ
+   ${should_be}=  Set Variable  active.qualification
+   Should Be Equal  ${should_be}  ${result}  msg=convert_for_robot
+   Log To Console  SHould be equal [ ${should_be} : ${result} ]
 
 *** Keywords ***
 
 Exist key in dict
-  [Arguments]  ${dict}  ${key}  
+  [Arguments]  ${dict}  ${key}
   ${if_key_in_dict}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${dict}  ${key}
   [Return]  ${if_key_in_dict}
+
+
