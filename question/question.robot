@@ -1,6 +1,6 @@
 *** Variables ***
-${locator.site_bar_section_question}    xpath=//a[contains(text(), "Уточнения")]
-${locator.button_ask_question}          xpath=//button[@class="btn btn-lg btn-default question-btn ng-binding ng-scope"]
+${locator.site_bar_section_question}    xpath=//span[contains(text(), "Уточнения")]
+${locator.button_ask_question}          xpath=//button[@ng-if="actions.can_ask_questions"]
 ${locator.ask_question_field_title}     xpath=//input[@ng-model="title"]
 ${locator.ask_question_field_text}      xpath=//textarea[@ng-model="message"]
 ${locator.send_question}                xpath=//div[@ng-click="sendQuestion()"]
@@ -14,18 +14,18 @@ ${locator.ask__list_of_ask}  xpath=//div[@class="row question-container"]
 *** Keywords ***
 
 Ask question
-  [Arguments]  ${user}  ${tender_id}  ${question_data}
-  ${title}=        Get From Dictionary  ${question_data}  title
-  ${description}=  Get From Dictionary  ${question_data}  description
+  [Arguments]  ${username}  ${tender_id}  ${question_data}
 
-  Switch Browser    ${BROWSER_ALIAS} # ???????
-  Пошук тендера по ідентифікатору  ${tender_id}
+  Find Tender By Id  ${tender_id}
 
   Wait And Click  ${locator.site_bar_section_question}
   Wait And Click  ${locator.button_ask_question}   20
 
-  Wait And Change   ${locator.ask_question_field_title}   ${title}
-  Wait And Change   ${locator.ask_question_field_text}    ${description}
+  ${title}=        Get From Dictionary  ${question_data.data}  title
+  ${description}=  Get From Dictionary  ${question_data.data}  description
+  
+  Wait And Type   ${locator.ask_question_field_title}   ${title}
+  Wait And Type   ${locator.ask_question_field_text}    ${description}
   Wait And Click   ${locator.send_question}
 
   Wait Until Page Contains  ${description}  20
