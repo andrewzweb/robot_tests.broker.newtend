@@ -91,11 +91,6 @@ Create suplier and add docs and confier him
   Choose File  ${locator.document_file}  ${document_file}
   Wait And Click  ${locator.documents_send_document}
 
-Підтвердити підписання контракту
-  [Arguments]   @{ARGUMENTS}
-  Log To Console  [+] Confirm contract
-  Print Args  ${ARGS}
-
 Make bid
   [Arguments]  @{ARGS}
   ${tender_id}=  Set Variable  ${ARGS[0]}  

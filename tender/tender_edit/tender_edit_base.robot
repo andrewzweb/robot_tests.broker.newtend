@@ -167,7 +167,9 @@ Set Created Tender ID In Global Variable
   ${tender_uaid}=  Get Text   xpath=//span[@ng-if="tender.tenderID"]
   ${tender_global}=  Convert To String  ${tender_uaid}
   Set Global Variable  ${g_data.current_tender_id}  ${tender_global}
+
   [Return]  ${tender_global}
+
 
 Publish tender
   CustomLog  [+] Publish tender
@@ -459,6 +461,7 @@ Get Tender Internal Id
   Log To Console  [+] Get Tender Internal Id
   ${now_url}=  Get Location
   ${result}=  Get Substring  ${now_url}  -41  -9
+  Log To Console  [+] Get Tender Internal Id: ${result}
   [return]  ${result}
 
 Return Tender Obj
