@@ -105,7 +105,7 @@ Find Plan By UAID
 
 Отримати Планову інформацію про status
   ${plan_status_raw}=   Get Text   ${locator.view_plan_status}
-  ${plan_status}=   convert_to_newtend_normal   ${plan_status_raw}
+  ${plan_status}=   convert_for_robot   ${plan_status_raw}
   [Return]  ${plan_status}
 
 Отримати Планову інформацію про tender.procurementMethodType

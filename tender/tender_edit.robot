@@ -177,4 +177,3 @@ Edit Argeement Duration
   ${data.argeement_max_award_count}=  Get From Dictionary  ${tender_data.data}  maxAwardsCount
 
   Wait And Type  ${locator.edit_argeement_max_count}     ${data.argeement_max_award_count}
-  

@@ -11,37 +11,37 @@
 # Award user status - winner
   Click Element     xpath=//a[@ui-sref="tenderView.auction"]
   Sleep     2
-  ${award_status}=   Get Text   xpath=//span[@ng-if="vm.award.status === 'active'"]
-  ${award_status}=   convert_to_newtend_normal   ${award_status}
-  [Return]      ${award_status}
+  ${award_status}=  Get Text   xpath=//span[@ng-if="vm.award.status === 'active'"]
+  ${award_status}=  convert_for_robot   ${award_status}
+  [Return]  ${award_status}
 
 Отримати інформацію про awards[0].suppliers[0].address.countryName
 # Winner Country name
   ${address}=   Get Webelements    xpath=//div[@class="row v-align"]/..//div[@class="form-control ng-binding"]
   ${address}=   Get Text    ${address[-3]}
   ${winner_country}=    Convert To String   ${address.split(', ')[1]}
-  [Return]      ${winner_country}
+  [Return]  ${winner_country}
 
 Отримати інформацію про awards[0].suppliers[0].address.locality
 # Winner City
   ${address}=   Get Webelements    xpath=//div[@class="row v-align"]/..//div[@class="form-control ng-binding"]
   ${address}=   Get Text    ${address[-3]}
   ${winner_city}=   Convert To String   ${address.split(', ')[3]}
-  [Return]      ${winner_city}
+  [Return]  ${winner_city}
 
 Отримати інформацію про awards[0].suppliers[0].address.postalCode
 # Winner Zip code
   ${address}=   Get Webelements    xpath=//div[@class="row v-align"]/..//div[@class="form-control ng-binding"]
   ${address}=   Get Text    ${address[-3]}
   ${winner_zip}=   Convert To String   ${address.split(', ')[0]}
-  [Return]      ${winner_zip}
+  [Return]  ${winner_zip}
 
 Отримати інформацію про awards[0].suppliers[0].address.region
 # Winner Oblast
   ${address}=   Get Webelements    xpath=//div[@class="row v-align"]/..//div[@class="form-control ng-binding"]
   ${address}=   Get Text    ${address[-3]}
   ${winner_region}=   Convert To String   ${address.split(', ')[2]}
-  [Return]      ${winner_region}
+  [Return]  ${winner_region}
 
 Отримати інформацію про awards[0].suppliers[0].address.streetAddress
 # Winner street
@@ -95,7 +95,7 @@
   ${award_raws}=    Get Webelements    xpath=//div[@class="row v-align"]/..//div[@class="form-control ng-binding"]
   ${vat}=      Get Text    ${award_raws[-1]}
   ${vat_is}=   Get Substring   ${vat}   -9
-  ${vat_ready}=     convert_to_newtend_normal   ${vat_is}
+  ${vat_ready}=  convert_for_robot  ${vat_is}
   [Return]     ${vat_ready}
 
 Отримати інформацію про awards[0].value.currency

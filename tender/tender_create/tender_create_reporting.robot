@@ -34,8 +34,9 @@ Create Reporting Tender
 
   Run Keyword  SingUp Tender
 
+  Log To Console  [+] Create Tender with criteria
+
   Run Keyword And Return  Set Created Tender ID In Global Variable
 
-  Log To Console  [+] Create Tender with criteria
 
 

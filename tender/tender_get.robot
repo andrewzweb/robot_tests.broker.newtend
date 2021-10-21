@@ -13,7 +13,8 @@ Resource  ./tender_get/tender_get_items.robot
   # for auction: active.enquiries
   # for qualification
   ${tenderStatus}=  Get Text  xpath=//span[@class="status ng-binding ng-scope"]
-  ${result}=  convert_to_human_like_data  ${tenderStatus}
+  ${result}=  convert_for_robot  ${tenderStatus}
+  Reload Page
   [Return]  ${result}
 
 Отримати текст із поля і показати на сторінці
@@ -43,7 +44,7 @@ Resource  ./tender_get/tender_get_items.robot
   [Arguments]    @{arguments}
   ${cpvs}=   Get Webelements    xpath=//tender-item[contains(., '${ARGUMENTS[0]}')]/..//div[contains(., '021:2015')]    # /..//div[@class="block-info"]/..//div[@class="block-info__text ng-binding"]
   ${cpv}=    Get Text    ${cpvs[2]}
-  ${scheme}=    convert_to_newtend_normal   ${cpv}
+  ${scheme}=  convert_for_robot  ${cpv}
   [Return]   ${scheme}
 
 Отримати інформацію із classification.id
@@ -64,7 +65,7 @@ Resource  ./tender_get/tender_get_items.robot
   [Arguments]    @{arguments}
   ${dkpps}=   Get Webelements    xpath=//tender-item[contains(., '${ARGUMENTS[0]}')]/..//div[contains(., 'ДКПП')]
   ${dkpp}=    Get Text      ${dkpps[2]}
-  ${dkpp_scheme}=   convert_to_newtend_normal   ${dkpp}
+  ${dkpp_scheme}=   convert_for_robot  ${dkpp}
   log to console    DKPP Scheme - ${dkpp_scheme}
   [Return]      ${dkpp_scheme}
 
@@ -94,7 +95,7 @@ Resource  ./tender_get/tender_get_items.robot
   [Arguments]   @{arguments}
   ${unit_name}=    Get Text    xpath=//tender-item[contains(., '${ARGUMENTS[0]}')]/..//span[@class="unit ng-binding"]
   log to console   unit name - ${unit_name}
-  ${unit_name}=     convert_to_newtend_normal   ${unit_name}
+  ${unit_name}=  convert_for_robot  ${unit_name}
   [Return]      ${unit_name}
 
 Отримати інформацію із unit.code
@@ -107,8 +108,8 @@ Resource  ./tender_get/tender_get_items.robot
 
 Отримати інформацію про cause
   ${cause_raw}=    Get Text    xpath=//div[@class="tender-causes__cause block-info"]/..//div[@id="view-tender-reasons"]
-  ${cause}=        convert_to_newtend_normal   ${cause_raw}
-  [Return]      ${cause}
+  ${cause}=  convert_for_robot  ${cause_raw}
+  [Return]  ${cause}
 
 Отримати інформацію про contracts[0].status
   Go To Contracts

@@ -31,7 +31,7 @@
 Отримати інформацію про milestones[0].duration.type
   Check Lot Stash Is Open
   ${result}=  Get Text  ${locator.view_milestone[0].duration_type}
-  ${result}=  convert_to_newtend_normal  ${result}
+  ${result}=  convert_for_robot  ${result}
   [Return]  ${result}
 
 Отримати інформацію про milestones[1].title
@@ -62,7 +62,7 @@
 Отримати інформацію про milestones[1].duration.type
   Check Lot Stash Is Open
   ${result}=  Get Text  ${locator.view_milestone[1].duration_type}
-  ${result}=  convert_to_newtend_normal  ${result}
+  ${result}=  convert_for_robot  ${result}
   [Return]  ${result}
 
 Отримати інформацію про milestones[2].title
@@ -93,6 +93,6 @@
 Отримати інформацію про milestones[2].duration.type
   Check Lot Stash Is Open
   ${result}=  Get Text  ${locator.view_milestone[2].duration_type}
-  ${result}=  convert_to_newtend_normal  ${result}
+  ${result}=  convert_for_robot  ${result}
   [Return]  ${result}    
 
