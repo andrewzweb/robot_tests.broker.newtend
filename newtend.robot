@@ -149,6 +149,24 @@ Resource  ./awards/awards.robot
 #                                                              #
 ################################################################ 
 
+Пошук тендера по ідентифікатору
+  [Arguments]  ${username}  ${tender_id}
+
+  ${its_plan}=  check_its_plan  ${tender_id}
+
+  # if plan go to plan
+  #Run Keyword If  ${its_plan}  Find Plan By UAID  ${tender_id}
+  #${plan_tender_id}=  Run Keyword If  ${its_plan}   Click Element  xpath=//a[@ng-if="plan.tender_id"]
+
+  # if tender
+  Find Tender By Id  ${tender_id}
+  Sleep  2
+
+  # make request and get tender data and put in global variable
+  Log To Console  Username ${username}
+  Run Keyword If  '${username}' != 'Newtend_Owner'  Put Tender In Global Verable  ${username}
+  Sleep  1
+
 Створити тендер
   [Arguments]  ${username}  ${tender_data}  ${plan_uaid}  ${criteria_guarantee}=None  ${criteria_lot}=None  ${criteria_llc}=None
   Create Tender  ${username}  ${tender_data}  ${plan_uaid}
@@ -182,19 +200,6 @@ Resource  ./awards/awards.robot
   ${tender_data}=   update_data_for_newtend   ${tender_data}
   [Return]   ${tender_data}
 
-Пошук тендера по ідентифікатору
-  [Arguments]  ${user}  ${tender_id}
-
-  ${its_plan}=  check_its_plan  ${tender_id}
-
-  # if plan go to plan
-  Run Keyword If  ${its_plan}  Find Plan By UAID  ${tender_id}
-  ${plan_tender_id}=  Run Keyword If  ${its_plan}   Click Element  xpath=//a[@ng-if="plan.tender_id"]
-  #Run Keyword If  ${its_plan}  Find Tender By Id  ${plan_tender_id}
-
-  # if tender
-  Run Keyword If  ${its_plan} != True  Find Tender By Id  ${tender_id}
-  Sleep  2
 
 Внести зміни в тендер
   [Arguments]   ${user_role}  ${tender_id}  ${field_name}  ${field_value}
