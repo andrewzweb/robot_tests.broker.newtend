@@ -62,9 +62,12 @@ Finish Torgi
   [Arguments]
   Log To Console  [.] Finish Torgi
 
-  Sleep  30
+  Log To Console  [*] Wait 2 min
+  Sleep  120
   Reload Page
-  Sleep  15
+  Sleep  5
+
+  Log To Console  [.] Try Finish Torgi min
 
   ${locator.end_torgi}=  Set Variable  xpath=//button[@data-test_id="close_tender"]
   Wait And Click  ${locator.end_torgi}
