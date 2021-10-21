@@ -304,26 +304,32 @@ Resource  ./awards/awards.robot
 
 Задати питання
   [Arguments]  @{ARGUMENTS}
+  Print Args  ${ARGUMENTS}
   Ask question  @{ARGUMENTS}
 
 Задати запитання на тендер
   [Arguments]  @{ARGUMENTS}
+  Print Args  @{ARGUMENTS}
   Ask question  @{ARGUMENTS}
 
 Задати запитання на предмет
   [Arguments]  @{ARGUMENTS}
+  Print Args  ${ARGUMENTS}
   Ask question  @{ARGUMENTS}
 
 Задати запитання на лот
   [Arguments]  @{ARGUMENTS}
+  Print Args  ${ARGUMENTS}
   Ask question  @{ARGUMENTS}
 
 Відповісти на запитання
   [Arguments]  @{ARGUMENTS}
+  Print Args  ${ARGUMENTS}
   Answer to question  @{ARGUMENTS}
 
 Отримати інформацію із запитання
   [Arguments]  @{ARGUMENTS}
+  Print Args  ${ARGUMENTS}
   ${result}=  Get Info From Question  @{ARGUMENTS}
   [Return]  ${result}
 
@@ -617,5 +623,3 @@ Resource  ./awards/awards.robot
   [Arguments]  @{ARGS}
   Print Args  ${ARGS}
   # its in new complaints procedure
-
-
