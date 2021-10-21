@@ -5,7 +5,7 @@ from iso8601 import parse_date
 from calendar import monthrange
 from helper_datetime import *
 import json
-
+import requests
 
 def create_custom_guranteee(tender_data):
     #    guarantee:
@@ -87,86 +87,11 @@ def string_convert_to_float(budget):
     converted_text = float(budget)
     return converted_text
 
-
-# Converting data from tendering place into CDB common values
-def convert_to_newtend_normal(string):
-    return {
-        # type tender
-        u'ЗАПЛАНОВАНИЙ': 'scheduled',
-        u'(Предложение принято)': u'active',
-        u'Active purchase': u'pending',
-        u'ACTIVE PURCHASE': u'pending',
-        u'Активна закупівля': u'pending',
-        u'Активная закупка': u'pending',
-        u'COMPLETED': u'active',
-        u'ЗАВЕРШЕН': u'active',
-        u'ЗАВЕРШЕНО': u'active',
-
-        # value
-        u"грн.": u"UAH",
-        u"VAT incl.": True,
-        u" VAT incl": True,
-        u"c НДС": True,
-
-        # value valueAddedTaxIncluded
-        u"без ПДВ": False,
-        u"з ПДВ": True,
-
-        # classification
-        u"DC 021:2015 classifier": u"ДК021",
-        u"Классификатор ДК 021:2015": u"ДК021",
-        u"Класифікатор ДК 021:2015": u"ДК021",
-        u"ДКПП Classifier": u"ДКПП",
-        u"Классификатор ДКПП": u"ДКПП",
-        u"Класифікатор ДКПП": u"ДКПП",
-
-        # item name
-        u"pack": u"упаковка",
-        u"set": u"набір",
-        u"accounting unit": u"Одиниця",
-        u"block": u"блок",
-        u"bobbin": u"Бобіна",
-        u"box": u"ящик",
-        u"kilogram": u"кілограми",
-        u"килограммы": u"кілограми",
-        u"lot [unit of procurement]": u"лот",
-        u"lot[unit of procurement]": u"лот",
-        u"piece": u"штуки",
-
-        # Milestone Codes
-        u"Аванс": u"prepayment",
-        u"Аванс": u"prepayment",
-        u"Послеоплата": u"postpayment",
-        u"Пiсляоплата": u"postpayment",
-
-        # Milestone Titles
-        u"Виконання робіт": u"executionOfWorks",
-        u"Выполнение работ": u"executionOfWorks",
-        u"Поставка товару": u"deliveryOfGoods",
-        u"Поставка товара": u"deliveryOfGoods",
-        u"Надання послуг": u"submittingServices",
-        u"Предоставление услуг": u"submittingServices",
-        u"Підписання договору": u"signingTheContract",
-        u"Подписание договора": u"signingTheContract",
-        u"Дата подання заявки": u"submissionDateOfApplications",
-        u"Дата подачи заявки": u"submissionDateOfApplications",
-        u"Дата виставлення рахунку": u"dateOfInvoicing",
-        u"Дата выставления счета": u"dateOfInvoicing",
-        u"Дата закінчення звітного періоду": u"endDateOfTheReportingPeriod",
-        u"Дата окончания отчетного периода": u"endDateOfTheReportingPeriod",
-        u"Інша подія": u"anotherEvent",
-        u"Другое событие": u"anotherEvent",
-
-        # milestone duration day type
-        u"рабочих": u"working",
-        u"робочих": u"working",
-        u"банковских": u"banking",
-        u"банківських": u"banking",
-        u"календарных": u"calendar",
-        u"календарних": u"calendar"
-
-    }.get(string, string)
-
+def convert_for_robot(raw_key):
+    for key, value in dict_units.items():
+        if key == raw_key:
+            return value
+    return "No such key: %s" % raw_key
 
 def key_by_value(val):
     for key, value in dict_units.items():
@@ -182,8 +107,28 @@ def convert_to_human_like_data(raw_key):
 
 dict_units = {
     # --- tender status ---
-    u'КВАЛІФІКАЦІЯ': 'active.qualification',
+    u'КВАЛІФІКАЦІЯ': u'active.qualification',
+    u'УТОЧНЕННЯ': u'active.enquiries',
+    u'ПРОПОЗИЦІЇ': u'active.tendering',
+    u'Черновик. Второй этап': u'draft.stage2',
+    u'Объявление второго этапа' : u'active.stage2.waiting',
+    u'Ожидание второго этапа' : u'active.stage2.pending',
+    u'Завершен' : u'complete',
+    u'Несостоявшийся': u'unsuccessful',
+    u'Рассмотрен' : u'active.awarded',
+    u'Кваліфікація переможців (період оскарження)' : u'active.qualification.stand-still',
+    u"Проведение переговоров" : u"active.pre-qualification.stand-still",
+    u'Прекваліфікація (період оскарження)': 'active.pre-qualification.stand-still',
+    u'Аукцион' : u'active.auction',
+    u'Предложения' : u'active.tendering',
+    u'Уточнение' : u'active.enquiries',
+    u'Період запрошення': u'active.enquiries',
+    u'Активная закупка': u'active',
+    u'Неуспішна закупівля': u'draft.unsuccessful',
+    u'Неактивоване запрошення': u'draft.pending',
+    u'Чернетка': u'local_draft',
 
+    u'' : u'active.pre-qualification',
     # --- bid status ---
     u'Отклонен': u'unsuccessful',
     u'Ожидает решение': u'pending',
@@ -320,3 +265,19 @@ def create_empty_list():
 def convert_string_in_json(some_string):
     result = json.loads(some_string)
     return result
+
+def newtend_get_tender(tender_internal_id):
+    """
+    input tender_internal_id
+
+    return python dict with tender
+
+    make request to api and get tender data
+    url like
+    https://lb-api-staging.prozorro.gov.ua/api/0/tenders/bd861e500f344165bb3ac0b8301292f8
+    """
+
+    url = "https://lb-api-staging.prozorro.gov.ua/api/0/tenders/" + tender_internal_id
+    request = requests.get(url)
+    tender = json.loads(request.text)
+    return tender
