@@ -55,23 +55,24 @@ Create suplier and add docs and confier him
   Wait And Type  ${locator.supplier_name}            ${supplier_name}
   Wait And Type  ${locator.supplier_email}           ${supplier_email}
   Wait And Type  ${locator.supplier_zip}             ${supplier_zip}
-  Sleep     1
+  Sleep   1
   Focus             ${locator.supplier_region}
   Click Element     ${locator.supplier_region}
-  Sleep     1
+  Sleep   1
   Click Element     xpath=//md-option[@value="${supplier_region}"]
-  Sleep     1
+  Sleep   1
   Wait And Type  ${locator.supplier_locality}        ${supplier_city}
   Wait And Type  ${locator.supplier_streetAddress}   ${supplier_street}
   Click Element     xpath=//md-select[@ng-model="vm.award.suppliers[0].identifier.scheme"]
+  Sleep   1
   Click Element     xpath=//md-option[@value="UA-EDR"]
-  Sleep     1
+  Sleep   1
   Wait And Type  ${locator.supplier_ua-id}       ${supplier_edr}
   Clear Element Text    id=award-value-amount
   Wait And Type  id=award-value-amount   ${supplier_amount_int}
-  Click Element     xpath=//md-checkbox[@name="qualified"]
+  Wait And Click   xpath=//md-checkbox[@name="qualified"]
   Sleep     2
-  Click Element     xpath=//button[@ng-click="vm.createAward()"]
+  Wait And Click     xpath=//button[@ng-click="vm.createAward()"]
 
   # accept bid
   Wait And Click  xpath=//button[@ng-click="vm.decide(vm.award.id, 'active',vm.tender.procurementMethodType)"]
@@ -91,12 +92,16 @@ Create suplier and add docs and confier him
   Choose File  ${locator.document_file}  ${document_file}
   Wait And Click  ${locator.documents_send_document}
 
-Make bid
+Make Bid
   [Arguments]  @{ARGS}
-  ${tender_id}=  Set Variable  ${ARGS[0]}  
-  ${bid_data}=  Set Variable  ${ARGS[1]}  
-  ${bid_amount}=  Get From Dictionary  ${bid_data}  amount
-  
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${bid_data}=  Set Variable  ${ARGS[2]}
+
+  ${bid_amount}=  Get From Dictionary  ${bid_data.data.value}  amount
+  ${bid_currency}=  Get From Dictionary  ${bid_data.data.value}  currency
+  ${bid_tax}=  Get From Dictionary  ${bid_data.data.value}  valueAddedTaxIncluded
+
   # go to tender
   Find Tender By Id  ${tender_id}
 
@@ -105,7 +110,7 @@ Make bid
   Wait And Click  ${locator.button_popup_make_bid}
 
   # wait popup
-  ${locator.popup_make_bid}=  Set Variable  xpath//div[@class="modal-content"]
+  ${locator.popup_make_bid}=  Set Variable  xpath=//div[@class="modal-content"]
   Wait Until Element Is Visible  ${locator.popup_make_bid}
 
   # click agree
@@ -122,8 +127,8 @@ Make bid
   ${locator.button_for_make_bid_in_lot}=  Set Variable  xpath=//div[@ng-repeat="lot in lots track by $index"]/div/div/button[@ng-click="showBid($index)"]
 
   # for example we choise first lot
-  ${elements_lot}=  Get WebElements  ${locator.button_for_make_bid_in_lot}
-  Wait And Click  ${elements_lot[0]}
+  #${elements_lot}=  Get WebElements  ${locator.button_for_make_bid_in_lot}
+  #Wait And Click  ${elements_lot[0]}
   
   # input count
   ${locator.input_bid_amount}=  Set Variable  xpath=//input[@name="amount"]

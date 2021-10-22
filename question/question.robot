@@ -1,9 +1,9 @@
 *** Variables ***
 ${locator.site_bar_section_question}    xpath=//span[contains(text(), "Уточнения")]
 ${locator.button_ask_question}          xpath=//button[@ng-if="actions.can_ask_questions"]
-${locator.ask_question_field_title}     xpath=//input[@ng-model="title"]
-${locator.ask_question_field_text}      xpath=//textarea[@ng-model="message"]
-${locator.send_question}                xpath=//div[@ng-click="sendQuestion()"]
+${locator.ask_question_field_title}     xpath=//input[@ng-show="chatData.isQuestion"]
+${locator.ask_question_field_text}      xpath=//textarea[@ng-model="chatData.message"]
+${locator.send_question}                xpath=//button[@ng-click="sendQuestion()"]
 
 ${locator.ask_button_answer_to_question}  xpath=//div[@class="answer"]
 ${locator.ask__field_answer}  xpath=//textarea[@ng-model="chatData.message"]

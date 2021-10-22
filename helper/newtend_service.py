@@ -128,7 +128,6 @@ dict_units = {
     u'Неактивоване запрошення': u'draft.pending',
     u'Чернетка': u'local_draft',
 
-    u'' : u'active.pre-qualification',
     # --- bid status ---
     u'Отклонен': u'unsuccessful',
     u'Ожидает решение': u'pending',
@@ -138,7 +137,6 @@ dict_units = {
     u'Спрощені / Допорогові закупівлі': u'belowThreshold',
     u'(Предложение принято)': u'active',
     u'Діючий': u'active',
-    u'ПРОПОЗИЦІЇ': u'active',
     u'Active purchase': u'pending',
     u'ACTIVE PURCHASE': u'pending',
     u'Активна закупівля': u'pending',

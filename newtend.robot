@@ -37,28 +37,45 @@ Resource  ./awards/awards.robot
 
 *** Keywords ***
 
+Подати цінову пропозицію в статусі draft
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  Log To Console  [.] Make bid draft
+  Make Bid  @{ARGS}
+
 Завантажити документ в ставку
   [Arguments]  @{ARGS}
-  Print Args  ${ARGS}
+  Print Args  @{ARGS}
   Log To Console  [+] Download doc in bid
-  ${tender_id}=  Set Variable  ${ARGS}
-  ${document_file}=  Set Variable  ${ARGS[2]}
-  ${document_for}=  Set Variable  tender
-  ${document_type}=  Set Variable  bid
 
-  Find Tender By Id  ${ARGS[1]}
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${document_file}=  Set Variable  ${ARGS[1]}
+  ${tender_id}=  Set Variable  ${ARGS[2]}
+
+  Find Tender By Id  ${tender_id}
 
   Go To Auction
-
-  Download Document  ${document_file}  ${document_for}  ${document_type}
 
 Подати цінову пропозицію
   [Arguments]  @{ARGS}
   Print Args  ${ARGS}
+  Log To Console  [.] Make bid
+  Make Bid  @{ARGS}
 
 Змінити документ в ставці
   [Arguments]  @{ARGS}
   Print Args  ${ARGS}
+  Log To Console  [.] Change doc in bid
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${document_file}=  Set Variable  ${ARGS[1]}
+  ${tender_id}=  Set Variable  ${ARGS[2]}
+
+  Find Tender By Id  ${tender_id}
+
+  Go To Auction
+
+  Sleep  90
 
 ################################################################
 #                                                              #
