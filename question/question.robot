@@ -18,8 +18,8 @@ Ask question
 
   Find Tender By Id  ${tender_id}
 
-  Wait And Click  ${locator.site_bar_section_question}
-  Wait And Click  ${locator.button_ask_question}   20
+  Wait And Click  ${locator.ask__tab_question}
+  Wait And Click  ${locator.button_ask_question}
 
   ${title}=        Get From Dictionary  ${question_data.data}  title
   ${description}=  Get From Dictionary  ${question_data.data}  description
