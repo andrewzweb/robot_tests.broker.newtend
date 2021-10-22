@@ -80,11 +80,19 @@ Find Tender By Id
   Click Element  ${locator.tender_search_button}
   Sleep  3
 
+  Wait Until Keyword Succeeds  2 minute  30 seconds  Try Choice Tender From Seatch List  ${tender_id}
+
+Try Choice Tender From Seatch List
+  [Arguments]  ${tender_id}
+  Log To Console  [.] Try click to search tender
+  Reload Page
   ${data.tender_id}=  Set Variable  Convert To String  ${tender_id}
   ${locator.link_to_tender}=  Set Variable  xpath=//a[@class="title ng-binding"]
-  Wait Until Element Is Visible  ${locator.link_to_tender}  10
-  Click Element  ${locator.link_to_tender}
-
+  Wait Until Element Is Visible  ${locator.link_to_tender}  20
+  ${can_click}=  Run Keyword And Return Status  Click Element  ${locator.link_to_tender}
+  Run Keyword If  '${can_click}' == False  Log To Console  [-] Can't see tender in search wait..
+  Run Keyword If  '${can_click}' == True   Log To Console  [+] See tender in search and click
+  [Return]  ${can_click}
 ################################################################
 #                                                              #
 #             Start Получить тендерную информацию              #
