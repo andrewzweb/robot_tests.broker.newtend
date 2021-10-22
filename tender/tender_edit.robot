@@ -80,9 +80,9 @@ Find Tender By Id
   Click Element  ${locator.tender_search_button}
   Sleep  3
 
-  Wait Until Keyword Succeeds  2 minute  30 seconds  Try Choice Tender From Seatch List  ${tender_id}
+  Wait Until Keyword Succeeds  2 minute  30 seconds  Try Choice Tender From Search List  ${tender_id}
 
-Try Choice Tender From Seatch List
+Try Choice Tender From Search List
   [Arguments]  ${tender_id}
   Log To Console  [.] Try click to search tender
   Reload Page

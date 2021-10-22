@@ -27,12 +27,25 @@ Find Plan By UAID
   Input Text  ${locator.field_search_plan}  ${tender_uaid}
   # click to search
   Click Element  ${locator.button_search_plan}
+
+  Wait Until Keyword Succeeds  2 minute  30 seconds  Try Choice Plan From Searh List  ${tender_id}
+
+
+Try Choice Plan From Searh List
+  [Arguments]  ${tender_uaid}
+  Log To Console  [.] Try click to search plan
+
+  Reload Page
   # wait results 
   Wait Until Page Contains Element  ${locator.result_plans_list}  20
   # we find plan
   ${locator.link_to_first_plan}=  Set Variable  xpath=//span[contains(text(), '${tender_uaid}')]
   # go to plan
-  Click Element  ${locator.link_to_first_plan}
+  ${can_click}=  Run Keyword And Return Status  Click Element  ${locator.link_to_first_plan}
+  Run Keyword If  '${can_click}' == False  Log To Console  [-] Can't see plan in search wait..
+  Run Keyword If  '${can_click}' == True   Log To Console  [+] See plan in search and click
+  [Return]  ${can_click}
+
 
 Знайти и перейти до плану закупівлі
   [Arguments]  ${user}  ${tender_id}  @{data}
