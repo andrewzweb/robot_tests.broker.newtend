@@ -13,8 +13,11 @@ Resource  ./tender_get/tender_get_items.robot
   # for auction: active.enquiries
   # for qualification
   ${tenderStatus}=  Get Text  xpath=//span[@class="status ng-binding ng-scope"]
-  ${result}=  convert_for_robot  ${tenderStatus}
+  Log To Console  [ ] Raw tender status ${tenderStatus}
   Reload Page
+  ${result}=  convert_for_robot  ${tenderStatus}
+  Log To Console  [ ] Robot like tender status ${result}
+  Sleep  2
   [Return]  ${result}
 
 Отримати текст із поля і показати на сторінці
