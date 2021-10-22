@@ -169,12 +169,6 @@ Resource  ./awards/awards.robot
 Пошук тендера по ідентифікатору
   [Arguments]  ${username}  ${tender_id}
 
-  ${its_plan}=  check_its_plan  ${tender_id}
-
-  # if plan go to plan
-  #Run Keyword If  ${its_plan}  Find Plan By UAID  ${tender_id}
-  #${plan_tender_id}=  Run Keyword If  ${its_plan}   Click Element  xpath=//a[@ng-if="plan.tender_id"]
-
   # if tender
   Find Tender By Id  ${tender_id}
   Sleep  2
