@@ -25,11 +25,6 @@ Get Dict inside
     ${result}=  Get From Dictionary  ${lots.other_dict}  id
     Should be True inside_id == ${result}
 
-Get Correct Status
-    ${tenderStatus}=  Set Variable  ПРОПОЗИЦІЇ
-    ${result}=  convert_to_human_like_data  ${tenderStatus}
-    Should Be Equal  ${result}  active.qualification
-
 Work service func human like
     Set To Dictionary  ${D1}  b=2
     Log To Console  ${D1}
