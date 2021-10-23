@@ -4,7 +4,7 @@
 ${locator.field_search_plan}     xpath=//input[@ng-model="searchData.query"]
 ${locator.button_search_plan}    xpath=//button[@ng-click="search()"]
 ${locator.result_plans_list}     xpath=//a[@class="row tender-info ng-scope"]
-${page.sarch_plans}              https://dev23.newtend.com/opc/provider/plans/all/?pageNum=1&query=&status=&procurementMethodType=&amount_gte=&amount_lte=&createReport=&create_gte=&create_lte=&tp_gte=&tp_lte=
+${page.sarch_plans}              https://autotest.newtend.com/opc/provider/plans/all/?pageNum=1&query=&status=&procurementMethodType=&amount_gte=&amount_lte=&createReport=&create_gte=&create_lte=&tp_gte=&tp_lte=
 
 # plan create action buttons and links
 ${locator.field_search_plan}    xpath=//input[@ng-model="searchData.query"]
@@ -57,6 +57,6 @@ ${locator.edit_plan_project_name}               xpath=//input[@id="project-name"
 ${locator.field_search_plan}    xpath=//input[@ng-model="searchData.query"]
 ${locator.button_search_plan}    xpath=//button[@ng-click="search()"]
 ${locator.result_plans_list}    xpath=//a[@class="row tender-info ng-scope"]
-${page.sarch_plans}    https://dev23.newtend.com/opc/provider/plans/all/?pageNum=1&query=&status=&procurementMethodType=&amount_gte=&amount_lte=&createReport=&create_gte=&create_lte=&tp_gte=&tp_lte=
+${page.sarch_plans}    https://autotest.newtend.com/opc/provider/plans/all/?pageNum=1&query=&status=&procurementMethodType=&amount_gte=&amount_lte=&createReport=&create_gte=&create_lte=&tp_gte=&tp_lte=
 
 # ===== PLAN END SEARCH =====

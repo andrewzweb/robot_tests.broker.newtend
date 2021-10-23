@@ -1,9 +1,9 @@
 *** Variables ***
 
-${url.tender_single_lot}    https://dev23.newtend.com/opc/provider/create-tender/singlelot/belowThreshold/tender/
-${url.tender_reporting}     https://dev23.newtend.com/opc/provider/create-tender/singlelot/reporting/tender/
-${url.tender_negotiation}   https://dev23.newtend.com/opc/provider/create-tender/singlelot/negotiation/tender/
-${url.tender_multilots}     https://dev23.newtend.com/opc/provider/create-tender/multilot/belowThreshold/tender/
+${url.tender_single_lot}    https://autotest.newtend.com/opc/provider/create-tender/singlelot/belowThreshold/tender/
+${url.tender_reporting}     https://autotest.newtend.com/opc/provider/create-tender/singlelot/reporting/tender/
+${url.tender_negotiation}   https://autotest.newtend.com/opc/provider/create-tender/singlelot/negotiation/tender/
+${url.tender_multilots}     https://autotest.newtend.com/opc/provider/create-tender/multilot/belowThreshold/tender/
 
 ${locator.button_publish}                  xpath=//button[@ng-click="publish()"]
 ${locator.lot_title_eng}                   xpath=//input[@id="lot_title_eng_0"]
@@ -84,7 +84,7 @@ ${locator.singup_button_go_ahead}  xpath=//div[@id="pkInfoNextButton"]
 ${locator.singup_button_singup_tender}  xpath=//div[@class="modal-content"]//button[@ng-click="vm.sign()"]
 
 # search tender
-${page_search_tender}  https://dev23.newtend.com/opc/provider/home/
+${page_search_tender}  https://autotest.newtend.com/opc/provider/home/
 ${locator.tender_search_input_field}  xpath=//input[@ng-model="searchData.query"]
 ${locator.tender_search_button}  xpath=//button[@ng-click="search()"]
 

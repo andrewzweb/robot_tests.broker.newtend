@@ -68,7 +68,7 @@ Get Tender
   Log To Console  ${tender}
 
 Get Interanal ID Test
-  ${now_url}=  Set Variable  https://dev23.newtend.com/opc/provider/tender/1195c9cda3fd45f6b5afd2df85aa044b/overview
+  ${now_url}=  Set Variable  https://autotest.newtend.com/opc/provider/tender/1195c9cda3fd45f6b5afd2df85aa044b/overview
   ${result}=  Get Substring  ${now_url}  -41  -9
   Log To Console  ${result}
 
