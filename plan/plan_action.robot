@@ -28,7 +28,7 @@ Find Plan By UAID
   # click to search
   Click Element  ${locator.button_search_plan}
 
-  Wait Until Keyword Succeeds  2 minute  30 seconds  Try Choice Plan From Searh List  ${tender_id}
+  Wait Until Keyword Succeeds  2 minute  30 seconds  Try Choice Plan From Searh List  ${tender_uaid}
 
 
 Try Choice Plan From Searh List
