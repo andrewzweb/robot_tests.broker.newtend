@@ -156,7 +156,7 @@ Choise Dont Add Document
   CustomLog  [+] Choise Dont Add Document
   # Click to popup download document
   ${locator.button_tender_no_document}=  Set Variable  xpath=//div[@id="no-docs-btn"]
-  Wait Until Page Contains Element  ${locator.button_tender_no_document}
+  Wait Until Page Contains Element  ${locator.button_tender_no_document}  20
   # Wait Until Element Is Visible  ${locator.button_tender_no_document}
   Click Element  ${locator.button_tender_no_document}
 
