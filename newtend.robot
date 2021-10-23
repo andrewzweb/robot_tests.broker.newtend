@@ -514,7 +514,7 @@ Resource  ./awards/awards.robot
   Go To Contracts
 
   # choice contract
-  Choise contract  ${contact_num}
+  Choise contract  ${contract_num}
   
   Confirm contract
 
