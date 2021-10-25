@@ -18,14 +18,14 @@ def create_custom_guranteee(tender_data):
     return tender_data
 
 def change_procuringEntity_identifier_id(tender_data):
-    tender_data['data']['procuringEntity']['identifier']['id'] = u"00037256"
+    tender_data['data']['procuringEntity']['identifier']['id'] = u"1234567892"
     return tender_data
 
 def overwrite_procuringEntity_data(tender_data):
     try:
-        tender_data['data']['procuringEntity']['name'] = u"Київський Тестовий Ліцей"
-        tender_data['data']['procuringEntity']['identifier']['id'] = u"00037256"
-        tender_data['data']['procuringEntity']['identifier']['legalName'] = u"Київський Тестовий Ліцей"
+        tender_data['data']['procuringEntity']['name'] = u"newtend owner company"
+        tender_data['data']['procuringEntity']['identifier']['id'] = u"1234567892"
+        tender_data['data']['procuringEntity']['identifier']['legalName'] = u"newtend owner company"
     except: pass
     # adress
     try:
@@ -38,7 +38,7 @@ def overwrite_procuringEntity_data(tender_data):
     try:
         tender_data['data']['procuringEntity']['contactPoint']['email'] = u"e_mail_test@bigmir.net"
         tender_data['data']['procuringEntity']['contactPoint']['faxNumber'] = u"088-111-22-33"
-        tender_data['data']['procuringEntity']['contactPoint']['name'] = u"Київський Тестовий Ліцей"
+        tender_data['data']['procuringEntity']['contactPoint']['name'] = u"newtend owner company"
         tender_data['data']['procuringEntity']['contactPoint']['telephone'] = u"+3808801234567"
         tender_data['data']['procuringEntity']['contactPoint']['url'] = u"http://webpage.org.ua/"
     except: pass
@@ -91,7 +91,7 @@ def convert_for_robot(raw_key):
     for key, value in dict_units.items():
         if key == raw_key:
             return value
-    return "No such key: %s" % raw_key
+    return "No such key: |%s|" % raw_key
 
 def key_by_value(val):
     for key, value in dict_units.items():
@@ -144,6 +144,16 @@ dict_units = {
     u'COMPLETED': u'active',
     u'ЗАВЕРШЕН': u'active',
     u'ЗАВЕРШЕНО': u'active',
+
+    # plan status
+    u"ЧЕРНЕТКА": u"draft",
+    u"Чернетка": u"draft",
+    u"ЗАПЛАНОВАНЫЙ": u"scheduled",
+    u"Запланованы": u"scheduled",
+    u"СКАСОВАНЫЙ": u"cancelled",
+    u"Скасованый": u"cancelled",
+    u"ОГОЛОШЕНЫЙ ТЕНДЕР": u"complete",
+    u"Оголошеный тендер": u"complete",
 
     # --- classifier ---
     u"DC 021:2015 classifier": u"ДК021",
