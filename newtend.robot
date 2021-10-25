@@ -41,7 +41,7 @@ Resource  ./awards/awards.robot
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
   Log To Console  [.] Make bid draft
-  Make Bid  @{ARGS}
+  Make Bid Draft  @{ARGS}
 
 Завантажити документ в ставку
   [Arguments]  @{ARGS}

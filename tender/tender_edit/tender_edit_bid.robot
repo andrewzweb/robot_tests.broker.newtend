@@ -92,15 +92,61 @@ Create suplier and add docs and confier him
   Choose File  ${locator.document_file}  ${document_file}
   Wait And Click  ${locator.documents_send_document}
 
+Make Bid Draft
+  [Arguments]  @{ARGS}
+  Make Bid  @{ARGS}
+
 Make Bid
   [Arguments]  @{ARGS}
+#  ARG[0] - Newtend_Provider1
+#  ARG[1] - UA-2021-10-25-000084-d
+#  ARG[2] - data:
+#    lotValues:
+#    -   relatedLot: 507cd84121144dfe9029ef359261d4c0
+#        value:
+#            amount: 75338886.75
+#            currency: UAH
+#            valueAddedTaxIncluded: true
+#    status: draft
+#    tenderers:
+#    -   address:
+#            countryName: Україна
+#            countryName_en: Ukraine
+#            countryName_ru: Украина
+#            locality: м. Київ
+#            postalCode: '04444'
+#            region: м. Київ
+#            streetAddress: вулиця Тестова, 32
+#        contactPoint:
+#            email: e_mail_test@ukr.net
+#            faxNumber: 333-44-55
+#            name: Другий тестовий ФОП
+#            telephone: '+380972223344'
+#            url: http://webpage.com.ua
+#        identifier:
+#            id: '2894905868'
+#            legalName: Тестовий ФОП 2
+#            scheme: UA-EDR
+#        name: Тестовий ФОП 2
+#        scale: mid
+#  ARG[3] - [u'l-3aafa6e4']
+
   ${username}=  Set Variable  ${ARGS[0]}
   ${tender_id}=  Set Variable  ${ARGS[1]}
   ${bid_data}=  Set Variable  ${ARGS[2]}
 
-  ${bid_amount}=  Get From Dictionary  ${bid_data.data.value}  amount
-  ${bid_currency}=  Get From Dictionary  ${bid_data.data.value}  currency
-  ${bid_tax}=  Get From Dictionary  ${bid_data.data.value}  valueAddedTaxIncluded
+
+  ${status_amount_exist}=  Exist key in dict  ${bid_data.data.value}  amount
+  ${bid_amount}=  Run Keyword If  '${status_amount_exist}' == True  Get From Dictionary  ${bid_data.data.value}  amount
+  ...  ELSE  Get From Dictionary  ${bid_data.data.lotValues[0].value}  amount
+
+  ${status_currency_exist}=  Exist key in dict  ${bid_data.data.value}  currency
+  ${bid_currency}=  Run Keyword If  '${status_currency_exist}' == True  Get From Dictionary  ${bid_data.data.value}  currency
+  ...  ELSE  Get From Dictionary  ${bid_data.data.lotValues[0].value}  currency
+
+  ${status_tax_exist}=  Exist key in dict  ${bid_data.data.value}  tax
+  ${bid_tax}=  Run Keyword If  '${status_tax_exist}' == True  Get From Dictionary  ${bid_data.data.value}  valueAddedTaxIncluded
+  ...  ELSE  Get From Dictionary  ${bid_data.data.lotValues[0].value}  valueAddedTaxIncluded
 
   # go to tender
   Find Tender By Id  ${tender_id}
