@@ -17,6 +17,7 @@ Resource  plan_locators.robot
 
 Find Plan By UAID
   [Arguments]  ${tender_uaid}
+  Change Language to UKR
   # go to search plan page 
   Go To  ${page.sarch_plans}
   # wait field search 
@@ -57,7 +58,7 @@ Try Choice Plan From Searh List
 
 Перейти на сторінку редактування плану закупівлі
   [Arguments]  ${plan_id_hash}
-  Go To  https://dev23newtend.com/opc/provider/plans/${plan_id_hash}/edit
+  Go To  https://autotest.newtend.com/opc/provider/plans/${plan_id_hash}/edit
 
 ################################################################
 #                                                              #

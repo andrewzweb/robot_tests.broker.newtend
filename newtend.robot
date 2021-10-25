@@ -110,7 +110,8 @@ Resource  ./awards/awards.robot
   Log To Console  --- PLAN DATA ---
   Log To Console  ${ARGUMENTS[1]}
   Log To Console  --- PLAN END ---
-  ${id}=  Створити план закупівлі  @{ARGUMENTS}
+  Change Language to UKR
+  ${id}=  Create Plan  @{ARGUMENTS}
   Log To Console  [+] Create Plan ID: ${id}
   [Return]  ${id}
 

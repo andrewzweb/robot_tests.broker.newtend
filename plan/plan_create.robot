@@ -6,7 +6,7 @@ Resource  ../helper/data.robot
 
 *** Keywords ***
 
-Створити план закупівлі
+Create Plan
     [ARGUMENTS]  ${plan_user}  ${plan_data}  @{ARGUMENTS}
 
     # change_data  procuringEntity.identifier.id  13313462
