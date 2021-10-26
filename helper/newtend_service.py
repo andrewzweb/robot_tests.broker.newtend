@@ -148,12 +148,12 @@ dict_units = {
     # plan status
     u"ЧЕРНЕТКА": u"draft",
     u"Чернетка": u"draft",
-    u"ЗАПЛАНОВАНЫЙ": u"scheduled",
-    u"Запланованы": u"scheduled",
-    u"СКАСОВАНЫЙ": u"cancelled",
-    u"Скасованый": u"cancelled",
-    u"ОГОЛОШЕНЫЙ ТЕНДЕР": u"complete",
-    u"Оголошеный тендер": u"complete",
+    u"ЗАПЛАНОВАНИЙ": u"scheduled",
+    u"Запланований": u"scheduled",
+    u"СКАСОВАНИЙ": u"cancelled",
+    u"Скасований": u"cancelled",
+    u"ОГОЛОШЕНИЙ ТЕНДЕР": u"complete",
+    u"Оголошений тендер": u"complete",
 
     # --- classifier ---
     u"DC 021:2015 classifier": u"ДК021",
