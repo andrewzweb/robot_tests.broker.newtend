@@ -202,3 +202,38 @@ Make Bid
   # pusblish bid
 
   # singin bid
+
+
+Add Doc To Bid
+  [Arguments]  ${document_file}
+
+  # click to open popup
+  ${locator.button_open_popup_download_doc_to_bid}=  Set Variable  xpath=//button[@ng-model="selected.files"]
+  Wait And Click  ${locator.button_open_popup_download_doc_to_bid}
+  
+  # choice file 
+  ${locator.input_download_file}=  Set Variable  xpath=//input[@type="file"]
+  Choice File  ${locator.input_download_file}  ${document_file}
+  
+  # select doc ralation for
+  ${locator.select_dropdown_document_type}=  Set Variable  xpath=//md-select[@ng-model="file.documentType"]
+  Wait And Click  ${locator.select_dropdown_document_type}
+  Sleep  2
+
+  # type:
+  # value="technicalSpecifications"  - Технічні специфікації
+  # value="qualificationDocuments"  - Документи, що підтверджують кваліфікацію
+  # value="eligibilityDocuments"  - Документи, що підтверджують відповідність
+  # value="commercialProposal"  - Цінова пропозиція
+  # value="billOfQuantity"  - Кошторис (розрахунок вартості)
+  # value="evidence"  - Пояснення/обгрунтування
+  # value="winningBid"  - Ціна за одиницю товару (послуги)
+
+  ${locator.select_type_option}=  Set Variable  xpath=//md-option[@value="eligibilityDocuments"]
+  Wait And Click  ${locator.select_type_option}
+
+  ${locator.button_save_document}=  Set Variable  xpath=//button[ng-click="saveDocumentsChanges()"]
+  Wait And Click  ${locator.button_save_document}
+
+  # wait doc download
+  Sleep   10

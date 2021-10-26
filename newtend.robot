@@ -56,6 +56,8 @@ Resource  ./awards/awards.robot
 
   Go To Auction
 
+  Add Doc To Bid  ${document_file}
+
 Подати цінову пропозицію
   [Arguments]  @{ARGS}
   Print Args  ${ARGS}
