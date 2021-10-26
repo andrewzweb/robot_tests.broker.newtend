@@ -278,11 +278,12 @@ Edit Plan Item Measure List
 
   ${measure_list}=    Get Webelement   id=measure-list
   Focus  id=measure-list
-  Click Element       ${measure_list}
+  Click Element  ${measure_list}
   Sleep  3
-  ${measure_item}=  Get Webelement  xpath=//a[contains(text(), '${plan_item_unit}')]
-  Focus  ${measure_item}
-  Click Element  ${measure_item}
+  Wait Until Page Contains Element  xpath=//a[contains(text(), '${plan_item_unit}')]
+  Focus  xpath=//a[contains(text(), '${plan_item_unit}')]
+  Wait Until Element Is Visible  xpath=//a[contains(text(), '${plan_item_unit}')]
+  Click Element  xpath=//a[contains(text(), '${plan_item_unit}')]
 
   # Change Value In Element  ${plan_item_unit}
   #${hidden_measure_unit_input}=  Set Variable  xpath=/
