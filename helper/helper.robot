@@ -155,3 +155,14 @@ Wait Bar Close
   Execute Javascript
   ...  var element=document.querySelector("input[ng-model='item.unit.code']");
   ...  element.setAttribute("value", "${attr_value}");
+
+If Exist Locator Click
+  [Arguments]  ${locator}
+
+  ${locator_exist}=  Run Keyword And Return Status  Get WebElement  ${locator}
+  Log To Console  --- Locator exist ${locator_exist} ---
+  ${obj}=  Run Keyword If  ${locator_exist}  Get WebElement  ${locator}
+  Run Keyword If  ${locator_exist}  Focus  ${obj}
+  Run Keyword If  ${locator_exist}  Sleep  1
+  Run Keyword If  ${locator_exist}  Click Element  ${obj}
+  Run Keyword If  ${locator_exist}  Sleep  2

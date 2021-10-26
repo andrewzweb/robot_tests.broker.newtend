@@ -284,12 +284,20 @@ Edit Criteria
   \  # ====== open form ======
   \
   \  # === select related to ==========
-  \  #${locator.select_criteria_relatesTo}=  Set Variable  xpath=//md-select-value[@class="md-select-value"]
-  \  #Wait And Click  ${locator.select_criteria_relatesTo}
-  \  #Sleep  2
-  \  #${locator.option_citeria_related_to_tender}=  Set Variable  xpath=//md-option[@value="lot"]
-  \  #Focus  ${locator.option_citeria_related_to_tender}
-  \  #Wait And Click  ${locator.select_criteria_relatesTo}
+  \  # obj name="relatedItem_0"
+  \  Sleep   2
+  \  ${locator.select_criteria_relatesTo}=  Set Variable  xpath=//md-select[@name="relatedItem_${item}"]
+  \  If Exist Locator Click  ${locator.select_criteria_relatesTo}
+  \  # obj ng-value="lot.id"
+  \  ${locator.option_citeria_related_to_tender}=  Set Variable  xpath=//md-option[@ng-value="lot.id"][first()]
+  \  If Exist Locator Click  ${locator.option_citeria_related_to_tender}
+#  \  ${locator_exist}=  Run Keyword And Return Status  Get WebElements  ${locator.option_citeria_related_to_tender}
+#  \  ${obj}=  Run Keyword If  ${locator_exist}  Get WebElements  ${locator.option_citeria_related_to_tender}
+#  \  Run Keyword If  ${locator_exist}  Focus  ${obj}[-1]
+#  \  Run Keyword If  ${locator_exist}  Sleep  1
+#  \  Run Keyword If  ${locator_exist}  Click Element  ${obj}[-1]
+#  \  Run Keyword If  ${locator_exist}  Sleep  2
+  \  #If Exist Locator Click  ${locator.option_citeria_related_to_tender}
   \  # === end select related to ==========
   \
   \  # criteria description
