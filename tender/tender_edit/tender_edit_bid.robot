@@ -135,17 +135,16 @@ Make Bid
   ${tender_id}=  Set Variable  ${ARGS[1]}
   ${bid_data}=  Set Variable  ${ARGS[2]}
 
+  ${status_bid_with_value}=  Exist key in dict  ${bid_data.data}  value
+  Log To Console  Status amount exist : ${status_bid_with_value}
 
-  ${status_amount_exist}=  Exist key in dict  ${bid_data.data.value}  amount
-  ${bid_amount}=  Run Keyword If  '${status_amount_exist}' == True  Get From Dictionary  ${bid_data.data.value}  amount
+  ${bid_amount}=  Run Keyword If  '${status_bid_with_value}' == True  Get From Dictionary  ${bid_data.data.value}  amount
   ...  ELSE  Get From Dictionary  ${bid_data.data.lotValues[0].value}  amount
 
-  ${status_currency_exist}=  Exist key in dict  ${bid_data.data.value}  currency
-  ${bid_currency}=  Run Keyword If  '${status_currency_exist}' == True  Get From Dictionary  ${bid_data.data.value}  currency
+  ${bid_currency}=  Run Keyword If  '${status_bid_with_value}' == True  Get From Dictionary  ${bid_data.data.value}  currency
   ...  ELSE  Get From Dictionary  ${bid_data.data.lotValues[0].value}  currency
 
-  ${status_tax_exist}=  Exist key in dict  ${bid_data.data.value}  tax
-  ${bid_tax}=  Run Keyword If  '${status_tax_exist}' == True  Get From Dictionary  ${bid_data.data.value}  valueAddedTaxIncluded
+  ${bid_tax}=  Run Keyword If  '${status_bid_with_value}' == True  Get From Dictionary  ${bid_data.data.value}  valueAddedTaxIncluded
   ...  ELSE  Get From Dictionary  ${bid_data.data.lotValues[0].value}  valueAddedTaxIncluded
 
   # go to tender
