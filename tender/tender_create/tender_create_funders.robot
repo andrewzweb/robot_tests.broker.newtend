@@ -35,6 +35,8 @@ Create Funders Tender
   Wait And Click  xpath=//button[@ng-click="save()"]
   # === It's all in one popup window
 
+  Edit NDS  ${tender_data}
+
   Edit Date For Tender  ${tender_data}
 
   Edit Criteria  ${tender_data}

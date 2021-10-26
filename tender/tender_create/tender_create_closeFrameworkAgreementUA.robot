@@ -40,6 +40,8 @@ Create Framework Agreement Tender
   Sleep  2
   # === It's all in one popup window
 
+  Edit NDS  ${tender_data}
+
   Edit Date For Tender  ${tender_data}
 
   Publish tender
