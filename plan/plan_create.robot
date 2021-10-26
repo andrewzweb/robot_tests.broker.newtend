@@ -207,7 +207,7 @@ Edit Plan Items
   \   ${data_key}=  convert_quantity  ${data_key}
   \   Run Keyword If  ${key_exist} and ${locator_exist}  Input Text  id=quantity0  ${data_key}
   \
-  \   ${locator_exist}=  Run Keyword And Return Status  Get WebElement  id=measure-list
+  \   ${locator_exist}=  Run Keyword And Return Status  Get WebElement  xpath=//select[@id="measurementUnits${I}"]
   \   Run Keyword If  ${locator_exist}  Edit Plan Item Measure List  ${plan_item_unit}
   \
   \   # Item classifiers
@@ -276,24 +276,5 @@ Edit Plan Item Measure List
   [Arguments]   ${plan_item_unit}
   Log To Console  [+] Edit Plan Item Measure List
 
-  ${measure_list}=    Get Webelement   id=measure-list
-  Focus  id=measure-list
-  Click Element  ${measure_list}
-  Sleep  4
-  #Wait Until Page Contains Element  xpath=//a[contains(text(), '${plan_item_unit}')]
-  #Focus  xpath=//a[contains(text(), '${plan_item_unit}')]
-  #Wait Until Element Is Visible  xpath=//a[contains(text(), '${plan_item_unit}')]
-  #Click Element  xpath=//a[contains(text(), '${plan_item_unit}')]
-
-  # variant 3
-  ${measure_name}=  Get Webelements  xpath=//a[@id="measure-list"]/..//a[contains(text(), '${plan_item_unit}')]
-  Sleep  1
-  Focus  ${measure_name[-1]}
-  Click Element       ${measure_name[-1]}
-  Sleep  1
-
-
-  # Change Value In Element  ${plan_item_unit}
-  #${hidden_measure_unit_input}=  Set Variable  xpath=/
-  #Log To Console  Measure ${plan_item_unit}
-  #Execute Javascript    window.document.querySelector('input[name="measurementUnits0"]').setAttribute("value", "${plan_item_unit}")
+  ${select_measure_list}=  Set Variable  xpath=//select[@ng-model="item.unit"]
+  Select From List By Label  ${select_measure_list}  ${plan_item_unit}
