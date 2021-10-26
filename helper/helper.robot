@@ -158,9 +158,7 @@ Wait Bar Close
 
 If Exist Locator Click
   [Arguments]  ${locator}
-
   ${locator_exist}=  Run Keyword And Return Status  Get WebElement  ${locator}
-  Log To Console  --- Locator exist ${locator_exist} ---
   ${obj}=  Run Keyword If  ${locator_exist}  Get WebElement  ${locator}
   Run Keyword If  ${locator_exist}  Focus  ${obj}
   Run Keyword If  ${locator_exist}  Sleep  1

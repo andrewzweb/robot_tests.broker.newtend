@@ -45,8 +45,8 @@ Create Funders Tender
 
   Set Created Tender ID In Global Variable
 
-  Edit Supplement Criteria  ${tender_data}
+  ${tender_data}=  Edit Supplement Criteria New  ${tender_data}
 
-  Make Global Variable  ${tender_data}
+  Make Global Variable  ${username}  ${tender_data}
 
   SingUp Tender

@@ -289,14 +289,14 @@ Edit Criteria
   \  ${locator.select_criteria_relatesTo}=  Set Variable  xpath=//md-select[@name="relatedItem_${item}"]
   \  If Exist Locator Click  ${locator.select_criteria_relatesTo}
   \  # obj ng-value="lot.id"
-  \  ${locator.option_citeria_related_to_tender}=  Set Variable  xpath=//md-option[@ng-value="lot.id"][first()]
-  \  If Exist Locator Click  ${locator.option_citeria_related_to_tender}
-#  \  ${locator_exist}=  Run Keyword And Return Status  Get WebElements  ${locator.option_citeria_related_to_tender}
-#  \  ${obj}=  Run Keyword If  ${locator_exist}  Get WebElements  ${locator.option_citeria_related_to_tender}
-#  \  Run Keyword If  ${locator_exist}  Focus  ${obj}[-1]
-#  \  Run Keyword If  ${locator_exist}  Sleep  1
-#  \  Run Keyword If  ${locator_exist}  Click Element  ${obj}[-1]
-#  \  Run Keyword If  ${locator_exist}  Sleep  2
+  \  ${locator.option_citeria_related_to_tender}=  Set Variable  xpath=//md-option[@ng-value="lot.id"]
+#  \  If Exist Locator Click  ${locator.option_citeria_related_to_tender}
+  \  ${locator_exist}=  Run Keyword And Return Status  Get WebElements  ${locator.option_citeria_related_to_tender}
+  \  ${obj}=  Run Keyword If  ${locator_exist}  Get WebElements  ${locator.option_citeria_related_to_tender}
+  \  Run Keyword If  ${locator_exist}  Focus  ${obj[-1]}
+  \  Run Keyword If  ${locator_exist}  Sleep  1
+  \  Run Keyword If  ${locator_exist}  Click Element  ${obj[-1]}
+  \  Run Keyword If  ${locator_exist}  Sleep  2
   \  #If Exist Locator Click  ${locator.option_citeria_related_to_tender}
   \  # === end select related to ==========
   \
@@ -398,10 +398,8 @@ Edit Supplement Criteria
   Sleep  3
 
   ${locator.criterias}=  Set Variable  xpath=//div[@ng-if="tender.criteria"]/div
+  ${procurementMethodType}=  Get From Dictionary  ${tender_data.data}  procurementMethodType
 
-  # old version
-  # ${elements_criteria}=  Get WebElements  ${locator.criterias}
-  #${count_of_criteria}=  Get Length  ${elements_criteria}
   ${criteria_from_data}=  Get From Dictionary    ${tender_data.data}  criteria
   ${count_of_criteria}=  Get Length  ${criteria_from_data}
   ${exist_before}=  Convert To Integer  0
