@@ -279,8 +279,12 @@ Edit Plan Item Measure List
   ${measure_list}=    Get Webelement   id=measure-list
   Focus  id=measure-list
   Click Element       ${measure_list}
-  Sleep  2
+  Sleep  3
   ${measure_item}=  Get Webelement  xpath=//a[contains(text(), '${plan_item_unit}')]
   Focus  ${measure_item}
   Click Element  ${measure_item}
-  #Change Value In Attribute  ${plan_item_unit}
+
+  # Change Value In Element  ${plan_item_unit}
+  #${hidden_measure_unit_input}=  Set Variable  xpath=/
+  #Log To Console  Measure ${plan_item_unit}
+  #Execute Javascript    window.document.querySelector('input[name="measurementUnits0"]').setAttribute("value", "${plan_item_unit}")
