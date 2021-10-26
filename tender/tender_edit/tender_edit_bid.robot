@@ -136,7 +136,7 @@ Make Bid
   ${bid_data}=  Set Variable  ${ARGS[2]}
 
   ${status_bid_with_value}=  Exist key in dict  ${bid_data.data}  value
-  Log To Console  Status amount exist : ${status_bid_with_value}
+  Log To Console  Bid not for lot : ${status_bid_with_value}
 
   ${bid_amount}=  Run Keyword If  '${status_bid_with_value}' == True  Get From Dictionary  ${bid_data.data.value}  amount
   ...  ELSE  Get From Dictionary  ${bid_data.data.lotValues[0].value}  amount
@@ -160,23 +160,23 @@ Make Bid
 
   # click agree
   ${locator.button_agree_with_publish}=  Set Variable  xpath=//input[@ng-model="agree.value"]
-  Wait And Click  ${locator.button_agree_with_publish}
+  Select Checkbox  ${locator.button_agree_with_publish}
 
   # click self qulified
-  ${locator.button_agree_selt_quliffied}= xpath=//input[@ng-model="agree.selfQualified"]
-  Wait And Click  ${locator.button_agree_selt_quliffied}
+  ${locator.button_agree_selt_quliffied}=  Set Variable  xpath=//input[@ng-model="agree.selfQualified"]
+  Select Checkbox  ${locator.button_agree_selt_quliffied}
 
   # choise from lots
   ${locator.bids_lots}=  Set Variable  xpath=//div[@ng-repeat="lot in lots track by $index"]
-
-  ${locator.button_for_make_bid_in_lot}=  Set Variable  xpath=//div[@ng-repeat="lot in lots track by $index"]/div/div/button[@ng-click="showBid($index)"]
+  ${locator.button_for_make_bid_in_lot}=  Set Variable  xpath=//button[@ng-show="!lot.lotValue"]
 
   # for example we choise first lot
-  #${elements_lot}=  Get WebElements  ${locator.button_for_make_bid_in_lot}
-  #Wait And Click  ${elements_lot[0]}
+  ${elements_lot}=  Get WebElements  ${locator.button_for_make_bid_in_lot}
+  Wait And Click  ${elements_lot[0]}
   
   # input count
   ${locator.input_bid_amount}=  Set Variable  xpath=//input[@name="amount"]
+  ${bid_amount}=  Convert To String  ${bid_amount}
   Wait And Type  ${locator.input_bid_amount}  ${bid_amount}
 
   # confirm bid
@@ -186,12 +186,11 @@ Make Bid
   # Wait page reload
   Sleep  3
 
-  # potom menya perekidivaet na big page 
+  # potom menya perekidivaet na big page
 
   # add doc vidpovidnist
   # choise type
   # save doc
-
   
   # need choise all criteria
 
