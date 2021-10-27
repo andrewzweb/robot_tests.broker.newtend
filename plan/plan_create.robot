@@ -11,6 +11,8 @@ Create Plan
 
     # change_data  procuringEntity.identifier.id  13313462
 
+    Check user if him reg to login  ${plan_user}
+
     ${plan_data}=  overwrite_procuringEntity_data  ${plan_data}
 
     ${plan_for_tender_type}=   Get From Dictionary   ${plan_data.data.tender}   procurementMethodType
@@ -276,5 +278,6 @@ Edit Plan Item Measure List
   [Arguments]   ${plan_item_unit}
   Log To Console  [+] Edit Plan Item Measure List
 
+  Sleep  3
   ${select_measure_list}=  Set Variable  xpath=//select[@ng-model="item.unit"]
   Select From List By Label  ${select_measure_list}  ${plan_item_unit}
