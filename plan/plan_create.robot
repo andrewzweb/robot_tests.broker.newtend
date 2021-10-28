@@ -10,9 +10,6 @@ Create Plan
     [ARGUMENTS]  ${plan_user}  ${plan_data}  @{ARGUMENTS}
 
     # change_data  procuringEntity.identifier.id  13313462
-
-    Check user if him reg to login  ${plan_user}
-
     ${plan_data}=  overwrite_procuringEntity_data  ${plan_data}
 
     ${plan_for_tender_type}=   Get From Dictionary   ${plan_data.data.tender}   procurementMethodType
