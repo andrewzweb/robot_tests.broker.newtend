@@ -205,16 +205,28 @@ Make Bid
 
 
 Add Doc To Bid
-  [Arguments]  ${document_file}
+  [Arguments]  ${username}  ${document_file}
+
+  #${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bidresponses['bid'].data.id}
+  #Log To Console  Bid ID ${bid_id}
+
+  # click to make bid
+  ${locator.button_popup_make_bid}=  Set Variable  xpath=//a[@ui-sref="tenderView.ownBid"]
+  Wait And Click  ${locator.button_popup_make_bid}
+
+  Sleep  3
+  # wait popup
+  #${locator.popup_make_bid}=  Set Variable  xpath=//div[@class="modal-content"]
+  #Wait Until Element Is Visible  ${locator.popup_make_bid}
 
   # click to open popup
   ${locator.button_open_popup_download_doc_to_bid}=  Set Variable  xpath=//button[@ng-model="selected.files"]
   Wait And Click  ${locator.button_open_popup_download_doc_to_bid}
-  
+
   # choice file 
   ${locator.input_download_file}=  Set Variable  xpath=//input[@type="file"]
-  Choice File  ${locator.input_download_file}  ${document_file}
-  
+  Choose File  ${locator.input_download_file}  ${document_file}
+
   # select doc ralation for
   ${locator.select_dropdown_document_type}=  Set Variable  xpath=//md-select[@ng-model="file.documentType"]
   Wait And Click  ${locator.select_dropdown_document_type}
@@ -232,8 +244,12 @@ Add Doc To Bid
   ${locator.select_type_option}=  Set Variable  xpath=//md-option[@value="eligibilityDocuments"]
   Wait And Click  ${locator.select_type_option}
 
-  ${locator.button_save_document}=  Set Variable  xpath=//button[ng-click="saveDocumentsChanges()"]
+  ${locator.button_save_document}=  Set Variable  xpath=//button[@ng-click="saveDocumentsChanges()"]
   Wait And Click  ${locator.button_save_document}
 
   # wait doc download
   Sleep   10
+
+  ${document_name}=  Convert To String   ${document_file}
+  Set To Dictionary  ${USERS.users['${username}']}   documents=${document_name}
+

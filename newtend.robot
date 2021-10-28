@@ -54,9 +54,7 @@ Resource  ./awards/awards.robot
 
   Find Tender By Id  ${tender_id}
 
-  Go To Auction
-
-  Add Doc To Bid  ${document_file}
+  Add Doc To Bid  ${username}  ${document_file}
 
 Подати цінову пропозицію
   [Arguments]  @{ARGS}
@@ -74,10 +72,7 @@ Resource  ./awards/awards.robot
   ${tender_id}=  Set Variable  ${ARGS[2]}
 
   Find Tender By Id  ${tender_id}
-
-  Go To Auction
-
-  Sleep  90
+  Sleep  10
 
 ################################################################
 #                                                              #
