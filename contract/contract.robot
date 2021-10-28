@@ -5,9 +5,14 @@ Resource  ../newtend.robot
 
 Choise Contract
   [Arguments]  ${contract_number}
+  Wait Until Keyword Succeeds  5 minute  30 seconds  Try Choice Contract From Searh List  ${contract_number}
+
+Try Choice Contract From Searh List
+  [Arguments]  ${contract_number}
+  [*] Try to find Contract
+  Reload Page
   ${element_contracts}=  Get WebElements  xpath=//a[@ui-sref="contract.overview({id: contract.id})"]
   Wait And Click  ${element_contracts[${contract_number}]}
-
 
 Confirm contract
   [Arguments]    @{ARGS}
