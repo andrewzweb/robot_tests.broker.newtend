@@ -16,8 +16,8 @@ Resource  plan_locators.robot
 ################################################################
 
 Find Plan By UAID
-  [Arguments]  ${tender_uaid}
-  Change Language to UKR
+  [Arguments]  ${plan_uaid}
+  Log To Console  [+] Find plan by id:
   # go to search plan page 
   Go To  ${page.sarch_plans}
   # wait field search 
@@ -25,22 +25,22 @@ Find Plan By UAID
   # click field search
   Click Element  ${locator.field_search_plan}
   # input our tender id in search field 
-  Input Text  ${locator.field_search_plan}  ${tender_uaid}
+  Input Text  ${locator.field_search_plan}  ${plan_uaid}
   # click to search
   Click Element  ${locator.button_search_plan}
 
-  Wait Until Keyword Succeeds  2 minute  30 seconds  Try Choice Plan From Searh List  ${tender_uaid}
+  Wait Until Keyword Succeeds  2 minute  30 seconds  Try Choice Plan From Searh List  ${plan_uaid}
 
 
 Try Choice Plan From Searh List
-  [Arguments]  ${tender_uaid}
+  [Arguments]  ${plan_uaid}
   Log To Console  [.] Try click to search plan
 
   Reload Page
   # wait results 
   Wait Until Page Contains Element  ${locator.result_plans_list}  20
   # we find plan
-  ${locator.link_to_first_plan}=  Set Variable  xpath=//span[contains(text(), '${tender_uaid}')]
+  ${locator.link_to_first_plan}=  Set Variable  xpath=//span[contains(text(), '${plan_uaid}')]
   # go to plan
   ${can_click}=  Run Keyword And Return Status  Click Element  ${locator.link_to_first_plan}
   Run Keyword If  '${can_click}' == False  Log To Console  [-] Can't see plan in search wait..
