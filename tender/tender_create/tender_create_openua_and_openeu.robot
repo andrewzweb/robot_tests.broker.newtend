@@ -122,4 +122,4 @@ Create OpenUA Tender
   
   Make Global Variable  ${username}  ${tender_data}
 
-  Run Keyword And Return  Set Created Tender ID In Global
+  Run Keyword And Return  Set Created Tender ID In Global Variable
