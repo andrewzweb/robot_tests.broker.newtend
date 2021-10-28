@@ -4,11 +4,15 @@ Resource  ../tender.robot
 *** Keywords ***
 
 Create Negotiation Tender
-  [Arguments]  ${tender_data}
-  Log To Console  [.] Creating OpenUA Tender
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  ${username}=     Set Variable  ${ARGS[0]}
+  ${tender_data}=  Set Variable  ${ARGS[1]}
+
+  Log To Console  [.] Creating Negoriation Tender
 
   ${tender_data}=  overwrite_procuringEntity_data  ${tender_data}
-  
+
   # Get Plan Id 
   ${plan_data}=  load_data_from   artifact_plan.yaml
   Find Plan By UAID  ${plan_data.tender_uaid}
