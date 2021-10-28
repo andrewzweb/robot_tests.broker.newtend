@@ -1,6 +1,7 @@
 ** Settings ***
 Resource  ./tender_create/tender_create_funders.robot
 Resource  ./tender_create/tender_create_reporting.robot
+Resource  ./tender_create/tender_create_defence.robot
 Resource  ./tender_create/tender_create_multilot.robot
 Resource  ./tender_create/tender_create_openua_and_openeu.robot
 Resource  ./tender_create/tender_create_singlelot.robot
@@ -31,6 +32,8 @@ Create Tender
   Run Keyword If   '${tender_type}' == 'aboveThresholdEU'  Create OpenEU Tender  @{ARGUMENTS}
   Run Keyword If   '${tender_type}' == 'aboveThresholdUA'  Create OpenUA Tender  @{ARGUMENTS}
   Run Keyword If   '${tender_type}' == 'negotiation'  Create Negotiation Tender  @{ARGUMENTS}
+  Run Keyword If   '${tender_type}' == 'simple.defence'  Create Defence Tender  @{ARGUMENTS}
+  Run Keyword If   '${tender_type}' == 'aboveThresholdUA.defense'  Create Defence Tender aboveThresholdUA  @{ARGUMENTS}
   Run Keyword If   '${tender_type}' == 'closeFrameworkAgreementUA'  Create Framework Agreement Tender  @{ARGUMENTS}
   Run Keyword If   '${tender_type}' == 'belowThreshold' and ${if_key_in_dict}  Create Funders Tender  @{ARGUMENTS}
   Run Keyword If   '${tender_type}' == 'competitiveDialogueEU'  Create CompetitiveDialogueEU Tender  @{ARGUMENTS}
