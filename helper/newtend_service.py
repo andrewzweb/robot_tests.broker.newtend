@@ -23,8 +23,8 @@ def change_procuringEntity_identifier_id(tender_data):
 
 def overwrite_procuringEntity_data(tender_data):
     try:
-        tender_data['data']['procuringEntity']['name'] = u"newtend owner company"
-        tender_data['data']['procuringEntity']['identifier']['id'] = u"1234567892"
+        tender_data['data']['procuringEntity']['name'] = u"newtend provider company"
+        tender_data['data']['procuringEntity']['identifier']['id'] = u"12312313123"
         tender_data['data']['procuringEntity']['identifier']['legalName'] = u"newtend owner company"
     except: pass
     # adress
@@ -39,7 +39,7 @@ def overwrite_procuringEntity_data(tender_data):
         tender_data['data']['procuringEntity']['contactPoint']['email'] = u"e_mail_test@bigmir.net"
         tender_data['data']['procuringEntity']['contactPoint']['faxNumber'] = u"088-111-22-33"
         tender_data['data']['procuringEntity']['contactPoint']['name'] = u"newtend owner company"
-        tender_data['data']['procuringEntity']['contactPoint']['telephone'] = u"+3808801234567"
+        tender_data['data']['procuringEntity']['contactPoint']['telephone'] = u"+380991234560"
         tender_data['data']['procuringEntity']['contactPoint']['url'] = u"http://webpage.org.ua/"
     except: pass
     return tender_data
