@@ -32,7 +32,7 @@ Create Tender
   Run Keyword If   '${tender_type}' == 'aboveThresholdEU'  Create OpenEU Tender  @{ARGUMENTS}
   Run Keyword If   '${tender_type}' == 'aboveThresholdUA'  Create OpenUA Tender  @{ARGUMENTS}
   Run Keyword If   '${tender_type}' == 'negotiation'  Create Negotiation Tender  @{ARGUMENTS}
-  Run Keyword If   '${tender_type}' == 'simple.defence'  Create Defence Tender  @{ARGUMENTS}
+  Run Keyword If   '${tender_type}' == 'simple.defense'  Create Defence Tender  @{ARGUMENTS}
   Run Keyword If   '${tender_type}' == 'aboveThresholdUA.defense'  Create Defence Tender aboveThresholdUA  @{ARGUMENTS}
   Run Keyword If   '${tender_type}' == 'closeFrameworkAgreementUA'  Create Framework Agreement Tender  @{ARGUMENTS}
   Run Keyword If   '${tender_type}' == 'belowThreshold' and ${if_key_in_dict}  Create Funders Tender  @{ARGUMENTS}
