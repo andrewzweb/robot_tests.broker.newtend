@@ -37,6 +37,22 @@ Resource  ./awards/awards.robot
 
 *** Keywords ***
 
+################################################################
+#                                                              #
+#             In work                                          #
+#                                                              #
+################################################################
+
+
+Отримати інформацію про enquiryPeriod.clarificationsUntil
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+
+Змінити цінову пропозицію
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  #Chagenge bid
+
 Подати цінову пропозицію в статусі draft
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
@@ -73,6 +89,13 @@ Resource  ./awards/awards.robot
 
   Find Tender By Id  ${tender_id}
   Sleep  10
+
+################################################################
+#                                                              #
+#             END In work                                      #
+#                                                              #
+################################################################
+
 
 ################################################################
 #                                                              #
@@ -522,7 +545,7 @@ Resource  ./awards/awards.robot
 #                    END Contract                              #
                                                               #
 ################################################################
-dn
+
 ################################################################
 #                                                              #
 #                    Feature                                   #
@@ -566,10 +589,6 @@ dn
 
 Змінити лот
   [Arguments]  ${username}  ${tender_id}  ${lot_id}  ${variable_chould_change}  ${variable_value}
-
-  # TODO
-  Print Args  ${ARGS}
-
   Find Tender By Id  ${tender_id}
   Go To Edit Tender
 
@@ -633,3 +652,4 @@ dn
   [Arguments]  @{ARGS}
   Print Args  ${ARGS}
   # its in new complaints procedure
+
