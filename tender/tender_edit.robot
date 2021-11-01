@@ -21,10 +21,12 @@ Edit Milestones
   \   ${milestoneSequence}=     Get From Dictionary     ${milestones_list[${I}]}    sequenceNumber
   \   ${milestoneTitle}=        Get From Dictionary     ${milestones_list[${I}]}    title
   \   ${milestoneType}=         Get From Dictionary     ${milestones_list[${I}]}    type
+  \   Sleep  2
   \   ${add_milestone_buttons}=     Get Webelements     xpath=//button[@ng-click="vm.addMilestone()"]
   \   Focus   ${add_milestone_buttons[-1]}
   \   Click Element   ${add_milestone_buttons[-1]}
   # Fill the fields
+  \   Sleep  2
   \   Focus  id=milestone-title-${I}
   \   Select From List By Value   xpath=//select[@id="milestone-title-${I}"]    ${milestoneTitle}
   \   Select From List By Value   xpath=//select[@id="milestone-code-${I}"]     ${milestoneCode}
