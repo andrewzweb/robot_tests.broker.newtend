@@ -1,5 +1,5 @@
 ** Settings ***
-Resource  ../../helper/data.robot
+Resource  ../../newtend.robot
 
 *** Variables ***
 ${data}                       hash
@@ -95,6 +95,80 @@ Create Feature
 
   # click to save features
   Wait And Click  ${locator.edit_feature_save_form}
+
+Delete Feature
+  [Arguments]  ${feature_id}
+
+  Log To Console  [*] Delete feature: ${feature_id}
+
+  ${locator_button_open_features_list}=  Set Variable  xpath=//input[@id="qualityIndicator"]
+  Wait And Click  ${locator_button_open_features_list}
+
+  # delete feature
+  #Wait And Click  xpath=//a[@id="remove-feature-0"]
+  Wait And Click  span[@ng-click="clearList(tender.features)"]
+
+  # click to save features
+  #Wait And Click  ${locator.edit_feature_save_form}
+
+
+Add New Feature
+  [Arguments]  @{ARGS}
+  ${feature_data}=     Set Variable  ${ARGS[0]}
+
+  # open popup for create new feature
+
+  ${locator_button_open_features_list}=  Set Variable  xpath=//input[@id="qualityIndicator"]
+  Wait And Click  ${locator_button_open_features_list}
+
+  ${locator_button_add_features_item}=  Set Variable  xpath=//a[@id="add-feature-0"]
+  Wait And Click  ${locator_button_add_features_item}
+
+  # data
+  ${data.feature_description}=  Get From Dictionary  ${feature_data}  description
+  ${data.feature_relation_of}=  Get From Dictionary  ${feature_data}  featureOf
+  ${data.feature_title}=  Get From Dictionary  ${feature_data}  title
+  ${data.feature_description}=  Get From Dictionary  ${feature_data}  description
+
+  # wait popUp form
+  #Focus  ${locator.edit_feature_add_button}
+  #Wait And Click  ${locator.edit_feature_add_button}
+
+  Sleep  3
+  Wait And Type  xpath=//input[@name="title1"]  ${data.feature_title}
+  Edit Feasible Element  ${feature_data}  title_en  Wait And Type  xpath=//input[@name="title_en1"]
+  Wait And Type  xpath=//input[@name="description1"]     ${data.feature_description}
+  Edit Feasible Element  ${feature_data}  description  Wait And Type  xpath=//input[@name="description_en1"]
+  Select From List By Value  xpath=//select[@name="featureOf1"]  ${data.feature_relation_of}
+
+  # TODO
+  # select features relation with lot or item
+
+  ${data_enum}=  Get From Dictionary  ${feature_data}  enum
+  ${count_enum}=  Get length  ${data_enum}
+
+  : FOR   ${number_enum}  IN RANGE   ${count_enum}
+  \  ${num_enum}=  Convert To Integer  ${number_enum}
+  \  ${enum_title}=   Get From Dictionary  ${data_enum[${number_enum}]}   title
+  \  ${enum_value}=   Get From Dictionary  ${data_enum[${number_enum}]}   value
+  \  ${enum_value}=   Convert To Integer  ${enum_value}
+  \  ${edit_feature_enum_title}=  Get WebElements  xpath=//input[@name="option0"]
+  \  Wait And Type  ${edit_feature_enum_title[-1]}  ${enum_title}
+  \  ${edit_feature_enum_value}=  Get WebElements  xpath=//input[@name="optionWeight0"]
+  \  Wait And Type  ${edit_feature_enum_value[-1]}  ${enum_value}
+  \  ${edit_feature_enum_description}=  Get WebElements  xpath=//input[@name="optionDescription1"]
+  \  Wait And Type  ${edit_feature_enum_description[-1]}  ${enum_title}
+  \  # add one form
+  \  #Wait And Click  ${locator.edit_feature_add_enum}-${number_enum}
+  \  # comment becouse
+  \  # Vitya should fix esco tedner
+  \  #
+  \  Sleep  2
+  \  Run Keyword If  ${number_enum} < ${count_enum}-1  Wait And Click  xpath=//a[@id="add-option-1-${num_enum}"]
+
+  # click to save features
+  Wait And Click  ${locator.edit_feature_save_form}
+
 
 Edit Budget In Reporting
   [Arguments]  ${tender_data}

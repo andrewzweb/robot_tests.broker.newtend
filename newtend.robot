@@ -556,24 +556,27 @@ Resource  ./awards/awards.robot
   [Arguments]    @{ARGS}
   Log To Console  [+] Get Info From Reatures
   # TODO
-  Print Args  @{ARGS}
+  Print Args  ${ARGS}
   [Return]  1
 
 Додати неціновий показник на тендер
   [Arguments]  ${username}  ${tender_id}  ${feature_date}
   Log To Console  [+] Add features in tender
   # TODO
-  Print Args  @{ARGS}
-
   Find Tender By Id  ${tender_id}
-  Create Feature  ${feature_date}
+  Go To Edit Tender
+  Add New Feature  ${feature_date}
   Publish tender
 
 Видалити неціновий показник
-  [Arguments]    @{ARGS}
+  [Arguments]  ${username}  ${tender_id}  ${feature_id}
   Log To Console  [+] Delete features in tender
-  # TODO
-  Print Args  @{ARGS}
+
+  Find Tender By Id  ${tender_id}
+  Go To Edit Tender
+  Delete Feature  ${feature_id}
+  Publish tender
+
 
 ################################################################
 #                                                              #
