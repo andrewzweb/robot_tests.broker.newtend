@@ -112,6 +112,8 @@ Create OpenUA Tender
 
   Edit Date For Tender  ${tender_data}
 
+  Edit NDS  ${tender_data}
+
   Publish tender
 
   Choise Dont Add Document
