@@ -82,6 +82,11 @@ Go To Edit Tender
   Wait And Click  xpath=//a[@id="edit-tender-btn"]
   Wait Bar Close
 
+Go To Prequlification
+  Wait Bar Open
+  Wait And Click  xpath=//a[@ui-sref="tenderView.prequalification"]
+  Wait Bar Close
+
 Print All Date
   [Arguments]  ${tender_data}
 
@@ -164,3 +169,8 @@ If Exist Locator Click
   Run Keyword If  ${locator_exist}  Sleep  1
   Run Keyword If  ${locator_exist}  Click Element  ${obj}
   Run Keyword If  ${locator_exist}  Sleep  2
+
+
+JS Wait And Click By Id
+  [Arguments]  ${element_id}
+  Execute Javascript    window.document.getElementById("${element_id}").click()

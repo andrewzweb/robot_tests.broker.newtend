@@ -457,7 +457,7 @@ Resource  ./awards/awards.robot
 
 Відxилити постачальника
   [Arguments]  ${username}  ${tender_id}  ${bid_id}  @{ARGS}
-  Log To Console  [+] Aprove Qulification
+  Log To Console  [+] Decline Qulification
   Log To Console  ${username}
   Log To Console  ${tender_id}
   Log To Console  ${bid_id}
@@ -471,11 +471,66 @@ Resource  ./awards/awards.robot
   ${bid_decline}=  Get WebElement  xpath=//button[@ng-click="decide('unsuccessful')"]
   Wait And Click  ${bid_decline}
 
-Відхилити кваліфікацію
+
+Підтвердити кваліфікацію
   [Arguments]    @{ARGS}
-  Log To Console  [+] Decline qulification
+  Log To Console  [+] Approve qulification
   # TODO
   Print Args  @{ARGS}
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${qulification_number}=  Set Variable  ${ARGS[2]}
+
+  Find Tender By Id  ${tender_id}
+  Go To Prequlification
+
+  ${button_confirm}=  Set Variable  xpath=//button[@ng-click="decide(qualification.id, true)"]
+
+  ${modal_window}=  Set Variable  xpath=//div[@class="modal-header ng-binding"]
+  Wait Until Page Contains Element  ${modal_window}
+
+  ${radio_button_confirm}=  Set Variable  xpath=//input[@name="agree-qualified"]
+  Select Checkbox  ${radio_button_confirm}
+
+  ${radio_button_article17}=  Set Variable  xpath=//input[@name="agree-eligible"]
+  Select Checkbox  ${radio_button_article17}
+
+  # submit approve
+  Wait And Click  xpath=//button[@ng-click="submit()"]
+
+  # singup need
+  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
+
+
+Відхилити кваліфікацію
+  [Arguments]    @{ARGS}
+  Log To Console  [+] Cancelled qulification
+  # TODO
+  Print Args  @{ARGS}
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${qulification_number}=  Set Variable  ${ARGS[2]}
+
+  Find Tender By Id  ${tender_id}
+  Go To Prequlification
+
+  ${button_decline}=  Set Variable  xpath=//button[@ng-click="decide(qualification.id, true)"]
+
+  # if you decline
+  # you should choise reason
+  #
+  Select Checkbox  xpath=//input[@id="reason2"]
+
+  # And write short description
+  Wait And Type  xpath=//textarea[@id="description"]  short decline reason
+
+  # submit approve
+  Wait And Click  xpath=//button[@ng-click="submit()"]
+
+  # singup need
+  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
+
 
 Скасувати кваліфікацію
   [Arguments]    @{ARGS}
@@ -483,17 +538,32 @@ Resource  ./awards/awards.robot
   # TODO
   Print Args  @{ARGS}
 
-Підтвердити кваліфікацію
-  [Arguments]    @{ARGS}
-  Log To Console  [+] Confirm qulification
-  # TODO
-  Print Args  @{ARGS}
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${qulification_number}=  Set Variable  ${ARGS[2]}
+
+  Find Tender By Id  ${tender_id}
+  Go To Prequlification
+
+  ${button_cancelled}=  Set Variable  xpath=//button[@ng-click="cancelDecision(qualification.id)"]
+  Wait And Click  ${button_cancelled}
+
 
 Затвердити остаточне рішення кваліфікації
   [Arguments]    @{ARGS}
-  Log To Console  [+] Approve qulification
+  Log To Console  [+] Last approve qulification
   # TODO
   Print Args  @{ARGS}
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${qulification_number}=  Set Variable  ${ARGS[2]}
+
+  Find Tender By Id  ${tender_id}
+
+  ${button_approve}=  Set Variable  xpath=//button[@ng-click="approveQualifications()"]
+  Wait And Click  ${button_approve}
+
 
 ################################################################
 #                                                              #
@@ -655,4 +725,53 @@ Resource  ./awards/awards.robot
   [Arguments]  @{ARGS}
   Print Args  ${ARGS}
   # its in new complaints procedure
+
+################################################################
+#                                                              #
+#                    Complaints                                #
+#                                                              #
+################################################################
+
+Створити чернетку вимоги/скарги на скасування
+  [Arguments]  @{ARGS}
+  [Documentation]  Input Data
+  ... 	data:
+  ...     author:
+  ...         address:
+  ...             countryName: Україна
+  ...             locality: Переяслав-Хмельницький
+  ...             postalCode: '01111'
+  ...             region: Київська область
+  ...             streetAddress: Тестова вулиця, 21-29
+  ...         contactPoint:
+  ...             email: test_e_mail@ukr.net
+  ...             faxNumber: '9998877'
+  ...             name: Перший Тестовий Учасник
+  ...             telephone: '+380506665544'
+  ...             url: http://www.page.gov.ua/
+  ...         identifier:
+  ...             id: '21725150'
+  ...             legalName: Тестова районна в місті Києві державна адміністрація
+  ...             scheme: UA-EDR
+  ...         name: Тестова районна в місті Києві державна адміністрація
+  ...     description: Фарфур багатолотовий корупціон з неціновими показниками прочолок
+  ...         виречи виґуляри призначати салтан весілчанин слюзувати матюнка підсмалити
+  ...         уторжитися.
+  ...     title: 'q-25d92d03: Пообскрібати потаска різнити обшити.'
+  ...         type: complaint
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${payload_data}=  Set Variable  ${ARGS[1]}
+  ${item_index}=  Set Variable  ${ARGS[2]}
+
+################################################################
+#                                                              #
+#                    END Complaints                            #
+#                                                              #
+################################################################
+
+Скасування рішення кваліфікаційної комісії
+  [Arguments]  @{ARGS}
+  Print Args  ${ARGS}
+
 
