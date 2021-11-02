@@ -289,3 +289,8 @@ def newtend_get_tender(tender_internal_id):
     request = requests.get(url)
     tender = json.loads(request.text)
     return tender
+
+def fake_document_response(doc_file):
+    print(doc_file)
+    result = {"data": {"id": '123543523452345', "title": str(doc_file)}}
+    return result

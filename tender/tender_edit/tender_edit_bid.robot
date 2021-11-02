@@ -206,7 +206,6 @@ Make Bid
 
 Add Doc To Bid
   [Arguments]  ${username}  ${document_file}
-
   #${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bidresponses['bid'].data.id}
   #Log To Console  Bid ID ${bid_id}
 
@@ -250,6 +249,6 @@ Add Doc To Bid
   # wait doc download
   Sleep   10
 
-  ${document_name}=  Convert To String   ${document_file}
-  Set To Dictionary  ${USERS.users['${username}']}   documents=${document_name}
-
+  # try to fake document response
+  ${fake_response}=    fake_document_response    ${document_file}
+  Set To Dictionary  ${USERS.users['${username}']}   documents=${fake_response}
