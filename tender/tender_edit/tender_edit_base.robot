@@ -83,17 +83,17 @@ Create Feature
   \  ${enum_title}=   Get From Dictionary  ${data_enum[${number_enum}]}   title
   \  ${enum_value}=   Get From Dictionary  ${data_enum[${number_enum}]}   value
   \  ${enum_value}=   Convert To Integer  ${enum_value}
-  \  Wait And Type  ${locator.edit_feature_enum_title_${number_enum}}  ${enum_title}
-  \  Wait And Type  ${locator.edit_feature_enum_value_${number_enum}}  ${enum_value}
-  \  Wait And Type  ${locator.edit_feature_enum_descr_${number_enum}}  ${enum_title}
+  \  ${edit_feature_enum_title}=  Get WebElement  xpath=//input[@name="option_0_${number_enum}"]
+  \  Wait And Type  ${edit_feature_enum_title}  ${enum_title}
+  \  ${edit_feature_enum_value}=  Get WebElement  xpath=//input[@name="optionWeight_0_${number_enum}"]
+  \  Wait And Type  ${edit_feature_enum_value}  ${enum_value}
+  \  ${edit_feature_enum_description}=  Get WebElement  xpath=//input[@name="optionDescription_0_${number_enum}"]
+  \  Wait And Type  ${edit_feature_enum_description}  ${enum_title}
   \  # add one form
-  \  #Wait And Click  ${locator.edit_feature_add_enum}-${number_enum}
-  \  # comment becouse
-  \  # Vitya should fix esco tedner
   \  #
-  \  Run Keyword If  ${number_enum} < ${count_enum}-1 and '${procurementMethodType}' != 'esco'  Wait And Click  ${locator.edit_feature_add_enum}-${number_enum}
+  \  Run Keyword If  ${number_enum} < ${count_enum}-1 and '${procurementMethodType}' != 'esco'  Wait And Click  xpath=//a[@id="add-option-0-${number_enum}"]
   \  # if esco we have 2 open form we need 3
-  \  Run Keyword If  ${number_enum} < ${count_enum}-2 and '${procurementMethodType}' == 'esco'  Wait And Click  ${locator.edit_feature_add_enum}-1
+  \  Run Keyword If  ${number_enum} < ${count_enum}-2 and '${procurementMethodType}' == 'esco'  Wait And Click  xpath=//a[@id="add-option-0-1"]
 
   # click to save features
   Wait And Click  ${locator.edit_feature_save_form}

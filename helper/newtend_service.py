@@ -113,7 +113,8 @@ def convert_to_human_like_data(raw_key):
 
 dict_units = {
     # --- tender status ---
-    u'КВАЛІФІКАЦІЯ': u'active.qualification',
+    u'КВАЛІФІКАЦІЯ': u'active.pre-qualification',
+    u'ПРЕКВАЛІФІКАЦІЯ': u'active.qualification',
     u'УТОЧНЕННЯ': u'active.enquiries',
     u'ПРОПОЗИЦІЇ': u'active.tendering',
     u'Черновик. Второй этап': u'draft.stage2',
