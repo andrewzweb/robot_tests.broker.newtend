@@ -44,6 +44,12 @@ def overwrite_procuringEntity_data(tender_data):
     except: pass
     return tender_data
 
+def overwrite_features_values_in_new_feature(feature):
+    feature['enum'][0]['value'] = 1
+    feature['enum'][1]['value'] = 2
+    feature['enum'][2]['value'] = 2
+    return feature
+
 def overwrite_features_values(tender_data):
     try:
         tender_data['data']['features'][0]['enum'][0]['value'] = 1

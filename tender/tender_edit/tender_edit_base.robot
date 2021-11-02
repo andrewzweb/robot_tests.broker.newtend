@@ -64,11 +64,13 @@ Create Feature
   Focus  ${locator.edit_feature_add_button}
   Wait And Click  ${locator.edit_feature_add_button}
 
-  Wait And Type  ${locator.edit_feature_title}  ${data.feature_title}
-  Edit Feasible Element  ${feature_data}  title_en  Wait And Type  ${locator.edit_feature_title_en}
-  Wait And Type  ${locator.edit_feature_description}     ${data.feature_description}
-  Edit Feasible Element  ${feature_data}  description  Wait And Type  ${locator.edit_feature_description_en}
-  Select From List By Value  ${locator.edit_feature_relation_of}  ${data.feature_relation_of}
+  Sleep  3
+
+  Wait And Type  xpath=//input[@id="quality_title_0"]  ${data.feature_title}
+  Edit Feasible Element  ${feature_data}  title_en  Wait And Type  xpath=//input[@id="quality_title_en_0"]
+  Wait And Type  xpath=//input[@id="quality_description_0"]   ${data.feature_description}
+  Edit Feasible Element  ${feature_data}  description  Wait And Type  xpath=//input[@id="quality_description_en0"]
+  Select From List By Value  xpath=//select[@id="quality_feature_Of_0"]  ${data.feature_relation_of}
 
   # TODO
   # select features relation with lot or item
@@ -101,8 +103,8 @@ Delete Feature
 
   Log To Console  [*] Delete feature: ${feature_id}
 
-  ${locator_button_open_features_list}=  Set Variable  xpath=//input[@id="qualityIndicator"]
-  Wait And Click  ${locator_button_open_features_list}
+  #${locator_button_open_features_list}=  Set Variable  xpath=//input[@id="qualityIndicator"]
+  #Wait And Click  ${locator_button_open_features_list}
 
   # delete feature
   #Wait And Click  xpath=//a[@id="remove-feature-0"]
@@ -115,13 +117,16 @@ Delete Feature
 Add New Feature
   [Arguments]  @{ARGS}
   ${feature_data}=     Set Variable  ${ARGS[0]}
-
+  Log To Console  ------------ New Feature ----------------
+  Log To Console  ${feature_data}
+  ${feature_data}=  overwrite_features_values_in_new_feature  ${feature_data}
+  Log To Console  ------------ END New Feature-------------
   # open popup for create new feature
 
   ${locator_button_open_features_list}=  Set Variable  xpath=//input[@id="qualityIndicator"]
   Wait And Click  ${locator_button_open_features_list}
 
-  ${locator_button_add_features_item}=  Set Variable  xpath=//a[@id="add-feature-0"]
+  ${locator_button_add_features_item}=  Set Variable  xpath=//a[@id="add_feature"]
   Wait And Click  ${locator_button_add_features_item}
 
   # data
@@ -135,11 +140,11 @@ Add New Feature
   #Wait And Click  ${locator.edit_feature_add_button}
 
   Sleep  3
-  Wait And Type  xpath=//input[@name="title1"]  ${data.feature_title}
-  Edit Feasible Element  ${feature_data}  title_en  Wait And Type  xpath=//input[@name="title_en1"]
-  Wait And Type  xpath=//input[@name="description1"]     ${data.feature_description}
-  Edit Feasible Element  ${feature_data}  description  Wait And Type  xpath=//input[@name="description_en1"]
-  Select From List By Value  xpath=//select[@name="featureOf1"]  ${data.feature_relation_of}
+  Wait And Type  xpath=//input[@id="quality_title_1"]  ${data.feature_title}
+  Edit Feasible Element  ${feature_data}  title_en  Wait And Type  xpath=//input[@id="quality_title_en_1"]
+  Wait And Type  xpath=//input[@id="quality_description_1"]     ${data.feature_description}
+  Edit Feasible Element  ${feature_data}  description  Wait And Type  xpath=//input[@id="quality_description_en1"]
+  Select From List By Value  xpath=//select[@id="quality_feature_Of_1"]  ${data.feature_relation_of}
 
   # TODO
   # select features relation with lot or item
@@ -152,17 +157,13 @@ Add New Feature
   \  ${enum_title}=   Get From Dictionary  ${data_enum[${number_enum}]}   title
   \  ${enum_value}=   Get From Dictionary  ${data_enum[${number_enum}]}   value
   \  ${enum_value}=   Convert To Integer  ${enum_value}
-  \  ${edit_feature_enum_title}=  Get WebElements  xpath=//input[@name="option0"]
-  \  Wait And Type  ${edit_feature_enum_title[-1]}  ${enum_title}
-  \  ${edit_feature_enum_value}=  Get WebElements  xpath=//input[@name="optionWeight0"]
-  \  Wait And Type  ${edit_feature_enum_value[-1]}  ${enum_value}
-  \  ${edit_feature_enum_description}=  Get WebElements  xpath=//input[@name="optionDescription1"]
-  \  Wait And Type  ${edit_feature_enum_description[-1]}  ${enum_title}
+  \  ${edit_feature_enum_title}=  Get WebElement  xpath=//input[@name="option_1_${number_enum}"]
+  \  Wait And Type  ${edit_feature_enum_title}  ${enum_title}
+  \  ${edit_feature_enum_value}=  Get WebElement  xpath=//input[@name="optionWeight_1_${number_enum}"]
+  \  Wait And Type  ${edit_feature_enum_value}  ${enum_value}
+  \  ${edit_feature_enum_description}=  Get WebElement  xpath=//input[@name="optionDescription_1_${number_enum}"]
+  \  Wait And Type  ${edit_feature_enum_description}  ${enum_title}
   \  # add one form
-  \  #Wait And Click  ${locator.edit_feature_add_enum}-${number_enum}
-  \  # comment becouse
-  \  # Vitya should fix esco tedner
-  \  #
   \  Sleep  2
   \  Run Keyword If  ${number_enum} < ${count_enum}-1  Wait And Click  xpath=//a[@id="add-option-1-${num_enum}"]
 
