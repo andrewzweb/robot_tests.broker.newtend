@@ -169,6 +169,7 @@ Add New Feature
   # click to save features
   Wait And Click  ${locator.edit_feature_save_form}
 
+  Sleep  3
 
 Edit Budget In Reporting
   [Arguments]  ${tender_data}
