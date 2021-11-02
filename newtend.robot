@@ -532,13 +532,13 @@ Resource  ./awards/awards.robot
   # go to tender
   Find Tender By Id  ${tender_uaid}
 
-  # go to contracts
-  Go To Contracts
+  # go to auction
+  Go To Auction
 
-  # choice contract
-  Choise contract  ${contract_num}
-  
-  Confirm contract
+  ${bool_finish_torgi}=  Run Keyword And Return Status  Finish Torgi
+  Log To Console  [+] _Finish torgi status: ${bool_finish_torgi}
+
+  Go To Contracts
 
 ################################################################
 #                                                              #
