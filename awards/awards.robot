@@ -62,24 +62,35 @@ Finish Torgi
   [Arguments]
   Log To Console  [.] Finish Torgi
 
-  Log To Console  [*] Wait 2 min
-  Sleep  120
-  Reload Page
-  Sleep  5
-
-  Log To Console  [.] Try Finish Torgi min
-
   ${locator.end_torgi}=  Set Variable  xpath=//button[@data-test_id="close_tender"]
-  Wait And Click  ${locator.end_torgi}
+  Wait Until Keyword Succeeds  5 minute  30 seconds  Wait And Click  ${locator.end_torgi}
 
   ${locator.input_contract_number}=  Set Variable  xpath=//input[@id="contractNumber"]
   Wait And Type  ${locator.input_contract_number}  0
 
   # change price
-  Wait And Type  id=contractValueAmount  96
-  Wait And Type  id=contractValueAmountNet  80
-  Wait And Type  id=itemUnitValueAmount  1
+  Wait And Type  id=contractValueAmount  960
+  Wait And Type  id=contractValueAmountNet  800
+
+  ${element_value_by_item}=  Get WebElements  id=itemUnitValueAmount
+  ${count_items}=  Get Length  ${element_value_by_item}
+
+  : FOR   ${index}  IN RANGE   ${count_items}
+  \   ${element}=  Set Variable  ${element_value_by_item[${index}]}
+  \   Wait And Type  xpath=//input[@name="${index}_itemUnitValueAmount"]  1
 
   Wait And Click  xpath=//button[@ng-click="closeBids()"]
   Log To Console  [+] Finish Torgi
   Sleep  3
+
+
+
+
+
+
+
+
+
+
+
+
