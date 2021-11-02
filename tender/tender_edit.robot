@@ -22,18 +22,16 @@ Edit Milestones
   \   ${milestoneTitle}=        Get From Dictionary     ${milestones_list[${I}]}    title
   \   ${milestoneType}=         Get From Dictionary     ${milestones_list[${I}]}    type
   \   Sleep  2
-  \   ${add_milestone_buttons}=     Get Webelements     xpath=//button[@ng-click="vm.addMilestone()"]
-  \   Focus   ${add_milestone_buttons[-1]}
-  \   Click Element   ${add_milestone_buttons[-1]}
-  # Fill the fields
-  \   Sleep  2
+  \   Wait And Click   xpath=//button[@ng-click="vm.addMilestone()"]
+  \
+  \   Wait Until Page Contains Element  id=milestone-title-${I}
   \   Focus  id=milestone-title-${I}
   \   Select From List By Value   xpath=//select[@id="milestone-title-${I}"]    ${milestoneTitle}
   \   Select From List By Value   xpath=//select[@id="milestone-code-${I}"]     ${milestoneCode}
-  \   Input Text    id=milestone-duration-days-${I}     ${milestoneDurDays}
+  \   Wait And Type    id=milestone-duration-days-${I}     ${milestoneDurDays}
   \   Select From List By Value   xpath=//select[@id="milestone-duration-type-${I}"]   ${milestoneDurType}
-  \   Input Text    id=milestone-percentage-days-${I}   ${milestonePercentage}
-  \   Input Text    id=milestone-description-${I}       ${milestoneType}
+  \   Wait And Type    id=milestone-percentage-days-${I}   ${milestonePercentage}
+  \   Wait And Type    id=milestone-description-${I}       ${milestoneType}
 
 
 Edit Funders
