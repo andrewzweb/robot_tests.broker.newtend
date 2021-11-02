@@ -106,7 +106,7 @@ Delete Feature
 
   # delete feature
   #Wait And Click  xpath=//a[@id="remove-feature-0"]
-  Wait And Click  span[@ng-click="clearList(tender.features)"]
+  Wait And Click  xpath=//span[@ng-click="clearList(tender.features)"]
 
   # click to save features
   #Wait And Click  ${locator.edit_feature_save_form}
