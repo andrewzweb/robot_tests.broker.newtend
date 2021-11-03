@@ -103,16 +103,20 @@ Delete Feature
 
   Log To Console  [*] Delete feature: ${feature_id}
 
-  #${locator_button_open_features_list}=  Set Variable  xpath=//input[@id="qualityIndicator"]
-  #Wait And Click  ${locator_button_open_features_list}
+  ${locator_button_open_features_list}=  Set Variable  xpath=//input[@id="qualityIndicator"]
+  Wait And Click  ${locator_button_open_features_list}
 
   # delete feature
-  #Wait And Click  xpath=//a[@id="remove-feature-0"]
-  Wait And Click  xpath=//span[@ng-click="clearList(tender.features)"]
+  Wait And Click  xpath=//a[@id="remove_feature_0"]
+
 
   # click to save features
-  #Wait And Click  ${locator.edit_feature_save_form}
+  Wait And Click  ${locator.edit_feature_save_form}
 
+Delete All Features
+  # delete all
+  Log To Console  [*] Delete ALL feature:
+  Wait And Click  xpath=//span[@ng-click="clearList(tender.features)"]
 
 Add New Feature
   [Arguments]  @{ARGS}
@@ -170,7 +174,7 @@ Add New Feature
   # click to save features
   Wait And Click  ${locator.edit_feature_save_form}
 
-  Sleep  3
+  Sleep  4
 
 Edit Budget In Reporting
   [Arguments]  ${tender_data}
