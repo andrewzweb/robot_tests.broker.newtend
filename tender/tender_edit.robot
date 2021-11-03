@@ -22,7 +22,7 @@ Edit Milestones
   \   ${milestoneTitle}=        Get From Dictionary     ${milestones_list[${I}]}    title
   \   ${milestoneType}=         Get From Dictionary     ${milestones_list[${I}]}    type
   \   Sleep  2
-  \   Wait And Click   xpath=//button[@ng-click="vm.addMilestone()"]
+  \   Execute Javascript    window.document.getElementById('button_add_payment_terms').click()
   \
   \   Wait Until Page Contains Element  id=milestone-title-${I}
   \   Focus  id=milestone-title-${I}
