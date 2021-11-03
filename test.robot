@@ -4,85 +4,64 @@ Library  BuiltIn
 Library  String
 Library  OperatingSystem
 Resource  newtend.robot
+#Library   SeleniumLibrary
+
+Library  Selenium2Library
+Library  DebugLibrary
+Library  Selenium2Screenshots
+Library  OperatingSystem
+
+#Library  AppiumLibrary
 
 *** Variables ***
-&{lots}  id=1  name=SOmeName
 &{D1}    a=1
+${username}  Newtend_Owner
+${OUTPUT_DIR}  .
+${BROWSER}  chrome
 
 
 *** Test Cases ***
-Get exist key from vocabulary
-    ${current_id}=  Get From Dictionary  ${lots}  id 
-    Should Be Equal  ${current_id}  1
+Remove feature
+  Open Browser  https://autotest.newtend.com/  ${BROWSER}
+  Set Window Size  1024  764
+  Add Cookie  autotest  1  domain=autotest.newtend.com  expiry=2021-11-30 16:21:35
 
-Custom method get from dict
-    ${key}=  Set Variable  id
-    ${dict}=  Create Dictionary   id=some_id, name=some_name
-    ${result}=  Exist key in dict  ${dict}  ${key}
-    Should Be True  ${result} == True
+  ${login}=  Set Variable  test.owner@gmail.com
+  ${pass}=  Set Variable  testowner0
+  Custom Login  ${login}  ${pass}
 
-Get Dict inside
-    ${result}=  Get From Dictionary  ${lots.other_dict}  id
-    Should be True inside_id == ${result}
+  Видалити неціновий показник  Newtend_Owner  UA-2021-11-03-000366-c  1
+  [Teardown]    Close Browser
 
-Work service func human like
-    Set To Dictionary  ${D1}  b=2
-    Log To Console  ${D1}
+#My fast test
+  #Open Browser  https://autotest.newtend.com/
+  #Add Cookie  autotest  1  domain=autotest.newtend.com  expiry=2021-11-30 16:21:35
 
-Change date
-    ${some_date}=  Set Variable  2021-09-04T19:57:00.763813+03:00 
-    ${result}=  plus_count_day_to_date  ${some_date}  2
+  #${login}=  Set Variable  test.owner@gmail.com
+  #${pass}=  Set Variable  testowner0
+  #Custom Login  ${login}  ${pass}
 
-    Log To Console  Some ${some_date}
-    Log To Console  Result ${result}
-
-Get Current Date Obj
-    ${some_date}=  Set Variable  2021-09-13T11:13:31.355339+03:00
-    ${date_now}=  convert_string_date_to_obj  ${some_date}
-    Log To Console  Date Obj: ${date_now}
-
-Get Current Date Obj Other Date
-    ${some_date}=  Set Variable  2021-09-13T00:00:00+03:00
-    ${date_now}=  change_count_day_to_date  ${some_date}  30
-    Log To Console  Date Obj: ${date_now}
-
-Get Current Date
-    ${date_now}=  get_now_date
-    Log To Console  Date: ${date_now}
-
-Current Date Plus Count Minit
-    ${one}=  date_now_plus_minutes  1
-    Log To Console  Date: ${one}
-    ${ten}=  date_now_plus_minutes  10
-    Log To Console  Date: ${ten}
-
-Cycle Count
-  ${count_of_criteria}=  Convert To Integer  10
-
-  : FOR   ${item}   IN RANGE  ${count_of_criteria}
-  \  ${numb}=  Evaluate  ${item}
-  \  Log To Console  Criteria ${numb}
-
-Get Tender
-  ${tender}=  newtend_get_tender  bd861e500f344165bb3ac0b8301292f8
-  Log To Console  ${tender}
-
-Get Interanal ID Test
-  ${now_url}=  Set Variable  https://autotest.newtend.com/opc/provider/tender/1195c9cda3fd45f6b5afd2df85aa044b/overview
-  ${result}=  Get Substring  ${now_url}  -41  -9
-  Log To Console  ${result}
-
-Converter
-   ${result}=  convert_for_robot  КВАЛІФІКАЦІЯ
-   ${should_be}=  Set Variable  active.qualification
-   Should Be Equal  ${should_be}  ${result}  msg=convert_for_robot
-   Log To Console  SHould be equal [ ${should_be} : ${result} ]
+  # tests
+  #Підтвердити кваліфікацію  Newtend_Owner  UA-2021-11-03-000366-c  1
+  #[Teardown]    Close Browser
 
 *** Keywords ***
+Custom Login
+  [ARGUMENTS]   ${login}  ${pass}
 
-Exist key in dict
-  [Arguments]  ${dict}  ${key}
-  ${if_key_in_dict}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${dict}  ${key}
-  [Return]  ${if_key_in_dict}
-
+  # wait page download
+  Wait Until Page Contains Element   ${locator.login_open_modal}  30
+  # click to popup
+  Click Element   ${locator.login_open_modal}
+  Wait Until Element Is Visible  ${locator.login_email_field}
+  Wait Until Page Contains Element  ${locator.login_email_field}  30
+  # input data
+  Click Element   ${locator.login_email_field}
+  Input text   ${locator.login_email_field}      ${login}
+  Input text   ${locator.login_password_field}   ${pass}
+  # button login
+  Wait Until Element Is Visible  ${locator.login_action}
+  Click Element   ${locator.login_action}
+  # Result
+  Sleep  3
 
