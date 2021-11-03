@@ -1,5 +1,5 @@
 *** Settings ***
-Library   ./helper/newtend_service.py
+Library   ../helper/newtend_service.py
 Resource  ../newtend.robot
 Resource  ../helper/helper.robot
 Resource  ../helper/data.robot
