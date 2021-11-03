@@ -47,7 +47,7 @@ def overwrite_procuringEntity_data(tender_data):
 def overwrite_features_values_in_new_feature(feature):
     feature['enum'][0]['value'] = 1
     feature['enum'][1]['value'] = 2
-    feature['enum'][2]['value'] = 2
+    feature['enum'][2]['value'] = 3
     return feature
 
 def overwrite_features_values(tender_data):
