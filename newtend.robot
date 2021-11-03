@@ -412,16 +412,10 @@ Resource  ./awards/awards.robot
 #                                                              #
 ################################################################
 
-Отримати інформацію про mainProcurementCategory
-  [Arguments]    @{ARGS}
-  ${length_args}=  Get Length  ${ARGS}
-  :FOR  ${INDEX}  IN RANGE  ${length_args}
-  \  Log To Console  ARG '${INDEX}' - ${ARGS[${INDEX}]}
-
 
 ################################################################
 #                                                              #
-#                    Qualification                             #
+#                    Suplier                                   #
 #                                                              #
 ################################################################
 Завантажити документ рішення кваліфікаційної комісії
@@ -471,6 +465,17 @@ Resource  ./awards/awards.robot
   ${bid_decline}=  Get WebElement  xpath=//button[@ng-click="decide('unsuccessful')"]
   Wait And Click  ${bid_decline}
 
+################################################################
+#                                                              #
+#                    END Suplier                               #
+#                                                              #
+################################################################
+
+################################################################
+#                                                              #
+#                    Qualification                             #
+#                                                              #
+################################################################
 
 Підтвердити кваліфікацію
   [Arguments]    @{ARGS}
@@ -482,8 +487,11 @@ Resource  ./awards/awards.robot
   ${tender_id}=  Set Variable  ${ARGS[1]}
   ${qulification_number}=  Set Variable  ${ARGS[2]}
 
+  Run Keyword And Return Status  Log Dictionary  ${USERS.users['Newtend_Owner'].initial_data.data}
+
   Find Tender By Id  ${tender_id}
   Go To Prequlification
+  #Wait Tender Status  'active.qualification'
 
   ${button_confirm}=  Set Variable  xpath=//button[@ng-click="decide(qualification.id, true)"]
 
@@ -491,9 +499,11 @@ Resource  ./awards/awards.robot
   Wait Until Page Contains Element  ${modal_window}
 
   ${radio_button_confirm}=  Set Variable  xpath=//input[@name="agree-qualified"]
+  Wait Until Page Contains Element  ${radio_button_confirm}
   Select Checkbox  ${radio_button_confirm}
 
   ${radio_button_article17}=  Set Variable  xpath=//input[@name="agree-eligible"]
+  Wait Until Page Contains Element  ${radio_button_article17}
   Select Checkbox  ${radio_button_article17}
 
   # submit approve
@@ -514,13 +524,16 @@ Resource  ./awards/awards.robot
 
   Find Tender By Id  ${tender_id}
   Go To Prequlification
+  #Wait Tender Status  'active.qualification'
 
   ${button_decline}=  Set Variable  xpath=//button[@ng-click="decide(qualification.id, true)"]
-
+  Wait And Click  ${button_decline}
   # if you decline
   # you should choise reason
   #
-  Select Checkbox  xpath=//input[@id="reason2"]
+  ${checkbox_reason_decline}=  Set Variable  xpath=//input[@id="reason2"]
+  Wait Until Page Contains Element  ${checkbox_reason_decline}
+  Select Checkbox  ${checkbox_reason_decline}
 
   # And write short description
   Wait And Type  xpath=//textarea[@id="description"]  short decline reason
@@ -544,6 +557,7 @@ Resource  ./awards/awards.robot
 
   Find Tender By Id  ${tender_id}
   Go To Prequlification
+  #Wait Tender Status  'active.qualification'
 
   ${button_cancelled}=  Set Variable  xpath=//button[@ng-click="cancelDecision(qualification.id)"]
   Wait And Click  ${button_cancelled}
@@ -560,10 +574,25 @@ Resource  ./awards/awards.robot
   ${qulification_number}=  Set Variable  ${ARGS[2]}
 
   Find Tender By Id  ${tender_id}
+  Go To Prequlification
+  #Wait Tender Status  'active.qualification'
 
   ${button_approve}=  Set Variable  xpath=//button[@ng-click="approveQualifications()"]
   Wait And Click  ${button_approve}
 
+Wait Tender Status
+  [Arguments]  ${status_should_be}
+  Wait Until Keyword Succeeds  20 minute  30 seconds  Check Tender Status  ${status_should_be}
+
+Check Tender Status
+  [Arguments]  ${status_should_be}
+  ${done}=  Set Variable  False
+  Reload Page
+  ${current_status}=  Отримати Планову інформацію про status
+  Sleep  20
+  Log To Console  [ ] Wait tender status: ${status_should_be} Now: ${current_status}
+  ${done}=  Run Keyword And Return Status  Should Be Equal  ${status_should_be}  ${current_status}
+  [Return] ${done}
 
 ################################################################
 #                                                              #
@@ -646,7 +675,6 @@ Resource  ./awards/awards.robot
   Go To Edit Tender
   Delete Feature  ${feature_id}
   Publish tender
-
 
 ################################################################
 #                                                              #
@@ -774,4 +802,9 @@ Resource  ./awards/awards.robot
   [Arguments]  @{ARGS}
   Print Args  ${ARGS}
 
+Отримати інформацію про mainProcurementCategory
+  [Arguments]    @{ARGS}
+  ${length_args}=  Get Length  ${ARGS}
+  :FOR  ${INDEX}  IN RANGE  ${length_args}
+  \  Log To Console  ARG '${INDEX}' - ${ARGS[${INDEX}]}
 
