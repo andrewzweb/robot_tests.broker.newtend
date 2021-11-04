@@ -654,21 +654,58 @@ Check Tender Status
   [Arguments]    @{ARGS}
   Log To Console  [+] Get Info From Reatures
   # TODO
-  Print Args  ${ARGS}
-  [Return]  1
+  Print Args  @{ARGS}
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${hash_id}=  Set Variable  ${ARGS[2]}
+  ${field}=  Set Variable  ${ARGS[3]}
+
+  Find Tender By Id  ${tender_id}
+  Sleep  2
+  ${result}=  Get Feature Title  ${hash_id}
+  [Return]  ${result}
+
+Get Feature Title
+  [Arguments]  ${feature_id}
+
+  ${result}=  Set Variable  0
+  ${feature_elements}=  Get WebElements  xpath=//div[@class="tender-feature__title"]
+  ${count_features}=  Get Length  ${feature_elements}
+
+  :FOR  ${index}  IN RANGE  ${count_features}
+  \  ${id}=  Set Variable  feature_title_${index}
+  \  ${current_title}=  Get Text  xpath=//span[@id='${id}']
+  \  ${is_need_element}=  is_one_string_include_other_string  ${current_title}  ${feature_id}
+  \  Log To Console  [ ] what we looking for ${index}? : ${is_need_element}
+  \  ${result}=  Run Keyword If  ${is_need_element} == True   Set Variable  ${current_title}
+  \  Exit For Loop IF  ${is_need_element} == True
+
+  [Return]  ${result}
 
 Додати неціновий показник на тендер
   [Arguments]  ${username}  ${tender_id}  ${feature_date}
   Log To Console  [+] Add features in tender
   # TODO
+  Print Args  ${username}  ${tender_id}  ${feature_date}
   Find Tender By Id  ${tender_id}
   Go To Edit Tender
   Add New Feature  ${feature_date}
+  Sleep  10
   Publish tender
 
+  #Set List Value  ${USERS.users['${username}'].data.features}  -1  ${feature_date}
+  #${old_feature}=  Set Variable  ${USERS.users['${username}'].data.features[0]}
+  #${}
+  #Set To Dictionary  ${USERS.users['${username}'].data.features}  ${new_feature_date}
+  
 Видалити неціновий показник
   [Arguments]  ${username}  ${tender_id}  ${feature_id}
+
   Log To Console  [+] Delete features in tender
+  Print Args  ${username}  ${tender_id}  ${feature_id}
+  # ARG[0] - Newtend_Owner
+  # ARG[1] - UA-2021-11-03-000401-c
+  # ARG[2] - f-02660b81
 
   Find Tender By Id  ${tender_id}
   Go To Edit Tender
