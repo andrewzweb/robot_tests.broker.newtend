@@ -97,21 +97,35 @@ Create Feature
 
   # click to save features
   Wait And Click  ${locator.edit_feature_save_form}
+  Sleep  3
 
 Delete Feature
   [Arguments]  ${feature_id}
 
   Log To Console  [*] Delete feature: ${feature_id}
 
+  # open
   ${locator_button_open_features_list}=  Set Variable  xpath=//input[@id="qualityIndicator"]
   Wait And Click  ${locator_button_open_features_list}
+  Sleep  2
+  ${feature_elements}=  Get WebElements  xpath=//div[@ng-repeat="item in features track by $index"]
+  ${count_features}=  Get Length  ${feature_elements}
+  Log To Console  [i] Count features ${count_features}
+  ${feature_title_elements}=  Get WebElements  xpath=//div[@ng-repeat="item in features track by $index"]/div/div/input[@ng-model="item.title"]
 
-  # delete feature
-  Wait And Click  xpath=//a[@id="remove_feature_0"]
+  :FOR  ${index}  IN RANGE  ${count_features}
+  \  ${id}=  Set Variable  quality_title_${index}
+  \  ${current_title}=  Get Element Attribute  xpath=//input[@id='${id}']@value
+  \  ${is_need_element}=  is_one_string_include_other_string  ${current_title}  ${feature_id}
+  \  Log To Console  [ ] delete ${index}? : ${is_need_element}
+  \  Run Keyword If  ${is_need_element} == True    Wait And Click  xpath=//a[@id="remove_feature_${index}"]
+  \  Exit For Loop IF  ${is_need_element} == True
 
 
+  # close
   # click to save features
   Wait And Click  ${locator.edit_feature_save_form}
+  Sleep  3
 
 Delete All Features
   # delete all
