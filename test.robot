@@ -8,20 +8,40 @@ Resource  newtend.robot
 
 Library  Selenium2Library
 Library  DebugLibrary
-Library  Selenium2Screenshots
+#Library  Selenium2Screenshots
 Library  OperatingSystem
 
 #Library  AppiumLibrary
 
 *** Variables ***
-&{D1}    a=1
 ${username}  Newtend_Owner
 ${OUTPUT_DIR}  .
 ${BROWSER}  chrome
-
+${tender_id}  UA-2021-11-04-000105-d
 
 *** Test Cases ***
-Remove feature
+
+My fast test
+  Prapare Browser
+
+  # done
+  # Видалити неціновий показник  ${username}  ${tender_id}  f-01
+
+  # process
+  ${result}=  Отримати інформацію із нецінового показника  ${username}  ${tender_id}  f-0ff12727  title
+  Log To Console  ${result}
+  
+
+  # tests
+  # Підтвердити кваліфікацію  ${username}  ${tender_id}  1
+  # Відхилити кваліфікацію  ${username}  ${tender_id}  2
+  # Скасувати кваліфікацію  ${username}  ${tender_id}  2
+  # Затвердити остаточне рішення кваліфікації
+  
+  [Teardown]    Close Browser
+
+*** Keywords ***
+Prapare Browser
   Open Browser  https://autotest.newtend.com/  ${BROWSER}
   Set Window Size  1024  764
   Add Cookie  autotest  1  domain=autotest.newtend.com  expiry=2021-11-30 16:21:35
@@ -30,22 +50,6 @@ Remove feature
   ${pass}=  Set Variable  testowner0
   Custom Login  ${login}  ${pass}
 
-  Видалити неціновий показник  Newtend_Owner  UA-2021-11-03-000366-c  1
-  [Teardown]    Close Browser
-
-#My fast test
-  #Open Browser  https://autotest.newtend.com/
-  #Add Cookie  autotest  1  domain=autotest.newtend.com  expiry=2021-11-30 16:21:35
-
-  #${login}=  Set Variable  test.owner@gmail.com
-  #${pass}=  Set Variable  testowner0
-  #Custom Login  ${login}  ${pass}
-
-  # tests
-  #Підтвердити кваліфікацію  Newtend_Owner  UA-2021-11-03-000366-c  1
-  #[Teardown]    Close Browser
-
-*** Keywords ***
 Custom Login
   [ARGUMENTS]   ${login}  ${pass}
 
@@ -64,4 +68,11 @@ Custom Login
   Click Element   ${locator.login_action}
   # Result
   Sleep  3
+  
+Remove feature
+  Prapare Browser
+
+  Видалити неціновий показник  ${username}  ${tender_id}  1
+  [Teardown]    Close Browser
+
 
