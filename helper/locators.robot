@@ -1,5 +1,5 @@
 ** Settings ***
-Resource  ./plan/plan_locators.robot
+Resource  ../plan/plan_locators.robot
 
 *** Variables ***
 ${locator.title}                     id=tender-title
