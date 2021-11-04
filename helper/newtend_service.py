@@ -60,16 +60,14 @@ def overwrite_features_values(tender_data):
     return tender_data
 
 def is_one_string_include_other_string(target_string, pattern_string):
-    result = None
-    print(target_string, pattern_string)
-    if str(pattern_string) in str(target_string):
-        print(True, target_string, pattern_string)
+    result = False
+    target_string = str(target_string.encode('ascii','ignore'))
+    pattern_string = str(pattern_string.encode('ascii','ignore'))
+    if pattern_string in target_string:
         result = True
-    elif str(pattern_string) not in str(target_string):
-        print(False, target_string, pattern_string)
+    elif pattern_string not in target_string:
         result = False
     return result
-
 
 def update_data_for_newtend(tender_data):
     return tender_data
