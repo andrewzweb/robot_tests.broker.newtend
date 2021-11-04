@@ -571,7 +571,6 @@ Resource  ./awards/awards.robot
 
   ${username}=  Set Variable  ${ARGS[0]}
   ${tender_id}=  Set Variable  ${ARGS[1]}
-  ${qulification_number}=  Set Variable  ${ARGS[2]}
 
   Find Tender By Id  ${tender_id}
   Go To Prequlification
