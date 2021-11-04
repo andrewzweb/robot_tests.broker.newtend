@@ -111,10 +111,13 @@ def convert_to_human_like_data(raw_key):
 
 dict_units = {
     # --- tender status ---
+    u"АУКЦІОН": u'active.auction',
     u'КВАЛІФІКАЦІЯ': u'active.pre-qualification',
     u'ПРЕКВАЛІФІКАЦІЯ': u'active.qualification',
     u'УТОЧНЕННЯ': u'active.enquiries',
     u'ПРОПОЗИЦІЇ': u'active.tendering',
+
+    # ru
     u'Черновик. Второй этап': u'draft.stage2',
     u'Объявление второго этапа' : u'active.stage2.waiting',
     u'Ожидание второго этапа' : u'active.stage2.pending',
