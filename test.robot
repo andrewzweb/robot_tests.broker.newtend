@@ -18,11 +18,11 @@ ${username}  Newtend_Owner
 ${OUTPUT_DIR}  .
 ${BROWSER}  chrome
 ${tender_id}  UA-2021-11-05-000204-c
-
+@{L2}  1  2  2  3
 *** Test Cases ***
 
-My fast test
-  Prapare Browser
+#My fast test
+  #Prapare Browser
 
   # done
   # Видалити неціновий показник  ${username}  ${tender_id}  f-01
@@ -38,13 +38,21 @@ My fast test
   #Підтвердити кваліфікацію  ${username}  ${tender_id}  2
   #Затвердити остаточне рішення кваліфікації  ${username}  ${tender_id}
 
-  Find Tender By Id  ${tender_id}
-  Log To Console  [+] Find tender
-  Wait Tender Status  active.pre
-  Log To Console  [+] Wait done
-  Log To Console  [+] End
+  # wait tenter status
+  #Find Tender By Id  ${tender_id}
+  #Log To Console  [+] Find tender
+  #Wait Tender Status  active.pre
+  #Log To Console  [+] End
 
-  [Teardown]    Close Browser
+  #Find Tender By Id  ${tender_id}
+  #${id}=  Get Internal ID
+  #Log To Console  ${id}
+  #[Teardown]    Close Browser
+
+Get Api Test
+  Set Global Variable  ${g_data.current_tender_internal_id}  f5926f5a8d8a4350b7eb92d471729f74
+  ${tender}=  Return Tender Obj  ${g_data.current_tender_internal_id}
+  Log To Console  ${tender['data']['features']}
 
 *** Keywords ***
 Prapare Browser

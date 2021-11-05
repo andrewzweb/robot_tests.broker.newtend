@@ -204,6 +204,8 @@ Resource  ./awards/awards.robot
   Change Language to UKR
   Create Tender  ${username}  ${tender_data}  ${plan_uaid}
   ${id}=  Set Variable  ${g_data.current_tender_id}
+  # internal ID and put in global
+  Get Internal ID
   [Return]  ${id}
 
 Створити тендер з критеріями
@@ -216,6 +218,7 @@ Resource  ./awards/awards.robot
   Log To Console  ${criteria_llc}
   Create Tender  ${username}  ${tender_data}  ${tender_id}
   ${id}=  Set Variable  ${g_data.current_tender_id}
+  Get Internal ID
   [Return]  ${id}
 
 Створити тендер другого етапу
@@ -226,6 +229,7 @@ Resource  ./awards/awards.robot
 
   ${id}=  Set Variable  ${g_data.current_tender_id}
   Log To Console  [+] Create Tender ID: ${id}
+  Get Internal ID
   [Return]  ${id}
 
 Підготувати дані для оголошення тендера
@@ -589,6 +593,19 @@ Resource  ./awards/awards.robot
   Delete Feature  ${feature_id}
   #Delete All Features
   Publish tender
+
+
+  Log To Console  Internal ID: ${g_data.current_tender_internal_id}
+  ${tender}=  Return Tender Obj  ${g_data.current_tender_internal_id}
+  Log  ${tender}
+  Set To Dictionary  ${USERS.users['Newtend_Owner'].tender_data.data}  features=${tender['data']['features']}
+
+Get Internal ID
+  #https://autotest.newtend.com/opc/provider/tender/f5926f5a8d8a4350b7eb92d471729f74/overview
+  ${location}=  Get Location
+  ${internal_id}=  Get Substring  ${location}  -41  -9
+  Set Global Variable  ${g_data.current_tender_internal_id}  ${internal_id}
+  [Return]  ${internal_id}
 
 ################################################################
 #                                                              #

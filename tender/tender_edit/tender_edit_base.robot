@@ -126,6 +126,9 @@ Delete Feature
   # click to save features
   Wait And Click  ${locator.edit_feature_save_form}
   Sleep  3
+  Log  ${USERS.users['Newtend_Owner'].tender_data.data['features']}
+
+
 
 Delete All Features
   # delete all
@@ -189,6 +192,9 @@ Add New Feature
   Wait And Click  ${locator.edit_feature_save_form}
 
   Sleep  4
+
+  Log  ${USERS.users['Newtend_Owner'].tender_data.data['features']}
+
 
 Edit Budget In Reporting
   [Arguments]  ${tender_data}
@@ -577,6 +583,6 @@ Put Tender In Global Verable
   ${tender_data}=  Get From Dictionary  ${raw_tender_data}  data
   #Log To Console  ${tender_data}
   Set To Dictionary  ${USERS.users['${username}'].tender_data}   data=${tender_data}
-  Set To Dictionary  ${USERS.users['${username}'].initial_data.tender_data}   data=${tender_data}
+  #Set To Dictionary  ${USERS.users['${username}'].initial_data}  tender_data=${raw_tender_data}
   #Set Global Variable  ${USERS.users['${username}'].data}  ${tender_data}
   Log To Console  [+] Put Tender Data Api In Storage
