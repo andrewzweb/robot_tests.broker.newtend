@@ -80,7 +80,7 @@ Find Tender By Id
   Click Element  ${locator.tender_search_button}
   Sleep  3
 
-  Wait Until Keyword Succeeds  2 minute  30 seconds  Try Choice Tender From Search List  ${tender_id}
+  Wait Until Keyword Succeeds  2 minute  15 seconds  Try Choice Tender From Search List  ${tender_id}
 
 Try Choice Tender From Search List
   [Arguments]  ${tender_id}
@@ -92,6 +92,7 @@ Try Choice Tender From Search List
   ${can_click}=  Run Keyword And Return Status  Click Element  ${locator.link_to_tender}
   Run Keyword If  '${can_click}' == False  Log To Console  [-] Can't see tender in search wait..
   Run Keyword If  '${can_click}' == True   Log To Console  [+] See tender in search and click
+  Sleep  5
   [Return]  ${can_click}
 ################################################################
 #                                                              #
