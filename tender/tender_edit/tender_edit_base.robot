@@ -577,5 +577,6 @@ Put Tender In Global Verable
   ${tender_data}=  Get From Dictionary  ${raw_tender_data}  data
   #Log To Console  ${tender_data}
   Set To Dictionary  ${USERS.users['${username}'].tender_data}   data=${tender_data}
+  Set To Dictionary  ${USERS.users['${username}'].initial_data.tender_data}   data=${tender_data}
   #Set Global Variable  ${USERS.users['${username}'].data}  ${tender_data}
   Log To Console  [+] Put Tender Data Api In Storage
