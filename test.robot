@@ -17,7 +17,7 @@ Library  OperatingSystem
 ${username}  Newtend_Owner
 ${OUTPUT_DIR}  .
 ${BROWSER}  chrome
-${tender_id}  UA-2021-11-04-000105-d
+${tender_id}  UA-2021-11-05-000204-c
 
 *** Test Cases ***
 
@@ -27,17 +27,23 @@ My fast test
   # done
   # Видалити неціновий показник  ${username}  ${tender_id}  f-01
 
-  # process
-  ${result}=  Отримати інформацію із нецінового показника  ${username}  ${tender_id}  f-0ff12727  title
-  Log To Console  ${result}
-  
+  # process openeu features get title
+  #${result}=  Отримати інформацію із нецінового показника  ${username}  ${tender_id}  f-0ff12727  title
+  #Log To Console  ${result}
 
-  # tests
-  # Підтвердити кваліфікацію  ${username}  ${tender_id}  1
-  # Відхилити кваліфікацію  ${username}  ${tender_id}  2
-  # Скасувати кваліфікацію  ${username}  ${tender_id}  2
-  # Затвердити остаточне рішення кваліфікації
-  
+  # tests openeu pre qulification
+  #Підтвердити кваліфікацію  ${username}  ${tender_id}  1
+  #Відхилити кваліфікацію  ${username}  ${tender_id}  1
+  #Скасувати кваліфікацію  ${username}  ${tender_id}  2
+  #Підтвердити кваліфікацію  ${username}  ${tender_id}  2
+  #Затвердити остаточне рішення кваліфікації  ${username}  ${tender_id}
+
+  Find Tender By Id  ${tender_id}
+  Log To Console  [+] Find tender
+  Wait Tender Status  active.pre
+  Log To Console  [+] Wait done
+  Log To Console  [+] End
+
   [Teardown]    Close Browser
 
 *** Keywords ***
