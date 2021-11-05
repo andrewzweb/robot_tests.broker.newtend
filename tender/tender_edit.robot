@@ -3,6 +3,7 @@ Resource  ./tender_edit/tender_edit_base.robot
 Resource  ./tender_edit/tender_edit_bid.robot
 Resource  ./tender_edit/tender_edit_lot.robot
 Resource  ./tender_edit/tender_edit_item.robot
+Resource  ./tender_edit/tender_edit_qualification.robot
 
 *** Keywords ***
 
