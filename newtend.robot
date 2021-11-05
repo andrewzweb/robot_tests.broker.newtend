@@ -491,9 +491,17 @@ Resource  ./awards/awards.robot
 
   Find Tender By Id  ${tender_id}
   Go To Prequlification
-  #Wait Tender Status  'active.qualification'
+  Wait Tender Status  active.qualification
 
-  ${button_confirm}=  Set Variable  xpath=//button[@ng-click="decide(qualification.id, true)"]
+  ${number}=  Evaluate  ${qulification_number}-1
+  Log To Console  [ ] Number ${number}
+
+  ${button_confirm}=  Set Variable  xpath=//div[@id="qualification_${number}_${number}"]/..//button[@ng-click="decide(qualification.id, true)"]
+
+  Log To Console  [ ] Button ${button_confirm}
+
+  Wait And Click  ${button_confirm}
+  Sleep  2
 
   ${modal_window}=  Set Variable  xpath=//div[@class="modal-header ng-binding"]
   Wait Until Page Contains Element  ${modal_window}
@@ -505,13 +513,13 @@ Resource  ./awards/awards.robot
   ${radio_button_article17}=  Set Variable  xpath=//input[@name="agree-eligible"]
   Wait Until Page Contains Element  ${radio_button_article17}
   Select Checkbox  ${radio_button_article17}
-
   # submit approve
   Wait And Click  xpath=//button[@ng-click="submit()"]
 
+  Sleep  2
   # singup need
   Wait And Click  xpath=//button[@ng-click="vm.sign()"]
-
+  Sleep  4
 
 Відхилити кваліфікацію
   [Arguments]    @{ARGS}
@@ -524,13 +532,17 @@ Resource  ./awards/awards.robot
 
   Find Tender By Id  ${tender_id}
   Go To Prequlification
-  #Wait Tender Status  'active.qualification'
+  Wait Tender Status  active.qualification
 
-  ${button_decline}=  Set Variable  xpath=//button[@ng-click="decide(qualification.id, true)"]
+  ${number}=  Evaluate  ${qulification_number}-1
+
+  ${button_decline}=  Set Variable  xpath=//div[@id="qualification_${number}_${number}"]/..//button[@ng-if="actions.qualifications[qualification.id].can_decline"]
   Wait And Click  ${button_decline}
+
   # if you decline
   # you should choise reason
   #
+  Sleep  2
   ${checkbox_reason_decline}=  Set Variable  xpath=//input[@id="reason2"]
   Wait Until Page Contains Element  ${checkbox_reason_decline}
   Select Checkbox  ${checkbox_reason_decline}
@@ -543,7 +555,7 @@ Resource  ./awards/awards.robot
 
   # singup need
   Wait And Click  xpath=//button[@ng-click="vm.sign()"]
-
+  Sleep  5
 
 Скасувати кваліфікацію
   [Arguments]    @{ARGS}
@@ -559,9 +571,11 @@ Resource  ./awards/awards.robot
   Go To Prequlification
   #Wait Tender Status  'active.qualification'
 
-  ${button_cancelled}=  Set Variable  xpath=//button[@ng-click="cancelDecision(qualification.id)"]
-  Wait And Click  ${button_cancelled}
+  ${number}=  Evaluate  ${qulification_number}-1
 
+  ${button_cancelled}=  Set Variable  xpath=//div[@id="qualification_${number}_${number}"]/..//button[@ng-click="cancelDecision(qualification.id)"]
+  Wait And Click  ${button_cancelled}
+  Sleep  4
 
 Затвердити остаточне рішення кваліфікації
   [Arguments]    @{ARGS}
@@ -579,19 +593,21 @@ Resource  ./awards/awards.robot
   ${button_approve}=  Set Variable  xpath=//button[@ng-click="approveQualifications()"]
   Wait And Click  ${button_approve}
 
+  Sleep  7
+
 Wait Tender Status
   [Arguments]  ${status_should_be}
-  Wait Until Keyword Succeeds  20 minute  30 seconds  Check Tender Status  ${status_should_be}
+  Log To Console  [*]  Wait Status
+  ${status}=  Wait Until Keyword Succeeds  25 minute  15 seconds  Check Tender Status  ${status_should_be}
 
 Check Tender Status
   [Arguments]  ${status_should_be}
   ${done}=  Set Variable  False
-  Reload Page
-  ${current_status}=  Отримати Планову інформацію про status
-  Sleep  20
-  Log To Console  [ ] Wait tender status: ${status_should_be} Now: ${current_status}
-  ${done}=  Run Keyword And Return Status  Should Be Equal  ${status_should_be}  ${current_status}
-  [Return] ${done}
+  ${current_status}=  Отримати інформацію про status
+  Log To Console  [ ] Wait until tender status: ${status_should_be} Now: ${current_status}
+  Should Be True  '${status_should_be}' == '${current_status}'
+  #${done}=  Run Keyword If  '${status_should_be}' == '${current_status}'  Set Variable  True
+  #...  ELSE  Set Variable  False
 
 ################################################################
 #                                                              #
@@ -710,6 +726,7 @@ Get Feature Title
   Find Tender By Id  ${tender_id}
   Go To Edit Tender
   Delete Feature  ${feature_id}
+  #Delete All Features
   Publish tender
 
 ################################################################
