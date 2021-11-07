@@ -279,8 +279,11 @@ Publish tender
 
 Змінити в тендері поле tenderPeriod.endDate і зберегти
   [Arguments]  ${date}
-  Sleep  3
+  Log To Console  [+] Change tender end date: ${date}
+  Sleep  2
   Set Date Time  xpath=//input[@id="input-date-tender-tenderPeriod-endDate"]  ${date}
+  Sleep  2
+  Set To Dictionary  ${USERS.users['Newtend_Owner'].tender_data.data.tenderPeriod}  endDate=${date}
 
 Змінити в тендері поле description і зберегти
   [Arguments]  ${description}
