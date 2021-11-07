@@ -49,10 +49,15 @@ ${tender_id}  UA-2021-11-05-000204-c
   #Log To Console  ${id}
   #[Teardown]    Close Browser
 
-Get Api Test
-  Set Global Variable  ${g_data.current_tender_internal_id}  f5926f5a8d8a4350b7eb92d471729f74
-  ${tender}=  Return Tender Obj  ${g_data.current_tender_internal_id}
-  Log To Console  ${tender['data']['features']}
+#Get Api Test
+#  Set Global Variable  ${g_data.current_tender_internal_id}  f5926f5a8d8a4350b7eb92d471729f74
+#  ${tender}=  Return Tender Obj  ${g_data.current_tender_internal_id}
+#  Log To Console  ${tender['data']['features']}
+
+Convert str to int
+    ${numb}=  Set Variable  0.05
+    ${result}=  convert_enum_str_to_int  ${numb}
+    Log To Console  ${result}
 
 *** Keywords ***
 Prapare Browser

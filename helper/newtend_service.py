@@ -45,19 +45,23 @@ def overwrite_procuringEntity_data(tender_data):
     return tender_data
 
 def overwrite_features_values_in_new_feature(feature):
-    feature['enum'][0]['value'] = 1
-    feature['enum'][1]['value'] = 2
-    feature['enum'][2]['value'] = 3
+    #feature['enum'][0]['value'] = 1
+    #feature['enum'][1]['value'] = 2
+    #feature['enum'][2]['value'] = 3
     return feature
 
 def overwrite_features_values(tender_data):
-    try:
-        tender_data['data']['features'][0]['enum'][0]['value'] = 1
-        tender_data['data']['features'][0]['enum'][1]['value'] = 2
-        tender_data['data']['features'][0]['enum'][2]['value'] = 3
-    except:
-        pass
+    #try:
+    #    tender_data['data']['features'][0]['enum'][0]['value'] = 1
+    #    tender_data['data']['features'][0]['enum'][1]['value'] = 2
+    #    tender_data['data']['features'][0]['enum'][2]['value'] = 3
+    #except:
+    #    pass
     return tender_data
+
+def convert_enum_str_to_int(enum):
+    enum = float(enum) * 100
+    return int(enum)
 
 def is_one_string_include_other_string(target_string, pattern_string):
     result = False
