@@ -255,6 +255,7 @@ Resource  ./awards/awards.robot
 
   # save
   Publish tender
+  Sleep  5
 
 Оновити сторінку з тендером
   [Arguments]  @{ARGUMENTS}

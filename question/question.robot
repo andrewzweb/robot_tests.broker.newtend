@@ -51,7 +51,7 @@ Answer to question
    Wait And Click  ${locator.ask__tab_question}
 
    # wait to show chat item
-   Wait Until Page Contains Element  xpath=//div[contains(., '${question_id}')]
+   Wait Until Page Contains Element  xpath=//div[contains(., '${question_id}')]  20
    Mouse Over  xpath=//div[contains(., '${question_id}')]  # should show answer btn
    # ckick to button answer to question
    Click Element   ${locator.ask_button_answer_to_question}
@@ -67,8 +67,8 @@ Answer to question
 
 
 Отримати інформацію про questions[0].title
-  [Arguments]  ${argument}
-  ${title}=   Get Text   xpath=//span[contains(text(), '${argument}')]
+  [Arguments]  ${argument}=None
+  ${title}=  Run Keyword If  ${argument} != None  Get Text   xpath=//span[contains(text(), '${argument}')]   
   [Return]  ${title}
 
 Отримати інформацію запитання із поля title
