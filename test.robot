@@ -21,13 +21,15 @@ ${tender_id}  UA-2021-11-08-000067-d
 
 @{L2}  1  2  2  3
 ${date}   2021-11-07T22:59:27.999676+02:00
+${g_data.current_tender_internal_id}  551ded127bac4d298d11a5443dd642a2
 *** Test Cases ***
 
 Current test
   Prapare Browser
   Qulification test
   [Teardown]    Close Browser
-
+#Test
+#  Test Qulification Api
 
 *** Keywords ***
 Prapare Browser
@@ -71,16 +73,16 @@ Remove feature
 
 Qulification test
   # tests openeu pre qulification
-  Підтвердити кваліфікацію  ${username}  ${tender_id}  1
+  #Підтвердити кваліфікацію  ${username}  ${tender_id}  1
   Відхилити кваліфікацію  ${username}  ${tender_id}  2
-  Скасувати кваліфікацію  ${username}  ${tender_id}  2
-  Підтвердити кваліфікацію  ${username}  ${tender_id}  2
-  Затвердити остаточне рішення кваліфікації  ${username}  ${tender_id}
+  #Скасувати кваліфікацію  ${username}  ${tender_id}  2
+  #Підтвердити кваліфікацію  ${username}  ${tender_id}  2
+  #Затвердити остаточне рішення кваліфікації  ${username}  ${tender_id}
 
 Convert str to int
-    ${numb}=  Set Variable  0.05
-    ${result}=  convert_enum_str_to_int  ${numb}
-    Log To Console  ${result}
+  ${numb}=  Set Variable  0.05
+  ${result}=  convert_enum_str_to_int  ${numb}
+  Log To Console  ${result}
 
 Change tenderPeriod.endDate
   Змінити в тендері поле tenderPeriod.endDate і зберегти  ${date}
@@ -109,3 +111,15 @@ Delete Feature
   Edit tender  
   Видалити неціновий показник  ${username}  ${tender_id}  f-01
 
+Test Qulification Api
+  ${result}=  api_get_qulification_id_hesh  551ded127bac4d298d11a5443dd642a2  1
+  Log To Console  ${result}
+  Should Be Equal   ${result}  7b6f154ce8934313ba1b4761696c5f1e
+  ${result}=  api_get_qulification_id_hesh  551ded127bac4d298d11a5443dd642a2  2
+  Log To Console  ${result}
+  Should Be Equal   ${result}  4c16995435be4ba098147281be635b77
+
+Test Get Tender Perion End
+  ${result}=  api_get_tenderPeriod_end_date  551ded127bac4d298d11a5443dd642a2
+  Log To Console  ${result}
+  Should Be Equal   ${result}  2021-11-08T15:34:00+02:00
