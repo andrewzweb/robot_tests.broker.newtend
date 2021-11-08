@@ -18,7 +18,8 @@ Ask question
 
   Find Tender By Id  ${tender_id}
 
-  Wait And Click  ${locator.ask__tab_question}
+  Go To Questions Of Tender
+
   Wait And Click  ${locator.button_ask_question}
 
   ${title}=        Get From Dictionary  ${question_data.data}  title
@@ -48,7 +49,7 @@ Answer to question
    newtend.Пошук тендера по ідентифікатору  ${username}  ${tender_id}
 
    # go to tab chat
-   Wait And Click  ${locator.ask__tab_question}
+   Go To Questions Of Tender
 
    # wait to show chat item
    Wait Until Keyword Succeeds  5 minute  30 seconds  Wait For Question  ${question_id}
