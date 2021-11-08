@@ -17,8 +17,9 @@ Library  OperatingSystem
 ${username}  Newtend_Owner
 ${OUTPUT_DIR}  .
 ${BROWSER}  chrome
-${tender_id}  UA-2021-11-05-000204-c
+${tender_id}  UA-2021-11-07-000008-d
 @{L2}  1  2  2  3
+${date}   2021-11-07T22:59:27.999676+02:00
 *** Test Cases ***
 
 #My fast test
@@ -59,6 +60,14 @@ Convert str to int
     ${result}=  convert_enum_str_to_int  ${numb}
     Log To Console  ${result}
 
+My fast test
+  Prapare Browser
+  Edit Tender
+  # work
+  Змінити в тендері поле tenderPeriod.endDate і зберегти  ${date}
+  [Teardown]    Close Browser
+
+   
 *** Keywords ***
 Prapare Browser
   Open Browser  https://autotest.newtend.com/  ${BROWSER}
@@ -69,6 +78,12 @@ Prapare Browser
   ${pass}=  Set Variable  testowner0
   Custom Login  ${login}  ${pass}
 
+Edit Tender
+  Find Tender By Id  ${tender_id}
+  Run Keyword  SingUp Tender
+  Sleep  2
+  Wait And Click  xpath=//a[@id="edit-tender-btn"]
+  
 Custom Login
   [ARGUMENTS]   ${login}  ${pass}
 
