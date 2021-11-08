@@ -8,6 +8,7 @@ ${data}                       hash
 
 Edit Tender Title and Description
   [Arguments]  ${tender_data}
+  Log To Console  [+] Edit tender title and description
   Wait Until Page Contains Element  id=tender-title     20
   ${title}=         Get From Dictionary   ${tender_data.data}  title
   ${description}=   Get From Dictionary   ${tender_data.data}  description
@@ -21,6 +22,7 @@ Edit Tender Title and Description
 Edit Features
   [Arguments]  ${tender_data}
 
+  Log To Console  [+] Edit tender Features
   # data
   ${procurementMethodType}=  Get From Dictionary  ${tender_data.data}  procurementMethodType
   ${data.features_data}=  Get From Dictionary  ${tender_data.data}  features
@@ -51,7 +53,7 @@ Create Feature
   ...        title_en: 'f-b360e661: Ad eos qui ut dicta.'
   ...        title_ru: 'f-360437d2: Рэктэквуэ ыёюз лыгимуз мэль ывыртятюр рыквюы.'
 
-  WrapLog  ${feature_data}
+  Log To Console  [+] Edit tender Features
 
   # data
   ${data}=  Set Variable  0
@@ -199,6 +201,8 @@ Add New Feature
 Edit Budget In Reporting
   [Arguments]  ${tender_data}
   # ====== budget ======
+
+  Log To Console  [+] Edit budget in Reporting
   ${budget}=        Run Keyword If   '${procurementMethodType}' in ['reporting', 'negotiation']   Get From Dictionary   ${tender_data.data.value}   amount
 
   ## Getting some Data according to procedure's type -== Main Block 1 ==-
@@ -228,13 +232,15 @@ Edit Budget In BelowThreshold
 
 Edit Choise Category Tender
   [Arguments]  ${tender_data}
-  CustomLog  [+] Edit Choise Category Tender
+  Log To Console  [+] Edit Choise Category Tender
   # Filling the Main Procurement category
   ${procurementCategory}=  Get From Dictionary   ${tender_data.data}   mainProcurementCategory
   ${procurementCategory_field}=  Get Webelement  id=mainProcurementCategory
   Select From List By Value   ${procurementCategory_field}   ${procurementCategory}
   
 If negotiation
+  CustomLog  [+] If negotiation
+    
   # Negotiation reson for Negotiation procedures only
   ${procurementMethodType}=  Get From Dictionary   ${tender_data.data}   procurementMethodType
   ${cause}=        Run Keyword If  '${procurementMethodType}' == 'negotiation'   Get From Dictionary   ${tender_data.data}   cause
@@ -501,6 +507,8 @@ Edit Supplement Criteria
   ...  -- data-requirement_group_id="4a1ef67cc9134fa2968f252b2c62deda"
   ...  --- data-requirement_id="f3dce577eee44bfc8c4f1cdb3535c811"
 
+  Log To Console  [+] Collect data about criteria
+  
   Sleep  3
 
   ${locator.criterias}=  Set Variable  xpath=//div[@ng-if="tender.criteria"]/div
@@ -584,6 +592,7 @@ Return Tender Obj
 
 Put Tender In Global Verable
   [Arguments]  ${username}
+  Log To Console  [+] Put Tender data in Global Veriable
   ${internal_id}=  Get Tender Internal Id
   ${raw_tender_data}=  Return Tender Obj  ${internal_id}
   ${tender_data}=  Get From Dictionary  ${raw_tender_data}  data
