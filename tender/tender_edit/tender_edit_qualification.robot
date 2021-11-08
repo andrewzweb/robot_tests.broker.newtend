@@ -7,11 +7,12 @@ Aprove Qualification
   Log To Console  [+] Approve qulification
   Print Args  @{ARGS}
 
-${username}=  Set Variable  ${ARGS[0]}
+  ${username}=  Set Variable  ${ARGS[0]}
   ${tender_id}=  Set Variable  ${ARGS[1]}
   ${qulification_number}=  Set Variable  ${ARGS[2]}
 
-  Run Keyword And Return Status  Log Dictionary  ${USERS.users['Newtend_Owner'].initial_data.data}
+  Run Keyword And Return Status  Log  ${USERS.users['Newtend_Owner'].tender_data.data}
+  Run Keyword And Return Status  Log  ${USERS.users['Newtend_Owner'].initial_data.data}
 
   Find Tender By Id  ${tender_id}
   Go To Prequlification
