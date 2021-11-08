@@ -17,57 +17,18 @@ Library  OperatingSystem
 ${username}  Newtend_Owner
 ${OUTPUT_DIR}  .
 ${BROWSER}  chrome
-${tender_id}  UA-2021-11-07-000008-d
+${tender_id}  UA-2021-11-08-000067-d
+
 @{L2}  1  2  2  3
 ${date}   2021-11-07T22:59:27.999676+02:00
 *** Test Cases ***
 
-#My fast test
-  #Prapare Browser
-
-  # done
-  # Видалити неціновий показник  ${username}  ${tender_id}  f-01
-
-  # process openeu features get title
-  #${result}=  Отримати інформацію із нецінового показника  ${username}  ${tender_id}  f-0ff12727  title
-  #Log To Console  ${result}
-
-  # tests openeu pre qulification
-  #Підтвердити кваліфікацію  ${username}  ${tender_id}  1
-  #Відхилити кваліфікацію  ${username}  ${tender_id}  1
-  #Скасувати кваліфікацію  ${username}  ${tender_id}  2
-  #Підтвердити кваліфікацію  ${username}  ${tender_id}  2
-  #Затвердити остаточне рішення кваліфікації  ${username}  ${tender_id}
-
-  # wait tenter status
-  #Find Tender By Id  ${tender_id}
-  #Log To Console  [+] Find tender
-  #Wait Tender Status  active.pre
-  #Log To Console  [+] End
-
-  #Find Tender By Id  ${tender_id}
-  #${id}=  Get Internal ID
-  #Log To Console  ${id}
-  #[Teardown]    Close Browser
-
-#Get Api Test
-#  Set Global Variable  ${g_data.current_tender_internal_id}  f5926f5a8d8a4350b7eb92d471729f74
-#  ${tender}=  Return Tender Obj  ${g_data.current_tender_internal_id}
-#  Log To Console  ${tender['data']['features']}
-
-Convert str to int
-    ${numb}=  Set Variable  0.05
-    ${result}=  convert_enum_str_to_int  ${numb}
-    Log To Console  ${result}
-
-My fast test
+Current test
   Prapare Browser
-  Edit Tender
-  # work
-  Змінити в тендері поле tenderPeriod.endDate і зберегти  ${date}
+  Qulification test
   [Teardown]    Close Browser
 
-   
+
 *** Keywords ***
 Prapare Browser
   Open Browser  https://autotest.newtend.com/  ${BROWSER}
@@ -102,11 +63,49 @@ Custom Login
   Click Element   ${locator.login_action}
   # Result
   Sleep  3
+
+# ============== end helper =================================
   
 Remove feature
-  Prapare Browser
-
   Видалити неціновий показник  ${username}  ${tender_id}  1
-  [Teardown]    Close Browser
 
+Qulification test
+  # tests openeu pre qulification
+  Підтвердити кваліфікацію  ${username}  ${tender_id}  1
+  Відхилити кваліфікацію  ${username}  ${tender_id}  2
+  Скасувати кваліфікацію  ${username}  ${tender_id}  2
+  Підтвердити кваліфікацію  ${username}  ${tender_id}  2
+  Затвердити остаточне рішення кваліфікації  ${username}  ${tender_id}
+
+Convert str to int
+    ${numb}=  Set Variable  0.05
+    ${result}=  convert_enum_str_to_int  ${numb}
+    Log To Console  ${result}
+
+Change tenderPeriod.endDate
+  Змінити в тендері поле tenderPeriod.endDate і зберегти  ${date}
+
+Get Api Test
+  Set Global Variable  ${g_data.current_tender_internal_id}  f5926f5a8d8a4350b7eb92d471729f74
+  ${tender}=  Return Tender Obj  ${g_data.current_tender_internal_id}
+  Log To Console  ${tender['data']['features']}
+
+Get Internal Id  
+  Find Tender By Id  ${tender_id}
+  ${id}=  Get Internal ID
+  Log To Console  ${id}
+
+Wait tenter status
+  Find Tender By Id  ${tender_id}
+  Log To Console  [+] Find tender
+  Wait Tender Status  active.pre
+  Log To Console  [+] End
+
+Process openeu features get title
+  ${result}=  Отримати інформацію із нецінового показника  ${username}  ${tender_id}  f-0ff12727  title
+  Log To Console  ${result}
+
+Delete Feature
+  Edit tender  
+  Видалити неціновий показник  ${username}  ${tender_id}  f-01
 
