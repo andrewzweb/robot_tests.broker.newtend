@@ -44,14 +44,14 @@ Get Info From Question
 
 Answer to question
    [Arguments]   ${username}  ${tender_id}  ${answer_data}  ${question_id}  @{ARGUMENTS}
-
+   Log To Console  [+] Answer to question id: ${question_id}
    newtend.Пошук тендера по ідентифікатору  ${username}  ${tender_id}
 
    # go to tab chat
    Wait And Click  ${locator.ask__tab_question}
 
    # wait to show chat item
-   Wait Until Page Contains Element  xpath=//div[contains(., '${question_id}')]  20
+   Wait Until Keyword Succeeds  5 minute  30 seconds  Wait For Question  ${question_id}
    Mouse Over  xpath=//div[contains(., '${question_id}')]  # should show answer btn
    # ckick to button answer to question
    Click Element   ${locator.ask_button_answer_to_question}
@@ -65,6 +65,11 @@ Answer to question
    # send answer
    Wait And Click  ${locator.ask__send_answer}
 
+Wait For Question
+  [Arguments]  ${question_id}
+  Log To Console  [+]_ Wait for quesion id: ${question_id}
+  Reload Page
+  Wait Until Page Contains Element  xpath=//div[contains(., '${question_id}')]
 
 Отримати інформацію про questions[0].title
   [Arguments]  ${argument}=None
