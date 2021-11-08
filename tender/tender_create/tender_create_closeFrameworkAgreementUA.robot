@@ -5,6 +5,10 @@ Resource  ../tender.robot
 
 Create Framework Agreement Tender
   [Arguments]  ${tender_data}
+  Print Args  @{ARGS}
+  ${username}=     Set Variable  ${ARGS[0]}
+  ${tender_data}=  Set Variable  ${ARGS[1]}
+
   Log To Console  [.] Creating Create Framework Agreement Tender
 
   ${tender_data}=  overwrite_procuringEntity_data  ${tender_data}
