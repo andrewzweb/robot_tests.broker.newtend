@@ -284,9 +284,12 @@ Publish tender
   Set Date Time  xpath=//input[@id="input-date-tender-tenderPeriod-endDate"]  ${date}
   Sleep  2
   Set To Dictionary  ${USERS.users['Newtend_Owner'].tender_data.data.tenderPeriod}  endDate=${date}
+  Log To Console  From Global Data  ${USERS.users['Newtend_Owner'].tender_data.data.tenderPeriod.endDate}
+  [Return]  ${date}
 
 Змінити в тендері поле description і зберегти
   [Arguments]  ${description}
+  Log To Console  [+] Change tender description: ${description}
   Wait Until Page Contains Element  id=tender-title     20
   Input text   ${locator.edit.description}   ${description}
 
