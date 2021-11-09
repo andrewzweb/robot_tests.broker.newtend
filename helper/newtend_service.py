@@ -117,8 +117,8 @@ dict_units = {
     # --- tender status ---
     u'НЕ ВІДБУВСЯ': u'draft.unsuccessful',
     u"АУКЦІОН": u'active.auction',
-    u'КВАЛІФІКАЦІЯ': u'active.pre-qualification',
-    u'ПРЕКВАЛІФІКАЦІЯ': u'active.qualification',
+    u'КВАЛІФІКАЦІЯ': u'active.qualification',
+    u'ПРЕКВАЛІФІКАЦІЯ': u'active.pre-qualification',
     u'УТОЧНЕННЯ': u'active.enquiries',
     u'ПРОПОЗИЦІЇ': u'active.tendering',
 
