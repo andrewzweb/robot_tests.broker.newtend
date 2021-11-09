@@ -273,7 +273,7 @@ dict_tender_status = {
     "PRE_QUALIFICATION_STAND_STILL" : 'active.pre-qualification.stand-still',  # предварительная квалификация (openEU)
     "QUALIFICATION_STAND_STILL" : 'active.qualification.stand-still',  # квалификация (closeFrameworkAgreementEU)
 }
-    
+
 def check_its_plan(str_tender_or_plan):
     if 'UA-P-' in str_tender_or_plan:
         return True
@@ -306,4 +306,17 @@ def newtend_get_tender(tender_internal_id):
 def fake_document_response(doc_file):
     print(doc_file)
     result = {"data": {"id": '123543523452345', "title": str(doc_file)}}
+    return result
+
+def api_get_qulification_id_hesh(tender_internal_id, numb=0):
+    if int(numb) > 0:
+        numb = int(numb) - 1
+    result = False
+    tender = newtend_get_tender(tender_internal_id)
+    result = tender['data']['qualifications'][int(numb)]['id']
+    return result
+
+def api_get_tenderPeriod_end_date(tender_internal_id):
+    tender = newtend_get_tender(tender_internal_id)
+    result = tender['data']['tenderPeriod']['endDate']
     return result
