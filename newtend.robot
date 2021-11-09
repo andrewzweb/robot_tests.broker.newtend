@@ -680,49 +680,26 @@ Get Internal ID
   Print Args  ${ARGS}
   # TODO
 
-Скасувати лот
-  [Arguments]  @{ARGS}
-  Print Args  ${ARGS}
-  # its in new complaints procedure
-
 ################################################################
 #                                                              #
 #                    Complaints                                #
 #                                                              #
 ################################################################
 
+Скасувати лот
+  [Arguments]  @{ARGS}
+  Print Args  ${ARGS}
+  Canceled Lot  @{ARGS}
+  # its in new complaints procedure
+    
 Створити чернетку вимоги/скарги на скасування
   [Arguments]  @{ARGS}
-  [Documentation]  Input Data
-  ... 	data:
-  ...     author:
-  ...         address:
-  ...             countryName: Україна
-  ...             locality: Переяслав-Хмельницький
-  ...             postalCode: '01111'
-  ...             region: Київська область
-  ...             streetAddress: Тестова вулиця, 21-29
-  ...         contactPoint:
-  ...             email: test_e_mail@ukr.net
-  ...             faxNumber: '9998877'
-  ...             name: Перший Тестовий Учасник
-  ...             telephone: '+380506665544'
-  ...             url: http://www.page.gov.ua/
-  ...         identifier:
-  ...             id: '21725150'
-  ...             legalName: Тестова районна в місті Києві державна адміністрація
-  ...             scheme: UA-EDR
-  ...         name: Тестова районна в місті Києві державна адміністрація
-  ...     description: Фарфур багатолотовий корупціон з неціновими показниками прочолок
-  ...         виречи виґуляри призначати салтан весілчанин слюзувати матюнка підсмалити
-  ...         уторжитися.
-  ...     title: 'q-25d92d03: Пообскрібати потаска різнити обшити.'
-  ...         type: complaint
+  Make draft complaint  @{ARGS}
 
-  ${username}=  Set Variable  ${ARGS[0]}
-  ${payload_data}=  Set Variable  ${ARGS[1]}
-  ${item_index}=  Set Variable  ${ARGS[2]}
-
+Отримати інформацію із скарги
+  [Arguments]  @{ARGS}
+  Get Info From Complaints  @{ARGS}
+  
 ################################################################
 #                                                              #
 #                    END Complaints                            #
