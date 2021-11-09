@@ -11,8 +11,8 @@ Create CompetitiveDialogueEU Tender
   Log To Console  [.] Create CompetitiveDialogueEU Tender
 
   ${tender_data}=  overwrite_procuringEntity_data  ${tender_data}
-  #${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
-  #${tender_data}=  change_minits_for_tests  ${tender_data}  0  5  8  11  12  14
+  ${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
+  ${tender_data}=  change_minits_for_tests  ${tender_data}  0  8  8  45  45  60
 
   # Get Plan Id
   Go To Plan And SingUp
