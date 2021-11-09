@@ -14,20 +14,21 @@ Library  OperatingSystem
 #Library  AppiumLibrary
 
 *** Variables ***
+${tender_id}  UA-2021-11-09-000174-c
+${g_data.current_tender_internal_id}  b60fc587c07f4d1ebf5e46f22f0bfd4c
 ${username}  Newtend_Owner
 ${OUTPUT_DIR}  .
 ${BROWSER}  chrome
-${tender_id}  UA-2021-11-08-000067-d
-
 @{L2}  1  2  2  3
 ${date}   2021-11-07T22:59:27.999676+02:00
-${g_data.current_tender_internal_id}  551ded127bac4d298d11a5443dd642a2
+${question_id}  q-f5a0a31d
 *** Test Cases ***
 
 Current test
   Prapare Browser
   Qulification test
   [Teardown]    Close Browser
+  
 #Test
 #  Test Qulification Api
 
@@ -35,6 +36,7 @@ Current test
 Prapare Browser
   Open Browser  https://autotest.newtend.com/  ${BROWSER}
   Set Window Size  1024  764
+  Set Window Position  0  0
   Add Cookie  autotest  1  domain=autotest.newtend.com  expiry=2021-11-30 16:21:35
 
   ${login}=  Set Variable  test.owner@gmail.com
@@ -73,10 +75,11 @@ Remove feature
 
 Qulification test
   # tests openeu pre qulification
-  #Підтвердити кваліфікацію  ${username}  ${tender_id}  1
+  Підтвердити кваліфікацію  ${username}  ${tender_id}  1
   Відхилити кваліфікацію  ${username}  ${tender_id}  2
-  #Скасувати кваліфікацію  ${username}  ${tender_id}  2
-  #Підтвердити кваліфікацію  ${username}  ${tender_id}  2
+  #Скасувати кваліфікацію  ${username}  ${tender_id}  1
+  Скасувати кваліфікацію  ${username}  ${tender_id}  2
+  Підтвердити кваліфікацію  ${username}  ${tender_id}  2
   #Затвердити остаточне рішення кваліфікації  ${username}  ${tender_id}
 
 Convert str to int
@@ -112,14 +115,18 @@ Delete Feature
   Видалити неціновий показник  ${username}  ${tender_id}  f-01
 
 Test Qulification Api
-  ${result}=  api_get_qulification_id_hesh  551ded127bac4d298d11a5443dd642a2  1
+  ${result}=  api_get_qulification_id_hesh  b60fc587c07f4d1ebf5e46f22f0bfd4c  1
   Log To Console  ${result}
-  Should Be Equal   ${result}  7b6f154ce8934313ba1b4761696c5f1e
-  ${result}=  api_get_qulification_id_hesh  551ded127bac4d298d11a5443dd642a2  2
+  Should Be Equal   ${result}  2de2089bcae54f308fa33a4cbac33526
+  ${result}=  api_get_qulification_id_hesh  b60fc587c07f4d1ebf5e46f22f0bfd4c  2
   Log To Console  ${result}
-  Should Be Equal   ${result}  4c16995435be4ba098147281be635b77
+  Should Be Equal   ${result}  6dcdb3a7c3c64f5cbf0da447676bb80a
 
 Test Get Tender Perion End
   ${result}=  api_get_tenderPeriod_end_date  551ded127bac4d298d11a5443dd642a2
   Log To Console  ${result}
   Should Be Equal   ${result}  2021-11-08T15:34:00+02:00
+
+Test Get Info From Question
+  ${result}=  Get Info From Question  ${username}  UA-2021-11-09-000174-c  q-f5a0a31d  title
+  [Return]  ${result}

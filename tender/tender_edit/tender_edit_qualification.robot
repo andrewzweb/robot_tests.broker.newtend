@@ -13,10 +13,10 @@ Aprove Qualification
 
   Find Tender By Id  ${tender_id}
   Go To Prequlification
-  Wait Tender Status  active.qualification
+  #Wait Tender Status  active.qualification
 
   # get data from api
-  ${qualification_interanl_id}=  api_get_qulification_id_hesh  ${g_data.current_tender_internal_id}  ${qulification_number}
+  ${qualification_interanl_id}=  api_get_bid_id_hash  ${g_data.current_tender_internal_id}  ${qulification_number}
   Log To Console  [+] Get Internal QUlification ID: ${qualification_interanl_id}
 
   # collect data from UI
@@ -24,14 +24,14 @@ Aprove Qualification
   ${qualification_count}=  Get Length  ${qualification_elements}
   Log To Console  [i] Count Qualifications: ${qualification_count}
 
-  ${button_accept}=  Set Variable  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]/..//button[@ng-click="decide(qualification.id, true)"]
+  ${button_accept}=  Get WebElements  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]/..//button[@ng-click="decide(qualification.id, true)"]
 
   :FOR  ${index}  IN RANGE  ${qualification_count}
-  \  ${id}=  Set Variable  quality_title_${index}
-  \  ${current_qualification_id}=  Get Element Attribute  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]@data-id
+  \  ${current_qualification_id}=  Get Element Attribute  xpath=//div[@id="qualification_${index}_${index}"]@data-bidid
+  \  Log To Console  [+] Current Qualififcation ID: ${current_qualification_id}
   \  ${is_need_element}=  is_one_string_include_other_string  ${current_qualification_id}  ${qualification_interanl_id}
   \  Log To Console  [ ] click ${index}? : ${is_need_element}
-  \  Run Keyword If  ${is_need_element} == True      Wait And Click  ${button_accept[${index}]}
+  \  Run Keyword If  ${is_need_element} == True  Wait And Click  xpath=//div[@id="qualification_${index}_${index}"]/..//button[@ng-click="decide(qualification.id, true)"]
   \  Exit For Loop IF  ${is_need_element} == True
 
   Sleep  2
@@ -52,7 +52,7 @@ Aprove Qualification
   Sleep  2
   # singup need
   Wait And Click  xpath=//button[@ng-click="vm.sign()"]
-  Sleep  4
+  Sleep  10
 
 
 Decline Qualification
@@ -66,10 +66,10 @@ Decline Qualification
 
   Find Tender By Id  ${tender_id}
   Go To Prequlification
-  Wait Tender Status  active.qualification
+  #Wait Tender Status  active.qualification
 
   # get data from api
-  ${qualification_interanl_id}=  api_get_qulification_id_hesh  ${g_data.current_tender_internal_id}  ${qulification_number}
+  ${qualification_interanl_id}=  api_get_bid_id_hash  ${g_data.current_tender_internal_id}  ${qulification_number}
   Log To Console  [+] Get Internal QUlification ID: ${qualification_interanl_id}
 
   # collect data from UI
@@ -77,14 +77,14 @@ Decline Qualification
   ${qualification_count}=  Get Length  ${qualification_elements}
   Log To Console  [i] Count Qualifications: ${qualification_count}
 
-  ${button_decline}=  Set Variable  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]/..//button[@ng-click="decide(qualification.id, false)"]
+  ${button_decline}=  Get WebElements  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]/..//button[@ng-click="decide(qualification.id, false)"]
 
   :FOR  ${index}  IN RANGE  ${qualification_count}
-  \  ${id}=  Set Variable  quality_title_${index}
-  \  ${current_qualification_id}=  Get Element Attribute  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]@data-id
+  \  ${current_qualification_id}=  Get Element Attribute  xpath=//div[@id="qualification_${index}_${index}"]@data-bidid
+  \  Log To Console  [+] Current Qualififcation ID: ${current_qualification_id}
   \  ${is_need_element}=  is_one_string_include_other_string  ${current_qualification_id}  ${qualification_interanl_id}
   \  Log To Console  [ ] click ${index}? : ${is_need_element}
-  \  Run Keyword If  ${is_need_element} == True      Wait And Click  ${button_decline[${index}]}
+  \  Run Keyword If  ${is_need_element} == True      Wait And Click  xpath=//div[@id="qualification_${index}_${index}"]/..//button[@ng-click="decide(qualification.id, false)"]
   \  Exit For Loop IF  ${is_need_element} == True
 
   # if you decline
@@ -103,7 +103,7 @@ Decline Qualification
 
   # singup need
   Wait And Click  xpath=//button[@ng-click="vm.sign()"]
-  Sleep  5
+  Sleep  10
 
 
 Cancel Qualification

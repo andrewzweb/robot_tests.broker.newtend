@@ -31,18 +31,6 @@ Ask question
 
   Wait Until Page Contains  ${description}  20
 
-Get Info From Question
-  [Arguments]   @{ARGUMENTS}
-  [Documentation]
-  ...     ${ARGUMENTS[0]} == user_name
-  ...     ${ARGUMENTS[1]} == tender_uaid
-  ...     ${ARGUMENTS[2]} == field_id_'q-f6dc51c3'
-  ...     ${ARGUMENTS[3]} == field_name_title/description
-  newtend.Пошук тендера по ідентифікатору  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
-  Wait And Click  ${locator.ask__tab_question}
-  Wait Until Page Contains Element  ${locator.ask__list_of_ask}
-  Run Keyword And Return  Отримати інформацію запитання із поля ${ARGUMENTS[3]}  ${ARGUMENTS[2]}
-
 Answer to question
    [Arguments]   ${username}  ${tender_id}  ${answer_data}  ${question_id}  @{ARGUMENTS}
    Log To Console  [+] Answer to question id: ${question_id}
@@ -72,19 +60,48 @@ Wait For Question
   Reload Page
   Wait Until Page Contains Element  xpath=//div[contains(., '${question_id}')]
 
+Wait For Question Title
+  [Arguments]  ${question_id}=
+  Log To Console  [+]_ Wait for quesion id: ${question_id}
+  Reload Page
+  Wait Until Page Contains Element  xpath=//div[contains(., '${question_id}')]
+
+
+Get Info From Question
+  [Arguments]   @{ARGUMENTS}
+  [Documentation]
+  ...     ${ARGUMENTS[0]} == user_name
+  ...     ${ARGUMENTS[1]} == tender_uaid
+  ...     ${ARGUMENTS[2]} == field_id_'q-f6dc51c3'
+  ...     ${ARGUMENTS[3]} == field_name_title/description
+  Print Args  ${ARGUMENTS}
+  newtend.Пошук тендера по ідентифікатору  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
+  Wait And Click  ${locator.ask__tab_question}
+  Wait Until Page Contains Element  ${locator.ask__list_of_ask}
+  Run Keyword And Return  Отримати інформацію запитання із поля ${ARGUMENTS[3]}  ${ARGUMENTS[2]}
+
+Await For Question Title Appear
+  [Arguments]   ${argument}
+  Reload Page
+  Log To Console  [.] Search question title with id: ${argument}
+  Get WebElement  xpath=//*[contains(text(), '${argument}')]
+
 Отримати інформацію про questions[0].title
-  [Arguments]  ${argument}=None
-  ${title}=  Run Keyword If  ${argument} != None  Get Text   xpath=//span[contains(text(), '${argument}')]   
-  [Return]  ${title}
+  [Arguments]  ${argument}
+  Log To Console  [+] Get question[0]title
+  Wait Until Keyword Succeeds  3 minute  20 s   Wait For Question Title  ${argument}
+  ${result}=  Get Text  xpath=//span[contains(text(), '${argument}')]
+  [return]  ${result}
 
 Отримати інформацію запитання із поля title
-  [Arguments]   ${argument}
-  ${question_containers}=   Get Webelements     xpath=//div[@class="row question-container"]
-  Focus    ${question_containers[-1]}
-  Sleep     1
-  ${title}=   Get Text   xpath=//span[contains(text(), '${argument}')]
-  [return]  ${title}
-
+  [Arguments]  ${argument}
+  Log To Console  [+] Get question title
+  ${question_0_title}=  Set Veriable  xpath=//div[@class="row question-container"]/..//span[@class="user ng-binding"]
+  Wait Until Keyword Succeeds  3 minute  20 s   Wait For Question Title  ${argument}
+  ${result}=  Run Keyword If  ${argument} != None  Get Text  xpath=//span[contains(text(), '${argument}')]
+  ...  ELSE  Get Text  ${question_0_title}
+  [return]  ${result}
+  
 Отримати інформацію запитання із поля description
   [Arguments]   ${argument}
   ${descriptions}=  Get Webelements     xpath=//span[@class="question-description ng-binding"]

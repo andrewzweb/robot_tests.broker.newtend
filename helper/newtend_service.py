@@ -119,6 +119,7 @@ dict_units = {
     u"АУКЦІОН": u'active.auction',
     u'КВАЛІФІКАЦІЯ': u'active.qualification',
     u'ПРЕКВАЛІФІКАЦІЯ': u'active.pre-qualification',
+    #u'ПРЕКВАЛІФІКАЦІЯ': u'active.qualification',
     u'УТОЧНЕННЯ': u'active.enquiries',
     u'ПРОПОЗИЦІЇ': u'active.tendering',
 

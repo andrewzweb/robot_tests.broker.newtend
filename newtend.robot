@@ -367,7 +367,6 @@ Resource  ./awards/awards.robot
 
 Отримати інформацію із запитання
   [Arguments]  @{ARGUMENTS}
-  Print Args  ${ARGUMENTS}
   ${result}=  Get Info From Question  @{ARGUMENTS}
   [Return]  ${result}
 
