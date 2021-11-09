@@ -308,12 +308,12 @@ def fake_document_response(doc_file):
     result = {"data": {"id": '123543523452345', "title": str(doc_file)}}
     return result
 
-def api_get_qulification_id_hesh(tender_internal_id, numb=0):
+def api_get_bid_id_hash(tender_internal_id, numb=0):
     if int(numb) > 0:
         numb = int(numb) - 1
     result = False
     tender = newtend_get_tender(tender_internal_id)
-    result = tender['data']['qualifications'][int(numb)]['id']
+    result = tender['data']['qualifications'][int(numb)]['bidID']
     return result
 
 def api_get_tenderPeriod_end_date(tender_internal_id):
