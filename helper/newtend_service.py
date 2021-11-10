@@ -169,6 +169,11 @@ dict_units = {
     u"ОГОЛОШЕНИЙ ТЕНДЕР": u"complete",
     u"Оголошений тендер": u"complete",
 
+    # --- quallification ---
+    u"Пропозицію прийнято": u"active",
+    u"Очікується кваліфікація": u"pending",
+    u"Пропозицію відхилено": u"unsuccessful",
+
     # --- classifier ---
     u"DC 021:2015 classifier": u"ДК021",
     u"Классификатор ДК 021:2015": u"ДК021",

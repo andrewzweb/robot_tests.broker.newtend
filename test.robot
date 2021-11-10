@@ -14,8 +14,8 @@ Library  OperatingSystem
 #Library  AppiumLibrary
 
 *** Variables ***
-${tender_id}  UA-2021-11-09-000174-c
-${g_data.current_tender_internal_id}  b60fc587c07f4d1ebf5e46f22f0bfd4c
+${tender_id}  UA-2021-11-10-000186-c
+${g_data.current_tender_internal_id}  4f47fd2f5d6a41abacc2d6edd237b008
 ${username}  Newtend_Owner
 ${OUTPUT_DIR}  .
 ${BROWSER}  chrome
@@ -26,6 +26,7 @@ ${question_id}  q-f5a0a31d
 
 Current test
   Prapare Browser
+  #Test Get Info About Qualification
   Qulification test
   [Teardown]    Close Browser
   
@@ -80,7 +81,7 @@ Qulification test
   #Скасувати кваліфікацію  ${username}  ${tender_id}  1
   Скасувати кваліфікацію  ${username}  ${tender_id}  2
   Підтвердити кваліфікацію  ${username}  ${tender_id}  2
-  #Затвердити остаточне рішення кваліфікації  ${username}  ${tender_id}
+  Затвердити остаточне рішення кваліфікації  ${username}  ${tender_id}
 
 Convert str to int
   ${numb}=  Set Variable  0.05
@@ -130,3 +131,9 @@ Test Get Tender Perion End
 Test Get Info From Question
   ${result}=  Get Info From Question  ${username}  UA-2021-11-09-000174-c  q-f5a0a31d  title
   [Return]  ${result}
+
+
+Test Get Info About Qualification
+  ${result}=  Get Info About Qualification  qualifications[0].status  ${username}  ${tender_id}  1
+  Should Be Equal   ${result}  active
+  Log To Console  ${result}
