@@ -87,10 +87,11 @@ Await For Question Title Appear
   Get WebElement  xpath=//*[contains(text(), '${argument}')]
 
 Отримати інформацію про questions[0].title
-  [Arguments]  ${argument}
+  [Arguments]  ${argument}=None
   Log To Console  [+] Get question[0]title
   Wait Until Keyword Succeeds  3 minute  20 s   Wait For Question Title  ${argument}
-  ${result}=  Get Text  xpath=//span[contains(text(), '${argument}')]
+  ${result}=  Run Keyword If  ${argument} != None  Get Text  xpath=//span[contains(text(), '${argument}')]
+  ...  ELSE  Get Text  ${question_0_title}
   [return]  ${result}
 
 Отримати інформацію запитання із поля title
