@@ -149,13 +149,8 @@ Go To Plan And SingUp
   ${plan_data}=  load_data_from   artifact_plan.yaml
   Find Plan By UAID  ${plan_data.tender_uaid}
   Sleep  2
-  #${button_create_tender_from_plan}=  Run Keyword And Return Status  Get WebElement  ${locator.button_create_tender_from_plan}
-  #Run Keyword If  ${button_create_tender_from_plan} == 'False'  Focus  ${button_create_tender_from_plan}
-  #${is_visible_button_create_tender_from_plan}=  Run Keyword And Return Status  Element Should Be Visible  ${locator.button_create_tender_from_plan}
-  #Log To Console   Button create tender is : '${is_visible_button_create_tender_from_plan}'
-  #Run Keyword If  ${is_visible_button_create_tender_from_plan} == 'False'  SingUp Plan
   SingUp Plan
-  Sleep  5
+  Sleep  4
 
 Edit Cause
   [Arguments]  ${tender_data}
