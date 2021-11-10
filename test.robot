@@ -14,7 +14,7 @@ Library  OperatingSystem
 #Library  AppiumLibrary
 
 *** Variables ***
-${tender_id}  UA-2021-11-10-000186-c
+${tender_id}  UA-2021-11-10-000320-c
 ${g_data.current_tender_internal_id}  4f47fd2f5d6a41abacc2d6edd237b008
 ${username}  Newtend_Owner
 ${OUTPUT_DIR}  .
@@ -26,10 +26,24 @@ ${question_id}  q-f5a0a31d
 
 Current test
   Prapare Browser
-  #Test Get Info About Qualification
-  Qulification test
-  [Teardown]    Close Browser
+  #Отримати інформацію про qualifications[1].status  ${username}  ${tender_id}  1
+  #Qulification test
+
+  Find Tender By Id  ${tender_id}
+  Go To Auction
+
+  # wait form show
+  #Wait Until Element Is Visible  ${locator.documents_form}
+  # choise type
+  #${data.dicument_type}=  Set variable  notice
+  #Select From List By Value  ${locator.document_type}  ${data.dicument_type}
+  #Wait And Click  ${locator.document_file_button}
+  #Sleep  2
+  #Wait Until Page Contains Element  ${locator.document_file}
+  Wait And Click  ${locator.documents_send_document}
   
+  [Teardown]    Close Browser
+
 #Test
 #  Test Qulification Api
 
@@ -131,7 +145,6 @@ Test Get Tender Perion End
 Test Get Info From Question
   ${result}=  Get Info From Question  ${username}  UA-2021-11-09-000174-c  q-f5a0a31d  title
   [Return]  ${result}
-
 
 Test Get Info About Qualification
   ${result}=  Get Info About Qualification  qualifications[0].status  ${username}  ${tender_id}  1
