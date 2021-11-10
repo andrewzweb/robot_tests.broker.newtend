@@ -3,14 +3,6 @@ Resource  ../tender.robot
 
 *** Keywords ***
 
-Edit NDS
-  [Arguments]  @{ARGS}
-  ${tender_data}=  Set Variable  ${ARGS[0]} 
-  Log To Console  [*] Click to button with NDS
-  ${lot_nds}=  Set Variable  ${tender_data.data.lots[0].value.valueAddedTaxIncluded}
-  Run Keyword If  '${lot_nds}' == 'True'  Focus  xpath=//input[@id="with-nds"]
-  Run Keyword If  '${lot_nds}' == 'True'  Select Checkbox  xpath=//input[@id="with-nds"]
-
 Create OpenEU Tender
   [Arguments]  @{ARGS}
   ${username}=     Set Variable  ${ARGS[0]}

@@ -602,3 +602,20 @@ Put Tender In Global Verable
   #Set To Dictionary  ${USERS.users['${username}'].initial_data}  tender_data=${raw_tender_data}
   #Set Global Variable  ${USERS.users['${username}'].data}  ${tender_data}
   Log To Console  [+] Put Tender Data Api In Storage
+
+Edit NDS
+  [Arguments]  @{ARGS}
+  ${tender_data}=  Set Variable  ${ARGS[0]}
+  Log To Console  [*] Click to button with NDS
+  ${lot_nds}=  Set Variable  ${tender_data.data.lots[0].value.valueAddedTaxIncluded}
+  Run Keyword If  '${lot_nds}' == 'True'  Focus  xpath=//input[@id="with-nds"]
+  Run Keyword If  '${lot_nds}' == 'True'  Select Checkbox  xpath=//input[@id="with-nds"]
+
+
+Edit NDS Negotiation
+  [Arguments]  @{ARGS}
+  ${tender_data}=  Set Variable  ${ARGS[0]}
+  Log To Console  [*] Click to button with NDS
+  ${lot_nds}=  Set Variable  ${tender_data.data.value.valueAddedTaxIncluded}
+  Run Keyword If  '${lot_nds}' == 'True'  Focus  xpath=//input[@id="with-nds"]
+  Run Keyword If  '${lot_nds}' == 'True'  Select Checkbox  xpath=//input[@id="with-nds"]
