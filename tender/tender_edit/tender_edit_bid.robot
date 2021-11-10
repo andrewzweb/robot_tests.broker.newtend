@@ -22,9 +22,14 @@ Create suplier and add docs and confier him
   [Arguments]   ${username}  ${tender_id}  ${tender_data}  ${document_file}
   [Documentation]   Adding user into reporting procedure
 
-  newtend.Пошук тендера по ідентифікатору  ${username}  ${tender_id}
-  Sleep     3
-  Click Element     xpath=//a[@ui-sref="tenderView.auction"]
+  Find Tender By Id  ${tender_id}
+  Go To Auction
+
+  Create Suplier  ${tender_data}
+  Confirm Suplier  ${document_file}
+
+Create Suplier
+  [Arguments]  ${tender_data}
 
   # Getting information about participant
   ${supplier_name}=    Get From Dictionary     ${tender_data.data.suppliers[0].contactPoint}    name
@@ -44,7 +49,6 @@ Create suplier and add docs and confier him
   # Supplier value
   ${supplier_amount}=      Get From Dictionary   ${tender_data.data.value}   amount
   ${supplier_amount_int}=  Convert To String     ${supplier_amount}
-
 
   Wait And Click  xpath=//button[@ng-click="createAward()"]
 
@@ -67,30 +71,36 @@ Create suplier and add docs and confier him
   Sleep   1
   Click Element     xpath=//md-option[@value="UA-EDR"]
   Sleep   1
-  Wait And Type  ${locator.supplier_ua-id}       ${supplier_edr}
-  Clear Element Text    id=award-value-amount
+  Wait And Type  ${locator.supplier_ua-id}  ${supplier_edr}
+  Clear Element Text  id=award-value-amount
   Wait And Type  id=award-value-amount   ${supplier_amount_int}
   Wait And Click   xpath=//md-checkbox[@name="qualified"]
   Sleep     2
   Wait And Click     xpath=//button[@ng-click="vm.createAward()"]
 
+Confirm Suplier
+  [Arguments]  ${document_file}
+
   # accept bid
   Wait And Click  xpath=//button[@ng-click="vm.decide(vm.award.id, 'active',vm.tender.procurementMethodType)"]
 
   # download doc
-  ${locator.suplier_add_doc_button}=  Set variable  xpath=//button[@ng-click="upload.uploadContract(lot.awardId, lot.contractId)"]
-  # add document
-  Wait And Click  ${locator.suplier_add_doc_button}
-  # wait form show
-  Wait Until Element Is Visible  ${locator.documents_form}
-  # choise type
-  ${data.dicument_type}=  Set variable  notice
-  Select From List By Value  ${locator.document_type}  ${data.dicument_type}
-  Wait And Click  ${locator.document_file_button}
-  Sleep  2
-  Wait Until Page Contains Element  ${locator.document_file}
-  Choose File  ${locator.document_file}  ${document_file}
-  Wait And Click  ${locator.documents_send_document}
+  # clit to button for add document
+  Wait And Click  xpath=//div[@ng-model="file"]
+
+  # put in input
+  Choose File  xpath=//input[@type="file"]  ${document_file}
+  # download doc
+  Wait And Click  xpath=//button[@ng-click="upload()"]
+  Sleep  10
+
+  # sing up
+  Wait And Click  xpath=//button[@ng-click="sign()"]
+  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
+  Sleep  3
+
+  # accept and close popup
+  Wait And Click  xpath=//button[@ng-click="accept()"]
 
 Make Bid Draft
   [Arguments]  @{ARGS}
