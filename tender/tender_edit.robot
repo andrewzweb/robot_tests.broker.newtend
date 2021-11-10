@@ -81,7 +81,7 @@ Find Tender By Id
   Click Element  ${locator.tender_search_button}
   Sleep  3
 
-  Wait Until Keyword Succeeds  2 minute  15 seconds  Try Choice Tender From Search List  ${tender_id}
+  Wait Until Keyword Succeeds  8 minute  15 seconds  Try Choice Tender From Search List  ${tender_id}
 
 Try Choice Tender From Search List
   [Arguments]  ${tender_id}

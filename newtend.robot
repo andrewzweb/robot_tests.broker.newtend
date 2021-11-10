@@ -43,6 +43,60 @@ Resource  ./awards/awards.robot
 #                                                              #
 ################################################################
 
+#Отримати інформацію із тендера
+#    [Arguments]                                                 ${username}  ${tender_uaid}  ${field_name}
+#    [Documentation]                                             Отримати значення поля field_name для тендера tender_uaid.
+
+    # fix for preventing error "Resolving variable '${award.value.amount}' failed: AttributeError: value" in next keywords for owner role
+##    run keyword if                                              ${is_test_role_owner} and '${field_name}' in 'awards[0].complaintPeriod.endDate awards[1].complaintPeriod.endDate awards[2].complaintPeriod.endDate awards[3].complaintPeriod.endDate'  fix awards data in global Users variable  ${username}
+
+ #   run keyword if                                              '${field_name}' == 'maxAwardsCount'  submit form and check result   ${bid_form_refresh_btn_locator}  ${bid_form_refresh_success_msg}  ${tender_created_checker_element_locator}  ${true}
+ #   Run Keyword And Return If                                   '${field_name}' == 'budget.amount'   playtender.Отримати інформацію із плану  ${username}  ${tender_uaid}  ${field_name}
+ #   open tender page by uaid                                    ${tender_uaid}
+ #   Run Keyword And Return If                                   '${field_name}' == 'lots[0].minimalStep.currency'   Отримати інформацію із лоту minimalStep.currency  ${field_name}
+ #   Run Keyword And Return If                                   '${field_name}' == 'lots[0].minimalStep.valueAddedTaxIncluded'   Отримати інформацію із лоту minimalStep.valueAddedTaxIncluded  ${field_name}
+ #   Run Keyword And Return If                                   '${field_name}' == 'lots[0].value.valueAddedTaxIncluded'   Отримати інформацію із лоту value.valueAddedTaxIncluded  ${field_name}
+ #   Run Keyword And Return If                                   '${field_name}' == 'lots[0].title'   Отримати інформацію із лоту title  ${field_name}
+ #   Run Keyword And Return If                                   '${field_name}' == 'lots[1].title'   Отримати інформацію із лоту title  ${field_name}
+ #   Run Keyword And Return If                                   '${field_name}' == 'lots[0].description'   Отримати інформацію із лоту description  ${field_name}
+ #   Run Keyword And Return If                                   '${field_name}' == 'value.valueAddedTaxIncluded'   Отримати інформацію із value.valueAddedTaxIncluded
+ #   Run Keyword And Return If                                   '${field_name}' == 'complaintPeriod.endDate'   Отримати інформацію із complaintPeriod.endDate
+ #   Run Keyword And Return If                                   '${field_name}' == 'items[0].deliveryLocation.latitude'   Fail   Поле не відображаем
+ #   run keyword if                                              '${field_name}' == 'status'  wait for tender status
+ #   run keyword if                                              '${field_name}' == 'agreements[0].status'  Wait Until Keyword Succeeds    1600 s    20 s    wait for agreements status active
+ #   run keyword if                                              '${field_name}' == 'qualificationPeriod.endDate'  Wait Until Keyword Succeeds    1600 s    20 s    Wait For QualificationsPeriodEnd
+ #   Run Keyword And Return If                                   '${field_name}' == 'contracts[0].status' or '${field_name}' == 'contracts[1].status'   Отримати інформацію із contracts[0].status
+ #   Run Keyword And Return If                                   '${field_name}' == 'qualificationPeriod.endDate' and '${mode}' in 'open_competitive_dialogue'   Отримати інформацію із qualificationPeriod.endDate
+ #   Run Keyword And Return If                                   '${field_name}' in 'awards[0].complaintPeriod.endDate awards[1].complaintPeriod.endDate awards[2].complaintPeriod.endDate awards[3].complaintPeriod.endDate'   Отримати інформацію із awards.complaintPeriod.endDate
+ #   Run Keyword And Return If                                   '${field_name}' in 'minimalStep.amount'   Отримати інформацію із minimalStep.amount
+ #   Run Keyword And Return If                                   '${field_name}' == 'awards[0].documents[0].title'   Отримати інформацію із awards[0].documents[0].title
+ #   Run Keyword And Return If                                   '${field_name}' == 'agreementDuration'   Отримати інформацію із agreementDuration
+#    Run Keyword And Return If                                   '${field_name}' == 'agreements[0].agreementID'   Отримати інформацію із agreements[0].agreementID
+ #   Run Keyword And Return If                                   '${field_name}' == 'items[0].quantity'   Отримати інформацію із items[0].quantity
+ #   Run Keyword And Return If                                   '${field_name}' == 'lots[0].value.amount'   Отримати інформацію із lots[0].value.amount
+ #   Run Keyword And Return If                                   '${field_name}' == 'lots[0].minimalStep.amount'   Отримати інформацію із lots[0].minimalStep.amount
+ #   Run Keyword And Return If                                   '${field_name}' == 'contracts[1].value.amountNet'   Отримати інформацію із contracts[1].value.amountNet
+ #   Run Keyword And Return If                                   '${field_name}' == 'contracts[1].value.amount'   Отримати інформацію із contracts[1].value.amount
+ #   Run Keyword And Return If                                   '${field_name}' == 'contracts[1].value.dateSigned'   Отримати інформацію із contracts[1].dateSigned
+ #   Run Keyword And Return If                                   '${field_name}' == 'cancellations[0].status'   Отримати інформацію із cancellations[0].status
+ #   Run Keyword And Return If                                   '${field_name}' == 'agreements[0].agreementID'   Execute Javascript   return $('#agreement-contracts-list .agreement-info-wrapper .info-row.agreement-id .value').text()
+#    Run Keyword And Return If                                   '${field_name}' == 'agreements[0].agreementID'   Execute Javascript   return $('#aside-part-pjax .aside__inner input[name*="agreement_uaid"]').val()
+#    Run Keyword And Return If                                   '${field_name}' == 'budget.amount'   Отримати інформацію із плану  ${username}  ${tender_uaid}  ${field_name}
+ #   ${field_name} =                                             set variable  tender.${field_name}.value
+ #   ${value} =                                                  get field_value by field_name on opened page  ${field_name}
+#    run keyword if                                              '${field_name}' == 'value.valueAddedTaxIncluded' and '${value}' == '1'  ${value} = True
+ #   [Return]                                                    ${value}
+
+
+Отримати інформацію про qualifications[0].status
+  [Arguments]  @{ARGS}
+  ${result}=  Get Info About Qualification   qualifications[0].status   @{ARGS}
+  [Return]  ${result}
+
+Отримати інформацію про qualifications[1].status
+  [Arguments]  @{ARGS}
+  ${result}=  Get Info About Qualification   qualifications[1].status   @{ARGS}
+  [Return]  ${result}
 
 Отримати інформацію про enquiryPeriod.clarificationsUntil
   [Arguments]  @{ARGS}
