@@ -9,29 +9,18 @@ Create Negotiation Tender
   ${username}=     Set Variable  ${ARGS[0]}
   ${tender_data}=  Set Variable  ${ARGS[1]}
 
-  Log To Console  [.] Creating Negoriation Tender
+  Log To Console  [.] Creating Negotiation Tender
 
-  ${tender_data}=  overwrite_procuringEntity_data  ${tender_data}
-
-  # Get Plan Id 
-  ${plan_data}=  load_data_from   artifact_plan.yaml
-  Find Plan By UAID  ${plan_data.tender_uaid}
-
-  Sleep  2
-  SingUp Plan
-  Sleep  5
-
+  # === prepare ====
+  Go To Plan And SingUp
   ${locator.button_create_tender_from_plan}=  Set Variable  xpath=//button[@ng-click="createTenderFromPlan()"]
-  Wait Until Page Contains Element  ${locator.button_create_tender_from_plan}
-  Focus  ${locator.button_create_tender_from_plan}
-  Wait Until Element Is Enabled  ${locator.button_create_tender_from_plan}
-  Click Element  ${locator.button_create_tender_from_plan}
+  Wait And Click  ${locator.button_create_tender_from_plan}
 
+  # === creating ===
   Edit Tender Title and Description  ${tender_data}
 
   Edit Cause  ${tender_data}
 
-  
   # === It's all in one popup window
   ${locator.edit_lot_first}=  Set Variable  xpath=//input[@id="lot-id-0"]
 
