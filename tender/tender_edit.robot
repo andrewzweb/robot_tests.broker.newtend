@@ -158,10 +158,11 @@ Edit Cause
   ...  cause: resolvingInsolvency
   ...  causeDescription: Докандибити гаріль виголос фльорес галаснути відчалювати збірослов
   ...      попереправляти повиводити поперетоплювати мнишки кантурь слідити.
-  
-  Edit Feasible Element  ${tender_data.data}  cause  Input Text  ${locator.edit_tender_cause_title}
-  ${exist_causeDescription}=  Exist key in dict  ${tender_data.data}  causeDescription
-  Run Keyword If  ${exist_causeDescription}  Select From List By Index  ${locator.edit_tender_cause_desctiption}  1
+
+  ${cause}=  Get From Dictionary  ${tender_data.data}  cause
+  ${causeDesctiption}=  Get From Dictionary  ${tender_data.data}  causeDescription
+  Wait And Type   xpath=//input[@id="tender-cause-description"]  ${causeDesctiption}
+  Select From List By Value  ${locator.edit_tender_cause_desctiption}  ${cause}
 
 Edit Argeement Duration
   [Arguments]  ${tender_data}
