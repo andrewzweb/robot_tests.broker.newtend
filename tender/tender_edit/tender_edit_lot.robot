@@ -3,6 +3,7 @@
 Add lots
   [Arguments]  ${tender_data}
 
+  Log To Console  [+] Add lot
   ${procurementMethodType}=   Get From Dictionary    ${tender_data.data}    procurementMethodType
 
   # how much lots we have
@@ -42,6 +43,7 @@ Add lots
 
 Edit Lot Value Amount
   [Arguments]  ${lot}
+  Log To Console  [+] Edit Lot Value Amount
   # amount (update for esco procedure)
   ${key_exist}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${lot.value}  amount
   ${data_key}=  Run Keyword If  ${key_exist}  Get From Dictionary  ${lot.value}  amount
@@ -52,6 +54,7 @@ Edit Lot Value Amount
 
 Edit Lot MinimalStep Amount
   [Arguments]  ${lot}
+  Log To Console  [+] Edit Lot MinimalStep Amount
   # step
   ${key_exist}=  Run Keyword And Return Status
   ...  Dictionary Should Contain Key  ${lot.minimalStep}   amount
@@ -62,6 +65,7 @@ Edit Lot MinimalStep Amount
 
 Edit Lot MinimalStepPercentage
   [Arguments]  ${lot}
+  Log To Console  [+] Edit Lot MinimalStepPercentage
   ${key_exist}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${lot}  minimalStepPercentage
   ${data_key}=  Run Keyword If  ${key_exist}  Get From Dictionary  ${lot}  minimalStepPercentage
   ${locator_exist}=  Run Keyword And Return Status  Get WebElement  ${locator.edit_lot_minimalStepPercentage}
@@ -69,6 +73,7 @@ Edit Lot MinimalStepPercentage
 
 Edit Lot YearlyPaymentsPercentageRange
   [Arguments]  ${lot}
+  Log To Console  [+] Edit Lot YearlyPaymentsPercentageRange
   ${key_exist}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${lot}  yearlyPaymentsPercentageRange
   ${data_key}=  Run Keyword If  ${key_exist}  Get From Dictionary  ${lot}  yearlyPaymentsPercentageRange
   ${locator_exist}=  Run Keyword And Return Status
@@ -77,6 +82,7 @@ Edit Lot YearlyPaymentsPercentageRange
   ...  Wait And Type  ${locator.edit_lot_yearlyPaymentsPercentageRange}  20
 
 Edit Lot Guarantee
+  Log To Console  [+] Edit Lot Guarantee
   ${value_dropdown}=  Set Variable  yes  
   Focus  ${locator.edit_guarantee_dropdown_menu}
   Select From List By Value  ${locator.edit_guarantee_dropdown_menu}  ${value_dropdown}
@@ -84,7 +90,7 @@ Edit Lot Guarantee
   Wait And Type  ${locator.edit_guarantee_amount}  1000
   ${currency}=  Set Variable  UAH
   Select From List By Value  ${locator.edit_guarantee_currency}  ${currency}
-  
+
 Змінити лот
   [Arguments]  @{ARGUMENTS}
   [Documentation]
@@ -93,7 +99,8 @@ Edit Lot Guarantee
   ...      ${ARGUMENTS[2]} ==  lotName
   ...      ${ARGUMENTS[3]} ==  fieldName - value.amount and minimalStep.amount
   ...      ${ARGUMENTS[4]} ==  fieldValue
-  #Log To Console    -== args list - @{ARGUMENTS} ==-
+  Log To Console  [+] Change Lot
+
   Sleep     2
   # Navigate to tender overview
   Click Element     xpath=//a[@ui-sref="tenderView.overview"]
@@ -120,7 +127,7 @@ Edit Lot Guarantee
 
 Edit lot budget
   [Arguments]   @{arguments}
-  #Log To Console    -== arrgos @{arguments} ==-
+  Log To Console  [+] Edit lot budget
   # :TODO Seems tobe real hardcode, need to change after FE will make corrections
   ${lot_field}=    Get Webelement     xpath=//div[contains(., '${ARGUMENTS[0]}')]//input[@ng-model="lot.value.amount"]
   Focus     ${lot_field}
@@ -133,6 +140,7 @@ Edit lot budget
 
 Edit lot step
   [Arguments]   @{arguments}
+  Log To Console  [+] Edit lot step
   ${lot_step}=      Get Webelement    xpath=//div[contains(., '${ARGUMENTS[0]}')]//input[@ng-model="lot.minimalStep.amount"]
   Focus     ${lot_step}
   Sleep     2

@@ -554,13 +554,13 @@ Edit Supplement Criteria New
   ${locator.criterias}=  Set Variable  xpath=//div[@ng-if="tender.criteria"]/div
   ${elements_criteria}=  Get WebElements  ${locator.criterias}
   ${count_of_criteria}=  Get Length  ${elements_criteria}
-  Log To Console  Count criteria ${count_of_criteria}
+  Log To Console  [_] Count criteria ${count_of_criteria}
   ${exist_before}=  Convert To Integer  0
 
   : FOR   ${item}   IN RANGE  ${count_of_criteria}
   \  ${numb}=  Evaluate  ${item}+${exist_before}
   \  ${numb}=  Convert To Integer  ${numb}
-  \  Log To Console  Criteria ${numb}
+  \  Log To Console  [_] Collect criteria ${numb}
   \  ${critetia_element_path}=  Set Variable  xpath=//div[@data-count_number="${numb}"]
   \  ${criteria_data}=  Get Element Attribute  ${critetia_element_path}@data-criteria
   \  #Log To Console  Find criteria ${criteria_data}
@@ -574,6 +574,7 @@ Edit Supplement Criteria New
 
 Make Global Variable
   [Arguments]  ${username}  ${tender_data}
+  Log To Console  [+] Make Global Variable
   Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender_data}
 
 Get Tender Internal Id
@@ -605,6 +606,7 @@ Put Tender In Global Verable
 
 Edit NDS
   [Arguments]  @{ARGS}
+  Log To Console  [+] Edit Tender NDS
   ${tender_data}=  Set Variable  ${ARGS[0]}
   Log To Console  [*] Click to button with NDS
   ${lot_nds}=  Set Variable  ${tender_data.data.lots[0].value.valueAddedTaxIncluded}
@@ -614,6 +616,7 @@ Edit NDS
 
 Edit NDS Negotiation
   [Arguments]  @{ARGS}
+  Log To Console  [+] Edit Tender NDS Negotiation
   ${tender_data}=  Set Variable  ${ARGS[0]}
   Log To Console  [*] Click to button with NDS
   ${lot_nds}=  Set Variable  ${tender_data.data.value.valueAddedTaxIncluded}
