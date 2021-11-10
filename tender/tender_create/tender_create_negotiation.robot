@@ -57,11 +57,13 @@ Create Negotiation Tender
   Edit Milestones  ${tender_data}
 
   Wait And Click  xpath=//button[@ng-click="save()"]
-
-  Sleep  2
   # === It's all in one popup window
 
   #Edit Date For Tender  ${tender_data}
+
+  Edit NDS Negotiation  ${tender_data}
+
+  Sleep  2
 
   Publish tender
 
