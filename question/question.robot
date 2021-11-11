@@ -66,31 +66,19 @@ Wait For Question Title
   Reload Page
   Wait Until Page Contains Element  xpath=//div[contains(., '${question_id}')]
 
-
 Get Info From Question
   [Arguments]   @{ARGS}
-  [Documentation]
-  ...     ${ARGUMENTS[0]} == user_name
-  ...     ${ARGUMENTS[1]} == tender_uaid
-  ...     ${ARGUMENTS[2]} == field_id_ 'q-f6dc51c3'
-  ...     ${ARGUMENTS[3]} == field_name_ title/description
+  Print Args  ${ARGS}
 
   ${usesname}=  Set Variable  ${ARGS[0]}
   ${tender_id}=  Set Variable  ${ARGS[1]}
   ${field_id}=  Set Variable  ${ARGS[2]}
   ${field_name}=  Set Variable  ${ARGS[3]}
 
-  Print Args  ${ARGS}
   Find Tender By Id  ${tender_id}
   Go To Questions Of Tender
   Run Keyword And Return  Отримати інформацію запитання із поля ${field_name}  ${field_id}
-
-Await For Question Title Appear
-  [Arguments]   ${argument}
-  Reload Page
-  Log To Console  [.] Search question title with id: ${argument}
-  Get WebElement  xpath=//*[contains(text(), '${argument}')]
-
+  
 Отримати інформацію запитання із поля questions[0].title
   [Arguments]  ${argument}
   Log To Console  [+] Get question[0]title
@@ -101,7 +89,7 @@ Await For Question Title Appear
 Отримати інформацію запитання із поля title
   [Arguments]  ${argument}
   Log To Console  [+] Get question title
-  ${question_0_title}=  Set Veriable  xpath=//div[@class="row question-container"]/..//span[@class="user ng-binding"]
+  ${question_0_title}=  Set Variable  xpath=//div[@class="row question-container"]/..//span[@class="user ng-binding"]
   Wait Until Keyword Succeeds  8 minute  20 s   Wait For Question Title  ${argument}
   ${result}=  Get Text  xpath=//span[contains(text(), '${argument}')]
   [return]  ${result}
