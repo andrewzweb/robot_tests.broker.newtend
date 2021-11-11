@@ -40,7 +40,7 @@ Answer to question
    Go To Questions Of Tender
 
    # wait to show chat item
-   Wait Until Keyword Succeeds  5 minute  30 seconds  Wait For Question  ${question_id}
+   Wait Until Keyword Succeeds  8 minute  20 seconds  Wait For Question  ${question_id}
    Mouse Over  xpath=//div[contains(., '${question_id}')]  # should show answer btn
    # ckick to button answer to question
    Click Element   ${locator.ask_button_answer_to_question}
@@ -68,17 +68,22 @@ Wait For Question Title
 
 
 Get Info From Question
-  [Arguments]   @{ARGUMENTS}
+  [Arguments]   @{ARGS}
   [Documentation]
   ...     ${ARGUMENTS[0]} == user_name
   ...     ${ARGUMENTS[1]} == tender_uaid
-  ...     ${ARGUMENTS[2]} == field_id_'q-f6dc51c3'
-  ...     ${ARGUMENTS[3]} == field_name_title/description
-  Print Args  ${ARGUMENTS}
-  newtend.Пошук тендера по ідентифікатору  ${ARGUMENTS[0]}  ${ARGUMENTS[1]}
-  Wait And Click  ${locator.ask__tab_question}
-  Wait Until Page Contains Element  ${locator.ask__list_of_ask}
-  Run Keyword And Return  Отримати інформацію запитання із поля ${ARGUMENTS[3]}  ${ARGUMENTS[2]}
+  ...     ${ARGUMENTS[2]} == field_id_ 'q-f6dc51c3'
+  ...     ${ARGUMENTS[3]} == field_name_ title/description
+
+  ${usesname}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${field_id}=  Set Variable  ${ARGS[2]}
+  ${field_name}=  Set Variable  ${ARGS[3]}
+
+  Print Args  ${ARGS}
+  Find Tender By Id  ${tender_id}
+  Go To Questions Of Tender
+  Run Keyword And Return  Отримати інформацію запитання із поля ${field_name}  ${field_id}
 
 Await For Question Title Appear
   [Arguments]   ${argument}
@@ -86,30 +91,28 @@ Await For Question Title Appear
   Log To Console  [.] Search question title with id: ${argument}
   Get WebElement  xpath=//*[contains(text(), '${argument}')]
 
-Отримати інформацію про questions[0].title
-  [Arguments]  ${argument}=None
+Отримати інформацію запитання із поля questions[0].title
+  [Arguments]  ${argument}
   Log To Console  [+] Get question[0]title
-  Wait Until Keyword Succeeds  3 minute  20 s   Wait For Question Title  ${argument}
-  ${result}=  Run Keyword If  ${argument} != None  Get Text  xpath=//span[contains(text(), '${argument}')]
-  ...  ELSE  Get Text  ${question_0_title}
+  Wait Until Keyword Succeeds  8 minute  20 s   Wait For Question Title  ${argument}
+  ${result}=  Get Text  xpath=//span[contains(text(), '${argument}')]
   [return]  ${result}
 
 Отримати інформацію запитання із поля title
   [Arguments]  ${argument}
   Log To Console  [+] Get question title
   ${question_0_title}=  Set Veriable  xpath=//div[@class="row question-container"]/..//span[@class="user ng-binding"]
-  Wait Until Keyword Succeeds  3 minute  20 s   Wait For Question Title  ${argument}
-  ${result}=  Run Keyword If  ${argument} != None  Get Text  xpath=//span[contains(text(), '${argument}')]
-  ...  ELSE  Get Text  ${question_0_title}
+  Wait Until Keyword Succeeds  8 minute  20 s   Wait For Question Title  ${argument}
+  ${result}=  Get Text  xpath=//span[contains(text(), '${argument}')]
   [return]  ${result}
-  
+
 Отримати інформацію запитання із поля description
   [Arguments]   ${argument}
   ${descriptions}=  Get Webelements     xpath=//span[@class="question-description ng-binding"]
   ${description}=   Get Text    ${descriptions[-1]}
   [return]  ${description}
 
-Отримати Інформацію Про QUESTIONS[0].date
+Отримати інформацію запитання із поля questions[0].date
   ${resp}=   отримати текст із поля і показати на сторінці   QUESTIONS[0].date
   ${day}=    Get Substring   ${resp}   0   2
   ${month}=  Get Substring   ${resp}   3   6

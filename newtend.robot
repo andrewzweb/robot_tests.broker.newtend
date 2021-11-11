@@ -766,7 +766,5 @@ Get Internal ID
 
 Отримати інформацію про mainProcurementCategory
   [Arguments]    @{ARGS}
-  ${length_args}=  Get Length  ${ARGS}
-  :FOR  ${INDEX}  IN RANGE  ${length_args}
-  \  Log To Console  ARG '${INDEX}' - ${ARGS[${INDEX}]}
+  Print Args  ${ARGS}
 

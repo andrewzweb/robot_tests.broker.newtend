@@ -29,8 +29,11 @@ Current test
   #Отримати інформацію про qualifications[1].status  ${username}  ${tender_id}  1
   #Qulification test
 
-  Find Tender By Id  ${tender_id}
-  Go To Auction
+  ${result}=  Test Get Info From Question
+  Log To Console  ${result}
+  
+  #Find Tender By Id  ${tender_id}
+  #Go To Auction
 
   # wait form show
   #Wait Until Element Is Visible  ${locator.documents_form}
@@ -40,8 +43,7 @@ Current test
   #Wait And Click  ${locator.document_file_button}
   #Sleep  2
   #Wait Until Page Contains Element  ${locator.document_file}
-  Wait And Click  ${locator.documents_send_document}
-  
+  #Wait And Click  ${locator.documents_send_document}
   [Teardown]    Close Browser
 
 #Test
@@ -143,7 +145,8 @@ Test Get Tender Perion End
   Should Be Equal   ${result}  2021-11-08T15:34:00+02:00
 
 Test Get Info From Question
-  ${result}=  Get Info From Question  ${username}  UA-2021-11-09-000174-c  q-f5a0a31d  title
+  ${result}=  Get Info From Question  ${username}  UA-2021-11-11-000204-c  q-44f0665b  questions[0].title
+  Should Be Equal  ${result}  q-44f0665b: Коханка чудар струпливий шамшити.
   [Return]  ${result}
 
 Test Get Info About Qualification
