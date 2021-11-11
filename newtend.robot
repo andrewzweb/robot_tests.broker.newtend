@@ -32,8 +32,8 @@ Resource  ./contract/contract.robot
 # awards
 Resource  ./awards/awards.robot
 
-# refactor
-#Resource  ./refactor.robot
+# complaints
+Resource  ./complaint/complaint.robot
 
 *** Keywords ***
 
