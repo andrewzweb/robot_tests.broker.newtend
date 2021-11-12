@@ -24,13 +24,13 @@ ${date}   2021-11-07T22:59:27.999676+02:00
 ${question_id}  q-f5a0a31d
 *** Test Cases ***
 
-Current test
-  Prapare Browser
+#Current test
+#  Prapare Browser
   #Отримати інформацію про qualifications[1].status  ${username}  ${tender_id}  1
   #Qulification test
 
-  ${result}=  Test Get Info From Question
-  Log To Console  ${result}
+#  ${result}=  Test Get Info From Question
+#  Log To Console  ${result}
   
   #Find Tender By Id  ${tender_id}
   #Go To Auction
@@ -44,7 +44,9 @@ Current test
   #Sleep  2
   #Wait Until Page Contains Element  ${locator.document_file}
   #Wait And Click  ${locator.documents_send_document}
-  [Teardown]    Close Browser
+  #[Teardown]    Close Browser
+Test
+  Test Api Sync Tender
 
 #Test
 #  Test Qulification Api
@@ -153,3 +155,9 @@ Test Get Info About Qualification
   ${result}=  Get Info About Qualification  qualifications[0].status  ${username}  ${tender_id}  1
   Should Be Equal   ${result}  active
   Log To Console  ${result}
+
+Test Api Sync Tender
+  ${internal_id}=  Set Variable  551ded127bac4d298d11a5443dd642a2
+  ${result}=  api_sync_tender  ${internal_id}
+  Should Be Equal   ${result}  200
+  Log To Console  Response from server ${result}
