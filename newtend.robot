@@ -432,26 +432,6 @@ Resource  ./complaint/complaint.robot
 
 ################################################################
 #                                                              #
-#                    Negotiation  (complains)                  #
-#                                                              #
-################################################################
-
-Подати скаргу
-  [Arguments]  @{ARGUMENTS}
-  Fail  Не реалізований функціонал
-
-Порівняти скаргу
-  [Arguments]  @{ARGUMENTS}
-  Fail  Не реалізований функціонал
-
-################################################################
-#                                                              #
-#                    END Negotiation                           #
-#                                                              #
-################################################################
-
-################################################################
-#                                                              #
 #                    Funders                                   #
 #                                                              #
 ################################################################
@@ -504,8 +484,8 @@ Resource  ./complaint/complaint.robot
   Choise Bid  ${bid_id}
   ${bool_confirm_bid}=  Run Keyword And Return Status  Confirm Bid
   Log To Console  [+] _Confirm bid status: ${bool_confirm_bid}
-  ${bool_finish_torgi}=  Run Keyword And Return Status  Finish Torgi
-  Log To Console  [+] _Finish torgi status: ${bool_finish_torgi}
+  #${bool_finish_torgi}=  Run Keyword And Return Status  Finish Torgi
+  #Log To Console  [+] _Finish torgi status: ${bool_finish_torgi}
 
 Відxилити постачальника
   [Arguments]  ${username}  ${tender_id}  ${bid_id}  @{ARGS}
@@ -649,8 +629,8 @@ Resource  ./complaint/complaint.robot
   Publish tender
 
 
-  Log To Console  Internal ID: ${g_data.current_tender_internal_id}
-  ${tender}=  Return Tender Obj  ${g_data.current_tender_internal_id}
+  Log To Console  Internal ID: ${data.tender_internal_id}
+  ${tender}=  Return Tender Obj  ${data.tender_internal_id}
   Log  ${tender}
   Set To Dictionary  ${USERS.users['Newtend_Owner'].tender_data.data}  features=${tender['data']['features']}
 
@@ -658,9 +638,18 @@ Get Internal ID
   #https://autotest.newtend.com/opc/provider/tender/f5926f5a8d8a4350b7eb92d471729f74/overview
   ${location}=  Get Location
   ${internal_id}=  Get Substring  ${location}  -41  -9
-  Set Global Variable  ${g_data.current_tender_internal_id}  ${internal_id}
+  Set Global Variable  ${data.tender_internal_id}  ${internal_id}
   [Return]  ${internal_id}
 
+Custom Get Internal ID
+  [Arguments]  ${start}  ${end}
+  ${location}=  Get Location
+  ${internal_id}=  Get Substring  ${location}  ${start}  ${end}
+  Set Global Variable  ${data.tender_internal_id}  ${internal_id}
+  [Return]  ${internal_id}
+
+
+  
 ################################################################
 #                                                              #
 #                    END Feature                               #
@@ -740,6 +729,14 @@ Get Internal ID
 #                                                              #
 ################################################################
 
+Подати скаргу
+  [Arguments]  @{ARGUMENTS}
+  Fail  Не реалізований функціонал
+
+Порівняти скаргу
+  [Arguments]  @{ARGUMENTS}
+  Fail  Не реалізований функціонал
+
 Скасувати лот
   [Arguments]  @{ARGS}
   Print Args  ${ARGS}
@@ -749,6 +746,11 @@ Get Internal ID
 Створити чернетку вимоги/скарги на скасування
   [Arguments]  @{ARGS}
   Make draft complaint  @{ARGS}
+
+Створити чернетку скарги про виправлення умов закупівлі
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  Create Draft Complaint  @{ARGS}
 
 Отримати інформацію із скарги
   [Arguments]  @{ARGS}
@@ -762,9 +764,9 @@ Get Internal ID
 
 Скасування рішення кваліфікаційної комісії
   [Arguments]  @{ARGS}
-  Print Args  ${ARGS}
+  Print Args  @{ARGS}
 
 Отримати інформацію про mainProcurementCategory
   [Arguments]    @{ARGS}
-  Print Args  ${ARGS}
+  Print Args  @{ARGS}
 

@@ -23,7 +23,7 @@ Get Info About Qualification
   ${qulification_number}=  Run Keyword If  'qualifications[0].status' == '${field_name}'  Set Variable  0
   ...  ELSE  Set Variable  1
 
-  ${qualification_interanl_id}=  api_get_bid_id_hash  ${g_data.current_tender_internal_id}  ${qulification_number}
+  ${qualification_interanl_id}=  api_get_bid_id_hash  ${data.tender_internal_id}  ${qulification_number}
   Log To Console  [+] Get Internal Qualification ID: ${qualification_interanl_id}
 
   ${qualification_elements}=  Get WebElements  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]
@@ -56,7 +56,7 @@ Aprove Qualification
   #Wait Tender Status  active.qualification
 
   # get data from api
-  ${qualification_interanl_id}=  api_get_bid_id_hash  ${g_data.current_tender_internal_id}  ${qulification_number}
+  ${qualification_interanl_id}=  api_get_bid_id_hash  ${data.tender_internal_id}  ${qulification_number}
   Log To Console  [+] Get Internal Qualification ID: ${qualification_interanl_id}
 
   # collect data from UI
@@ -109,7 +109,7 @@ Decline Qualification
   #Wait Tender Status  active.qualification
 
   # get data from api
-  ${qualification_interanl_id}=  api_get_bid_id_hash  ${g_data.current_tender_internal_id}  ${qulification_number}
+  ${qualification_interanl_id}=  api_get_bid_id_hash  ${data.tender_internal_id}  ${qulification_number}
   Log To Console  [+] Get Internal QUlification ID: ${qualification_interanl_id}
 
   # collect data from UI

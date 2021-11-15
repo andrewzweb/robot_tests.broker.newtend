@@ -289,7 +289,7 @@ Publish tender
   Sleep  2
   Set Date Time  xpath=//input[@id="input-date-tender-tenderPeriod-endDate"]  ${date}
   Sleep  2
-  ${api_date}=  api_get_tenderPeriod_end_date  ${g_data.current_tender_internal_id}
+  ${api_date}=  api_get_tenderPeriod_end_date  ${data.tender_internal_id}
   Set To Dictionary  ${USERS.users['Newtend_Owner'].tender_data.data.tenderPeriod}  endDate=${api_date}
   Log To Console  ${USERS.users['Newtend_Owner'].tender_data.data.tenderPeriod}
   [Return]  ${date}
@@ -583,6 +583,7 @@ Get Tender Internal Id
   Log To Console  [+] Get Tender Internal Id
   ${now_url}=  Get Location
   ${result}=  Get Substring  ${now_url}  -41  -9
+  Set Global Variable  ${data.tender_internal_id}  ${result}
   Log To Console  [+] Get Tender Internal Id: ${result}
   [return]  ${result}
 

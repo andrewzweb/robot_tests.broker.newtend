@@ -14,8 +14,8 @@ Library  OperatingSystem
 #Library  AppiumLibrary
 
 *** Variables ***
-${tender_id}  UA-2021-11-10-000320-c
-${g_data.current_tender_internal_id}  4f47fd2f5d6a41abacc2d6edd237b008
+${tender_id}  UA-2021-11-15-000066-d
+${data.tender_internal_id}  4f47fd2f5d6a41abacc2d6edd237b008
 ${username}  Newtend_Owner
 ${OUTPUT_DIR}  .
 ${BROWSER}  chrome
@@ -24,29 +24,14 @@ ${date}   2021-11-07T22:59:27.999676+02:00
 ${question_id}  q-f5a0a31d
 *** Test Cases ***
 
-#Current test
-#  Prapare Browser
-  #Отримати інформацію про qualifications[1].status  ${username}  ${tender_id}  1
-  #Qulification test
+Current test
+  Prapare Browser
+  Test Answer to Question
+  [Teardown]    Close Browser
 
-#  ${result}=  Test Get Info From Question
-#  Log To Console  ${result}
-  
-  #Find Tender By Id  ${tender_id}
-  #Go To Auction
 
-  # wait form show
-  #Wait Until Element Is Visible  ${locator.documents_form}
-  # choise type
-  #${data.dicument_type}=  Set variable  notice
-  #Select From List By Value  ${locator.document_type}  ${data.dicument_type}
-  #Wait And Click  ${locator.document_file_button}
-  #Sleep  2
-  #Wait Until Page Contains Element  ${locator.document_file}
-  #Wait And Click  ${locator.documents_send_document}
-  #[Teardown]    Close Browser
-Test
-  Test Api Sync Tender
+#Test
+#  Test Api Get Complaint Data
 
 #Test
 #  Test Qulification Api
@@ -110,11 +95,11 @@ Change tenderPeriod.endDate
   Змінити в тендері поле tenderPeriod.endDate і зберегти  ${date}
 
 Get Api Test
-  Set Global Variable  ${g_data.current_tender_internal_id}  f5926f5a8d8a4350b7eb92d471729f74
-  ${tender}=  Return Tender Obj  ${g_data.current_tender_internal_id}
+  Set Global Variable  ${data.tender_internal_id}  f5926f5a8d8a4350b7eb92d471729f74
+  ${tender}=  Return Tender Obj  ${data.tender_internal_id}
   Log To Console  ${tender['data']['features']}
 
-Get Internal Id  
+Test Get Internal ID 
   Find Tender By Id  ${tender_id}
   ${id}=  Get Internal ID
   Log To Console  ${id}
@@ -161,3 +146,30 @@ Test Api Sync Tender
   ${result}=  api_sync_tender  ${internal_id}
   Should Be Equal   ${result}  200
   Log To Console  Response from server ${result}
+
+Test Complaint
+  ${tender_id}=  Set Variable  UA-2021-11-12-000254-c
+  Find Tender By Id  ${tender_id}
+  Go To Complaint
+
+  Wait And Click  xpath=//button[@ng-click="makeComplaint()"]
+  Wait And Click  xpath=//md-radio-button[@value="complaint"]/./div/div
+
+  ${locator.complaint_title}=  Set Variable  xpath=//input[@ng-model="title"]
+  Wait And Type  ${locator.complaint_title}  title
+
+  Select From List By Value  xpath=//select[@ng-model="complaintOf"]  tender
+
+
+  ${locator.complaint_description}=  Set Variable  xpath=//textarea[@ng-model="message"]
+  Wait And Type  ${locator.complaint_description}  complaint_descriptioncomplaint_descriptioncomplaint_descriptioncomplaint_descriptioncomplaint_descriptioncomplaint_descriptioncomplaint_descriptioncomplaint_descriptioncomplaint_descriptioncomplaint_descriptioncomplaint_descriptioncomplaint_description
+
+  Wait And Click  xpath=//button[@ng-click="makeComplaint()"]
+
+Test Api Get Complaint Data
+    ${result}=  api_get_complaint  ffdf90d5eec548518250a4fc416c4657
+    Log To Console  ${result}
+
+Test Answer to Question
+  Answer to question  ${username}  ${tender_id}  asdfasdfasdfasdfasdf  q-e71cef89  
+  

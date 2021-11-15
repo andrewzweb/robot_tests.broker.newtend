@@ -67,7 +67,7 @@ Go To Questions Of Tender
   Wait And Click  xpath=//a[@ui-sref="tenderView.chat"]
   Wait Bar Close
 
-Go To Complains Of Tender
+Go To Complaint
   Wait Bar Open
   Wait And Click  xpath=//a[@ui-sref="tenderView.complaint"]
   Wait Bar Close

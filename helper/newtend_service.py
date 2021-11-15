@@ -330,3 +330,8 @@ def api_get_tenderPeriod_end_date(tender_internal_id):
 def api_sync_tender(internal_id):
     response = requests.get('https://autotest.newtend.com/api/v2/sync_tender/%s/' % (internal_id))
     return response.status_code
+
+def api_get_complaint(tender_internal_id):
+    tender = newtend_get_tender(tender_internal_id)
+    result = tender['data']['complaints']
+    return result

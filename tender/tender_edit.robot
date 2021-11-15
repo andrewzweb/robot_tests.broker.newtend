@@ -72,13 +72,8 @@ Add meats to tender
 Find Tender By Id
   [Arguments]  ${tender_id}
   Log To Console  [+] Find Tender id: ${tender_id}
-  #Switch browser   ${BROWSER_ALIAS}
 
-  ${payload_tender_data}=  load_data_from   artifact.yaml
-  ${tender_internal_id}=  Set Variable  ${payload_tender_data.tender_id}
-  Log To Console  [+] Tender internal id: ${tender_internal_id}
-  api_sync_tender  ${tender_internal_id}
-  Log To Console  [+] Sync tender id: ${tender_internal_id}
+  Sync Tender
 
   Go To  ${page_search_tender}
   Wait Until Page Contains Element  ${locator.tender_search_input_field}
@@ -88,6 +83,10 @@ Find Tender By Id
   Sleep  3
 
   Wait Until Keyword Succeeds  8 minute  15 seconds  Try Choice Tender From Search List  ${tender_id}
+
+Sync Tender
+  ${status}=  Run Keyword And Return Status  api_sync_tender  ${data.tender_internal_id}
+  Log To Console  [${status}] Sync tender id: ${data.tender_internal_id}
 
 Try Choice Tender From Search List
   [Arguments]  ${tender_id}
