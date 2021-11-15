@@ -750,12 +750,22 @@ Custom Get Internal ID
 Створити чернетку скарги про виправлення умов закупівлі
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
-  Create Draft Complaint  @{ARGS}
+  ${id}=  Create Draft Complaint  @{ARGS}
+  [Return]  ${id}
 
 Отримати інформацію із скарги
   [Arguments]  @{ARGS}
   Get Info From Complaints  @{ARGS}
-  
+
+Завантажити документацію до вимоги
+  [Arguments]  @{ARGS}
+  Download document to complaint  @{ARGS}
+
+Виконати оплату скарги
+  [Arguments]  @{ARGS}
+  Complaint publish  @{ARGS}
+
+
 ################################################################
 #                                                              #
 #                    END Complaints                            #

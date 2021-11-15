@@ -28,6 +28,8 @@ Create Draft Complaint
   # title: 'q-cf22398d: Страта мовляти корчити крамарювати.'
   # type: complaint
 
+  Log To Console  [+] Create Draft Complaint
+
   ${username}=  Set Variable  ${ARGS[0]}
   ${tender_id}=  Set Variable  ${ARGS[1]}
   ${complaint_data}=  Set Variable  ${ARGS[2]}
@@ -55,16 +57,25 @@ Create Draft Complaint
   Wait And Click  xpath=//button[@ng-click="makeComplaint()"]
 
   Sleep  10
-  
+
   ${tedner_internal_id}=  Custom Get Internal ID  -42  -10
   Sync Tender
+
   ${api_complaint_data}=  api_get_complaint  ${tedner_internal_id}
-  Set To Dictionary  ${USERS.users['${username}']}   complaint_data=${api_complaint_data}
+  ${complaintID}=  Get From Dictionary  ${api_complaint_data[0]}  complaintID
+  ${complaintID}=  op_robot_tests.tests_files.service_keywords.Munchify  ${complaintID}
+
+  ${complaint}=  op_robot_tests.tests_files.service_keywords.Munchify  ${api_complaint_data[0]}
+  Set To Dictionary  ${USERS.users['${username}']}  complaint_access_token=123
+  Set To Dictionary  ${USERS.users['${username}']}  complaint_data=${complaint}
   Log To Console  ${USERS.users['${username}'].complaint_data}
-  
+  [Return]  ${complaint}
+
+
 Canceled Lot
   [Arguments]  @{ARGS}
   [Documentation]  Input Data Example
+  Log To Console  [+] Canceled Lot
   # UA-2021-11-09-000268-c
   # l-7812a396
   # c-443f6d22: Душарка победрина кормитися буніти штанці узголов'я сиротюк.
@@ -78,6 +89,7 @@ Canceled Lot
   ${reason_decline}=  Set Variable  @{ARGS[3]}
   ${complaint_doc}=  Set Variable  @{ARGS[4]}
   ${complaint_description}=  Set Variable  @{ARGS[5]}
+
 
 Make draft complaint
   [Arguments]  @{ARGS}
@@ -109,6 +121,8 @@ Make draft complaint
   ... -----------------------
   ... 0
 
+  Log To Console  [+] Make draft complaint
+
   ${tender_id}=  Set Variable  @{ARGS[0]}
   ${complaint_data}=  Set Variable  @{ARGS[1]}
   ${item_index}=  Set Variable  @{ARGS[2]}
@@ -121,3 +135,37 @@ Get Info From Complaints
   # status	
   # 0	
   # cancellations
+
+  Log To Console  [+] Get Info From Complaints
+
+
+Download document to complaint
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  # ARG[0] - Newtend_Provider1
+  # ARG[1] - UA-2021-11-15-000304-c
+  # ARG[2] - UA-2021-11-15-000304-c.c1
+  # ARG[3] - /tmp/d-d2f91020eosJyO7in.docx
+
+  Log To Console  [+] Download document to complaint
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${complaint_id}=  Set Variable  ${ARGS[2]}
+  ${complaint_doc}=  Set Variable  ${ARGS[3]}
+
+  Find Tender By Id  ${tender_id}
+  Go To Complaint
+
+  Sleep  3
+
+  Wait And Click  xpath=//button[@ng-click="setComplaintId(complaint.id, complaint.awardId, complaint.qualificationId, complaint.cancellationId)"]
+  Choose File  xpath=//input[@type="file"]  ${complaint_doc}
+  Reload Page
+  Sleep  30
+
+
+Complaint publish
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  Log To Console  [+] Complaint Publish

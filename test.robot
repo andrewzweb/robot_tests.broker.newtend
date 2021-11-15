@@ -24,14 +24,13 @@ ${date}   2021-11-07T22:59:27.999676+02:00
 ${question_id}  q-f5a0a31d
 *** Test Cases ***
 
-Current test
-  Prapare Browser
-  Test Answer to Question
-  [Teardown]    Close Browser
+#Current test
+#  Prapare Browser
+#  Test Answer to Question
+#  [Teardown]    Close Browser
 
-
-#Test
-#  Test Api Get Complaint Data
+Test
+  Test Api Get Complaint Data
 
 #Test
 #  Test Qulification Api
@@ -168,7 +167,11 @@ Test Complaint
 
 Test Api Get Complaint Data
     ${result}=  api_get_complaint  ffdf90d5eec548518250a4fc416c4657
+    #${data}=  op_robot_tests.tests_files.service_keywords.Munchify  ${result}
+    #Log Dictionary  ${data}
     Log To Console  ${result}
+    ${id}=  Get From Dictionary  ${result[0]}  complaintID
+    Log To Console  ${id}
 
 Test Answer to Question
   Answer to question  ${username}  ${tender_id}  asdfasdfasdfasdfasdf  q-e71cef89  
