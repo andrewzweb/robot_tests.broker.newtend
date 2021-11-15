@@ -58,17 +58,19 @@ Create Draft Complaint
 
   Sleep  10
 
+  # get internal id from browser location string
   ${tedner_internal_id}=  Custom Get Internal ID  -42  -10
+  # make sync on backend
   Sync Tender
 
+  # get complaint data from api
   ${api_complaint_data}=  api_get_complaint  ${tedner_internal_id}
-  ${complaintID}=  Get From Dictionary  ${api_complaint_data[0]}  complaintID
-  ${complaintID}=  op_robot_tests.tests_files.service_keywords.Munchify  ${complaintID}
-
+  # convert complaint data
   ${complaint}=  op_robot_tests.tests_files.service_keywords.Munchify  ${api_complaint_data[0]}
+  # add complaint token in global
   Set To Dictionary  ${USERS.users['${username}']}  complaint_access_token=123
+  # convert complaint put in global
   Set To Dictionary  ${USERS.users['${username}']}  complaint_data=${complaint}
-  Log To Console  ${USERS.users['${username}'].complaint_data}
   [Return]  ${complaint}
 
 
