@@ -165,7 +165,7 @@ Resource  ./complaint/complaint.robot
   Встановити розміри браузера  '${user}'
   Check user if him reg to login  ${user}
   Change Language to UKR
-  Add Cookie  autotest  1  domain=autotest.newtend.com  expiry=2021-11-30 16:21:35
+  Add Cookie  autotest  1  domain=autotest.newtend.com  expiry=2021-12-30 16:21:35
 
 ################################################################
 #                                                              #
@@ -755,7 +755,8 @@ Custom Get Internal ID
 
 Отримати інформацію із скарги
   [Arguments]  @{ARGS}
-  Get Info From Complaints  @{ARGS}
+  ${result}=  Get Info From Complaints  @{ARGS}
+  [Return]  ${result}
 
 Завантажити документацію до вимоги
   [Arguments]  @{ARGS}

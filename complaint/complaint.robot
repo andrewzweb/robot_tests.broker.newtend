@@ -132,13 +132,18 @@ Make draft complaint
 
 Get Info From Complaints
   [Arguments]  @{ARGS}
-  # UA-2021-10-29-000102-d	
-  # UA-2021-10-29-000102-d.c1	
-  # status	
-  # 0	
-  # cancellations
+  Print Args  @{ARGS}
+  # ARG[1] - UA-2021-11-16-000079-d
+  # ARG[2] - UA-2021-11-16-000079-d.c1
+  # ARG[3] - status
+  ${tender_id}=  Set Variable  ${ARGS[0]}
 
   Log To Console  [+] Get Info From Complaints
+
+  ${complaint_status}=  Get Text  xpath=//div[@class="row question-container"]/div/div/span[@class="status ng-binding"]
+  ${result}=  convert_for_robot  ${complaint_status}
+
+  [Return]  ${result}
 
 
 Download document to complaint
@@ -171,3 +176,7 @@ Complaint publish
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
   Log To Console  [+] Complaint Publish
+  #ARG[0] - Newtend_Provider1
+  #ARG[1] - {'description': u'UA-2021-11-16-000081-c.c1-3c9909af [TESTING, ROBOT TESTS]', 'odb_ref': 'TMLN8037M6ZSF.W', 'mfo': '123456', 'currency': 'UAH', 'account': 'UA723004380000026001503374077', 'name': u'\u041f\u043b\u0430\u0442.\u0438\u043d\u0442\u0435\u0440-\u044d\u043a\u0432\u0430\u0439\u0440\u0438\u043d \u0447\u0435\u0440\u0435\u0437 LiqPay', 'okpo': '14360570', 'source': 'account', 'amount': '74760.00', 'date_oper': '16.11.2021 11:01:50', 'type': 'credit'}
+
+  Wait And Click  xpath=//button[@ng-click="publicAsComplaint(complaint.id, complaint.awardId, complaint.qualificationId, complaint.cancellationId)"]

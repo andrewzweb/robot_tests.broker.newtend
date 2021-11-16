@@ -123,6 +123,9 @@ dict_units = {
     u'УТОЧНЕННЯ': u'active.enquiries',
     u'ПРОПОЗИЦІЇ': u'active.tendering',
 
+    # complaint status
+    u'Очікує розгляду /': u'pending',
+
     # ru
     u'Черновик. Второй этап': u'draft.stage2',
     u'Объявление второго этапа' : u'active.stage2.waiting',
