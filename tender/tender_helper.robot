@@ -162,3 +162,7 @@ SingUp Plan
 Check Lot Stash Is Open
   ${status_get_milestone_code}=  Run Keyword And Return Status  Get Text  ${locator.view_milestone[0].code}
   Run Keyword If  ${status_get_milestone_code} == False    Wait And Click  ${locator.view_lot_accordeon}
+
+Go To Create OpenEU
+  Go To  https://autotest.newtend.com/opc/provider/create-tender/multilot/aboveThresholdEU/plan/${data.plan_internal_id}
+

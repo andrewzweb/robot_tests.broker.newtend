@@ -154,8 +154,15 @@ Go To Plan And SingUp
   ${plan_data}=  load_data_from   artifact_plan.yaml
   Find Plan By UAID  ${plan_data.tender_uaid}
   Sleep  2
-  SingUp Plan
+  ${status}=  Run Keyword And Return Status  SingUp Plan
+  Log To Console  [${status}] SingUp Plan
+  # if plan create quinta and give us only id we change flow to execution script
+  Run Keyword If  ${status} == False  Plan Get Internal Id  -41  -9
+  Run Keyword If  ${status} == False  Go To Create OpenEU
   Sleep  4
+
+  ${locator.button_create_tender_from_plan}=  Set Variable  xpath=//button[@ng-click="createTenderFromPlan()"]
+  Run Keyword If  ${status} == True  Wait And Click  ${locator.button_create_tender_from_plan}
 
 Edit Cause
   [Arguments]  ${tender_data}

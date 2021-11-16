@@ -44,3 +44,13 @@ Check and change date field
   
   # get edit PLAN page
   Go To  https://autotest.newtend.com/opc/provider/plans/${plan_id}/edit
+  Sleep  10
+
+Plan Get Internal Id
+  [Arguments]  ${start}  ${end}
+  #https://autotest.newtend.com/opc/provider/plans/e1018ccd8e15435794e2ee4b8c0d4515/overview
+  ${location}=  Get Location
+  ${internal_id}=  Get Substring  ${location}  ${start}  ${end}
+  Set Global Variable  ${data.plan_internal_id}  ${internal_id}
+  [Return]  ${internal_id}
+

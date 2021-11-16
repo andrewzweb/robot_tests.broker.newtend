@@ -24,13 +24,15 @@ ${date}   2021-11-07T22:59:27.999676+02:00
 ${question_id}  q-f5a0a31d
 *** Test Cases ***
 
-#Current test
-#  Prapare Browser
+Current test
+  Prapare Browser
 #  Test Answer to Question
-#  [Teardown]    Close Browser
+  Test Plan Get Internal Id
+  Go To Create OpenEU
+  [Teardown]    Close Browser
 
-Test
-  Test Api Get Complaint Data
+#Test
+#  Test Api Get Complaint Data
 
 #Test
 #  Test Qulification Api
@@ -176,3 +178,10 @@ Test Api Get Complaint Data
 Test Answer to Question
   Answer to question  ${username}  ${tender_id}  asdfasdfasdfasdfasdf  q-e71cef89  
   
+Test Plan Get Internal Id
+  ${plan_uaid}=  Set Variable   UA-P-2021-11-16-000294-c
+  Find Plan By UAID  ${plan_uaid}
+  Sleep  2
+  ${result}=  Plan Get Internal Id  -41  -9
+  Log To Console  ${result}
+  Should Be Equal  ${result}  e1018ccd8e15435794e2ee4b8c0d4515
