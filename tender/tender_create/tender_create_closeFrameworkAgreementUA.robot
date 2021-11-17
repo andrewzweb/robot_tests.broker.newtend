@@ -16,8 +16,6 @@ Create Framework Agreement Tender
 
   # Get Plan Id
   Go To Plan And SingUp
-  
-  Wait And Click  ${locator.button_create_tender_from_plan}
 
   Edit Argeement Duration  ${tender_data}
   

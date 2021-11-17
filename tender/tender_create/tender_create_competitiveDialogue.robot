@@ -17,12 +17,6 @@ Create CompetitiveDialogueEU Tender
   # Get Plan Id
   Go To Plan And SingUp
 
-  Wait And Click  ${locator.button_create_tender_from_plan}
-
-  #Edit Argeement Duration  ${tender_data}
-
-  #Edit Features  ${tender_data}
-
   Edit Tender Title and Description  ${tender_data}
 
   # === It's all in one popup window
@@ -78,10 +72,8 @@ Create CompetitiveDialogueUA Tender
   #${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
   #${tender_data}=  change_minits_for_tests  ${tender_data}  0  5  8  11  12  14
 
-    # Get Plan Id
+  # Get Plan Id
   Go To Plan And SingUp
-
-  Wait And Click  ${locator.button_create_tender_from_plan}
 
   Edit Tender Title and Description  ${tender_data}
 

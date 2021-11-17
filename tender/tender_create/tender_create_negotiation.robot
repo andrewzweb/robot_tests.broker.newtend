@@ -13,8 +13,7 @@ Create Negotiation Tender
 
   # === prepare ====
   Go To Plan And SingUp
-  ${locator.button_create_tender_from_plan}=  Set Variable  xpath=//button[@ng-click="createTenderFromPlan()"]
-  Wait And Click  ${locator.button_create_tender_from_plan}
+
 
   # === creating ===
   Edit Tender Title and Description  ${tender_data}

@@ -74,9 +74,6 @@ Create OpenUA Tender
   #${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
   #${tender_data}=  change_minits_for_tests  ${tender_data}  0  5  8  35  36  55
 
-  ${locator.button_create_tender_from_plan}=  Set Variable  xpath=//button[@ng-click="createTenderFromPlan()"]
-  Wait And Click  ${locator.button_create_tender_from_plan}
-
   Edit Tender Title and Description  ${tender_data}
 
   ${locator.edit_lot_first}=  Set Variable  xpath=//input[@id="lot-id-0"]
