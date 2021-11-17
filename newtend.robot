@@ -739,13 +739,14 @@ Custom Get Internal ID
 
 Скасувати лот
   [Arguments]  @{ARGS}
-  Print Args  ${ARGS}
-  Canceled Lot  @{ARGS}
-  # its in new complaints procedure
-    
+  ${cancellation_data}=  Cancelled Lot  @{ARGS}
+  [Return]  ${cancellation_data}
+
 Створити чернетку вимоги/скарги на скасування
   [Arguments]  @{ARGS}
-  Make draft complaint  @{ARGS}
+  Print Args  @{ARGS}
+  ${id}=  Make draft complaint  @{ARGS}
+  [Return]  ${id}
 
 Створити чернетку скарги про виправлення умов закупівлі
   [Arguments]  @{ARGS}
@@ -766,6 +767,16 @@ Custom Get Internal ID
   [Arguments]  @{ARGS}
   Complaint publish  @{ARGS}
 
+Змінити статус скарги
+  [Arguments]  @{ARGS}
+  #${cancellation_data}=  Complaint change status  @{ARGS}
+  Complaint change status  @{ARGS}
+  #[Return]  ${cancellation_data}
+
+Скасувати закупівлю
+  [Arguments]  @{ARGS}
+  ${complaint_data}=  Cancelled Tender  @{ARGS}
+  [Return]  ${complaint_data}
 
 ################################################################
 #                                                              #

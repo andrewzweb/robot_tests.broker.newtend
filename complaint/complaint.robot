@@ -74,9 +74,58 @@ Create Draft Complaint
   [Return]  ${complaint}
 
 
-Canceled Lot
+Cancelled Tender
   [Arguments]  @{ARGS}
-  [Documentation]  Input Data Example
+  Log To Console  [+] Canceled Tender
+  Print Args  @{ARGS}
+  # 1 - Newtend_Owner
+  # 2 - UA-2021-11-16-000125-d
+  # 3 -  c-9488b425: Борозний зніматися пофальшувати мимо ремествувати здирати
+  # 4 - expensesCut
+  # 5 - /tmp/d-1f36be10atKxhEh9.docx
+  # 6 - Осердак голубаня жовтішати різнити усподі чепурніти привіт людино прикриватися.
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${complaint_title}=  Set Variable  ${ARGS[2]}
+  ${complaint_reason}=  Set Variable  ${ARGS[3]}
+  ${complaint_doc}=  Set Variable  ${ARGS[4]}
+  ${complaint_description}=  Set Variable  ${ARGS[5]}
+
+  Wait And Click  xpath=//button[@id="cancel-tender-btn"]
+
+  # description
+  Wait And Type  xpath=//textarea[@ng-model="reason"]  ${complaint_description}
+
+  # add doc
+  Wait And Click  xpath=//div[@ng-model="file"]
+  Sleep  2
+  Choose File  xpath=//input[@type="file"]  ${complaint_doc}
+  Sleep  7
+
+  # reason
+  Select From List By Value  xpath=//select[@id="reason"]  ${complaint_reason}
+
+  Wait And Click  xpath=//button[@ng-click="delete()"]
+
+  Sleep  5
+
+  # sing up
+  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
+
+  Sleep  5
+  
+  ${api_cancellation_data}=  api_get_cancellation  ${data.tender_internal_id}
+  Log To Console  ${api_cancellation_data}
+  # convert complaint data
+  ${cancellation}=  op_robot_tests.tests_files.service_keywords.Munchify  ${api_cancellation_data}
+  # add complaint token in global
+  Set To Dictionary  ${USERS.users['${username}']}  cancellation_data=${cancellation}
+  [Return]  ${cancellation}
+  
+
+Cancelled Lot
+  [Arguments]  @{ARGS}
   Log To Console  [+] Canceled Lot
   # UA-2021-11-09-000268-c
   # l-7812a396
@@ -85,51 +134,87 @@ Canceled Lot
   # /tmp/d-6e089097quodiQ7vgw.doc
   # Пороспорюватися бісовщина ракляцький утинок соненько воратися ревучий.
 
-  ${tender_id}=  Set Variable  @{ARGS[0]}
-  ${lot_id}=  Set Variable  @{ARGS[1]}
-  ${complaint_id}=  Set Variable  @{ARGS[2]}
-  ${reason_decline}=  Set Variable  @{ARGS[3]}
-  ${complaint_doc}=  Set Variable  @{ARGS[4]}
-  ${complaint_description}=  Set Variable  @{ARGS[5]}
+  Print Args  @{ARGS}
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${lot_id}=  Set Variable  ${ARGS[2]}
+  ${complaint_title}=  Set Variable  ${ARGS[3]}
+  ${complaint_reason}=  Set Variable  ${ARGS[4]}
+  ${complaint_doc}=  Set Variable  ${ARGS[5]}
+  ${complaint_description}=  Set Variable  ${ARGS[6]}
+
+  Find Tender By Id  ${tender_id}
+
+  # open lot
+  Wait And Click  xpath=//h2[@class="tender-block__title tender-block__title--bold ng-binding ng-scope"]
+  # click to button open delete lot
+  Wait And Click  xpath=//button[@id="cancel-lot-btn"]
+
+  # --- fill form ---
+  Wait And Type  xpath=//textarea[@ng-model="reason"]  ${complaint_description}
+
+
+  # add doc
+  Wait And Click  xpath=//div[@ng-model="file"]
+  Sleep  2
+  Choose File  xpath=//input[@type="file"]  ${complaint_doc}
+  Sleep  7
+
+  # choice reason
+  Select From List By Value  xpath=//select[@ng-model="reasonType"]  ${complaint_reason}
+
+  Wait And Click  xpath=//button[@ng-click="delete()"]
+
+  Sleep  7
+
+  # sing up
+  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
+
+  
+  # get complaint data from api
+  ${api_cancellation_data}=  api_get_cancellation  ${data.tender_internal_id}
+  # convert complaint data
+  ${cancellation}=  op_robot_tests.tests_files.service_keywords.Munchify  ${api_cancellation_data}
+  # add complaint token in global
+  Set To Dictionary  ${USERS.users['${username}']}  cancellation_data=${cancellation}
+  [Return]  ${cancellation}
 
 
 Make draft complaint
   [Arguments]  @{ARGS}
-  [Documentation]  Input Data Example
-  ... UA-2021-10-28-000287-c
-  ... -----------------------
-  ... author:
-  ...   address:
-  ...     countryName: Україна
-  ...     locality: Переяслав-Хмельницький
-  ...     postalCode: '01111'
-  ...     region: Київська область
-  ...     streetAddress: Тестова вулиця, 21-29
-  ...   contactPoint:
-  ...     email: test_e_mail@ukr.net
-  ...     faxNumber: '9998877'
-  ...     name: Перший Тестовий Учасник
-  ...     telephone: '+380506665544'
-  ...     url: http://www.page.gov.ua/
-  ... identifier:
-  ...   id: '21725150'
-  ...   legalName: Тестова районна в місті Києві державна адміністрація
-  ...   scheme: UA-EDR
-  ...   name: Тестова районна в місті Києві державна адміністрація
-  ... description: Самопрядка роґлик сужена підставляти знахарювати заглитнутися паливо
-  ...   матюнка займати злагідно обрубка.
-  ... title: 'q-5d3e106b: Пообскрібати очевидьки клямати кормитися.'
-  ... type: complaint
-  ... -----------------------
-  ... 0
-
   Log To Console  [+] Make draft complaint
 
-  ${tender_id}=  Set Variable  @{ARGS[0]}
-  ${complaint_data}=  Set Variable  @{ARGS[1]}
-  ${item_index}=  Set Variable  @{ARGS[2]}
+  ${tender_id}=  Set Variable  ${ARGS[0]}
+  ${complaint_data}=  Set Variable  ${ARGS[1]}
+  ${item_index}=  Set Variable  ${ARGS[2]}
 
+  Wait And Click  xpath=//button[@id="complaint-cancel-lot-btn"]
+  Sleep  2
 
+  Log To Console  ${complaint_data}
+  
+  ${complaint_title}=  Get From Dictionary  ${complaint_data}  title
+  ${complaint_description}=  Get From Dictionary  ${complaint_data}  description
+  ${complaint_type}=  Get From Dictionary  ${complaint_data}  type
+
+  Run Keyword If  ${complaint_type} == complaint  Wait And Click  xpath=//md-radio-button[@value='complaint']
+  Run Keyword If  ${complaint_type} == claim  Wait And Click  xpath=//md-radio-button[@value='claim']
+  
+  Wait And Type  xpath=//input[@ng-model="title"]  ${complaint_title}
+  Wait And Type  xpath=//textarea[@ng-model="message"]  ${complaint_title}
+  
+  Wait And Click  xpath=//button[@ng-click="makeComplaint()"]
+
+  # get complaint data from api
+  ${api_cancellation_data}=  api_get_cancellation  ${data.tender_internal_id}
+  # convert complaint data
+  ${cancellation}=  op_robot_tests.tests_files.service_keywords.Munchify  ${api_cancellation_data}
+  # add complaint token in global
+  Set To Dictionary  ${USERS.users['${username}']}  cancellation_data=${cancellation}
+  [Return]  ${cancellation}
+  
+  
+  
 Get Info From Complaints
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
@@ -180,3 +265,39 @@ Complaint publish
   #ARG[1] - {'description': u'UA-2021-11-16-000081-c.c1-3c9909af [TESTING, ROBOT TESTS]', 'odb_ref': 'TMLN8037M6ZSF.W', 'mfo': '123456', 'currency': 'UAH', 'account': 'UA723004380000026001503374077', 'name': u'\u041f\u043b\u0430\u0442.\u0438\u043d\u0442\u0435\u0440-\u044d\u043a\u0432\u0430\u0439\u0440\u0438\u043d \u0447\u0435\u0440\u0435\u0437 LiqPay', 'okpo': '14360570', 'source': 'account', 'amount': '74760.00', 'date_oper': '16.11.2021 11:01:50', 'type': 'credit'}
 
   Wait And Click  xpath=//button[@ng-click="publicAsComplaint(complaint.id, complaint.awardId, complaint.qualificationId, complaint.cancellationId)"]
+
+
+Complaint change status
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  Log To Console  [+] Complaint change status
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${complaint_id}=  Set Variable  ${ARGS[2]}
+  ${complaint_data}=  Set Variable  ${ARGS[3]}
+  ${complaint_status}=  Get From Dictionary  ${complaint_data.data}  status
+
+  Find Tender By Id  ${tender_id}
+  Go To Complaint
+
+  Run Keyword If  '${complaint_status}' == 'resolved' and '${username}' == 'Newtend_Owner'  Owner Change Status Complaint
+  Run Keyword If  '${complaint_status}' == 'mistaken' and '${username}' == Newtend_Provider1  Provider Change Status Complaint
+
+
+Owner Change Status Complaint
+  # open popup  
+  Wait And Click  xpath=//button[@ng-click="resolution(complaint.id, complaint.awardId, complaint.qualificationId, complaint.cancellationId, true)"]
+  Wait And Type  xpath=//textarea[@ng-model="message"]  confirm AMKU resolution for tender owner
+  Wait And Click  xpath=//button[@ng-click="sendAnswer()"]
+  Sleep  5
+
+    
+Provider Change Status Complaint
+  # click to cancel complaint 
+  Wait And Click  xpath=//button[@ng-click="cancelComplaint(complaint.id, complaint.awardId, complaint.qualificationId, complaint.cancellationId, complaint.type)"]
+  # input message (need)
+  Wait And Type  xpath=//textarea[@ng-model="message"]  cancel complaint description reason write here!!!
+  # and confirm action
+  Wait And Click  xpath=//button[@ng-click="cancelComplaint()"]
+  Sleep  5
