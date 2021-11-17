@@ -112,7 +112,7 @@ Cancelled Tender
   ${cancellation}=  Get Cancellation Data And Put In Global  ${username}
   [Return]  ${cancellation}
 
-  
+
 Cancelled Lot
   [Arguments]  @{ARGS}
   Log To Console  [+] Canceled Lot
@@ -267,7 +267,7 @@ Complaint change status
   Go To Complaint
 
   Run Keyword If  '${complaint_status}' == 'resolved' and '${username}' == 'Newtend_Owner'  Owner Change Status Complaint
-  Run Keyword If  '${complaint_status}' == 'mistaken' and '${username}' == Newtend_Provider1  Provider Change Status Complaint
+  Run Keyword If  '${complaint_status}' == 'mistaken' and '${username}' == 'Newtend_Provider1'  Provider Change Status Complaint
 
 
 Owner Change Status Complaint
@@ -313,7 +313,7 @@ Get Cancellation Data And Put In Global
   ${username}=  Set Variable  ${ARGS[0]}
 
   ${tedner_internal_id}=  Custom Get Internal ID  -42  -10
-  
+
   ${api_cancellation_data}=  api_get_cancellation  ${data.tender_internal_id}
   Log To Console  ${api_cancellation_data}
   # convert complaint data
