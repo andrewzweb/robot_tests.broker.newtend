@@ -639,6 +639,7 @@ Get Internal ID
   ${location}=  Get Location
   ${internal_id}=  Get Substring  ${location}  -41  -9
   Set Global Variable  ${data.tender_internal_id}  ${internal_id}
+  Log To Console  [+] Get Tender Internal ID: ${internal_id}
   [Return]  ${internal_id}
 
 Custom Get Internal ID
@@ -646,8 +647,8 @@ Custom Get Internal ID
   ${location}=  Get Location
   ${internal_id}=  Get Substring  ${location}  ${start}  ${end}
   Set Global Variable  ${data.tender_internal_id}  ${internal_id}
+  Log To Console  [+] Get Custom Tender Internal ID: ${internal_id}
   [Return]  ${internal_id}
-
 
   
 ################################################################
@@ -744,9 +745,8 @@ Custom Get Internal ID
 
 Створити чернетку вимоги/скарги на скасування
   [Arguments]  @{ARGS}
-  Print Args  @{ARGS}
-  ${id}=  Make draft complaint  @{ARGS}
-  [Return]  ${id}
+  ${result}=  Create draft complaint to cancelled tender  @{ARGS}
+  [Return]  ${result}
 
 Створити чернетку скарги про виправлення умов закупівлі
   [Arguments]  @{ARGS}
@@ -777,6 +777,12 @@ Custom Get Internal ID
   [Arguments]  @{ARGS}
   ${complaint_data}=  Cancelled Tender  @{ARGS}
   [Return]  ${complaint_data}
+
+Створити чернетку скарги про виправлення умов лоту
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  ${id}=  Create Draft Complaint Of Lot  @{ARGS}
+  [Return]  ${id}
 
 ################################################################
 #                                                              #
