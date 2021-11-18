@@ -9,7 +9,6 @@ Create CompetitiveDialogueEU Tender
   ${tender_data}=  Set Variable  ${ARGS[1]}
 
   Log To Console  [.] Create CompetitiveDialogueEU Tender
-  ${tender_data}=  overwrite_procuringEntity_data  ${tender_data}
 
   # Get Plan Id
   Go To Plan And SingUp
@@ -36,6 +35,9 @@ Create CompetitiveDialogueEU Tender
   # === It's all in one popup window
 
   Edit NDS  ${tender_data}
+
+  ${bool_features_exist}=  Exist key in dict  ${tender_data.data}  features
+  Run Keyword If  ${bool_features_exist}  Edit Features  ${tender_data}
 
   Edit Date For Tender  ${tender_data}
 
@@ -65,10 +67,6 @@ Create CompetitiveDialogueUA Tender
 
   Log To Console  [.] Create CompetitiveDialogueUA Tender
 
-  ${tender_data}=  overwrite_procuringEntity_data  ${tender_data}
-  #${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
-  #${tender_data}=  change_minits_for_tests  ${tender_data}  0  5  8  11  12  14
-
   # Get Plan Id
   Go To Plan And SingUp
 
@@ -92,6 +90,9 @@ Create CompetitiveDialogueUA Tender
   # === It's all in one popup window
 
   Edit NDS  ${tender_data}
+
+  ${bool_features_exist}=  Exist key in dict  ${tender_data.data}  features
+  Run Keyword If  ${bool_features_exist}  Edit Features  ${tender_data}
 
   Edit Date For Tender  ${tender_data}
 
