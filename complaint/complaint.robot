@@ -210,11 +210,15 @@ Get Info From Complaints
   # ARG[3] - status
   ${tender_id}=  Set Variable  ${ARGS[0]}
 
+  Find Tender By Id  ${tender_id}
+  Go To Complaint
+
   Log To Console  [+] Get Info From Complaints
 
   ${complaint_status}=  Get Text  xpath=//div[@class="row question-container"]/div/div/span[@class="status ng-binding"]
   ${result}=  convert_for_robot  ${complaint_status}
 
+  Log To Console  [_] Get Info In Complaint: ${result}
   [Return]  ${result}
 
 
