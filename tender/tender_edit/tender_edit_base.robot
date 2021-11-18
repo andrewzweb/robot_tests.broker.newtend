@@ -259,10 +259,10 @@ Edit Date For Tender
   Run Keyword If  '${procurementMethodType}' not in ['reporting']  Edit Feasible Element  ${tender_data.data.tenderPeriod}  endDate  Set Date Time  ${locator.tender_end_date}
 
 Choise Dont Add Document
-  CustomLog  [+] Choise Dont Add Document
+  Log To Console  [+] Choise Dont Add Document
   # Click to popup download document
   ${locator.button_tender_no_document}=  Set Variable  xpath=//div[@id="no-docs-btn"]
-  Wait Until Page Contains Element  ${locator.button_tender_no_document}  20
+  Wait Until Page Contains Element  ${locator.button_tender_no_document}  40
   # Wait Until Element Is Visible  ${locator.button_tender_no_document}
   Click Element  ${locator.button_tender_no_document}
 
