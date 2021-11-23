@@ -35,6 +35,9 @@ Resource  ./awards/awards.robot
 # complaints
 Resource  ./complaint/complaint.robot
 
+# bids
+Resource  ./bid/bid.robot
+
 *** Keywords ***
 
 ################################################################
@@ -759,16 +762,25 @@ Custom Get Internal ID
 #                                                              #
 ################################################################
 
-  
-Завантажити відповіді на критерії закупівлі
-  [Arguments]    @{ARGS}
-  Edit Bid Criteria  @{ARGS}
-
+# ---- main ----
 Подати цінову пропозицію
   [Arguments]  @{ARGS}
   Log To Console  [+] Make price bid
   Print Args  ${ARGS}
   Make bid  ${ARGS}
+
+Подати цінову пропозицію в статусі draft
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  Log To Console  [.] Make bid
+  Make Bid  @{ARGS}
+
+Завантажити відповіді на критерії закупівлі
+  [Arguments]    @{ARGS}
+  Edit Bid Criteria  @{ARGS}
+
+
+# ---- options ----
 
 Додати позицію
   [Arguments]  @{ARGS}
@@ -778,19 +790,29 @@ Custom Get Internal ID
 
 Отримати інформацію із пропозиції
   [Arguments]  @{ARGS}
-  Print Args  ${ARGS}
+  Print Args  @{ARGS}
   # TODO
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${field}=  Set Variable  ${ARGS[2]}
+
+  Find Tender By Id  ${tender_id}
+
+  ${result}=  Run Keyword And Return  Отримати інформацію із пропозиції із поля ${field}
+
+  [Return]  ${result}
+
+Отримати інформацію із пропозиції із поля value.amount
+  ${value_amount}=  Get Text  xpath=//div[@class="bid-item__amount ng-binding ng-scope"]
+  ${result}=  convert_bid_amount  ${value_amount}
+  [Return]  ${result}
 
 Змінити цінову пропозицію
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
   #Chagenge bid
 
-Подати цінову пропозицію в статусі draft
-  [Arguments]  @{ARGS}
-  Print Args  @{ARGS}
-  Log To Console  [.] Make bid
-  Make Bid  @{ARGS}
+# --- add doc in bid ---
 
 Завантажити документ в ставку
   [Arguments]  @{ARGS}
@@ -803,27 +825,27 @@ Custom Get Internal ID
 
   Find Tender By Id  ${tender_id}
 
-  Add Doc To Bid  ${username}  ${document_file}
+  # посмотреть есть ли в ставке документы если есть
+  # то появляется другое меню
 
-Подати цінову пропозицію
-  [Arguments]  @{ARGS}
-  Print Args  ${ARGS}
-  Log To Console  [.] Make bid
-  Make Bid  @{ARGS}
+  ${button_upload_doc}=  Set Variable  xpath=//button[@ng-click="uploadDocument()"]
+  ${locator_exist}=  Run Keyword And Return Status  Get WebElement  ${button_upload_doc}
+
+  Run Keyword If  '${locator_exist}' == 'True'  Upload Doc In Second Time  ${username}  ${document_file}
+  Run Keyword If  '${locator_exist}' == 'False'  Add Doc To Bid  ${username}  ${document_file}
 
 Змінити документ в ставці
   [Arguments]  @{ARGS}
   Print Args  ${ARGS}
   Log To Console  [.] Change doc in bid
 
-  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[0]}
   ${document_file}=  Set Variable  ${ARGS[1]}
-  ${tender_id}=  Set Variable  ${ARGS[2]}
+  ${doument_id}=  Set Variable  ${ARGS[2]}
 
   Find Tender By Id  ${tender_id}
   Sleep  10
-  
-  
+
 ################################################################
 #                                                              #
 #                    END BID                                   #

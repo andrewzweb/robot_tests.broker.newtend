@@ -69,6 +69,7 @@ Add meats to tender
   \   \   ${enum_title}=    Get From Dictionary     ${f_enum[${n}]}     title
   \   \   ${enum_value}=    Get From Dictionary     ${f_enum[${n}]}     value
 
+
 Find Tender By Id
   [Arguments]  ${tender_id}
   Log To Console  [+] Find Tender id: ${tender_id}
@@ -83,6 +84,12 @@ Find Tender By Id
   Sleep  3
 
   Wait Until Keyword Succeeds  8 minute  15 seconds  Try Choice Tender From Search List  ${tender_id}
+
+  # my version
+  #Set To Dictionary  ${USERS.users['${username}'].id_map}  ${tender_id}  ${data.tender_internal_id}
+
+  # like in client
+  #Set To Dictionary  ${USERS.users['Newtend_Provider1'].id_map}  ${tender_id}=${data.tender_internal_id}
 
 Sync Tender
   ${status}=  Run Keyword And Return Status  api_sync_tender  ${data.tender_internal_id}

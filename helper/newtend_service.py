@@ -343,3 +343,7 @@ def api_get_cancellation(tender_internal_id):
     tender = newtend_get_tender(tender_internal_id)
     result = tender['data']['cancellations']
     return result
+
+def convert_bid_amount(raw_amount):
+    result = str(raw_amount[0]).replace(' ', '').replace(',', '.')
+    return float(result)

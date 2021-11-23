@@ -1,6 +1,8 @@
 ** Settings ***
-Resource  ../../newtend.robot
+Resource  ../newtend.robot
 
+
+*** Keywords ***
 
 Make Bid Draft
   [Arguments]  @{ARGS}
@@ -40,6 +42,8 @@ Make Bid
 #        name: Тестовий ФОП 2
 #        scale: mid
 #  ARG[3] - [u'l-3aafa6e4']
+
+  Log To Console  [.] === Make bid ===
 
   ${username}=  Set Variable  ${ARGS[0]}
   ${tender_id}=  Set Variable  ${ARGS[1]}
@@ -96,26 +100,12 @@ Make Bid
   # Wait page reload
   Sleep  3
 
-  # potom menya perekidivaet na big page
-
-  # add doc vidpovidnist
-  # choise type
-  # save doc
-  
-  # need choise all criteria
-
-  # choise first
-  # and again choise first
-
-  # save all criteria
-
-  # pusblish bid
-
-  # singin bid
-
 
 Add Doc To Bid
   [Arguments]  ${username}  ${document_file}
+
+  Log To Console  [.] === Add doc in bid ===
+
   #${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bidresponses['bid'].data.id}
   #Log To Console  Bid ID ${bid_id}
 
@@ -166,6 +156,8 @@ Add Doc To Bid
 Edit Bid Criteria
   [Arguments]    @{ARGS}
   Print Args  @{ARGS}
+
+  Log To Console  [.] === Edit criteria in bid ===
 
   ${username}=  Set Variable  ${ARGS[0]}
   ${tender_id}=  Set Variable  ${ARGS[1]}
@@ -234,7 +226,7 @@ Edit Bid Criteria
 Add Doc To Criteria
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
-  Log To Console  [+] Add Doc To Criteria
+  Log To Console  [+] === Add Doc To Criteria ===
   
   ${current_data_item}=  Set Variable  ${ARGS[0]}
   ${criteria_index}=  Set Variable  ${ARGS[1]}
@@ -269,3 +261,35 @@ Save Criteria In Bid And Publish Bid
   #Sleep  3
 
   Wait And Click  xpath=//button[@ng-click="publishBid()"]
+
+
+Upload Doc In Second Time
+  [Arguments]  ${username}  ${document_file}
+
+  Log To Console  [+] === Upload Doc In Second Time ===
+
+  # перейти в меню создание бида
+  ${locator.button_popup_make_bid}=  Set Variable  xpath=//a[@ui-sref="tenderView.ownBid"]
+  Wait And Click  ${locator.button_popup_make_bid}
+
+  # открыть попап
+  Wait And Click  xpath=//button[@ng-click="uploadDocument()"]
+  Sleep  3
+
+  # выбрать тип документа
+  Select From List By Value  xpath=//select[@ng-model="document.documentType"]  eligibilityDocuments
+
+  # выбрать открытость
+  Select From List By Value  xpath=//select[@ng-model="document.confidentiality"]  public
+
+  # нажать на добавить
+  Wait And Click  xpath=//button[@ng-disabled="loadInProgress"]
+
+  # загрузить файл
+  Sleep  2
+  Choose File  xpath=//input[@type='file']  ${document_file}
+  Sleep  3
+
+  # нажать на кнопку загрузить
+  Wait And Click  xpath=//button[@ng-click="upload()"]
+  Sleep  5

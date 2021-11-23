@@ -24,16 +24,16 @@ ${date}   2021-11-07T22:59:27.999676+02:00
 ${question_id}  q-f5a0a31d
 *** Test Cases ***
 
-Current test
-  Prapare Browser
+#Current test
+#  Prapare Browser
 #  Test Answer to Question
-  Test Plan Get Internal Id
-  Go To Create OpenEU
-  [Teardown]    Close Browser
+#  Test Plan Get Internal Id
+#  Go To Create OpenEU
+#  [Teardown]    Close Browser
 
-#Test
+Test
 #  Test Api Get Complaint Data
-
+  Test Bid Amount Convert
 #Test
 #  Test Qulification Api
 
@@ -186,4 +186,7 @@ Test Plan Get Internal Id
   Log To Console  ${result}
   Should Be Equal  ${result}  e1018ccd8e15435794e2ee4b8c0d4515
 
-
+Test Bid Amount Convert
+  ${amount_raw}=  Set Variable  35 753 280,98  грн
+  ${result}=  convert_bid_amount  ${amount_raw}
+  Log To Console  ${result}
