@@ -281,7 +281,7 @@ Owner Change Status Complaint
   Wait And Click  xpath=//button[@ng-click="sendAnswer()"]
   Sleep  5
 
-    
+
 Provider Change Status Complaint
   # click to cancel complaint 
   Wait And Click  xpath=//button[@ng-click="cancelComplaint(complaint.id, complaint.awardId, complaint.qualificationId, complaint.cancellationId, complaint.type)"]

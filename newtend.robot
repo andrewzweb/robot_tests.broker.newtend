@@ -102,47 +102,6 @@ Resource  ./complaint/complaint.robot
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
 
-Змінити цінову пропозицію
-  [Arguments]  @{ARGS}
-  Print Args  @{ARGS}
-  #Chagenge bid
-
-Подати цінову пропозицію в статусі draft
-  [Arguments]  @{ARGS}
-  Print Args  @{ARGS}
-  Log To Console  [.] Make bid draft
-  Make Bid Draft  @{ARGS}
-
-Завантажити документ в ставку
-  [Arguments]  @{ARGS}
-  Print Args  @{ARGS}
-  Log To Console  [+] Download doc in bid
-
-  ${username}=  Set Variable  ${ARGS[0]}
-  ${document_file}=  Set Variable  ${ARGS[1]}
-  ${tender_id}=  Set Variable  ${ARGS[2]}
-
-  Find Tender By Id  ${tender_id}
-
-  Add Doc To Bid  ${username}  ${document_file}
-
-Подати цінову пропозицію
-  [Arguments]  @{ARGS}
-  Print Args  ${ARGS}
-  Log To Console  [.] Make bid
-  Make Bid  @{ARGS}
-
-Змінити документ в ставці
-  [Arguments]  @{ARGS}
-  Print Args  ${ARGS}
-  Log To Console  [.] Change doc in bid
-
-  ${username}=  Set Variable  ${ARGS[0]}
-  ${document_file}=  Set Variable  ${ARGS[1]}
-  ${tender_id}=  Set Variable  ${ARGS[2]}
-
-  Find Tender By Id  ${tender_id}
-  Sleep  10
 
 ################################################################
 #                                                              #
@@ -719,10 +678,6 @@ Custom Get Internal ID
   ${complaintPeriod}=  Get Text  xpath=//div[@id="end-date-complaintPeriod"]
   [Return]  ${complaintPeriod}
 
-Отримати інформацію із пропозиції
-  [Arguments]  @{ARGS}
-  Print Args  ${ARGS}
-  # TODO
 
 ################################################################
 #                                                              #
@@ -798,3 +753,79 @@ Custom Get Internal ID
   [Arguments]    @{ARGS}
   Print Args  @{ARGS}
 
+################################################################
+#                                                              #
+#                    BID                                       #
+#                                                              #
+################################################################
+
+  
+Завантажити відповіді на критерії закупівлі
+  [Arguments]    @{ARGS}
+  Edit Bid Criteria  @{ARGS}
+
+Подати цінову пропозицію
+  [Arguments]  @{ARGS}
+  Log To Console  [+] Make price bid
+  Print Args  ${ARGS}
+  Make bid  ${ARGS}
+
+Додати позицію
+  [Arguments]  @{ARGS}
+  Log To Console  [+] Add bid
+  Print Args  ${ARGS}
+  Make bid  ${ARGS}
+
+Отримати інформацію із пропозиції
+  [Arguments]  @{ARGS}
+  Print Args  ${ARGS}
+  # TODO
+
+Змінити цінову пропозицію
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  #Chagenge bid
+
+Подати цінову пропозицію в статусі draft
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  Log To Console  [.] Make bid
+  Make Bid  @{ARGS}
+
+Завантажити документ в ставку
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  Log To Console  [+] Download doc in bid
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${document_file}=  Set Variable  ${ARGS[1]}
+  ${tender_id}=  Set Variable  ${ARGS[2]}
+
+  Find Tender By Id  ${tender_id}
+
+  Add Doc To Bid  ${username}  ${document_file}
+
+Подати цінову пропозицію
+  [Arguments]  @{ARGS}
+  Print Args  ${ARGS}
+  Log To Console  [.] Make bid
+  Make Bid  @{ARGS}
+
+Змінити документ в ставці
+  [Arguments]  @{ARGS}
+  Print Args  ${ARGS}
+  Log To Console  [.] Change doc in bid
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${document_file}=  Set Variable  ${ARGS[1]}
+  ${tender_id}=  Set Variable  ${ARGS[2]}
+
+  Find Tender By Id  ${tender_id}
+  Sleep  10
+  
+  
+################################################################
+#                                                              #
+#                    END BID                                   #
+#                                                              #
+################################################################
