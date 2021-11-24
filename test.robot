@@ -24,16 +24,18 @@ ${date}   2021-11-07T22:59:27.999676+02:00
 ${question_id}  q-f5a0a31d
 *** Test Cases ***
 
-#Current test
-#  Prapare Browser
+Current test
+  Prapare Browser
+  Змінити документ в ставці  Newtend_Provider1  UA-2021-11-24-000184-c  /tmp/d-df2315e7inventoreHjiX3B.pdf  d-c6d4dbbf
 #  Test Answer to Question
 #  Test Plan Get Internal Id
 #  Go To Create OpenEU
-#  [Teardown]    Close Browser
+  [Teardown]    Close Browser
 
 Test
 #  Test Api Get Complaint Data
-  Test Bid Amount Convert
+#  Test Bid Amount Convert
+
 #Test
 #  Test Qulification Api
 
@@ -46,7 +48,9 @@ Prapare Browser
 
   ${login}=  Set Variable  test.owner@gmail.com
   ${pass}=  Set Variable  testowner0
-  Custom Login  ${login}  ${pass}
+  ${login2}=  Set Variable  test.provider1@gmail.com
+  ${pass2}=  Set Variable  test.provider1
+  Custom Login  ${login2}  ${pass2}
 
 Edit Tender
   Find Tender By Id  ${tender_id}

@@ -87,6 +87,12 @@ Go To Prequlification
   Wait And Click  xpath=//a[@ui-sref="tenderView.prequalification"]
   Wait Bar Close
 
+Go To Create Bid
+  # перейти в меню создание бида
+  ${locator.button_popup_make_bid}=  Set Variable  xpath=//a[@ui-sref="tenderView.ownBid"]
+  Wait And Click  ${locator.button_popup_make_bid}
+
+
 Print All Date
   [Arguments]  ${tender_data}
 

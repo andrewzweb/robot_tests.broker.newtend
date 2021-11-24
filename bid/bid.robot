@@ -101,57 +101,6 @@ Make Bid
   Sleep  3
 
 
-Add Doc To Bid
-  [Arguments]  ${username}  ${document_file}
-
-  Log To Console  [.] === Add doc in bid ===
-
-  #${bid_id}=  Get Variable Value   ${USERS.users['${username}'].bidresponses['bid'].data.id}
-  #Log To Console  Bid ID ${bid_id}
-
-  # click to make bid
-  ${locator.button_popup_make_bid}=  Set Variable  xpath=//a[@ui-sref="tenderView.ownBid"]
-  Wait And Click  ${locator.button_popup_make_bid}
-
-  Sleep  3
-  # wait popup
-  #${locator.popup_make_bid}=  Set Variable  xpath=//div[@class="modal-content"]
-  #Wait Until Element Is Visible  ${locator.popup_make_bid}
-
-  # click to open popup
-  ${locator.button_open_popup_download_doc_to_bid}=  Set Variable  xpath=//button[@ng-model="selected.files"]
-  Wait And Click  ${locator.button_open_popup_download_doc_to_bid}
-
-  # choice file 
-  ${locator.input_download_file}=  Set Variable  xpath=//input[@type="file"]
-  Choose File  ${locator.input_download_file}  ${document_file}
-
-  # select doc ralation for
-  ${locator.select_dropdown_document_type}=  Set Variable  xpath=//md-select[@ng-model="file.documentType"]
-  Wait And Click  ${locator.select_dropdown_document_type}
-  Sleep  2
-
-  # type:
-  # value="technicalSpecifications"  - Технічні специфікації
-  # value="qualificationDocuments"  - Документи, що підтверджують кваліфікацію
-  # value="eligibilityDocuments"  - Документи, що підтверджують відповідність
-  # value="commercialProposal"  - Цінова пропозиція
-  # value="billOfQuantity"  - Кошторис (розрахунок вартості)
-  # value="evidence"  - Пояснення/обгрунтування
-  # value="winningBid"  - Ціна за одиницю товару (послуги)
-
-  ${locator.select_type_option}=  Set Variable  xpath=//md-option[@value="eligibilityDocuments"]
-  Wait And Click  ${locator.select_type_option}
-
-  ${locator.button_save_document}=  Set Variable  xpath=//button[@ng-click="saveDocumentsChanges()"]
-  Wait And Click  ${locator.button_save_document}
-
-  # wait doc download
-  Sleep   10
-
-  # try to fake document response
-  ${fake_response}=    fake_document_response    ${document_file}
-  Set To Dictionary  ${USERS.users['${username}']}   documents=${fake_response}
 
 Edit Bid Criteria
   [Arguments]    @{ARGS}
@@ -205,7 +154,6 @@ Edit Bid Criteria
   \
   \  ${numb_index}=  Convert To Integer  ${criteria_index}
   \  ${current_data_item}=  Set Variable  ${criteria_data.data[${numb_index}]}
-  \  Log Dictionary  ${current_data_item}
   \
   \  # получить значение именно value
   \  ${criteria_value}=  Get From Dictionary  ${current_data_item}  value
@@ -263,14 +211,51 @@ Save Criteria In Bid And Publish Bid
   Wait And Click  xpath=//button[@ng-click="publishBid()"]
 
 
+Add Doc To Bid
+  [Arguments]  ${username}  ${document_file}
+
+  Log To Console  [.] === Add doc in bid ===
+
+  # click to open popup
+  ${locator.button_open_popup_download_doc_to_bid}=  Set Variable  xpath=//button[@ng-model="selected.files"]
+  Wait And Click  ${locator.button_open_popup_download_doc_to_bid}
+
+  # choice file
+  ${locator.input_download_file}=  Set Variable  xpath=//input[@type="file"]
+  Choose File  ${locator.input_download_file}  ${document_file}
+
+  # select doc ralation for
+  ${locator.select_dropdown_document_type}=  Set Variable  xpath=//md-select[@ng-model="file.documentType"]
+  Wait And Click  ${locator.select_dropdown_document_type}
+  Sleep  2
+
+  # type:
+  # value="technicalSpecifications"  - Технічні специфікації
+  # value="qualificationDocuments"  - Документи, що підтверджують кваліфікацію
+  # value="eligibilityDocuments"  - Документи, що підтверджують відповідність
+  # value="commercialProposal"  - Цінова пропозиція
+  # value="billOfQuantity"  - Кошторис (розрахунок вартості)
+  # value="evidence"  - Пояснення/обгрунтування
+  # value="winningBid"  - Ціна за одиницю товару (послуги)
+
+  ${locator.select_type_option}=  Set Variable  xpath=//md-option[@value="eligibilityDocuments"]
+  Wait And Click  ${locator.select_type_option}
+
+  ${locator.button_save_document}=  Set Variable  xpath=//button[@ng-click="saveDocumentsChanges()"]
+  Wait And Click  ${locator.button_save_document}
+
+  # wait doc download
+  Sleep   10
+
+  # try to fake document response
+  ${fake_response}=    fake_document_response    ${document_file}
+  Set To Dictionary  ${USERS.users['${username}']}   documents=${fake_response}
+
+
 Upload Doc In Second Time
   [Arguments]  ${username}  ${document_file}
 
   Log To Console  [+] === Upload Doc In Second Time ===
-
-  # перейти в меню создание бида
-  ${locator.button_popup_make_bid}=  Set Variable  xpath=//a[@ui-sref="tenderView.ownBid"]
-  Wait And Click  ${locator.button_popup_make_bid}
 
   # открыть попап
   Wait And Click  xpath=//button[@ng-click="uploadDocument()"]
