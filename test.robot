@@ -14,7 +14,7 @@ Library  OperatingSystem
 #Library  AppiumLibrary
 
 *** Variables ***
-${tender_id}  UA-2021-11-15-000066-d
+${tender_id}  UA-2021-11-25-000157-d
 ${data.tender_internal_id}  4f47fd2f5d6a41abacc2d6edd237b008
 ${username}  Newtend_Owner
 ${OUTPUT_DIR}  .
@@ -24,22 +24,66 @@ ${date}   2021-11-07T22:59:27.999676+02:00
 ${question_id}  q-f5a0a31d
 *** Test Cases ***
 
-Current test
-  Prapare Browser
-  Змінити документ в ставці  Newtend_Provider1  UA-2021-11-24-000184-c  /tmp/d-df2315e7inventoreHjiX3B.pdf  d-c6d4dbbf
-#  Test Answer to Question
-#  Test Plan Get Internal Id
-#  Go To Create OpenEU
-  [Teardown]    Close Browser
+#Current test
+#  Prapare Browser
+#  Find Tender By Id  ${tender_id}
+#  Wait And Click  xpath=//a[@ui-sref="tenderView.ownBid"]
+#  Sleep  3
+#  Me 2
+#  [Teardown]    Close Browser
 
 Test
-#  Test Api Get Complaint Data
-#  Test Bid Amount Convert
-
-#Test
-#  Test Qulification Api
+  ${number}=  return_number_element_check_hash  010  3fd89a7bc06645c58f650fb4f15e3940
+  Log To Console  ${number}
 
 *** Keywords ***
+
+Me 2
+  ${elements}=  Get Webelements  xpath=//div[@ng-repeat='requirement in requirementGroup.requirements track by $index']
+
+  :FOR  ${element}  IN RANGE  10
+  \  Log To Console  ${elements[${element}].get_attribute('id')}
+  \  Log To Console  ${elements[${element}].get_attribute('data-requirement_id')}
+  # get_attribute('value')
+
+Test Me
+  # go to tender
+  Find Tender By Id  ${tender_id}
+
+  # click to make bid
+  ${locator.button_popup_make_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
+  Wait And Click  ${locator.button_popup_make_bid}
+
+  # wait popup
+  ${locator.popup_make_bid}=  Set Variable  xpath=//div[@class="modal-content"]
+  Wait Until Element Is Visible  ${locator.popup_make_bid}
+
+  # click agree
+  ${locator.button_agree_with_publish}=  Set Variable  xpath=//input[@ng-model="agree.value"]
+  Select Checkbox  ${locator.button_agree_with_publish}
+
+  # click self qulified
+  ${locator.button_agree_selt_quliffied}=  Set Variable  xpath=//input[@ng-model="agree.selfQualified"]
+  Select Checkbox  ${locator.button_agree_selt_quliffied}
+
+  # choise from lots
+  ${bid_with_lots}=  Run Keyword And Return Status  Get Webelements  xpath=//div[@ng-repeat="lot in lots track by $index"]
+  Log To Console  [ ] Bid with criteria: '${bid_with_lots}'
+
+  Log To Console  --- 1 ----
+  Run Keyword If  ${bid_with_lots}  Wait And Click  xpath=//button[@ng-show="!lot.lotValue"]
+
+  Log To Console  --- 2 ----
+  # есть ставка мультилотовая и у нее есть критерии то нужно эти критериии нажать потомучто дальше мы не
+  # не поедем так сказать
+  Log To Console  --- 3 ----
+  Run Keyword If  ${bid_with_lots}  Wait And Click  xpath=//a[@class="dropdown-toggle ng-binding"]
+  Run Keyword If  ${bid_with_lots}  Sleep  2
+  Log To Console  --- 6 ----
+  Run Keyword If  ${bid_with_lots}  Wait And Click  xpath=//a[@id="feature_item_0_0_0"]
+  Log To Console  --- 7 ----
+
+
 Prapare Browser
   Open Browser  https://autotest.newtend.com/  ${BROWSER}
   Set Window Size  1024  764

@@ -81,12 +81,16 @@ Make Bid
   Select Checkbox  ${locator.button_agree_selt_quliffied}
 
   # choise from lots
-  ${locator.bids_lots}=  Set Variable  xpath=//div[@ng-repeat="lot in lots track by $index"]
-  ${locator.button_for_make_bid_in_lot}=  Set Variable  xpath=//button[@ng-show="!lot.lotValue"]
+  ${bid_with_lots}=  Run Keyword And Return Status  Get Webelements  xpath=//div[@ng-repeat="lot in lots track by $index"]
+  Log To Console  [ ] Bid with criteria: '${bid_with_lots}'
 
-  # for example we choise first lot
-  #${elements_lot}=  ${bid_currency}=  Run Keyword If  '${status_bid_with_value}' == 'False'  Get WebElements  ${locator.button_for_make_bid_in_lot}
-  #${bid_currency}=  Run Keyword If  '${status_bid_with_value}' == 'False'  Wait And Click  ${elements_lot[0]}
+  Run Keyword If  ${bid_with_lots}  Wait And Click  xpath=//button[@ng-show="!lot.lotValue"]
+
+  # есть ставка мультилотовая и у нее есть критерии то нужно эти критериии нажать потомучто дальше мы не
+  # не поедем так сказать
+  Run Keyword If  ${bid_with_lots}  Wait And Click  xpath=//a[@class="dropdown-toggle ng-binding"]
+  Run Keyword If  ${bid_with_lots}  Sleep  2
+  Run Keyword If  ${bid_with_lots}  Wait And Click  xpath=//a[@id="feature_item_0_0_0"]
 
   # input count
   ${locator.input_bid_amount}=  Set Variable  xpath=//input[@name="amount"]
@@ -101,17 +105,9 @@ Make Bid
   Sleep  3
 
 
-
 Edit Bid Criteria
   [Arguments]    @{ARGS}
   Print Args  @{ARGS}
-
-  Log To Console  [.] === Edit criteria in bid ===
-
-  ${username}=  Set Variable  ${ARGS[0]}
-  ${tender_id}=  Set Variable  ${ARGS[1]}
-  ${criteria_data}=  Set Variable  ${ARGS[2]}
-  ${input_criteria_data_length}=  Get Length  ${criteria_data}
 
   # ARG[0] - Newtend_Provider1
   # ARG[1] - UA-2021-11-19-000185-c
@@ -136,85 +132,99 @@ Edit Bid Criteria
   #     title: Requirement response title
   #     value: 'true'
 
+  Log To Console  [.] === Edit criteria in bid ===
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${criteria_data}=  Set Variable  ${ARGS[2]}
+
+  ${input_criteria_data_length}=  Get Length  ${criteria_data.data}
+  Log To Console  [*] Count criteria on test data: ${input_criteria_data_length}
 
   # === снаяала оперделим сколько всего критериев
   # получим сначала все елементы
-  ${elements_requirement}=  Get WebElements  xpath=//div[@ng-repeat="criteria in criterias track by $index"]
+  ${elements_requirement}=  Get WebElements  xpath=//div[@ng-repeat='requirement in requirementGroup.requirements track by $index']
   # посчитаем количество всех елементов
-  ${count_criteria_on_page}=  Get Length  ${elements_requirement}
-  Log To Console  [*] Count criteria on page: ${count_criteria_on_page}
+  ${count_requirement_on_page}=  Get Length  ${elements_requirement}
+  Log To Console  [*] Count criteria on page: ${count_requirement_on_page}
 
   # идем по циклу этих эдементов и по циклу данных которые нам прислали
   # для того чтобы заполнить эти критерии
 
-  :FOR  ${criteria_index}  IN RANGE  ${count_criteria_on_page}
-  \  # получить атрибут с элемента для подальшего сравнения
-  \  ${data_requirement_group_id}=  Get Element Attribute  xpath=//div[@id="requirement_group_${criteria_index}_0"]@data-requirement_group_id
-  \  Log To Console  [_] Criteria id: ${criteria_index} and attr ${data_requirement_group_id}
+  :FOR  ${element}  IN RANGE  ${count_requirement_on_page}
+  \  Log To Console  [-] --------------------------
+  \  ${current_element_id}=  Set Variable  ${elements_requirement[${element}].get_attribute('id')}
+  \  Log To Console  ${current_element_id}
+  \  ${current_element_hash}=  Set Variable  ${elements_requirement[${element}].get_attribute('data-requirement_id')}
+  \  Log To Console  ${current_element_hash}
   \
-  \  ${numb_index}=  Convert To Integer  ${criteria_index}
-  \  ${current_data_item}=  Set Variable  ${criteria_data.data[${numb_index}]}
+  \  # вернуть элемент
+  \  # если он есть
+  \  ${number}=  return_number_element_check_hash  ${criteria_data}  ${current_element_hash}
   \
-  \  # получить значение именно value
-  \  ${criteria_value}=  Get From Dictionary  ${current_data_item}  value
-  \  Log To Console  [_] Criteria value: ${criteria_value}
-  \  Run Keyword If  '${criteria_value}' == 'true'  Wait And Click  xpath=//div[@id="requirement_group_${criteria_index}_0"]//../md-checkbox[@ng-model="requirement.requirementResponse.value"]
+  \  Run Keyword If  '${number}' != 'None'  Log To Console  [+] ID: ${current_element_id}| HASH ${current_element_hash} | Number ${number}
   \
-  \  # получить лист евиденцес где должен быть документ
-  \  ${criteria_evidences}=  Get From Dictionary  ${current_data_item}  evidences
-  \  # существует ил документ к данному критерию?
-  \  ${key_exist}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${criteria_evidences[0]}  relatedDocument
-  \
-  \  Log To Console  [${key_exist}] Add Doc To Criteria
-  \  Run Keyword If  ${key_exist}  Add Doc To Criteria  ${current_data_item}  ${criteria_index}
+  \  # заполняем если элемент подходит
+  \  Run Keyword If  '${number}' != 'None'  Edit Criteria Item  ${criteria_data}  ${number}  ${current_element_id}
 
+  Log To Console  [+] Save criteria
   Save Criteria In Bid And Publish Bid
+  ${status}=  Run Keyword And Return Status   Wait Until Page Contains Element  xpath=//button[@ng-click="confirm()"]  60
+  Run Keyword If  ${status}  SingUp Bid
 
+SingUp Bid
+  Wait Until Page Contains Element  xpath=//button[@ng-click="confirm()"]  60
+  Wait And Click  xpath=//button[@ng-click="confirm()"]
+  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
 
-Add Doc To Criteria
-  [Arguments]  @{ARGS}
-  Print Args  @{ARGS}
-  Log To Console  [+] === Add Doc To Criteria ===
+ Edit Criteria Item
+  [Arguments]    @{ARGS}
+  ${data_list}=  Set Variable  ${ARGS[0]}
+  ${number}=  Set Variable  ${ARGS[1]}
+  ${id_current}=  Set Variable  ${ARGS[2]}
+
+  Log To Console  [.] Edit Criteria Item |${number} | ${id_current}
+
+  # берем нужный елемент
+  ${current_element}=  Set Variable  ${data_list.data[${number}]}
+
+  # берем непосредственно значение ответа и принтуем
+  ${current_element_value}=  Get From Dictionary  ${current_element}  value
+  Log To Console  [*] Requirement value ${number}: ${current_element_value}
+
+  # если значение true то нажимаем на кнопку
+  Run Keyword If  '${current_element_value}' == 'true'  Wait And Click  xpath=//div[@id="${id_current}"]//../md-checkbox[@ng-model="requirement.requirementResponse.value"]
+
+  # достаем евиденцес
+  ${current_element_evidence}=  Get From Dictionary  ${current_element}  evidences
+  # проверяем есть ли что-то внутри
+  ${evidence_exist}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${current_element_evidence[0]}  relatedDocument
+  Log To Console  [!] Evidence exist: ${evidence_exist}
+  # если да то получаем тайтл и документ
+  ${current_element_evidence_title}=  Run Keyword If  ${evidence_exist}  Get From Dictionary  ${current_element_evidence[0]}  title
+
+  # если в критерии есть док то нажать на элемент
+  Run Keyword If  ${evidence_exist}  Log To Console  [+] Click add doc button
+  Run Keyword If  ${evidence_exist}  Select From List By Index  xpath=//div[@id="${id_current}"]//../select[@ng-model="requirement.requirementResponse.evidences[$index].relatedDocument.id"]  1
+
+  # добавить описание к документу или эвиденс
+  Run Keyword If  ${evidence_exist}  Wait And Type  xpath=//div[@id="${id_current}"]//../textarea  ${current_element_evidence_title}
   
-  ${current_data_item}=  Set Variable  ${ARGS[0]}
-  ${criteria_index}=  Set Variable  ${ARGS[1]}
-
-  # --- добавить документ
-  # получить лист евиденцес где должен быть документ
-  ${criteria_evidences}=  Get From Dictionary  ${current_data_item}  evidences
-  # существует ил документ к данному критерию?
-  ${key_exist}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${criteria_evidences[0]}  relatedDocument
-
-  Log To Console  [_] Current criteria have doc: ${key_exist}
-
-  # открыть селект документа
-  Run Keyword If  ${key_exist}  Wait And Click  xpath=//div[@id="requirement_group_${criteria_index}_0"]//../md-select[@ng-model="requirement.requirementResponse.evidences[$index].relatedDocument.id"]
-  Sleep  3
-
-  # нажать на появившийся документ
-  Run Keyword If  ${key_exist}  Wait And Click  xpath=//md-option[@ng-repeat="document in eligibilityDocuments"]
-  Sleep  2
-
-  # написать дескриптион к документу
-  ${doc_title}=  Run Keyword If  ${key_exist}  Get From Dictionary  ${criteria_evidences[0]}  title
-  Run Keyword If  ${key_exist}  Wait And Type  xpath=//div[@id="requirement_group_${criteria_index}_0"]//../textarea  ${doc_title}
 
 Save Criteria In Bid And Publish Bid
   #--- end
   Wait And Click  xpath=//button[@ng-click="saveCriteriaChanges()"]
   Sleep  5
-
-  #Wait And Click  xpath=//button[@ng-click="signBid(currentBid)"]
-  #Wait And Click  xpath=//button[@ng-click="vm.sign()"]
-  #Sleep  3
-
   Wait And Click  xpath=//button[@ng-click="publishBid()"]
-
+  Sleep  5
 
 Add Doc To Bid
   [Arguments]  ${username}  ${document_file}
 
   Log To Console  [.] === Add doc in bid ===
+
+  # закртыть меню которое показывает деньги на счету
+  Execute Javascript    window.document.getElementById('wallet-menu').style.display = "None";
 
   # click to open popup
   ${locator.button_open_popup_download_doc_to_bid}=  Set Variable  xpath=//button[@ng-model="selected.files"]
@@ -278,3 +288,38 @@ Upload Doc In Second Time
   # нажать на кнопку загрузить
   Wait And Click  xpath=//button[@ng-click="upload()"]
   Sleep  5
+
+
+Change Doc From Bid
+  [Arguments]  ${username}  ${document_file}  ${document_id}
+
+  Log To Console  [+] === Change Doc From Bid ===
+
+  # посмотрим сколько документов в биде
+  Wait Until Page Contains Element  xpath=//div[@ng-repeat="document in allBidDocuments track by $index"]
+  ${doc_elements}=  Get Webelements  xpath=//div[@ng-repeat="document in allBidDocuments track by $index"]
+
+  # посчитать сколько элементов
+  ${doc_elements_len}=  Get Length   ${doc_elements}
+  Log To Console  [+] Current count doc in bid: ${doc_elements_len}
+
+  # в цикле начать итерацию по лементам
+  :FOR  ${index}  IN RANGE  ${doc_elements_len}
+  \  # получить title элемента
+  \  ${title}=  Get Text  ${doc_elements[${index}]}
+  \  #Log To Console  [_] Get title doc: ${title}
+  \  # посмотреть вхождение айдишника в title
+  \  ${status}=  is_one_string_include_other_string  ${title}  ${document_id}
+  \  Log To Console  [_] Get doc_id in title: (status: ${status} | doc_id: ${document_id})
+  \  Execute Javascript    window.document.getElementById('wallet-menu').style.display = "None";
+  \  # если вхождение есть то нажать на кнопочку заментить
+  \  Run Keyword If  ${status}  Wait And Click  xpath=//div[@id="bid_doc_1"]/..//i[@class="glyphicon glyphicon-refresh"]
+  \  # загрузить документ
+  \  Run Keyword If  ${status}  Choose File  xpath=//input[@type="file"]  ${document_file}
+  \  Run Keyword If  ${status}  Wait And Click  xpath=//button[@ng-click="confirm()"]
+  # подождать
+  Sleep  3
+
+Отримати інформацію із пропозиції із поля status
+  ${result}=  Get Text xpath=//div[@id="bid-status"]
+  [Return]  ${result}

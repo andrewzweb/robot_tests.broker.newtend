@@ -849,40 +849,36 @@ Custom Get Internal ID
   Change Doc From Bid  ${username}  ${document_file}  ${document_id}
 
 
-Change Doc From Bid
-  [Arguments]  ${username}  ${document_file}  ${document_id}
-
-  Log To Console  [+] === Change Doc From Bid ===
-  
-  # посмотрим сколько документов в биде
-  Wait Until Page Contains Element  xpath=//div[@ng-repeat="document in allBidDocuments track by $index"]
-  ${doc_elements}=  Get Webelements  xpath=//div[@ng-repeat="document in allBidDocuments track by $index"]
-
-  # посчитать сколько элементов
-  ${doc_elements_len}=  Get Length   ${doc_elements}
-  Log To Console  [+] Current count doc in bid: ${doc_elements_len}
-  
-  # в цикле начать итерацию по лементам
-  :FOR  ${index}  IN RANGE  ${doc_elements_len}
-  \  # получить title элемента
-  \  ${title}=  Get Text  ${doc_elements[${index}]}
-  \  #Log To Console  [_] Get title doc: ${title}
-  \  # посмотреть вхождение айдишника в title
-  \  ${status}=  is_one_string_include_other_string  ${title}  ${document_id}
-  \  Log To Console  [_] Get doc_id in title: (status: ${status} | doc_id: ${document_id})
-  \  Execute Javascript    window.document.getElementById('wallet-menu').style.display = "None";
-  \  # если вхождение есть то нажать на кнопочку заментить
-  \  Run Keyword If  ${status}  Wait And Click  xpath=//div[@id="bid_doc_1"]/..//i[@class="glyphicon glyphicon-refresh"]
-  \  # загрузить документ
-  \  Run Keyword If  ${status}  Choose File  xpath=//input[@type="file"]  ${document_file}
-  \  Run Keyword If  ${status}  Wait And Click  xpath=//button[@ng-click="confirm()"]
-  # подождать
-  Sleep  3
-  # перезагрузка
-
-
 ################################################################
 #                                                              #
 #                    END BID                                   #
 #                                                              #
 ################################################################
+
+# //TODO for single item viewer
+Отримати інформацію із документа
+  [Arguments]  @{ARGS}
+  Print Args  ${ARGS}
+  Log To Console  [.] GET ingo from doc
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${document_id}=  Set Variable  ${ARGS[2]}
+  ${document_field}=  Set Variable  ${ARGS[3]}
+  # username
+  # UA-2021-11-24-000226-c
+  # d-5934673d
+  # title
+
+Отримати документ
+  [Arguments]  @{ARGS}
+  Print Args  ${ARGS}
+  Log To Console  [.] GET ingo from doc
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${document_id}=  Set Variable  ${ARGS[2]}
+  ${document_field}=  Set Variable  ${ARGS[3]}
+  # username
+  # UA-2021-11-24-000226-c
+  # d-5934673d

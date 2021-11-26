@@ -347,3 +347,12 @@ def api_get_cancellation(tender_internal_id):
 def convert_bid_amount(raw_amount):
     result = str(raw_amount[0]).replace(' ', '').replace(',', '.')
     return float(result)
+
+def return_number_element_check_hash(data, search_hash):
+    result = None
+    for x in range(len(data['data'])):
+        id_hash = data['data'][x]['requirement']['id']
+        print(id_hash)
+        if str(id_hash) == str(search_hash):
+            result = x
+    return result
