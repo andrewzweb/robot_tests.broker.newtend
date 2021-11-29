@@ -848,6 +848,42 @@ Custom Get Internal ID
 
   Change Doc From Bid  ${username}  ${document_file}  ${document_id}
 
+Створити чернетку вимоги/скарги про виправлення визначення переможця
+  [Arguments]  @{ARGS}
+  # data:
+  #   author:
+  #       address:
+  #           countryName: Україна
+  #           locality: м. Київ
+  #           postalCode: '04444'
+  #           region: м. Київ
+  #           streetAddress: вулиця Тестова, 32
+  #       contactPoint:
+  #           email: e_mail_test@ukr.net
+  #           faxNumber: 333-44-55
+  #           name: Другий тестовий ФОП
+  #           telephone: '+380972223344'
+  #           url: http://webpage.com.ua
+  #       identifier:
+  #           id: '2894905868'
+  #           legalName: Тестовий ФОП 2
+  #           scheme: UA-EDR
+  #       name: Тестовий ФОП 2
+  #   description: Відволожувати постогнувати недомова позорювати прокормитися карасір
+  #       відом згучатися зажати.
+  #   title: 'q-aa8c7826: Корчити нечулий тоскно відом.'
+  #   type: complaint
+
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${complaint_data}=  Set Variable  ${ARGS[2]}
+  ${award_id}=  Set Variable  ${ARGS[3]}
+
+  Find Tender By Id  ${tender_id}
+  Go To Auction
+
+  Make Complaint To Award  ${username}  ${Complaint_data}  ${award_id}
 
 ################################################################
 #                                                              #

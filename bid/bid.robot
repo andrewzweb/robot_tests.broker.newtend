@@ -88,9 +88,11 @@ Make Bid
 
   # есть ставка мультилотовая и у нее есть критерии то нужно эти критериии нажать потомучто дальше мы не
   # не поедем так сказать
-  Run Keyword If  ${bid_with_lots}  Wait And Click  xpath=//a[@class="dropdown-toggle ng-binding"]
-  Run Keyword If  ${bid_with_lots}  Sleep  2
-  Run Keyword If  ${bid_with_lots}  Wait And Click  xpath=//a[@id="feature_item_0_0_0"]
+
+  ${element_dropdown_exist}=  Run Keyword And Return Status  Get WebElement  xpath=//a[@class="dropdown-toggle ng-binding"]
+  Run Keyword If  ${bid_with_lots} and ${element_dropdown_exist}  Wait And Click  xpath=//a[@class="dropdown-toggle ng-binding"]
+  Run Keyword If  ${bid_with_lots} and ${element_dropdown_exist}  Sleep  2
+  Run Keyword If  ${bid_with_lots} and ${element_dropdown_exist}  Wait And Click  xpath=//a[@id="feature_item_0_0_0"]  
 
   # input count
   ${locator.input_bid_amount}=  Set Variable  xpath=//input[@name="amount"]
