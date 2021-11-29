@@ -28,7 +28,6 @@ Edit Features
   ${data.features_data}=  Get From Dictionary  ${tender_data.data}  features
   ${data.feature_data}=  Get From List  ${data.features_data}  0
   Create Feature  ${data.feature_data}  ${procurementMethodType}
-  CustomLog  [+] Edit Features
   Sleep  3
 
 Create Feature
@@ -80,6 +79,8 @@ Create Feature
   ${data_enum}=  Get From Dictionary  ${feature_data}  enum
   ${count_enum}=  Get length  ${data_enum}
 
+  ${tender_type_with_different_default_count_features}=  Create List  esco  competitiveDialogueUA
+
   : FOR   ${number_enum}  IN RANGE   ${count_enum}
   \  ${num_enum}=  Convert To Integer  ${number_enum}
   \  ${enum_title}=   Get From Dictionary  ${data_enum[${number_enum}]}   title
@@ -93,13 +94,13 @@ Create Feature
   \  Wait And Type  ${edit_feature_enum_description}  ${enum_title}
   \  # add one form
   \  #
-  \  Run Keyword If  ${number_enum} < ${count_enum}-1 and '${procurementMethodType}' != 'esco'  Wait And Click  xpath=//a[@id="add-option-0-${number_enum}"]
+  \  Run Keyword If  ${number_enum} < ${count_enum}-1 and '${procurementMethodType}' not in ${tender_type_with_different_default_count_features}  Wait And Click  xpath=//a[@id="add-option-0-${number_enum}"]
   \  # if esco we have 2 open form we need 3
-  \  Run Keyword If  ${number_enum} < ${count_enum}-2 and '${procurementMethodType}' == 'esco'  Wait And Click  xpath=//a[@id="add-option-0-1"]
+  \  Run Keyword If  ${number_enum} < ${count_enum}-2 and '${procurementMethodType}' in ${tender_type_with_different_default_count_features}  Wait And Click  xpath=//a[@id="add-option-0-1"]
 
   # click to save features
   Wait And Click  ${locator.edit_feature_save_form}
-  Sleep  3
+  Sleep  5
 
 Delete Feature
   [Arguments]  ${feature_id}
@@ -142,7 +143,6 @@ Add New Feature
   ${feature_data}=     Set Variable  ${ARGS[0]}
   Log To Console  ------------ New Feature ----------------
   Log To Console  ${feature_data}
-  ${feature_data}=  overwrite_features_values_in_new_feature  ${feature_data}
   Log To Console  ------------ END New Feature-------------
   # open popup for create new feature
 

@@ -11,7 +11,6 @@ Create Esco Tender
   Log To Console  [.] Creating Create Esco Tender
 
   ${tender_data}=  overwrite_procuringEntity_data  ${tender_data}
-  ${tender_data}=  overwrite_features_values  ${tender_data}
   #${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
   #${tender_data}=  change_minits_for_tests  ${tender_data}  0  5  8  35  36  55
 

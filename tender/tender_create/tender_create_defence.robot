@@ -19,10 +19,6 @@ Create Defence Tender
 
   Go To Plan And SingUp
 
-  ${tender_data}=  overwrite_features_values  ${tender_data}
-  #${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
-  #${tender_data}=  change_minits_for_tests  ${tender_data}  0  5  8  35  36  55
-
   Edit Tender Title and Description  ${tender_data}
 
   ${locator.edit_lot_first}=  Set Variable  xpath=//input[@id="lot-id-0"]
