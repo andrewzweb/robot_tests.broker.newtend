@@ -770,13 +770,13 @@ Custom Get Internal ID
 
 Подати цінову пропозицію в статусі draft
   [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
   Log To Console  [.] Make bid
-  Make Bid  @{ARGS}
+  Make Bid Draft  @{ARGS}
 
 Завантажити відповіді на критерії закупівлі
   [Arguments]    @{ARGS}
   Edit Bid Criteria  @{ARGS}
-
 
 # ---- options ----
 
@@ -883,7 +883,11 @@ Custom Get Internal ID
   Find Tender By Id  ${tender_id}
   Go To Auction
 
-  Make Complaint To Award  ${username}  ${Complaint_data}  ${award_id}
+  Make Complaint To Award  ${username}  ${complaint_data}  ${award_id}
+
+Створити чернетку вимоги/скарги про виправлення кваліфікації учасника
+  [Arguments]  @{ARGS}
+  Make Complaint To Qualification  @{ARGS}
 
 ################################################################
 #                                                              #

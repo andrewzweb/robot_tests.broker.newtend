@@ -393,3 +393,48 @@ Create Draft Complaint Of Lot
   ${complaint}=  Get Complaint Data And Put In Global  ${username}
 
   [Return]  ${complaint}
+
+
+Make Complaint To Qualification
+  [Arguments]  @{ARGS}
+  Log To Console  [+] Create Complaint To Qualification
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${complaint_data}=  Set Variable  ${ARGS[2]}
+  ${complaint_data}=  Get From Dictionary  ${complaint_data}  data
+  ${Qualification_id}=  Set Variable  ${ARGS[3]}
+
+  Find Tender By Id  ${tender_id}
+  Sleep  240
+  Go To Auction
+
+  # нажать на кнопку создать жалобу на квалификацию
+  Wait And Click  xpath=//button[@ng-click="makeComplaint(lotValue.awardId)"]
+
+  ${complaint_type}=  Get From Dictionary  ${complaint_data}  type
+  #   Run Keyword If  '${complaint_type}' == 'complaint'
+  Wait And Click  xpath=//button[@ng-click="makeComplaint()"]
+  Sleep  2
+  Wait And Click  xpath=//md-radio-button[@value="complaint"]/./div/div
+
+  ${complaint_title}=  Get From Dictionary  ${complaint_data}  title
+  ${locator.complaint_title}=  Set Variable  xpath=//input[@ng-model="title"]
+  Wait And Type  ${locator.complaint_title}  ${complaint_title}
+
+  ${complaint_description}=  Get From Dictionary  ${complaint_data}  description
+  ${locator.complaint_description}=  Set Variable  xpath=//textarea[@ng-model="message"]
+  Wait And Type  ${locator.complaint_description}  ${complaint_description}
+
+  Wait And Click  xpath=//button[@ng-click="makeComplaint()"]
+
+  Sleep  10
+
+  # get internal id from browser location string
+  ${tedner_internal_id}=  Custom Get Internal ID  -42  -10
+  # make sync on backend
+  Sync Tender
+
+  ${complaint}=  Get Complaint Data And Put In Global  ${username}
+
+  [Return]  ${complaint}

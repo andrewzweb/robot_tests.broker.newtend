@@ -66,20 +66,6 @@ Make Bid Draft
   ${locator.input_bid_amount}=  Set Variable  xpath=//input[@name="amount"]
   Wait And Type  ${locator.input_bid_amount}  100
 
-  # choise from lots
-  ${bid_with_lots}=  Run Keyword And Return Status  Get Webelements  xpath=//div[@ng-repeat="lot in lots track by $index"]
-  Log To Console  [ ] Bid with criteria: '${bid_with_lots}'
-
-  Run Keyword If  ${bid_with_lots}  Wait And Click  xpath=//button[@ng-show="!lot.lotValue"]
-
-  # есть ставка мультилотовая и у нее есть критерии то нужно эти критериии нажать потомучто дальше мы не
-  # не поедем так сказать
-
-  ${element_dropdown_exist}=  Run Keyword And Return Status  Get WebElement  xpath=//a[@class="dropdown-toggle ng-binding"]
-  Run Keyword If  ${bid_with_lots} and ${element_dropdown_exist}  Wait And Click  xpath=//a[@class="dropdown-toggle ng-binding"]
-  Run Keyword If  ${bid_with_lots} and ${element_dropdown_exist}  Sleep  2
-  Run Keyword If  ${bid_with_lots} and ${element_dropdown_exist}  Wait And Click  xpath=//a[@id="feature_item_0_0_0"]  
-
   # confirm bid
   ${locator.place_a_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
   Wait And Click  ${locator.place_a_bid}
