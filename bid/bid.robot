@@ -6,7 +6,87 @@ Resource  ../newtend.robot
 
 Make Bid Draft
   [Arguments]  @{ARGS}
-  Make Bid  @{ARGS}
+  Log To Console  [.] === Make DRAFT bid ===
+
+  #    lotValues:
+  #  -   relatedLot: b15763fa0b8f4d4d9e91255dbb9824b8
+  #  selfQualified: true
+  #  status: draft
+  #  tenderers:
+  #  -   address:
+  #          countryName: Україна
+  #          countryName_en: Ukraine
+  #          countryName_ru: Украина
+  #          locality: Переяслав-Хмельницький
+  #          postalCode: '01111'
+  #          region: Київська область
+  #          streetAddress: Тестова вулиця, 21-29
+  #      contactPoint:
+  #          email: test_e_mail@ukr.net
+  #          faxNumber: '9998877'
+  #          name: Перший Тестовий Учасник
+  #          telephone: '+380506665544'
+  #          url: http://www.page.gov.ua/
+  #      identifier:
+  #          id: '21725150'
+  #          legalName: Тестова районна в місті Києві державна адміністрація
+  #          scheme: UA-EDR
+  #      name: Тестова районна в місті Києві державна адміністрація
+  #      scale: micro
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${bid_data}=  Set Variable  ${ARGS[2]}
+
+  # go to tender
+  Find Tender By Id  ${tender_id}
+
+  # click to make bid
+  ${locator.button_popup_make_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
+  Wait And Click  ${locator.button_popup_make_bid}
+
+  # wait popup
+  ${locator.popup_make_bid}=  Set Variable  xpath=//div[@class="modal-content"]
+  Wait Until Element Is Visible  ${locator.popup_make_bid}
+
+  # click agree
+  ${locator.button_agree_with_publish}=  Set Variable  xpath=//input[@ng-model="agree.value"]
+  Select Checkbox  ${locator.button_agree_with_publish}
+
+  # click self qulified
+  ${locator.button_agree_selt_quliffied}=  Set Variable  xpath=//input[@ng-model="agree.selfQualified"]
+  Select Checkbox  ${locator.button_agree_selt_quliffied}
+
+  ${bid_with_lots}=  Run Keyword And Return Status  Get Webelements  xpath=//div[@ng-repeat="lot in lots track by $index"]
+  Log To Console  [ ] Bid with criteria: '${bid_with_lots}'
+  Run Keyword If  ${bid_with_lots}  Wait And Click  xpath=//button[@ng-show="!lot.lotValue"]
+
+  # поставлю тут 100 потому что дефолные данные создают драфт
+  # и в драфте нет понятие деньги
+  ${locator.input_bid_amount}=  Set Variable  xpath=//input[@name="amount"]
+  Wait And Type  ${locator.input_bid_amount}  100
+
+  # choise from lots
+  ${bid_with_lots}=  Run Keyword And Return Status  Get Webelements  xpath=//div[@ng-repeat="lot in lots track by $index"]
+  Log To Console  [ ] Bid with criteria: '${bid_with_lots}'
+
+  Run Keyword If  ${bid_with_lots}  Wait And Click  xpath=//button[@ng-show="!lot.lotValue"]
+
+  # есть ставка мультилотовая и у нее есть критерии то нужно эти критериии нажать потомучто дальше мы не
+  # не поедем так сказать
+
+  ${element_dropdown_exist}=  Run Keyword And Return Status  Get WebElement  xpath=//a[@class="dropdown-toggle ng-binding"]
+  Run Keyword If  ${bid_with_lots} and ${element_dropdown_exist}  Wait And Click  xpath=//a[@class="dropdown-toggle ng-binding"]
+  Run Keyword If  ${bid_with_lots} and ${element_dropdown_exist}  Sleep  2
+  Run Keyword If  ${bid_with_lots} and ${element_dropdown_exist}  Wait And Click  xpath=//a[@id="feature_item_0_0_0"]  
+
+  # confirm bid
+  ${locator.place_a_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
+  Wait And Click  ${locator.place_a_bid}
+
+  # Wait page reload
+  Sleep  3
+
 
 Make Bid
   [Arguments]  @{ARGS}
