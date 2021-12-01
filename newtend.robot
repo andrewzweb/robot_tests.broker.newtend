@@ -706,6 +706,10 @@ Custom Get Internal ID
   ${result}=  Create draft complaint to cancelled tender  @{ARGS}
   [Return]  ${result}
 
+Змінити статус скарги на скасування
+  [Arguments]  @{ARGS}
+  Complaint change status  @{ARGS}
+  
 Створити чернетку скарги про виправлення умов закупівлі
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
@@ -727,9 +731,7 @@ Custom Get Internal ID
 
 Змінити статус скарги
   [Arguments]  @{ARGS}
-  #${cancellation_data}=  Complaint change status  @{ARGS}
   Complaint change status  @{ARGS}
-  #[Return]  ${cancellation_data}
 
 Скасувати закупівлю
   [Arguments]  @{ARGS}

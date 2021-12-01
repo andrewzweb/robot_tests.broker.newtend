@@ -268,7 +268,8 @@ Complaint change status
   ${username}=  Set Variable  ${ARGS[0]}
   ${tender_id}=  Set Variable  ${ARGS[1]}
   ${complaint_id}=  Set Variable  ${ARGS[2]}
-  ${complaint_data}=  Set Variable  ${ARGS[3]}
+  ${complaint_int}=  Set Variable  ${ARGS[3]}
+  ${complaint_data}=  Set Variable  ${ARGS[4]}
   ${complaint_status}=  Get From Dictionary  ${complaint_data.data}  status
 
   Find Tender By Id  ${tender_id}
@@ -337,7 +338,7 @@ Get Cancellation Data And Put In Global
 
   ${username}=  Set Variable  ${ARGS[0]}
 
-  ${tedner_internal_id}=  Custom Get Internal ID  -42  -10
+  ${tedner_internal_id}=  Custom Get Internal ID  -41  -9
 
   ${api_cancellation_data}=  api_get_cancellation  ${data.tender_internal_id}
   Log To Console  ${api_cancellation_data}
