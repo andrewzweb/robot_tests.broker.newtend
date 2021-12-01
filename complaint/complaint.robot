@@ -174,9 +174,9 @@ Create draft complaint to cancelled tender
   ${item_index}=  Set Variable  ${ARGS[3]}
 
   Find Tender By Id  ${tender_id}
-  Go To Complaint
+  #Go To Complaint
 
-  Wait And Click  xpath=//button[@ng-click="makeComplaint()"]
+  Wait And Click  xpath=//button[@ng-click="makeComplaint(pendingTenderCancellation.id)"]
   Sleep  2
 
   Log To Console  ${complaint_data}
@@ -190,16 +190,19 @@ Create draft complaint to cancelled tender
   
   Wait And Type  xpath=//input[@ng-model="title"]  ${complaint_title}
   Wait And Type  xpath=//textarea[@ng-model="message"]  ${complaint_description}
-  
+
   Wait And Click  xpath=//button[@ng-click="makeComplaint()"]
 
   Sleep  5
 
-  #${complaint}=  Get Complaint Data And Put In Global  ${username}
+  # get internal id from browser location string
+  ${tedner_internal_id}=  Custom Get Internal ID  -42  -10
+  # make sync on backend
+  Sync Tender
 
-  ${cancellation}=  Get Cancellation Data And Put In Global  ${username}
+  ${complaint}=  Get Complaint Data From Cancelled And Put In Global  ${username}
 
-  [Return]  ${cancellation}
+  [Return]  ${complaint}
 
 
 Get Info From Complaints
@@ -208,7 +211,8 @@ Get Info From Complaints
   # ARG[1] - UA-2021-11-16-000079-d
   # ARG[2] - UA-2021-11-16-000079-d.c1
   # ARG[3] - status
-  ${tender_id}=  Set Variable  ${ARGS[0]}
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
 
   Find Tender By Id  ${tender_id}
   Go To Complaint
@@ -498,3 +502,22 @@ Make Complaint To Award
   \  Exit For Loop IF  ${is_need_element} == True
 
   ${result}=  convert_for_robot  ${result}
+
+
+Get Complaint Data From Cancelled And Put In Global
+  [Arguments]  @{ARGS}
+
+  ${username}=  Set Variable  ${ARGS[0]}
+
+  ${tedner_internal_id}=  Custom Get Internal ID  -42  -10
+
+  ${api_complaint_cancellation_data}=  api_get_complaint_from_cancellation  ${data.tender_internal_id}
+  Log To Console  ${api_complaint_cancellation_data}
+  # convert complaint data
+  ${complaint}=  op_robot_tests.tests_files.service_keywords.Munchify  ${api_complaint_cancellation_data}
+  # add token
+  Set To Dictionary  ${USERS.users['${username}']}  complaint_access_token=123
+  # add complaint token in global
+  Set To Dictionary  ${USERS.users['${username}']}  complaint_data=${complaint}
+
+  [Return]  ${complaint}

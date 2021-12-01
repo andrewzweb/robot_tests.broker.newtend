@@ -351,3 +351,9 @@ def api_get_tender_amount(tender_internal_id):
     tender = newtend_get_tender(tender_internal_id)
     result = tender['data']['value']['amount']
     return str(round(float(result) * 0.9, 2))
+
+
+def api_get_complaint_from_cancellation(tender_internal_id):
+    tender = newtend_get_tender(tender_internal_id)
+    result = tender['data']['cancellations'][0]['complaints'][0]
+    return result

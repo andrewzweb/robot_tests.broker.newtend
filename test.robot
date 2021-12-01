@@ -34,12 +34,16 @@ ${question_id}  q-f5a0a31d
 #  [Teardown]    Close Browser
 
 Test
-  Test Get Tender Amount
-  
+  Test Complaint From Canncellation
+
   
 *** Keywords ***
 
-Test Get Tender Amount
+Test Complaint From Canncellation
+  ${result}=  api_get_complaint_from_cancellation  3007846c90cc421ab6ec9230103b8e3f
+  Log To Console  ${result}
+
+Test Get Tender Amount  
   ${result}=  api_get_tender_amount  95c4833e157e4f608862a7db29570458
   Log To Console  ${result}
 
