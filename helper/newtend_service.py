@@ -108,8 +108,12 @@ dict_units = {
     u'УТОЧНЕННЯ': u'active.enquiries',
     u'ПРОПОЗИЦІЇ': u'active.tendering',
     #u'ПРОПОЗИЦІЇ': u'active.qualification',
+
     # complaint status
     u'Очікує розгляду /': u'pending',
+    u'Залишено без розгляду /': u'invalid',
+    u'Прийнята до розгляду /': 'accepted',
+    u'Скасовано /': u"mistaken",
 
     # ru
     u'Черновик. Второй этап': u'draft.stage2',
@@ -357,3 +361,4 @@ def api_get_complaint_from_cancellation(tender_internal_id):
     tender = newtend_get_tender(tender_internal_id)
     result = tender['data']['cancellations'][0]['complaints'][0]
     return result
+
