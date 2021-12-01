@@ -87,7 +87,7 @@ Resource  ./bid/bid.robot
 #    Run Keyword And Return If                                   '${field_name}' == 'budget.amount'   Отримати інформацію із плану  ${username}  ${tender_uaid}  ${field_name}
  #   ${field_name} =                                             set variable  tender.${field_name}.value
  #   ${value} =                                                  get field_value by field_name on opened page  ${field_name}
-#    run keyword if                                              '${field_name}' == 'value.valueAddedTaxIncluded' and '${value}' == '1'  ${value} = True
+ #   run keyword if                                              '${field_name}' == 'value.valueAddedTaxIncluded' and '${value}' == '1'  ${value} = True
  #   [Return]                                                    ${value}
 
 
@@ -848,46 +848,13 @@ Custom Get Internal ID
 
   Change Doc From Bid  ${username}  ${document_file}  ${document_id}
 
-Створити чернетку вимоги/скарги про виправлення визначення переможця
-  [Arguments]  @{ARGS}
-  # data:
-  #   author:
-  #       address:
-  #           countryName: Україна
-  #           locality: м. Київ
-  #           postalCode: '04444'
-  #           region: м. Київ
-  #           streetAddress: вулиця Тестова, 32
-  #       contactPoint:
-  #           email: e_mail_test@ukr.net
-  #           faxNumber: 333-44-55
-  #           name: Другий тестовий ФОП
-  #           telephone: '+380972223344'
-  #           url: http://webpage.com.ua
-  #       identifier:
-  #           id: '2894905868'
-  #           legalName: Тестовий ФОП 2
-  #           scheme: UA-EDR
-  #       name: Тестовий ФОП 2
-  #   description: Відволожувати постогнувати недомова позорювати прокормитися карасір
-  #       відом згучатися зажати.
-  #   title: 'q-aa8c7826: Корчити нечулий тоскно відом.'
-  #   type: complaint
-
-
-  ${username}=  Set Variable  ${ARGS[0]}
-  ${tender_id}=  Set Variable  ${ARGS[1]}
-  ${complaint_data}=  Set Variable  ${ARGS[2]}
-  ${award_id}=  Set Variable  ${ARGS[3]}
-
-  Find Tender By Id  ${tender_id}
-  Go To Auction
-
-  Make Complaint To Award  ${username}  ${complaint_data}  ${award_id}
-
 Створити чернетку вимоги/скарги про виправлення кваліфікації учасника
   [Arguments]  @{ARGS}
   Make Complaint To Qualification  @{ARGS}
+
+Створити чернетку вимоги/скарги про виправлення визначення переможця
+  [Arguments]  @{ARGS}
+  Make Complaint To Award  @{ARGS}
 
 ################################################################
 #                                                              #
@@ -922,3 +889,5 @@ Custom Get Internal ID
   # username
   # UA-2021-11-24-000226-c
   # d-5934673d
+
+

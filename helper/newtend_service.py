@@ -341,3 +341,13 @@ def return_number_element_check_hash(data, search_hash):
         if str(id_hash) == str(search_hash):
             result = x
     return result
+
+def api_get_award_id(tender_internal_id):
+    tender = newtend_get_tender(tender_internal_id)
+    result = tender['data']['cancellations']
+    return result
+
+def api_get_tender_amount(tender_internal_id):
+    tender = newtend_get_tender(tender_internal_id)
+    result = tender['data']['value']['amount']
+    return str(round(float(result) * 0.9, 2))

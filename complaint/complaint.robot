@@ -310,6 +310,23 @@ Get Complaint Data And Put In Global
   [Return]  ${complaint}
 
 
+Get Complaint New Data And Put In Global
+  [Arguments]  @{ARGS}
+
+  ${username}=  Set Variable  ${ARGS[0]}
+
+  ${tedner_internal_id}=  Custom Get Internal ID  -98  -66
+
+  # get complaint data from api
+  ${api_complaint_data}=  api_get_complaint  ${data.tender_internal_id}
+  # convert complaint data
+  ${complaint}=  op_robot_tests.tests_files.service_keywords.Munchify  ${api_complaint_data[0]}
+  # add complaint token in global
+  Set To Dictionary  ${USERS.users['${username}']}  complaint_access_token=123
+  # convert complaint put in global
+  Set To Dictionary  ${USERS.users['${username}']}  complaint_data=${complaint}
+  [Return]  ${complaint}
+
 
 Get Cancellation Data And Put In Global
   [Arguments]  @{ARGS}
@@ -406,35 +423,78 @@ Make Complaint To Qualification
   ${Qualification_id}=  Set Variable  ${ARGS[3]}
 
   Find Tender By Id  ${tender_id}
-  Sleep  240
   Go To Auction
 
-  # нажать на кнопку создать жалобу на квалификацию
-  Wait And Click  xpath=//button[@ng-click="makeComplaint(lotValue.awardId)"]
+  Smart Wait  Wait Until Page Contains Element  xpath=//button[@ng-click="makeComplaint(lotValue.awardId)"]
 
-  ${complaint_type}=  Get From Dictionary  ${complaint_data}  type
-  #   Run Keyword If  '${complaint_type}' == 'complaint'
-  Wait And Click  xpath=//button[@ng-click="makeComplaint()"]
+  Wait And Click  xpath=//button[@ng-click="makeComplaint(lotValue.awardId)"]
   Sleep  2
-  Wait And Click  xpath=//md-radio-button[@value="complaint"]/./div/div
+
+  Log To Console  ${complaint_data}
 
   ${complaint_title}=  Get From Dictionary  ${complaint_data}  title
-  ${locator.complaint_title}=  Set Variable  xpath=//input[@ng-model="title"]
-  Wait And Type  ${locator.complaint_title}  ${complaint_title}
-
   ${complaint_description}=  Get From Dictionary  ${complaint_data}  description
-  ${locator.complaint_description}=  Set Variable  xpath=//textarea[@ng-model="message"]
-  Wait And Type  ${locator.complaint_description}  ${complaint_description}
+  ${complaint_type}=  Get From Dictionary  ${complaint_data}  type
+
+  Run Keyword If  '${complaint_type}' == 'complaint'  Wait And Click  xpath=//md-radio-button[@value='complaint']
+  Run Keyword If  '${complaint_type}' == 'claim'  Wait And Click  xpath=//md-radio-button[@value='claim']
+
+  Wait And Type  xpath=//input[@ng-model="title"]  ${complaint_title}
+  Wait And Type  xpath=//textarea[@ng-model="message"]  ${complaint_description}
 
   Wait And Click  xpath=//button[@ng-click="makeComplaint()"]
 
-  Sleep  10
+  Sleep  5
 
-  # get internal id from browser location string
-  ${tedner_internal_id}=  Custom Get Internal ID  -42  -10
-  # make sync on backend
-  Sync Tender
+  #${complaint}=  Get Complaint Data And Put In Global  ${username}
+  #${cancellation}=  Get Complaint New Data And Put In Global  ${username}
+  #[Return]  None #${cancellation}
 
-  ${complaint}=  Get Complaint Data And Put In Global  ${username}
 
-  [Return]  ${complaint}
+Make Complaint To Award
+  [Arguments]  @{ARGS}
+  Log To Console  [+] Create Complaint To Award
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${complaint_data}=  Set Variable  ${ARGS[2]}
+  ${complaint_data}=  Get From Dictionary  ${complaint_data}  data
+  ${award_id}=  Set Variable  ${ARGS[3]}
+
+  Find Tender By Id  ${tender_id}
+  Go To Auction
+
+  # подождать пока появится список
+  # xpath=//div[@ng-repeat="lotValue in bid.lotValues"]
+
+  # взять данние из апи и пройти по списку доступных бидов и если айди совпадает кликнуть по нему
+  # data-lot_bid_id="6c42d508eb034e5caa2de72094afb706"
+
+  Wait And Click  xpath=//button[@ng-click="requirement(awardId)"]
+
+  # заполняем одно поле из имеющихся
+  ${complaint_description}=  Get From Dictionary  ${complaint_data}  description
+  Wait And Type  xpath=//textarea[@id="description"]  ${complaint_description}
+
+  # нажимаем сохранить жалобу
+  Wait And Click xpath=//button[@ng-click="publicRequirement()"]
+
+
+  ########################
+  ########################
+  ${qualification_interanl_id}=  api_get_bid_id_hash  ${data.tender_internal_id}  ${qulification_number}
+  Log To Console  [+] Get Internal Qualification ID: ${qualification_interanl_id}
+
+  ${qualification_elements}=  Get WebElements  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]
+  ${qualification_count}=  Get Length  ${qualification_elements}
+  Log To Console  [i] Count Qualifications: ${qualification_count}
+
+  :FOR  ${index}  IN RANGE  ${qualification_count}
+  \  ${current_qualification_id}=  Get Element Attribute  xpath=//div[@id="qualification_${index}_${index}"]@data-bidid
+  \  Log To Console  [+] Current Qualififcation ID: ${current_qualification_id}
+  \  ${is_need_element}=  is_one_string_include_other_string  ${current_qualification_id}  ${qualification_interanl_id}
+  \  Log To Console  [ ] click ${index}? : ${is_need_element}
+  \  ${result}=  Run Keyword If  ${is_need_element} == True  Get Text  xpath=//div[@id="qualification_0_0"]/..//p
+  \  Exit For Loop IF  ${is_need_element} == True
+
+  ${result}=  convert_for_robot  ${result}

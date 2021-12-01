@@ -180,3 +180,13 @@ If Exist Locator Click
 JS Wait And Click By Id
   [Arguments]  ${element_id}
   Execute Javascript    window.document.getElementById("${element_id}").click()
+
+Smart Wait
+  [Arguments]  @{keyword}
+
+  :FOR  ${index}  IN RANGE  80
+  \  Log To Console  [.] Wait ${index}
+  \  Sleep  30
+  \  Reload Page
+  \  ${result}=  Run Keyword And Return Status  ${keyword[0]}  ${keyword[1]}
+  \  Exit For Loop IF  ${result} == True

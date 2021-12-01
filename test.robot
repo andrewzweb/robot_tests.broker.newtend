@@ -26,17 +26,27 @@ ${question_id}  q-f5a0a31d
 
 #Current test
 #  Prapare Browser
-#  Find Tender By Id  ${tender_id}
+#  #Find Tender By Id  UA-2021-11-30-000124-d
+#  Complaint get internal id
 #  Wait And Click  xpath=//a[@ui-sref="tenderView.ownBid"]
 #  Sleep  3
 #  Me 2
 #  [Teardown]    Close Browser
 
 Test
-  ${number}=  return_number_element_check_hash  010  3fd89a7bc06645c58f650fb4f15e3940
-  Log To Console  ${number}
-
+  Test Get Tender Amount
+  
+  
 *** Keywords ***
+
+Test Get Tender Amount
+  ${result}=  api_get_tender_amount  95c4833e157e4f608862a7db29570458
+  Log To Console  ${result}
+
+Complaint get internal id
+  Go To  https://autotest.newtend.com/opc/provider/tender/6a997b87052f4d61a3dcf204d9a52fa2/f6bf2c83a6a94d82be7c74e09013214c/a679870e645846c9974d5d077b597e80
+  ${result}=  Custom Get Internal ID  -98  -66
+  Log To Console  ${result}
 
 Me 2
   ${elements}=  Get Webelements  xpath=//div[@ng-repeat='requirement in requirementGroup.requirements track by $index']
@@ -238,3 +248,4 @@ Test Bid Amount Convert
   ${amount_raw}=  Set Variable  35 753 280,98  грн
   ${result}=  convert_bid_amount  ${amount_raw}
   Log To Console  ${result}
+

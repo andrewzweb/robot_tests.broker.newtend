@@ -40,6 +40,7 @@ Make Bid Draft
 
   # go to tender
   Find Tender By Id  ${tender_id}
+  ${tender_internal_id}=  Custom Get Internal ID  -41  -9
 
   # click to make bid
   ${locator.button_popup_make_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
@@ -63,8 +64,10 @@ Make Bid Draft
 
   # поставлю тут 100 потому что дефолные данные создают драфт
   # и в драфте нет понятие деньги
+  ${bid_amount}=  api_get_tender_amount  ${tender_internal_id}
+
   ${locator.input_bid_amount}=  Set Variable  xpath=//input[@name="amount"]
-  Wait And Type  ${locator.input_bid_amount}  100
+  Wait And Type  ${locator.input_bid_amount}  ${bid_amount}
 
   # confirm bid
   ${locator.place_a_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
