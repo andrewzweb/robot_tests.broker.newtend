@@ -45,6 +45,11 @@ Cancelled Tender
   Sleep  5
   
   ${cancellation}=  Get Cancellation Data And Put In Global  ${username}
+
+  ${tender_data}=  newtend_get_tender  ${data.tender_internal_id}
+  ${tender_data}=  op_robot_tests.tests_files.service_keywords.Munchify  ${tender_data}
+  Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender_data}
+
   [Return]  ${cancellation}
 
 
@@ -110,8 +115,13 @@ Create draft complaint to cancelled tender
 
   Find Tender By Id  ${tender_id}
   #Go To Complaint
+  Sleep  3
 
-  Wait And Click  xpath=//button[@ng-click="makeComplaint(pendingTenderCancellation.id)"]
+  ${lot_button_exitst}=  Run Keyword And Return Status  Get WebElement  xpath=//button[@id="complaint-cancel-lot_0"]
+  ${tender_button_exist}=  Run Keyword And Return Status  Get WebElement  xpath=//button[@ng-click="makeComplaint(pendingTenderCancellation.id)"]
+
+  Run Keyword If  ${lot_button_exitst}  Wait And Click  xpath=//button[@id="complaint-cancel-lot_0"]
+  Run Keyword If  ${tender_button_exist}  Wait And Click  xpath=//button[@ng-click="makeComplaint(pendingTenderCancellation.id)"]
   Sleep  2
 
   Log To Console  ${complaint_data}
@@ -154,3 +164,17 @@ Cancel Cancelled Tender
 
   Sleep  10
 
+Cancel Cancelled Lot
+  [Arguments]  @{ARGS}
+  Log To Console  [+] Cancel Cancelled Lot
+  Print Args  @{ARGS}
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${canncelled_item}=  Set Variable  ${ARGS[2]}
+
+  Find Tender By Id  ${tender_id}
+
+  Wait And Click  xpath=//button[@ng-click="recoverTender(pendingTenderCancellation.id)"]
+
+  Sleep  10
