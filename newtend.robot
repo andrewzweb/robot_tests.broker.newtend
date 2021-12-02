@@ -744,6 +744,10 @@ Custom Get Internal ID
   ${id}=  Create Draft Complaint Of Lot  @{ARGS}
   [Return]  ${id}
 
+Скасувати cancellation
+  [Arguments]  @{ARGS}
+  Cancel Cancelled Tender  @{ARGS}
+
 ################################################################
 #                                                              #
 #                    END Complaints                            #

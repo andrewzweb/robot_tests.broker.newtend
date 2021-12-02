@@ -4,14 +4,9 @@ Library  BuiltIn
 Library  String
 Library  OperatingSystem
 Resource  newtend.robot
-#Library   SeleniumLibrary
-
 Library  Selenium2Library
 Library  DebugLibrary
-#Library  Selenium2Screenshots
 Library  OperatingSystem
-
-#Library  AppiumLibrary
 
 *** Variables ***
 ${tender_id}  UA-2021-11-25-000157-d
@@ -33,8 +28,11 @@ ${question_id}  q-f5a0a31d
 #  Me 2
 #  [Teardown]    Close Browser
 
-Test
-  Test Complaint From Canncellation
+Test Me Second
+  ${tender_data}=  newtend_get_tender  ${data.tender_internal_id}
+  ${data}=  Get From Dictionary  ${tender_data}  data
+
+  Log To Console  ${data}
 
   
 *** Keywords ***

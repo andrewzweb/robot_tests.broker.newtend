@@ -139,3 +139,18 @@ Create draft complaint to cancelled tender
 
   [Return]  ${complaint}
 
+Cancel Cancelled Tender
+  [Arguments]  @{ARGS}
+  Log To Console  [+] Cancel Cancelled Tender
+  Print Args  @{ARGS}
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${canncelled_item}=  Set Variable  ${ARGS[2]}
+
+  Find Tender By Id  ${tender_id}
+
+  Wait And Click  xpath=//button[@ng-click="recoverTender(pendingTenderCancellation.id)"]
+
+  Sleep  10
+
