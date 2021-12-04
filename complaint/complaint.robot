@@ -270,3 +270,9 @@ Make Complaint To Award
   ${complaint}=  Get Complaint Data And Put In Global  ${username}
 
   [Return]  ${complaint}  
+
+
+Отримати інформацію про cancellations[0].status
+  [Arguments]  @{ARGS}
+  Log To Console  [+] Get info about cancellations[0].status
+
