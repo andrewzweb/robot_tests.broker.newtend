@@ -28,14 +28,18 @@ ${question_id}  q-f5a0a31d
 #  Me 2
 #  [Teardown]    Close Browser
 
-Test Me Second
-  ${tender_data}=  newtend_get_tender  ${data.tender_internal_id}
-  ${data}=  Get From Dictionary  ${tender_data}  data
-
-  Log To Console  ${data}
-
+#Test Me Second
+#  ${tender_data}=  newtend_get_tender  ${data.tender_internal_id}
+#  ${data}=  Get From Dictionary  ${tender_data}  data
+#  Log To Console  ${data}
   
 *** Keywords ***
+
+Test Three
+  ${procurementMethodType}=  Set Variable  esco
+  ${tender_type_with_different_default_count_features}=  Create List  esco  competitiveDialogueUA  competitiveDialogueUA
+  Run Keyword If  True and '${procurementMethodType}' not in ${tender_type_with_different_default_count_features}  Log To Console  Not in list
+  Run Keyword If  True and '${procurementMethodType}' in ${tender_type_with_different_default_count_features}  Log To Console  In list
 
 Test Complaint From Canncellation
   ${result}=  api_get_complaint_from_cancellation  3007846c90cc421ab6ec9230103b8e3f

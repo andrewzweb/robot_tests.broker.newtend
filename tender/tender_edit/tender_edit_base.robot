@@ -79,7 +79,7 @@ Create Feature
   ${data_enum}=  Get From Dictionary  ${feature_data}  enum
   ${count_enum}=  Get length  ${data_enum}
 
-  ${tender_type_with_different_default_count_features}=  Create List  esco  competitiveDialogueUA
+  ${tender_type_with_different_default_count_features}=  Create List  esco  competitiveDialogueUA  competitiveDialogueUA
 
   : FOR   ${number_enum}  IN RANGE   ${count_enum}
   \  ${num_enum}=  Convert To Integer  ${number_enum}
