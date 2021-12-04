@@ -110,13 +110,13 @@ dict_units = {
     #u'ПРОПОЗИЦІЇ': u'active.qualification',
 
     # complaint status
-    u'Очікує розгляду /': u'pending',
-    u'Залишено без розгляду /': u'invalid',
-    u'Прийнята до розгляду /': 'accepted',
-    u'Скасовано /': u"mistaken",
-    u'Розгляд припинено /': u'stopped',
+    u'Очікує розгляду /':         u'pending',
+    u'Залишено без розгляду /':   u'invalid',
+    u'Прийнята до розгляду /':    u'accepted',
+    u'Скасовано /':               u"mistaken",
+    u'Розгляд припинено /':       u'stopped',
     u'Відмовлено в задоволені /': u'declined',
-    u'Відмовлено в задоволені /': u'resolved',
+    u'Чернетка /':                u'draft',
 
     # ru
     u'Черновик. Второй этап': u'draft.stage2',
