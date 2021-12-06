@@ -108,6 +108,7 @@ dict_units = {
     u'УТОЧНЕННЯ': u'active.enquiries',
     u'ПРОПОЗИЦІЇ': u'active.tendering',
     #u'ПРОПОЗИЦІЇ': u'active.qualification',
+    u'ПРЕКВАЛІФІКАЦІЯ (ПЕРІОД ОСКАРЖЕННЯ)': u'active.pre-qualification.stand-still',
 
     # complaint status
     u'Очікує розгляду /':         u'pending',
