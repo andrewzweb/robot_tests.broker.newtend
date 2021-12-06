@@ -118,6 +118,7 @@ dict_units = {
     u'Розгляд припинено /':       u'stopped',
     u'Відмовлено в задоволені /': u'declined',
     u'Чернетка /':                u'draft',
+    u'Задоволено /':              u'satisfied',
 
     # ru
     u'Черновик. Второй этап': u'draft.stage2',
