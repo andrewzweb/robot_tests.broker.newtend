@@ -32,8 +32,17 @@ ${question_id}  q-f5a0a31d
 #  ${tender_data}=  newtend_get_tender  ${data.tender_internal_id}
 #  ${data}=  Get From Dictionary  ${tender_data}  data
 #  Log To Console  ${data}
-  
+
+Test
+  Test Qualification Part Get Complaint
+
 *** Keywords ***
+
+Test Qualification Part Get Complaint
+  ${data.tender_internal_id}=  Set Variable  5aabe8346b304ac3a2f40edda8400f91
+  ${api_complaint_data}=  api_get_complaint_from_qualification  ${data.tender_internal_id}
+  ${result}=  Get From Dictionary  ${api_complaint_data[0]}  complaintID
+  Log To Console  ${result}
 
 Test Three
   ${procurementMethodType}=  Set Variable  esco

@@ -104,10 +104,8 @@ dict_units = {
     u"АУКЦІОН": u'active.auction',
     u'КВАЛІФІКАЦІЯ': u'active.qualification',
     u'ПРЕКВАЛІФІКАЦІЯ': u'active.pre-qualification',
-    #u'ПРЕКВАЛІФІКАЦІЯ': u'active.qualification',
     u'УТОЧНЕННЯ': u'active.enquiries',
     u'ПРОПОЗИЦІЇ': u'active.tendering',
-    #u'ПРОПОЗИЦІЇ': u'active.qualification',
     u'ПРЕКВАЛІФІКАЦІЯ (ПЕРІОД ОСКАРЖЕННЯ)': u'active.pre-qualification.stand-still',
 
     # complaint status
@@ -361,9 +359,12 @@ def api_get_tender_amount(tender_internal_id):
     result = tender['data']['value']['amount']
     return str(round(float(result) * 0.9, 2))
 
-
 def api_get_complaint_from_cancellation(tender_internal_id):
     tender = newtend_get_tender(tender_internal_id)
     result = tender['data']['cancellations'][0]['complaints'][0]
     return result
 
+def api_get_complaint_from_qualification(tender_internal_id):
+    tender = newtend_get_tender(tender_internal_id)
+    result = tender['data']['qualifications'][0]['complaints'][0]
+    return result

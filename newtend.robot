@@ -748,6 +748,21 @@ Custom Get Internal ID
   [Arguments]  @{ARGS}
   Cancel Cancelled Tender  @{ARGS}
 
+Створити чернетку вимоги/скарги про виправлення кваліфікації учасника
+  [Arguments]  @{ARGS}
+  ${result}=  Make Complaint To Qualification  @{ARGS}
+  [Return]  ${result}
+
+Створити чернетку вимоги/скарги про виправлення визначення переможця
+  [Arguments]  @{ARGS}
+  ${result}=  Make Complaint To Award  @{ARGS}
+  [Return]  ${result}
+
+Завантажити документ до скарги в окремий об'єкт
+  [Arguments]  @{ARGS}
+  Download Document To Qualification Complaint  @{ARGS}
+
+
 ################################################################
 #                                                              #
 #                    END Complaints                            #
@@ -854,13 +869,6 @@ Custom Get Internal ID
 
   Change Doc From Bid  ${username}  ${document_file}  ${document_id}
 
-Створити чернетку вимоги/скарги про виправлення кваліфікації учасника
-  [Arguments]  @{ARGS}
-  Make Complaint To Qualification  @{ARGS}
-
-Створити чернетку вимоги/скарги про виправлення визначення переможця
-  [Arguments]  @{ARGS}
-  Make Complaint To Award  @{ARGS}
 
 ################################################################
 #                                                              #

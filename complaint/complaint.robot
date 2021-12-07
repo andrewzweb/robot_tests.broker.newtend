@@ -225,7 +225,9 @@ Make Complaint To Qualification
   # make sync on backend
   Sync Tender
 
-  ${complaint}=  Get Complaint Data And Put In Global  ${username}
+  ${complaint}=  Get Complaint Data From Qualification And Put In Global  ${username}
+
+  [Return]  ${complaint}
 
 
 Make Complaint To Award
@@ -276,3 +278,34 @@ Make Complaint To Award
   [Arguments]  @{ARGS}
   Log To Console  [+] Get info about cancellations[0].status
 
+
+Download Document To Qualification Complaint
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+
+  # Newtend_Provider1
+  # UA-2021-12-06-000215-d
+  # UA-2021-12-06-000215-d.c1
+  # 0
+  # /tmp/d-da31f7deimpedit6CqvxX.doc
+  # qualifications
+
+  Log To Console  [+] Download document to complaint
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${complaint_id}=  Set Variable  ${ARGS[2]}
+  ${complaint_index}=  Set Variable  ${ARGS[3]}
+  ${complaint_doc}=  Set Variable  ${ARGS[4]}
+  ${complaint_type}=  Set Variable  ${ARGS[5]}
+
+  Find Tender By Id  ${tender_id}
+  Go To Complaint
+
+  Sleep  3
+
+  Wait And Click  xpath=//button[@ng-model="$parent.$parent.files"]
+
+  Choose File  xpath=//input[@type="file"]  ${complaint_doc}
+  Sleep  8
+  Reload Page
