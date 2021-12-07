@@ -492,6 +492,10 @@ Resource  ./bid/bid.robot
 Затвердити остаточне рішення кваліфікації
   [Arguments]    @{ARGS}
   Finish Qualification  @{ARGS}
+
+Отримати інформацію про qualificationPeriod.endDate
+  [Arguments]    @{ARGS}
+  Print Args  @{ARGS}
   
 ################################################################
 #                                                              #
@@ -762,7 +766,9 @@ Custom Get Internal ID
   [Arguments]  @{ARGS}
   Download Document To Qualification Complaint  @{ARGS}
 
-
+Змінити статус скарги на визначення пре-кваліфікації учасника
+  [Arguments]  @{ARGS}
+  Change Status To Complaint
 ################################################################
 #                                                              #
 #                    END Complaints                            #

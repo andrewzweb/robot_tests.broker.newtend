@@ -309,3 +309,30 @@ Download Document To Qualification Complaint
   Choose File  xpath=//input[@type="file"]  ${complaint_doc}
   Sleep  8
   Reload Page
+
+Change Status To Complaint
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+
+  Log To Console  [+] Change Status To Complaint
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${complaint_id}=  Set Variable  ${ARGS[2]}
+  ${complaint_index}=  Set Variable  ${ARGS[3]}
+  ${complaint_data}=  Set Variable  ${ARGS[4]}
+  ${complaint_data}=  Get From Dictionary  ${complaint_data}  data
+
+  ${complaint_description}=  Get From Dictionary  ${complaint_data}  tendererAction
+  ${complaint_status}=  Get From Dictionary  ${complaint_data}  status
+
+  Find Tender By Id  ${tender_id}
+  Go To Complaint
+
+  Sleep  3
+
+  Wait And Click  xpath=//button[@ng-click="resolution(complaint.id, complaint.awardId, complaint.qualificationId, complaint.cancellationId, true)"]
+
+  Wait And Type  xpath=//textarea[@ng-model="message"]   ${complaint_description}
+
+  Wait And Clickc xpath=//button[@ng-click="sendAnswer()"]

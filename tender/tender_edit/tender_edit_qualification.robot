@@ -13,9 +13,9 @@ Get Info About Qualification
   Print Args  @{ARGS}
 
   ${field_name}=  Set Variable  ${ARGS[0]}
-  ${username}=  Set Variable  ${ARGS[1]}
-  ${tender_id}=  Set Variable  ${ARGS[2]}
-  ${qulification_id}=  Set Variable  ${ARGS[3]}
+  #${username}=  Set Variable  ${ARGS[1]}
+  #${tender_id}=  Set Variable  ${ARGS[2]}
+  #${qulification_id}=  Set Variable  ${ARGS[3]}
 
   Find Tender By Id  ${tender_id}
   Go To Prequlification
