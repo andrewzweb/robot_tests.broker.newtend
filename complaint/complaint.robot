@@ -269,7 +269,7 @@ Make Complaint To Award
   # make sync on backend
   Sync Tender
 
-  ${complaint}=  Get Complaint Data And Put In Global  ${username}
+  ${complaint}=  Get Complaint Data From Award And Put In Global  ${username}
 
   [Return]  ${complaint}  
 

@@ -369,3 +369,8 @@ def api_get_complaint_from_qualification(tender_internal_id):
     tender = newtend_get_tender(tender_internal_id)
     result = tender['data']['qualifications'][0]['complaints'][0]
     return result
+
+def api_get_complaint_from_award(tender_internal_id):
+    tender = newtend_get_tender(tender_internal_id)
+    result = tender['data']['awards'][0]['complaints'][0]
+    return result

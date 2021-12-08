@@ -97,3 +97,24 @@ Get Complaint Data From Qualification And Put In Global
   Set To Dictionary  ${USERS.users['${username}']}  complaint_data=${complaint}
   [Return]  ${complaint}
 
+
+Get Complaint Data From Award And Put In Global
+  [Arguments]  @{ARGS}
+
+  ${username}=  Set Variable  ${ARGS[0]}
+
+  ${tedner_internal_id}=  Custom Get Internal ID  -42  -10
+
+  # get complaint data from api
+  ${api_complaint_data}=  api_get_complaint_from_award  ${data.tender_internal_id}
+
+  Log To Console  [_] Data award complaint
+  Log To Console  ${api_complaint_data}
+
+  # convert complaint data
+  ${complaint}=  op_robot_tests.tests_files.service_keywords.Munchify  ${api_complaint_data}
+  # add complaint token in global
+  Set To Dictionary  ${USERS.users['${username}']}  complaint_access_token=123
+  # convert complaint put in global
+  Set To Dictionary  ${USERS.users['${username}']}  complaint_data=${complaint}
+  [Return]  ${complaint}
