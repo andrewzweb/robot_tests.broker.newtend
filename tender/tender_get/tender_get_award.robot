@@ -117,4 +117,3 @@
   ${raw_period}=      Get Substring   ${period_string}    -19
   ${period}=    get_time_with_offset    ${raw_period}
   [Return]    ${period}
-

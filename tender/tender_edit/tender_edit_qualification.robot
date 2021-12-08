@@ -13,11 +13,14 @@ Get Info About Qualification
   Print Args  @{ARGS}
 
   ${field_name}=  Set Variable  ${ARGS[0]}
-  #${username}=  Set Variable  ${ARGS[1]}
-  #${tender_id}=  Set Variable  ${ARGS[2]}
+  ${status_username}=  Run Keyword And Return Status  Set Variable  ${ARGS[1]}
+  ${username}=  Run Keyword If  ${status_username}  Set Variable  ${ARGS[1]}
+
+  ${status_tender_id}=  Run Keyword And Return Status  Set Variable  ${ARGS[2]}
+  ${tender_id}=  Run Keyword If  ${status_tender_id}  Set Variable  ${ARGS[2]}
   #${qulification_id}=  Set Variable  ${ARGS[3]}
 
-  Find Tender By Id  ${tender_id}
+  Run Keyword If  ${status_tender_id}  Find Tender By Id  ${tender_id}
   Go To Prequlification
 
   ${qulification_number}=  Run Keyword If  'qualifications[0].status' == '${field_name}'  Set Variable  0

@@ -910,4 +910,5 @@ Custom Get Internal ID
   # UA-2021-11-24-000226-c
   # d-5934673d
 
+Отримати інформацію про awards[0].complaintPeriod.endDate
 

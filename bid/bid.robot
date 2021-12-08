@@ -67,7 +67,8 @@ Make Bid Draft
   ${bid_amount}=  api_get_tender_amount  ${tender_internal_id}
 
   ${locator.input_bid_amount}=  Set Variable  xpath=//input[@name="amount"]
-  Wait And Type  ${locator.input_bid_amount}  ${bid_amount}
+  ${status_amount_input_exist}=  Run Keyword And Return Status  Get WebElement  ${locator.input_bid_amount}
+  Run Keyword If  ${status_amount_input_exist}  Wait And Type  ${locator.input_bid_amount}  ${bid_amount}
 
   # confirm bid
   ${locator.place_a_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
