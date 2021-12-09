@@ -113,7 +113,7 @@ Decline Qualification
 
   # get data from api
   ${qualification_interanl_id}=  api_get_bid_id_hash  ${data.tender_internal_id}  ${qulification_number}
-  Log To Console  [+] Get Internal QUlification ID: ${qualification_interanl_id}
+  Log To Console  [+] Get Internal Qualification ID: ${qualification_interanl_id}
 
   # collect data from UI
   ${qualification_elements}=  Get WebElements  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]

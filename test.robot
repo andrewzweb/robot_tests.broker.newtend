@@ -33,8 +33,14 @@ ${question_id}  q-f5a0a31d
 #  ${data}=  Get From Dictionary  ${tender_data}  data
 #  Log To Console  ${data}
 
-Test
-  Test Qualification Part Get Complaint
+#Test
+#  Test Qualification Part Get Complaint
+
+Test Qulification Api
+   ${internal_tender_id}=  Set Variable  9631da687bd54d8dbc88d30bbc5afc5c
+   ${qualification_interanl_id}=  api_get_bid_id_hash  ${internal_tender_id}  0
+   Log To Console  [+] Get Internal Qualification ID: ${qualification_interanl_id}
+
 
 *** Keywords ***
 
