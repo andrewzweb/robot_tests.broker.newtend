@@ -4,7 +4,7 @@ Resource  ../newtend.robot
 *** Keywords ***
 
 Add Doc To Qualification
-  [Arguments]  ${username}  ${document_file}  ${tender_id}  ${bid_id}  @{ARGS}
+  [Arguments]  ${username}  ${document_file}  ${tender_id}  ${bid_index}  @{ARGS}
   Log To Console  [+] Add Doc Qulification
 
   Find Tender By Id  ${tender_id}
@@ -13,7 +13,7 @@ Add Doc To Qualification
 
   Sleep  5
 
-  Choise Bid  ${bid_id}
+  Choise Bid  ${bid_index}
 
   Add Quilificaton Comission Document  ${document_file}
 
@@ -31,11 +31,12 @@ Choise Bid
   Log To Console  [i] Count Award: ${award_count}
 
   :FOR  ${index}  IN RANGE  ${award_count}
-  \  ${current_award_id}=  Get Element Attribute  xpath=//div[@id="bid_${index}"]@data-lot_bid_id
+  \  ${number}=  plus_one  ${index}
+  \  ${current_award_id}=  Get Element Attribute  xpath=//div[@ng-repeat="bid in tenderBids"][${number}]@data-lot_bid_id
   \  Log To Console  [+] Current Award ID: ${current_award_id}
   \  ${is_need_element}=  is_one_string_include_other_string  ${current_award_id}  ${bid_hash_id}
   \  Log To Console  [ ] click ${index}? : ${is_need_element}
-  \  ${result}=  Run Keyword If  ${is_need_element} == True  Wait And Click  xpath=//div[@id="bid_${index}"]
+  \  ${result}=  Run Keyword If  ${is_need_element} == True  Wait And Click  xpath=//div[@ng-repeat="bid in tenderBids"][${number}]
   \  Exit For Loop IF  ${is_need_element} == True
 
 

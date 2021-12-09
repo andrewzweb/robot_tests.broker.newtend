@@ -9,8 +9,8 @@ Library  DebugLibrary
 Library  OperatingSystem
 
 *** Variables ***
-${tender_id}  UA-2021-11-25-000157-d
-${data.tender_internal_id}  0ba2ecac4a034f768a089c585daa98de
+${tender_id}  UA-2021-12-09-000260-c
+${data.tender_internal_id}  d1354ba87a77431ca876b86bff39bfe6
 ${username}  Newtend_Owner
 ${OUTPUT_DIR}  .
 ${BROWSER}  chrome
@@ -21,12 +21,12 @@ ${question_id}  q-f5a0a31d
 
 
 Test get award
-  ${result}=  api_get_first_award_id  0ba2ecac4a034f768a089c585daa98de
+  ${result}=  api_get_first_award_id  ${data.tender_internal_id}
   Log To Console  ${result}
 
 Current test
   Prapare Browser
-  Add Doc To Qualification  Newtend_Owner  some_file  UA-2021-12-09-000205-c  0
+  Add Doc To Qualification  Newtend_Owner  some_file  ${tender_id}  0
   [Teardown]  Close Browser
 
 
@@ -118,7 +118,7 @@ Prapare Browser
   ${pass}=  Set Variable  testowner0
   ${login2}=  Set Variable  test.provider1@gmail.com
   ${pass2}=  Set Variable  test.provider1
-  Custom Login  ${login2}  ${pass2}
+  Custom Login  ${login}  ${pass}
 
 Edit Tender
   Find Tender By Id  ${tender_id}
