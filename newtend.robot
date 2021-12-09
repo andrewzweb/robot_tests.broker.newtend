@@ -419,20 +419,8 @@ Resource  ./bid/bid.robot
 #                                                              #
 ################################################################
 Завантажити документ рішення кваліфікаційної комісії
-  [Arguments]  ${username}  ${document_file}  ${tender_id}  ${bid_id}  @{ARGS}
-  Log To Console  [+] Add Doc Qulification
-  Log To Console  ${username}
-  Log To Console  ${document_file}
-  Log To Console  ${tender_id}
-  Log To Console  ${bid_id}
-  Find Tender By Id  ${tender_id}
-  Go To Auction
-  # wait all download
-  Sleep  5
-  Choise Bid  ${bid_id}
-  # SingUp Qulifiacation
-  Add Quilificaton Comission Document  ${document_file}
-  Reload Page
+  [Arguments]  @{ARGS}
+  Add Doc To Qualification  @{ARGS}
 
 Підтвердити постачальника
   [Arguments]  ${username}  ${tender_id}  ${bid_id}  @{ARGS}
@@ -768,7 +756,12 @@ Custom Get Internal ID
 
 Змінити статус скарги на визначення пре-кваліфікації учасника
   [Arguments]  @{ARGS}
-  Change Status To Complaint
+  Change Status To Complaint  @{ARGS}
+
+Змінити статус скарги на визначення переможця
+  [Arguments]  @{ARGS}
+  Complaint change status  @{ARGS}
+
 ################################################################
 #                                                              #
 #                    END Complaints                            #

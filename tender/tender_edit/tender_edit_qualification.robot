@@ -38,7 +38,7 @@ Get Info About Qualification
   \  Log To Console  [+] Current Qualififcation ID: ${current_qualification_id}
   \  ${is_need_element}=  is_one_string_include_other_string  ${current_qualification_id}  ${qualification_interanl_id}
   \  Log To Console  [ ] click ${index}? : ${is_need_element}
-  \  ${result}=  Run Keyword If  ${is_need_element} == True  Get Text  xpath=//div[@id="qualification_0_0"]/..//p
+  \  ${result}=  Run Keyword If  ${is_need_element} == True  Get Text  xpath=//div[@id="qualification_${index}_${index}"]/..//p
   \  Exit For Loop IF  ${is_need_element} == True
 
   ${result}=  convert_for_robot  ${result}

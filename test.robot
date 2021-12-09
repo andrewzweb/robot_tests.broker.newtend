@@ -10,7 +10,7 @@ Library  OperatingSystem
 
 *** Variables ***
 ${tender_id}  UA-2021-11-25-000157-d
-${data.tender_internal_id}  4f47fd2f5d6a41abacc2d6edd237b008
+${data.tender_internal_id}  0ba2ecac4a034f768a089c585daa98de
 ${username}  Newtend_Owner
 ${OUTPUT_DIR}  .
 ${BROWSER}  chrome
@@ -19,30 +19,23 @@ ${date}   2021-11-07T22:59:27.999676+02:00
 ${question_id}  q-f5a0a31d
 *** Test Cases ***
 
-#Current test
-#  Prapare Browser
-#  #Find Tender By Id  UA-2021-11-30-000124-d
-#  Complaint get internal id
-#  Wait And Click  xpath=//a[@ui-sref="tenderView.ownBid"]
-#  Sleep  3
-#  Me 2
-#  [Teardown]    Close Browser
 
-#Test Me Second
-#  ${tender_data}=  newtend_get_tender  ${data.tender_internal_id}
-#  ${data}=  Get From Dictionary  ${tender_data}  data
-#  Log To Console  ${data}
+Test get award
+  ${result}=  api_get_first_award_id  0ba2ecac4a034f768a089c585daa98de
+  Log To Console  ${result}
 
-#Test
-#  Test Qualification Part Get Complaint
-
-Test Qulification Api
-   ${internal_tender_id}=  Set Variable  9631da687bd54d8dbc88d30bbc5afc5c
-   ${qualification_interanl_id}=  api_get_bid_id_hash  ${internal_tender_id}  0
-   Log To Console  [+] Get Internal Qualification ID: ${qualification_interanl_id}
+Current test
+  Prapare Browser
+  Add Doc To Qualification  Newtend_Owner  some_file  UA-2021-12-09-000205-c  0
+  [Teardown]  Close Browser
 
 
 *** Keywords ***
+
+Test Qulification Api 2
+   ${internal_tender_id}=  Set Variable  9631da687bd54d8dbc88d30bbc5afc5c
+   ${qualification_interanl_id}=  api_get_bid_id_hash  ${internal_tender_id}  0
+   Log To Console  [+] Get Internal Qualification ID: ${qualification_interanl_id}
 
 Test Qualification Part Get Complaint
   ${data.tender_internal_id}=  Set Variable  5aabe8346b304ac3a2f40edda8400f91

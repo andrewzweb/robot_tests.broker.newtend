@@ -3,6 +3,42 @@ Resource  ../newtend.robot
 
 *** Keywords ***
 
+Add Doc To Qualification
+  [Arguments]  ${username}  ${document_file}  ${tender_id}  ${bid_id}  @{ARGS}
+  Log To Console  [+] Add Doc Qulification
+
+  Find Tender By Id  ${tender_id}
+
+  Go To Auction
+
+  Sleep  5
+
+  Choise Bid  ${bid_id}
+
+  Add Quilificaton Comission Document  ${document_file}
+
+  Reload Page
+
+Choise Bid
+  [Arguments]  ${bid_index}
+  Sleep  2
+
+  ${bid_hash_id}=  api_get_first_award_id  ${data.tender_internal_id}  ${bid_index}
+  Log To Console  [+] Get Award ID: ${bid_hash_id}
+
+  ${award_elements}=  Get WebElements  xpath=//div[@ng-repeat="bid in tenderBids"]
+  ${award_count}=  Get Length  ${award_elements}
+  Log To Console  [i] Count Award: ${award_count}
+
+  :FOR  ${index}  IN RANGE  ${award_count}
+  \  ${current_award_id}=  Get Element Attribute  xpath=//div[@id="bid_${index}"]@data-lot_bid_id
+  \  Log To Console  [+] Current Award ID: ${current_award_id}
+  \  ${is_need_element}=  is_one_string_include_other_string  ${current_award_id}  ${bid_hash_id}
+  \  Log To Console  [ ] click ${index}? : ${is_need_element}
+  \  ${result}=  Run Keyword If  ${is_need_element} == True  Wait And Click  xpath=//div[@id="bid_${index}"]
+  \  Exit For Loop IF  ${is_need_element} == True
+
+
 Add Quilificaton Comission Document
   [Arguments]  ${document_file}
 
@@ -39,6 +75,7 @@ Confirm Bid
   ${locator.apply_decision}=  Set Variable  xpath=//*[@ng-click="decide('active')"]
   Wait And Click  ${locator.apply_decision}
 
+
   Sleep  2
   ${bid_accept}=  Get WebElement  xpath=//button[@ng-click="accept()"]
 
@@ -50,13 +87,6 @@ Confirm Bid
   Log To Console  [+] Confirm bid
   Sleep  2
 
-Choise Bid
-  [Arguments]  ${bid_id}
-  Log To Console  [+] _ choise number ${bid_id}
-  Sleep  3
-  ${locator.bids}=  Set Variable  xpath=//*[@ng-repeat="bid in tenderBids"]
-  ${element_bids}=  Get WebElements  ${locator.bids}
-  Wait And Click  ${element_bids[${bid_id}]}
 
 Finish Torgi
   [Arguments]
