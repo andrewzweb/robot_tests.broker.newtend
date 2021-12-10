@@ -9,8 +9,8 @@ Library  DebugLibrary
 Library  OperatingSystem
 
 *** Variables ***
-${tender_id}  UA-2021-12-09-000260-c
-${data.tender_internal_id}  d1354ba87a77431ca876b86bff39bfe6
+${tender_id}  UA-2021-12-10-000295-c
+${data.tender_internal_id}  466ad39d94af47c6b06ab34207a45679
 ${username}  Newtend_Owner
 ${OUTPUT_DIR}  .
 ${BROWSER}  chrome
@@ -20,17 +20,44 @@ ${question_id}  q-f5a0a31d
 *** Test Cases ***
 
 
-Test get award
-  ${result}=  api_get_first_award_id  ${data.tender_internal_id}
-  Log To Console  ${result}
+Test me 2
+  Test get award
 
-Current test
-  Prapare Browser
-  Add Doc To Qualification  Newtend_Owner  some_file  ${tender_id}  0
-  [Teardown]  Close Browser
+#Current test
+#  Prapare Browser
+#  Qulification test
+#  [Teardown]  Close Browser
 
 
 *** Keywords ***
+
+Qulification test
+  # tests openeu pre qulification
+  Підтвердити кваліфікацію  ${username}  ${tender_id}  0
+  Відхилити кваліфікацію  ${username}  ${tender_id}  1
+  #Скасувати кваліфікацію  ${username}  ${tender_id}  1
+  Скасувати кваліфікацію  ${username}  ${tender_id}  1
+  Підтвердити кваліфікацію  ${username}  ${tender_id}  2
+  #Затвердити остаточне рішення кваліфікації  ${username}  ${tender_id}
+
+Test get award
+  Log To Console  -----------
+  ${result}=  api_get_bid_id_hash  ${data.tender_internal_id}  0
+  Log To Console  -----------
+  Log To Console  0: ${result}
+  ${result}=  api_get_bid_id_hash  ${data.tender_internal_id}  1
+  Log To Console  -----------
+  Log To Console  1: ${result}
+  ${result}=  api_get_bid_id_hash  ${data.tender_internal_id}  2
+  Log To Console  -----------
+  Log To Console  2: ${result}
+  ${result}=  api_get_bid_id_hash  ${data.tender_internal_id}  -1
+  Log To Console  -----------
+  Log To Console  3: ${result}
+  ${result}=  api_get_bid_id_hash  ${data.tender_internal_id}  -2
+  Log To Console  -----------
+  Log To Console  4: ${result}
+
 
 Test Qulification Api 2
    ${internal_tender_id}=  Set Variable  9631da687bd54d8dbc88d30bbc5afc5c
@@ -150,14 +177,6 @@ Custom Login
 Remove feature
   Видалити неціновий показник  ${username}  ${tender_id}  1
 
-Qulification test
-  # tests openeu pre qulification
-  Підтвердити кваліфікацію  ${username}  ${tender_id}  1
-  Відхилити кваліфікацію  ${username}  ${tender_id}  2
-  #Скасувати кваліфікацію  ${username}  ${tender_id}  1
-  Скасувати кваліфікацію  ${username}  ${tender_id}  2
-  Підтвердити кваліфікацію  ${username}  ${tender_id}  2
-  Затвердити остаточне рішення кваліфікації  ${username}  ${tender_id}
 
 Convert str to int
   ${numb}=  Set Variable  0.05

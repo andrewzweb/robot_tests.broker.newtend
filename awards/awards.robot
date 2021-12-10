@@ -70,25 +70,6 @@ Add Quilificaton Comission Document
 
   Sleep  3
 
-Confirm Bid
-  # click to popup download
-  Log To Console  [.] Confirm bid
-  ${locator.apply_decision}=  Set Variable  xpath=//*[@ng-click="decide('active')"]
-  Wait And Click  ${locator.apply_decision}
-
-
-  Sleep  2
-  ${bid_accept}=  Get WebElement  xpath=//button[@ng-click="accept()"]
-
-  Execute Javascript
-  ...  var element=document.querySelector("button[ng-click='accept()']");
-  ...  element.removeAttribute("disabled");
-
-  Wait And Click  ${bid_accept}
-  Log To Console  [+] Confirm bid
-  Sleep  2
-
-
 Finish Torgi
   [Arguments]
   Log To Console  [.] Finish Torgi

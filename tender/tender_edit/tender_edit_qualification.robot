@@ -9,7 +9,6 @@ Get Info About Qualification
   # because status not have hot reload
   Reload Page
 
-  ${result}=  Set Variable  None
   Print Args  @{ARGS}
 
   ${field_name}=  Set Variable  ${ARGS[0]}
@@ -18,16 +17,19 @@ Get Info About Qualification
 
   ${status_tender_id}=  Run Keyword And Return Status  Set Variable  ${ARGS[2]}
   ${tender_id}=  Run Keyword If  ${status_tender_id}  Set Variable  ${ARGS[2]}
-  #${qulification_id}=  Set Variable  ${ARGS[3]}
+
+  ${status_field_name}=  Run Keyword And Return Status  Set Variable  ${ARGS[3]}
+  ${field_name}=  Run Keyword If  ${status_field_name}  Set Variable  ${ARGS[3]}
 
   Run Keyword If  ${status_tender_id}  Find Tender By Id  ${tender_id}
   Go To Prequlification
 
-  ${qulification_number}=  Run Keyword If  'qualifications[0].status' == '${field_name}'  Set Variable  0
+  ${qualification_number}=  Run Keyword If  'qualifications[0].status' == '${field_name}'  Set Variable  0
   ...  ELSE  Set Variable  1
+  Log To Console  [.] Qualification number ${qualification_number}
 
-  ${qualification_interanl_id}=  api_get_bid_id_hash  ${data.tender_internal_id}  ${qulification_number}
-  Log To Console  [+] Get Internal Qualification ID: ${qualification_interanl_id}
+  ${qualification_internal_id}=  api_get_bid_id_hash  ${data.tender_internal_id}  ${qualification_number}
+  Log To Console  [+] Get Internal Qualification ID: ${qualification_internal_id}
 
   ${qualification_elements}=  Get WebElements  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]
   ${qualification_count}=  Get Length  ${qualification_elements}
@@ -36,7 +38,7 @@ Get Info About Qualification
   :FOR  ${index}  IN RANGE  ${qualification_count}
   \  ${current_qualification_id}=  Get Element Attribute  xpath=//div[@id="qualification_${index}_${index}"]@data-bidid
   \  Log To Console  [+] Current Qualififcation ID: ${current_qualification_id}
-  \  ${is_need_element}=  is_one_string_include_other_string  ${current_qualification_id}  ${qualification_interanl_id}
+  \  ${is_need_element}=  is_one_string_include_other_string  ${current_qualification_id}  ${qualification_internal_id}
   \  Log To Console  [ ] click ${index}? : ${is_need_element}
   \  ${result}=  Run Keyword If  ${is_need_element} == True  Get Text  xpath=//div[@id="qualification_${index}_${index}"]/..//p
   \  Exit For Loop IF  ${is_need_element} == True
@@ -56,11 +58,10 @@ Aprove Qualification
 
   Find Tender By Id  ${tender_id}
   Go To Prequlification
-  #Wait Tender Status  active.qualification
 
   # get data from api
-  ${qualification_interanl_id}=  api_get_bid_id_hash  ${data.tender_internal_id}  ${qulification_number}
-  Log To Console  [+] Get Internal Qualification ID: ${qualification_interanl_id}
+  ${qualification_internal_id}=  api_get_bid_id_hash  ${data.tender_internal_id}  ${qulification_number}
+  Log To Console  [+] Get Internal Qualification ID: ${qualification_internal_id}
 
   # collect data from UI
   ${qualification_elements}=  Get WebElements  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]
@@ -72,7 +73,7 @@ Aprove Qualification
   :FOR  ${index}  IN RANGE  ${qualification_count}
   \  ${current_qualification_id}=  Get Element Attribute  xpath=//div[@id="qualification_${index}_${index}"]@data-bidid
   \  Log To Console  [+] Current Qualififcation ID: ${current_qualification_id}
-  \  ${is_need_element}=  is_one_string_include_other_string  ${current_qualification_id}  ${qualification_interanl_id}
+  \  ${is_need_element}=  is_one_string_include_other_string  ${current_qualification_id}  ${qualification_internal_id}
   \  Log To Console  [ ] click ${index}? : ${is_need_element}
   \  Run Keyword If  ${is_need_element} == True  Wait And Click  xpath=//div[@id="qualification_${index}_${index}"]/..//button[@ng-click="decide(qualification.id, true)"]
   \  Exit For Loop IF  ${is_need_element} == True
@@ -109,7 +110,6 @@ Decline Qualification
 
   Find Tender By Id  ${tender_id}
   Go To Prequlification
-  #Wait Tender Status  active.qualification
 
   # get data from api
   ${qualification_interanl_id}=  api_get_bid_id_hash  ${data.tender_internal_id}  ${qulification_number}

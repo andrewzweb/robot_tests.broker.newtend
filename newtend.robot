@@ -423,19 +423,8 @@ Resource  ./bid/bid.robot
   Add Doc To Qualification  @{ARGS}
 
 Підтвердити постачальника
-  [Arguments]  ${username}  ${tender_id}  ${bid_id}  @{ARGS}
-  Log To Console  [+] Aprove Qulification
-  Log To Console  ${username}
-  Log To Console  ${tender_id}
-  Log To Console  ${bid_id}
-  Find Tender By Id  ${tender_id}
-  Go To Auction
-  Sleep  5
-  Choise Bid  ${bid_id}
-  ${bool_confirm_bid}=  Run Keyword And Return Status  Confirm Bid
-  Log To Console  [+] _Confirm bid status: ${bool_confirm_bid}
-  #${bool_finish_torgi}=  Run Keyword And Return Status  Finish Torgi
-  #Log To Console  [+] _Finish torgi status: ${bool_finish_torgi}
+  [Arguments]  @{ARGS}
+  Confirm Bid  @{ARGS}
 
 Відxилити постачальника
   [Arguments]  ${username}  ${tender_id}  ${bid_id}  @{ARGS}

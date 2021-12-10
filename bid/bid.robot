@@ -395,3 +395,42 @@ Change Doc From Bid
 Отримати інформацію із пропозиції із поля status
   ${result}=  Get Text xpath=//div[@id="bid-status"]
   [Return]  ${result}
+
+
+Confirm Bid
+  [Arguments]  @{ARGS}
+  Log To Console  [+] === Confirm Bid ===
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[0]}
+  ${bid_id}=  Set Variable  ${ARGS[0]}
+
+  Find Tender By Id  ${tender_id}
+
+  Go To Auction
+
+  Sleep  5
+
+  Choise Bid  ${bid_id}
+
+  ${bool_confirm_bid}=  Run Keyword And Return Status  Choise Confirm Bid
+  Log To Console  [+] _Confirm bid status: ${bool_confirm_bid}
+
+
+Choise Confirm Bid
+  # click to popup download
+  Log To Console  [.] Confirm bid
+  ${locator.apply_decision}=  Set Variable  xpath=//*[@ng-click="decide('active')"]
+  Wait And Click  ${locator.apply_decision}
+
+
+  Sleep  2
+  ${bid_accept}=  Get WebElement  xpath=//button[@ng-click="accept()"]
+
+  Execute Javascript
+  ...  var element=document.querySelector("button[ng-click='accept()']");
+  ...  element.removeAttribute("disabled");
+
+  Wait And Click  ${bid_accept}
+  Log To Console  [+] Confirm bid
+  Sleep  2

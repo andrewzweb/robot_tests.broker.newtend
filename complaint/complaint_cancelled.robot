@@ -93,12 +93,13 @@ Cancelled Lot
 
   Wait And Click  xpath=//button[@ng-click="delete()"]
 
-  Sleep  7
+  Sleep  10
 
   # sing up
   Wait And Click  xpath=//button[@ng-click="vm.sign()"]
 
   ${cancellation}=  Get Cancellation Data And Put In Global  ${username}
+  Sleep  5
   [Return]  ${cancellation}
 
 
