@@ -335,4 +335,4 @@ Change Status To Complaint
 
   Wait And Type  xpath=//textarea[@ng-model="message"]   ${complaint_description}
 
-  Wait And Clickc xpath=//button[@ng-click="sendAnswer()"]
+  Wait And Click  xpath=//button[@ng-click="sendAnswer()"]
