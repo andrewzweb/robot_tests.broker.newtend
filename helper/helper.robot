@@ -190,3 +190,8 @@ Smart Wait
   \  Reload Page
   \  ${result}=  Run Keyword And Return Status  ${keyword[0]}  ${keyword[1]}
   \  Exit For Loop IF  ${result} == True
+
+
+Hide Wallet
+  Log To Console  [.] Hide wallet
+  Execute Javascript    window.document.getElementById('wallet-menu').style.display = "None";

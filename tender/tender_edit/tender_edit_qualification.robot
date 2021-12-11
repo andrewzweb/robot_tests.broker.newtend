@@ -68,6 +68,8 @@ Aprove Qualification
   ${qualification_count}=  Get Length  ${qualification_elements}
   Log To Console  [i] Count Qualifications: ${qualification_count}
 
+  Hide Wallet
+
   ${button_accept}=  Get WebElements  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]/..//button[@ng-click="decide(qualification.id, true)"]
 
   :FOR  ${index}  IN RANGE  ${qualification_count}
@@ -120,6 +122,8 @@ Decline Qualification
   ${qualification_count}=  Get Length  ${qualification_elements}
   Log To Console  [i] Count Qualifications: ${qualification_count}
 
+  Hide Wallet
+
   ${button_decline}=  Get WebElements  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]/..//button[@ng-click="decide(qualification.id, false)"]
 
   :FOR  ${index}  IN RANGE  ${qualification_count}
@@ -166,6 +170,9 @@ Cancel Qualification
   ${number}=  Evaluate  ${qulification_number}-1
 
   ${button_cancelled}=  Set Variable  xpath=//div[@id="qualification_${number}_${number}"]/..//button[@ng-click="cancelDecision(qualification.id)"]
+
+  Hide Wallet
+
   Wait And Click  ${button_cancelled}
   Sleep  4
 
@@ -182,6 +189,8 @@ Finish Qualification
   Find Tender By Id  ${tender_id}
   Go To Prequlification
   #Wait Tender Status  'active.qualification'
+
+  Hide Wallet
 
   ${button_approve}=  Set Variable  xpath=//button[@ng-click="approveQualifications()"]
   Wait And Click  ${button_approve}

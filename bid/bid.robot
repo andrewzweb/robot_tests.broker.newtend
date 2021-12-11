@@ -296,7 +296,7 @@ Add Doc To Bid
   Log To Console  [.] === Add doc in bid ===
 
   # закртыть меню которое показывает деньги на счету
-  Execute Javascript    window.document.getElementById('wallet-menu').style.display = "None";
+  Hide Wallet
 
   # click to open popup
   ${locator.button_open_popup_download_doc_to_bid}=  Set Variable  xpath=//button[@ng-model="selected.files"]
@@ -383,7 +383,7 @@ Change Doc From Bid
   \  # посмотреть вхождение айдишника в title
   \  ${status}=  is_one_string_include_other_string  ${title}  ${document_id}
   \  Log To Console  [_] Get doc_id in title: (status: ${status} | doc_id: ${document_id})
-  \  Execute Javascript    window.document.getElementById('wallet-menu').style.display = "None";
+  \  Hide Wallet
   \  # если вхождение есть то нажать на кнопочку заментить
   \  Run Keyword If  ${status}  Wait And Click  xpath=//div[@id="bid_doc_1"]/..//i[@class="glyphicon glyphicon-refresh"]
   \  # загрузить документ
