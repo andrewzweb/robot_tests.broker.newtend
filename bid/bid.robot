@@ -427,6 +427,14 @@ Choise Confirm Bid
   Sleep  2
   ${bid_accept}=  Get WebElement  xpath=//button[@ng-click="accept()"]
 
+  ${radio_button_confirm}=  Set Variable  xpath=//input[@name="agree-qualified"]
+  Wait Until Page Contains Element  ${radio_button_confirm}
+  Select Checkbox  ${radio_button_confirm}
+
+  ${radio_button_article17}=  Set Variable  xpath=//input[@name="agree-eligible"]
+  Wait Until Page Contains Element  ${radio_button_article17}
+  Select Checkbox  ${radio_button_article17}
+
   Execute Javascript
   ...  var element=document.querySelector("button[ng-click='accept()']");
   ...  element.removeAttribute("disabled");
