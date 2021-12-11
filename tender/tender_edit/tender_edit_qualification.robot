@@ -59,6 +59,9 @@ Aprove Qualification
   Find Tender By Id  ${tender_id}
   Go To Prequlification
 
+  Sleep  3
+  Hide Wallet
+
   # get data from api
   ${qualification_internal_id}=  api_get_bid_id_hash  ${data.tender_internal_id}  ${qulification_number}
   Log To Console  [+] Get Internal Qualification ID: ${qualification_internal_id}
@@ -67,8 +70,6 @@ Aprove Qualification
   ${qualification_elements}=  Get WebElements  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]
   ${qualification_count}=  Get Length  ${qualification_elements}
   Log To Console  [i] Count Qualifications: ${qualification_count}
-
-  Hide Wallet
 
   ${button_accept}=  Get WebElements  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]/..//button[@ng-click="decide(qualification.id, true)"]
 
@@ -113,6 +114,9 @@ Decline Qualification
   Find Tender By Id  ${tender_id}
   Go To Prequlification
 
+  Sleep  3
+  Hide Wallet
+
   # get data from api
   ${qualification_interanl_id}=  api_get_bid_id_hash  ${data.tender_internal_id}  ${qulification_number}
   Log To Console  [+] Get Internal Qualification ID: ${qualification_interanl_id}
@@ -121,8 +125,6 @@ Decline Qualification
   ${qualification_elements}=  Get WebElements  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]
   ${qualification_count}=  Get Length  ${qualification_elements}
   Log To Console  [i] Count Qualifications: ${qualification_count}
-
-  Hide Wallet
 
   ${button_decline}=  Get WebElements  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]/..//button[@ng-click="decide(qualification.id, false)"]
 
@@ -171,6 +173,7 @@ Cancel Qualification
 
   ${button_cancelled}=  Set Variable  xpath=//div[@id="qualification_${number}_${number}"]/..//button[@ng-click="cancelDecision(qualification.id)"]
 
+  Sleep  3
   Hide Wallet
 
   Wait And Click  ${button_cancelled}
@@ -190,6 +193,7 @@ Finish Qualification
   Go To Prequlification
   #Wait Tender Status  'active.qualification'
 
+  Sleep  3
   Hide Wallet
 
   ${button_approve}=  Set Variable  xpath=//button[@ng-click="approveQualifications()"]
