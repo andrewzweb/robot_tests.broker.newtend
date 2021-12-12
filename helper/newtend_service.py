@@ -376,9 +376,18 @@ def api_get_complaint_from_award(tender_internal_id):
 
 def api_get_first_award_id(tender_internal_id, award_index=0):
     tender = newtend_get_tender(tender_internal_id)
-    result = tender['data']['awards'][int(award_index)]['bid_id']
+    number_award = int(str(award_index)) - 0
+    result = tender['data']['awards'][number_award]['bid_id']
     return result
 
 def plus_one(number):
     result = int(number) + 1
     return result
+
+def get_amount_for_bid(tender_data, tender_internal_id):
+    amount = False
+    try:
+        current = tender_data['data']['lotValues'][0]['value']['amount']
+    except:
+        pass
+
