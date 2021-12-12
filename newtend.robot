@@ -277,6 +277,10 @@ Resource  ./bid/bid.robot
   [Arguments]  @{ARGUMENTS}
   Reload Page
 
+  # новая функциональность для коректного отображения контракта тендера
+  # и ждет синхронизации
+  Run Keyword If  '${TEST_NAME}' == 'Відображення статусу підписаної угоди з постачальником переговорної процедури' Smart Wait  Wait Until Page Contains Element  xpath=//a[@ng-repeat="contract in contracts"]
+
 Отримати інформацію із лоту
   [Arguments]  @{ARGUMENTS}
   Run Keyword And Return  Отримати лотову інформацію про ${ARGUMENTS[3]}    ${ARGUMENTS[2]}
