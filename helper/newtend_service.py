@@ -128,7 +128,7 @@ dict_units = {
     u'Рассмотрен' : u'active.awarded',
     u'Кваліфікація переможців (період оскарження)' : u'active.qualification.stand-still',
     u"Проведение переговоров" : u"active.pre-qualification.stand-still",
-    u'Прекваліфікація (період оскарження)': 'active.pre-qualification.stand-still',
+    u'Прекваліфікація (період оскарження)': u'active.pre-qualification.stand-still',
     u'Аукцион' : u'active.auction',
     u'Предложения' : u'active.tendering',
     u'Уточнение' : u'active.enquiries',

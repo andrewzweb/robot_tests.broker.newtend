@@ -167,17 +167,27 @@ Cancel Qualification
 
   Find Tender By Id  ${tender_id}
   Go To Prequlification
-  #Wait Tender Status  'active.qualification'
-
-  ${number}=  Evaluate  ${qulification_number}-1
-
-  ${button_cancelled}=  Set Variable  xpath=//div[@id="qualification_${number}_${number}"]/..//button[@ng-click="cancelDecision(qualification.id)"]
 
   Sleep  3
   Hide Wallet
 
-  Wait And Click  ${button_cancelled}
-  Sleep  4
+  ${qualification_internal_id}=  api_get_bid_id_hash  ${data.tender_internal_id}  ${qulification_number}
+  Log To Console  [+] Get Internal Qualification ID: ${qualification_internal_id}
+
+  # collect data from UI
+  ${qualification_elements}=  Get WebElements  xpath=//div[@ng-repeat="qualification in qualifications track by $index"]
+  ${qualification_count}=  Get Length  ${qualification_elements}
+  Log To Console  [i] Count Qualifications: ${qualification_count}
+
+  :FOR  ${index}  IN RANGE  ${qualification_count}
+  \  ${current_qualification_id}=  Get Element Attribute  xpath=//div[@id="qualification_${index}_${index}"]@data-bidid
+  \  Log To Console  [+] Current Qualififcation ID: ${current_qualification_id}
+  \  ${is_need_element}=  is_one_string_include_other_string  ${current_qualification_id}  ${qualification_internal_id}
+  \  Log To Console  [ ] click ${index}? : ${is_need_element}
+  \  Run Keyword If  ${is_need_element} == True      Wait And Click  xpath=//div[@id="qualification_${index}_${index}"]/..//button[@ng-click="cancelDecision(qualification.id)"]
+  \  Exit For Loop IF  ${is_need_element} == True
+
+  Sleep  5
 
 Finish Qualification
   [Arguments]    @{ARGS}
