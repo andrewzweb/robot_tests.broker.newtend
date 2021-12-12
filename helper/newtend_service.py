@@ -374,9 +374,9 @@ def api_get_complaint_from_award(tender_internal_id):
     result = tender['data']['awards'][0]['complaints'][0]
     return result
 
-def api_get_first_award_id(tender_internal_id, award_index=0):
+def api_get_first_award_id(tender_internal_id, award_index):
     tender = newtend_get_tender(tender_internal_id)
-    number_award = int(str(award_index)) - 0
+    number_award = int(str(award_index)) - 1
     result = tender['data']['awards'][number_award]['bid_id']
     return result
 
