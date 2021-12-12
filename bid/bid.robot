@@ -66,6 +66,9 @@ Make Bid Draft
   # и в драфте нет понятие деньги
   ${bid_amount}=  api_get_tender_amount  ${tender_internal_id}
 
+  # тут должна быть проверка на то что есть ли в словаре значение amount для тендера
+  # если да то брать это значение если нет то генерировать исходя из суммы тендера
+
   ${locator.input_bid_amount}=  Set Variable  xpath=//input[@name="amount"]
   ${status_amount_input_exist}=  Run Keyword And Return Status  Get WebElement  ${locator.input_bid_amount}
   Run Keyword If  ${status_amount_input_exist}  Wait And Type  ${locator.input_bid_amount}  ${bid_amount}
@@ -402,8 +405,8 @@ Confirm Bid
   Log To Console  [+] === Confirm Bid ===
 
   ${username}=  Set Variable  ${ARGS[0]}
-  ${tender_id}=  Set Variable  ${ARGS[0]}
-  ${bid_id}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${bid_id}=  Set Variable  ${ARGS[2]}
 
   Find Tender By Id  ${tender_id}
 
@@ -421,8 +424,8 @@ Choise Confirm Bid
   # click to popup download
   Log To Console  [.] Confirm bid
   ${locator.apply_decision}=  Set Variable  xpath=//*[@ng-click="decide('active')"]
-  Wait And Click  ${locator.apply_decision}
 
+  Wait And Click  ${locator.apply_decision}
 
   Sleep  2
   ${bid_accept}=  Get WebElement  xpath=//button[@ng-click="accept()"]
