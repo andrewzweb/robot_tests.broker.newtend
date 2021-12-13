@@ -91,9 +91,16 @@ Find Tender By Id
   # like in client
   #Set To Dictionary  ${USERS.users['Newtend_Provider1'].id_map}  ${tender_id}=${data.tender_internal_id}
 
+
 Sync Tender
   ${status}=  Run Keyword And Return Status  api_sync_tender  ${data.tender_internal_id}
   Log To Console  [${status}] Sync tender id: ${data.tender_internal_id}
+
+
+Sync Contract
+  ${status}=  Run Keyword And Return Status  api_sync_contract  ${data.contract_internal_id}
+  Log To Console  [${status}] Sync contract id: ${data.contract_internal_id}
+
 
 Try Choice Tender From Search List
   [Arguments]  ${tender_id}
