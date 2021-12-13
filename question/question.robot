@@ -29,7 +29,7 @@ Ask question
   Wait And Type   ${locator.ask_question_field_text}    ${description}
 
   ${select_questionOf}=  Set Variable  xpath=//select[@ng-model="chatData.questionOf"]
-  ${exist_select_questionOf}=  Run Keyword And Return  Get Webelement  ${select_questionOf}
+  ${exist_select_questionOf}=  Run Keyword And Return Status  Get Webelement  ${select_questionOf}
   Run Keyword If  ${exist_select_questionOf}  Select From List By Index  xpath=//select[@ng-model="chatData.questionOf"]  1
 
   Wait And Click   ${locator.send_question}
