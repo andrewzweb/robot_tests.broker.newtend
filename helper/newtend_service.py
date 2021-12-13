@@ -398,6 +398,6 @@ def get_amount_for_bid(tender_data, tender_internal_id):
 import subprocess
 
 def update_repo():
-    subprocess.call('sed  -i "71s/.*/robot_tests.broker.newtend       = git git@github.com:andrewzweb\/robot_tests.broker.newtend.gits/" buildout.cfg', shell=True)
+    subprocess.call('sed  -i "71s/.*/robot_tests.broker.newtend       = git git@github.com:andrewzweb\/robot_tests.broker.newtend.gits/" buildout.cfg', shell=True, stdout=None)
     subprocess.call('bin/develop update -f', shell=True)
     return 'Succses!!!'
