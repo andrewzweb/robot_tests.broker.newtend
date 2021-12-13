@@ -62,12 +62,22 @@ Make Bid Draft
   Log To Console  [ ] Bid with criteria: '${bid_with_lots}'
   Run Keyword If  ${bid_with_lots}  Wait And Click  xpath=//button[@ng-show="!lot.lotValue"]
 
-  # поставлю тут 100 потому что дефолные данные создают драфт
-  # и в драфте нет понятие деньги
-  ${bid_amount}=  api_get_tender_amount  ${tender_internal_id}
+  # если есть поле feature вибираем первое значение
+  ${status_feature_exist}=  Run Keyword And Return Status  Get WebElement  xpath=//select[@id="funder"]
+  Run Keyword If  ${status_feature_exist}  Select From List By Index  xpath=//select[@id="funder"]  1
 
+  # === amount ===
+  #
   # тут должна быть проверка на то что есть ли в словаре значение amount для тендера
   # если да то брать это значение если нет то генерировать исходя из суммы тендера
+
+  ${status_feature_exist}=  Run Keyword And Return Status  Get From Dictionary  ${bid_data.data.lotValues[0].value}  amount
+  Log To Console  [${status_feature_exist}]  Amount Exist
+  ${bid_amount}=  Run Keyword If  ${status_feature_exist}  Get From Dictionary  ${bid_data.data.lotValues[0].value}  amount
+  ...  ELSE  api_get_tender_amount  ${tender_internal_id}
+
+  # нужно конвертировать в строку
+  ${bid_amount}=  Convert To String  ${bid_amount}
 
   ${locator.input_bid_amount}=  Set Variable  xpath=//input[@name="amount"]
   ${status_amount_input_exist}=  Run Keyword And Return Status  Get WebElement  ${locator.input_bid_amount}
