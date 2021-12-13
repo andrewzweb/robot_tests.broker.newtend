@@ -419,6 +419,8 @@ Confirm Bid
   ${bool_confirm_bid}=  Run Keyword And Return Status  Choise Confirm Bid
   Log To Console  [+] _Confirm bid status: ${bool_confirm_bid}
 
+  Sync Tender
+
 
 Choise Confirm Bid
   # click to popup download
