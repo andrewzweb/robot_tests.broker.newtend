@@ -406,7 +406,7 @@ Change Doc From Bid
   Sleep  3
 
 Отримати інформацію із пропозиції із поля status
-  ${result}=  Get Text xpath=//div[@id="bid-status"]
+  ${result}=  Get Text  xpath=//div[@id="bid-status"]
   [Return]  ${result}
 
 
