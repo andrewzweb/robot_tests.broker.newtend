@@ -909,4 +909,9 @@ Custom Get Internal ID
   # d-5934673d
 
 Отримати інформацію про awards[0].complaintPeriod.endDate
+  [Arguments]  @{ARGS}
+  Print Args  ${ARGS}
 
+Отримати інформацію із пропозиції із поля lotValues[0].value.amount
+  [Arguments]  @{ARGS}
+  Print Args  ${ARGS}
