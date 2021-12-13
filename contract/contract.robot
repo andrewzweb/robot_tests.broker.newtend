@@ -95,3 +95,45 @@ Change contract
   # confirm date for publish
   ${locator.confirm_date_publish_change}=  Set Variable  xpath=//button[@ng-click="publicChange(publicData)"]
   Wait And Click  ${locator.confirm_date_publish_change}
+
+Set Date Sing For Contract
+  [Arguments]    @{ARGS}
+  Print Args  @{ARGS}
+  # TODO
+
+  # username
+  # tender_id - UA-2021-12-12-000085-c
+  # contract index - 0
+  # date - 2021-12-12T21:22:30.484288+02:00
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${contract_index}=  Set Variable  ${ARGS[2]}
+  ${date}=  Set Variable  ${ARGS[3]}
+
+Set Date For Contract
+  [Arguments]    @{ARGS}
+  Print Args  @{ARGS}
+
+  # username
+  # UA-2021-12-12-000085-c
+  # 2021-12-12T21:22:31.900970+02:00
+  # 2021-12-12T21:32:31.900970+02:00
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${date_start}=  Set Variable  ${ARGS[2]}
+  ${date_end}=  Set Variable  ${ARGS[3]}
+
+
+Download Document To Contract
+  [Arguments]    @{ARGS}
+  Print Args  @{ARGS}
+
+  # username
+  # /tmp/d-f38b08e3molestiasV2GIJO.pdf
+  # UA-2021-12-12-000085-c
+  # 0
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${document_file}=  Set Variable  ${ARGS[1]}
+  ${tender_id}=  Set Variable  ${ARGS[2]}
+  ${contract_index}=  Set Variable  ${ARGS[3]}

@@ -523,6 +523,18 @@ Resource  ./bid/bid.robot
 
   Go To Contracts
 
+Завантажити документ в угоду
+  [Arguments]  @{ARGS}
+  Download Document To Contract  @{ARGS}
+
+Вказати період дії угоди
+  [Arguments]  @{ARGS}
+  Set Date For Contract  @{ARGS}
+
+Встановити дату підписання угоди
+  [Arguments]  @{ARGS}
+  Set Date Sing For Contract  @{ARGS}
+
 ################################################################
 #                                                              #
 #                    END Contract                              #
