@@ -52,7 +52,7 @@ Create Feature
   ...        title_en: 'f-b360e661: Ad eos qui ut dicta.'
   ...        title_ru: 'f-360437d2: Рэктэквуэ ыёюз лыгимуз мэль ывыртятюр рыквюы.'
 
-  Log To Console  [+] Edit tender Features
+  Log To Console  [+] Create tender Features
 
   # data
   ${data}=  Set Variable  0
@@ -62,8 +62,8 @@ Create Feature
   ${data.feature_description}=  Get From Dictionary  ${feature_data}  description
 
   # wait popUp form
-  Focus  ${locator.edit_feature_add_button}
-  Wait And Click  ${locator.edit_feature_add_button}
+  Focus  xpath=//input[@id="qualityIndicator"]
+  Wait And Click  xpath=//input[@id="qualityIndicator"]
 
   Sleep  3
 
@@ -79,8 +79,14 @@ Create Feature
   ${data_enum}=  Get From Dictionary  ${feature_data}  enum
   ${count_enum}=  Get length  ${data_enum}
 
-  ${tender_type_with_different_default_count_features}=  Create List  esco  competitiveDialogueUA  competitiveDialogueUA
+  ${tender_type_with_different_default_count_features}=  black_list_tender_for_feature
+  ${status_speciat_tender}=  Run Keyword If  '${procurementMethodType}' in ${tender_type_with_different_default_count_features}  Set Variable  True
+  ...  ELSE  Set Variable  False
 
+  Log To Console  [${status_speciat_tender}] Tender in black list
+
+  Run Keyword If  ${status_speciat_tender}  Wait And Click  xpath=//a[@id="add-option-0-1"]
+  
   : FOR   ${number_enum}  IN RANGE   ${count_enum}
   \  ${num_enum}=  Convert To Integer  ${number_enum}
   \  ${enum_title}=   Get From Dictionary  ${data_enum[${number_enum}]}   title
@@ -94,9 +100,12 @@ Create Feature
   \  Wait And Type  ${edit_feature_enum_description}  ${enum_title}
   \  # add one form
   \  #
-  \  Run Keyword If  ${number_enum} < ${count_enum}-1 and '${procurementMethodType}' not in ${tender_type_with_different_default_count_features}  Wait And Click  xpath=//a[@id="add-option-0-${number_enum}"]
-  \  # if esco we have 2 open form we need 3
-  \  Run Keyword If  ${number_enum} < ${count_enum}-2 and '${procurementMethodType}' in ${tender_type_with_different_default_count_features}  Wait And Click  xpath=//a[@id="add-option-0-1"]
+  \  ${st1}=  Evaluate  ${number_enum} < ${count_enum}-1
+  \  
+  \  Log To Console  ${num_enum}: ${st1} | ${status_speciat_tender}
+  \  Log To Console  ${procurementMethodType} | ${tender_type_with_different_default_count_features}
+  \
+  \  Run Keyword If  ${st1} and not ${status_speciat_tender}  Wait And Click  xpath=//a[@id="add-option-0-${number_enum}"]
 
   # click to save features
   Wait And Click  ${locator.edit_feature_save_form}

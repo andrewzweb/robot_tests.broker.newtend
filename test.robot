@@ -8,6 +8,7 @@ Library  Selenium2Library
 Library  DebugLibrary
 Library  OperatingSystem
 
+
 *** Variables ***
 ${tender_id}  UA-2021-12-10-000295-c
 ${data.tender_internal_id}  466ad39d94af47c6b06ab34207a45679
@@ -17,19 +18,102 @@ ${BROWSER}  chrome
 @{L2}  1  2  2  3
 ${date}   2021-11-07T22:59:27.999676+02:00
 ${question_id}  q-f5a0a31d
+
+
 *** Test Cases ***
 
-
-Test me 2
-  Test get award
+#Test me 3
+#  Test Feature
 
 #Current test
 #  Prapare Browser
-#  Qulification test
+#  Test UI Feature
 #  [Teardown]  Close Browser
 
+Test
+  Test Black List Check  
+  Test Black Two    
+  Test Black Two Tvise
 
 *** Keywords ***
+
+Test Black List Check
+  ${type}=  Set Variable  esco
+  ${type}=  Convert To String  ${type}
+  ${list}=  black_list_tender_for_feature
+  ${result}=  str_in_list  ${type}  ${list}  
+  Log To Console  [${result}] Type
+
+Test Black Two
+  ${type}=  Set Variable  esco
+  ${type}=  Convert To String  ${type}
+  ${list}=  black_list_tender_for_feature  
+  ${result}=  List Should Contain Value  ${list}  ${type}
+  Log To Console  [${result}] Type
+  
+Test Black Two Tvise
+  ${type}=  Set Variable  esco
+  ${type}=  Convert To String  ${type}
+  ${list}=  black_list_tender_for_feature  
+  ${result}=  Run Keyword If  '${type}' in ${list}  Log To Console  [True] Type
+  
+  
+Test UI Feature
+  ${page}=  Set Variable  https://autotest.newtend.com/opc/provider/create-tender/multilot/competitiveDialogueEU/plan/951cb32a01ec4ccead51d55abe61b398
+  Go To  ${page}
+
+  Wait And Click  xpath=//input[@id="qualityIndicator"]
+
+  ${procurementMethodType}=  Set Variable  esco
+  
+  ${tender_type_with_different_default_count_features}=  black_list_tender_for_feature 
+
+  ${status_speciat_tender}=  str_in_list  ${procurementMethodType}  ${tender_type_with_different_default_count_features}  msg=True
+  Log To Console  [${status_speciat_tender}] Tender in black list
+  Run Keyword If  ${status_speciat_tender}  Wait And Click  xpath=//a[@id="add-option-0-1"]
+
+  ${count_enum}=  Set Variable  3
+  
+  : FOR   ${number_enum}  IN RANGE   ${count_enum}
+  \  ${num_enum}=  Convert To Integer  ${number_enum}
+  \  ${edit_feature_enum_title}=  Get WebElement  xpath=//input[@name="option_0_${number_enum}"]
+  \  Wait And Type  ${edit_feature_enum_title}  ${number_enum}
+  \  ${edit_feature_enum_value}=  Get WebElement  xpath=//input[@name="optionWeight_0_${number_enum}"]
+  \  Wait And Type  ${edit_feature_enum_value}  ${number_enum}
+  \  ${edit_feature_enum_description}=  Get WebElement  xpath=//input[@name="optionDescription_0_${number_enum}"]
+  \  Wait And Type  ${edit_feature_enum_description}  ${number_enum}
+  \  # add one form
+  \  #
+  \  ${st1}=  Evaluate  ${number_enum} < ${count_enum}-1
+  \  
+  \  Log To Console  ${num_enum}: ${st1} | ${status_speciat_tender}
+  \  Log To Console  ${procurementMethodType} | ${tender_type_with_different_default_count_features}
+  \
+  \  Run Keyword If  ${st1} and not ${status_speciat_tender}  Wait And Click  xpath=//a[@id="add-option-0-${number_enum}"]
+
+  # click to save features
+  Wait And Click  ${locator.edit_feature_save_form}
+
+Test Feature
+
+  ${tender_type_with_different_default_count_features}=  Create List  esco  competitiveDialogueUA  competitiveDialogueUA
+  ${procurementMethodType}=  Set Variable  esco
+
+  ${count_enum}=  Set Variable  3
+
+  : FOR   ${number_enum}  IN RANGE   ${count_enum}
+  \  ${num_enum}=  Convert To Integer  ${number_enum}
+  \
+  \  Log To Console  --------------------
+  \  ${st1}=  Evaluate  ${number_enum} < ${count_enum}-1
+  \  ${st2}=  str_in_list  ${procurementMethodType}  ${tender_type_with_different_default_count_features}
+  \
+  \  Log To Console  ${num_enum}: [${st1}] [${st2}]
+  \
+  \  Run Keyword If  ${st1} and not ${st2}  Log To Console  ==== First ====
+  \  # if esco we have 2 open form we need 3
+  \  Run Keyword If  ${st2} and not ${st1}  Log To Console  ==== Second ====
+
 
 Qulification test
   # tests openeu pre qulification

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import subprocess
 from datetime import datetime, timedelta
 from iso8601 import parse_date
 #from op_robot_tests.tests_files.service_keywords import get_now
@@ -395,9 +396,18 @@ def get_amount_for_bid(tender_data, tender_internal_id):
     except:
         pass
 
-import subprocess
 
 def update_repo():
-    subprocess.call('sed  -i "71s/.*/robot_tests.broker.newtend       = git git@github.com:andrewzweb\/robot_tests.broker.newtend.gits/" buildout.cfg', shell=True, stdout=None)
-    subprocess.call('bin/develop update -f', shell=True)
+    #subprocess.call('sed  -i "71s/.*/robot_tests.broker.newtend       = git git@github.com:andrewzweb\/robot_tests.broker.newtend.gits/" buildout.cfg', shell=True, stdout=None)
+    #subprocess.call('bin/develop update -f', shell=True)
     return 'Succses!!!'
+
+def str_in_list(string_target, _list):
+    result = False
+    for i in _list:
+        if str(i) == str(string_target):
+            result = True
+    return result
+
+def black_list_tender_for_feature():
+    return [u'esco', u'competitiveDialogueEU', u'competitiveDialogueUA']

@@ -13,6 +13,9 @@ Create CompetitiveDialogueEU Tender
   # Get Plan Id
   Go To Plan And SingUp
 
+  ${bool_features_exist}=  Exist key in dict  ${tender_data.data}  features
+  Run Keyword If  ${bool_features_exist}  Edit Features  ${tender_data}
+
   Edit Tender Title and Description  ${tender_data}
 
   # === It's all in one popup window
@@ -36,8 +39,6 @@ Create CompetitiveDialogueEU Tender
 
   Edit NDS  ${tender_data}
 
-  ${bool_features_exist}=  Exist key in dict  ${tender_data.data}  features
-  Run Keyword If  ${bool_features_exist}  Edit Features  ${tender_data}
 
   Edit Date For Tender  ${tender_data}
 

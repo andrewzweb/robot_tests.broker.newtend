@@ -431,6 +431,7 @@ Resource  ./bid/bid.robot
 Підтвердити постачальника
   [Arguments]  @{ARGS}
   Confirm Bid  @{ARGS}
+  Sync Tender
 
 Відxилити постачальника
   [Arguments]  ${username}  ${tender_id}  ${bid_id}  @{ARGS}
