@@ -924,7 +924,7 @@ Custom Get Internal ID
   Print Args  ${ARGS}
 
   ${username}=  Set Variable  ${ARGS[0]}
-  ${tender_id}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
 
   Find Tender By Id  ${tender_id}
   Go To Prequlification
