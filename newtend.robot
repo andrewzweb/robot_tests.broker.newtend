@@ -494,7 +494,7 @@ Resource  ./bid/bid.robot
 ################################################################
 
 Завантажити документ у кваліфікацію
-  [Arguments]  ${username}  ${document_file}  ${tender_uaid}  ${qualification_num}  @{args}
+  [Arguments]  ${username}  ${document_file}  ${tender_id}  ${qualification_num}  @{args}
   Log To Console  [+] Download doc in qulification
 
   Log To Console  Username ${username}
@@ -504,7 +504,7 @@ Resource  ./bid/bid.robot
   Log To Console  Args ${args}
 
   # find tender
-  Find Tender By Id  ${tender_uaid}
+  Find Tender By Id  ${tender_id}
 
   Download Document  ${document_file}  "tender"  "bidders"
 
