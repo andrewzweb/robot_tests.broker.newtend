@@ -71,8 +71,8 @@ Add meats to tender
 
 
 Find Tender By Id
-  [Arguments]  ${tender_id}
-  Log To Console  [+] Find Tender id: ${tender_id}
+  [Arguments]  ${tender_id}  ${username}=None
+  Log To Console  [+] Find Tender id: ${tender_id} | username: '${username}'
 
   Sync Tender
 
@@ -85,12 +85,17 @@ Find Tender By Id
 
   Wait Until Keyword Succeeds  8 minute  15 seconds  Try Choice Tender From Search List  ${tender_id}
 
+  # try to fix error cant find data for competitive
+  Run Keyword If  '${username}' != 'None'  Log To Console  [+] Username True
+  ${tender_data}=  Run Keyword If  '${username}' != 'None'  newtend_get_tender  ${data.tender_internal_id}
+  ${tender_data}=  Run Keyword If  '${username}' != 'None'  op_robot_tests.tests_files.service_keywords.Munchify  ${tender_data}
+  Run Keyword If  '${username}' != 'None'  Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender_data}
+
   # my version
   #Set To Dictionary  ${USERS.users['${username}'].id_map}  ${tender_id}  ${data.tender_internal_id}
 
   # like in client
   #Set To Dictionary  ${USERS.users['Newtend_Provider1'].id_map}  ${tender_id}=${data.tender_internal_id}
-
 
 Sync Tender
   ${status}=  Run Keyword And Return Status  api_sync_tender  ${data.tender_internal_id}

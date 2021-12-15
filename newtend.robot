@@ -209,7 +209,7 @@ Resource  ./bid/bid.robot
   [Arguments]  ${username}  ${tender_id}
 
   # if tender
-  Find Tender By Id  ${tender_id}
+  Find Tender By Id  ${tender_id}  ${username}
   Sleep  2
 
   # make request and get tender data and put in global variable

@@ -25,17 +25,21 @@ ${question_id}  q-f5a0a31d
 #Test me 3
 #  Test Feature
 
-#Current test
-#  Prapare Browser
-#  Test UI Feature
-#  [Teardown]  Close Browser
+Current test
+  Prapare Browser
+  Test Find Tender
+  [Teardown]  Close Browser
 
-Test
-  Test Black List Check  
-  Test Black Two    
-  Test Black Two Tvise
+#Test
+#  Test Black List Check  
+#  Test Black Two
+#  Test Black Two Tvise
 
 *** Keywords ***
+
+Test Find Tender
+  Find Tender By Id  ${tender_id}  ${username}
+
 
 Test Black List Check
   ${type}=  Set Variable  esco
