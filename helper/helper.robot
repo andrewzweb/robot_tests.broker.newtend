@@ -52,6 +52,11 @@ Edit Feasible Element
   ${data_key}=  Run Keyword If  ${key_exist}  Get From Dictionary  ${dict}  ${key}
   Run Keyword If  ${key_exist} and ${locator_exist}  ${keyword}  ${locator}  ${data_key}
 
+Go To Overview
+  Wait Bar Open
+  Wait And Click  xpath=//a[@ui-sref="tenderView.overview"]
+  Wait Bar Close
+
 Go To Auction
   Wait Bar Open
   Wait And Click  xpath=//a[@ui-sref="tenderView.auction"]

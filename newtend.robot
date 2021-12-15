@@ -516,7 +516,7 @@ Resource  ./bid/bid.robot
   Log To Console  ARG 2 - ${contract_num}
 
   # go to tender
-  Find Tender By Id  ${tender_uaid}
+  Find Tender By Id  ${tender_id}
 
   # go to auction
   Go To Auction
@@ -918,3 +918,24 @@ Custom Get Internal ID
 Отримати інформацію із пропозиції із поля lotValues[0].value.amount
   [Arguments]  @{ARGS}
   Print Args  ${ARGS}
+
+Перевести тендер на статус очікування обробки мостом
+  [Arguments]  @{ARGS}
+  Print Args  ${ARGS}
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[0]}
+
+  Find Tender By Id  ${tender_id}
+  Go To Prequlification
+
+  Smart Wait  Wait Until Page Contains Element  xpath=//button[@ng-click="startSecondStageTender()"]
+  Wait And Click  xpath=//button[@ng-click="startSecondStageTender()"]
+  Sleep  5
+
+  Wait And Click  xpath=//button[@ng-click="start()"]
+
+  Go To Overview
+
+  Smart Wait  Wait Until Page Contains Element  xpath=//button[@ng-click="activateTender(tender)"]
+  Wait And Click  xpath=//button[@ng-click="activateTender(tender)"]
