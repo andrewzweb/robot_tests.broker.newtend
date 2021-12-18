@@ -70,9 +70,10 @@ Add Quilificaton Comission Document
 
   Sleep  3
 
-Finish Torgi
+
+Create Contract
   [Arguments]
-  Log To Console  [.] Finish Torgi
+  Log To Console  [.] Create Contract
 
   ${locator.end_torgi}=  Set Variable  xpath=//button[@data-test_id="close_tender"]
   Wait Until Keyword Succeeds  5 minute  30 seconds  Wait And Click  ${locator.end_torgi}
@@ -92,17 +93,5 @@ Finish Torgi
   \   Wait And Type  xpath=//input[@name="${index}_itemUnitValueAmount"]  1
 
   Wait And Click  xpath=//button[@ng-click="closeBids()"]
-  Log To Console  [+] Finish Torgi
+  Log To Console  [+] Create Contract
   Sleep  3
-
-
-
-
-
-
-
-
-
-
-
-

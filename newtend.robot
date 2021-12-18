@@ -477,10 +477,7 @@ Resource  ./bid/bid.robot
   # go to auction
   Go To Auction
 
-  ${bool_finish_torgi}=  Run Keyword And Return Status  Finish Torgi
-  Log To Console  [+] _Finish torgi status: ${bool_finish_torgi}
-
-  Go To Contracts
+  Create Contract
 
 Завантажити документ в угоду
   [Arguments]  @{ARGS}
