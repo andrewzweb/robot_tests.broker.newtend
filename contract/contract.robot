@@ -137,3 +137,28 @@ Download Document To Contract
   ${document_file}=  Set Variable  ${ARGS[1]}
   ${tender_id}=  Set Variable  ${ARGS[2]}
   ${contract_index}=  Set Variable  ${ARGS[3]}
+
+  Find Tender By Id  ${tender_id}
+
+  Go To Auction
+
+  # открыть попап
+  Wait And Click  xpath=//button[@data-test_id="upload_contract"]
+
+  # определить тип документа
+  Select From List By Index  xpath=//select[@ng-model="document.documentType"]  1
+
+  # нажать на добавить документы
+  Wait And Click  xpath=//button[@ng-model="file"]
+
+  # полодить файл
+  Choose File  xpath=//input[@type="file"]  ${document_file}
+
+  Sleep  5
+
+  Execute Javascript
+  ...  var element=document.querySelector("button[ng-click='upload()']");
+  ...  element.removeAttribute("disabled");
+
+  Wait And Click  xpath=//button[@ng-click="upload()"]
+
