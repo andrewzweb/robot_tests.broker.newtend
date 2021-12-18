@@ -10,7 +10,7 @@ Create Plan
     [ARGUMENTS]  ${plan_user}  ${plan_data}  @{ARGUMENTS}
 
     ${plan_data}=  overwrite_procuringEntity_for_plan  ${plan_data}
-
+    #${plan_data}=  overwrite_plan_data  ${plan_data}
     ${plan_for_tender_type}=   Get From Dictionary   ${plan_data.data.tender}   procurementMethodType
 
     ${plan_budget_block}=   Get From Dictionary   ${plan_data.data}   budget
@@ -33,7 +33,7 @@ Create Plan
     Publish Plan
     Get Plan ID and HashID
     SingUp Plan
-    ${tender_uaid}=  Set Variable  ${g_data.plan_id}
+    ${tender_uaid}=  Set Variable  ${data.plan_id}
     # return id plan
     [Return]  ${tender_uaid}
 
@@ -240,10 +240,10 @@ Get Plan ID and HashID
   # set global var plan id hash for other tests
   # for get page plan in site
   ${plan_hash}=  Get Text  id=view-plan-id
-  Set Global Variable  ${g_data.plan_id_hash}  ${plan_hash}
+  Set Global Variable  ${data.plan_id_hash}  ${plan_hash}
   # get id
   ${plan_uaid}=   Get Text  id=planID
-  Set Global Variable  ${g_data.plan_id}  ${plan_uaid}
+  Set Global Variable  ${data.plan_id}  ${plan_uaid}
   Wait Until Page Contains Element    id=sign-tender-btn
 
 Change Decsription
@@ -251,7 +251,7 @@ Change Decsription
   Log To Console  [+] Change Decsription
   ${plan_budget_block}=   Get From Dictionary   ${plan_data.data}   budget
   # delete labal test from description
-  Перейти до редагування плану  ${g_data.plan_id_hash}
+  Перейти до редагування плану  ${data.plan_id_hash}
   ${locator.plan_budget_description}=  Set Variable  xpath=//input[@id="plan-description"]
   Wait Until Page Contains Element  ${locator.plan_budget_description}
   # input new value

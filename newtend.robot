@@ -137,7 +137,7 @@ Resource  ./bid/bid.robot
   [Arguments]   ${user_role}  ${plan_id}  ${field_what_need_change}  ${new_value_of_field}
 
   # searching for necessary Plan
-  Перейти до редагування плану  ${g_data.plan_id_hash}
+  Перейти до редагування плану  ${data.plan_id_hash}
 
   # change plan
   ${result}=  Run Keyword  Змінити в плані поле ${field_what_need_change} і зберегти  ${new_value_of_field}
@@ -149,14 +149,14 @@ Resource  ./bid/bid.robot
 Додати предмет закупівлі в план
   [Arguments]  @{ARGUMENTS}
   # go to plan
-  Перейти до редагування плану  ${g_data.plan_id_hash}
+  Перейти до редагування плану  ${data.plan_id_hash}
   # click to add item in plan
   Wait And Click  ${locator.edit_plan_item_add}
 
 Видалити предмет закупівлі плану
   [Arguments]  @{ARGUMENTS}
   # go to plan
-  Перейти до редагування плану  ${g_data.plan_id_hash}
+  Перейти до редагування плану  ${data.plan_id_hash}
   # click to button delete element from PLAN
   Wait And Click  ${locator.edit_plan_item_0_remove}
 
