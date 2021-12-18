@@ -8,32 +8,21 @@ Make Bid Draft
   [Arguments]  @{ARGS}
   Log To Console  [.] === Make DRAFT bid ===
 
-  #    lotValues:
-  #  -   relatedLot: b15763fa0b8f4d4d9e91255dbb9824b8
-  #  selfQualified: true
-  #  status: draft
-  #  tenderers:
-  #  -   address:
-  #          countryName: Україна
-  #          countryName_en: Ukraine
-  #          countryName_ru: Украина
-  #          locality: Переяслав-Хмельницький
-  #          postalCode: '01111'
-  #          region: Київська область
-  #          streetAddress: Тестова вулиця, 21-29
-  #      contactPoint:
-  #          email: test_e_mail@ukr.net
-  #          faxNumber: '9998877'
-  #          name: Перший Тестовий Учасник
-  #          telephone: '+380506665544'
-  #          url: http://www.page.gov.ua/
-  #      identifier:
-  #          id: '21725150'
-  #          legalName: Тестова районна в місті Києві державна адміністрація
-  #          scheme: UA-EDR
-  #      name: Тестова районна в місті Києві державна адміністрація
-  #      scale: micro
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${bid_data}=  Set Variable  ${ARGS[2]}
 
+  ${its_esco}=  Run Keyword And Return Status  Get From Dictionary  ${bid_data.data.lotValues[0].value}  yearlyPaymentsPercentage
+  Log To Console  [?] This esco: ${its_esco}
+  
+  Run Keyword If  ${its_esco}  Run Keyword  Make Bid For Esco  @{ARGS}
+  ...  ELSE  Run Keyword  Make Draft Simple Bid  @{ARGS}
+
+
+Make Draft Simple Bid
+  [Arguments]  @{ARGS}
+  Log To Console  [.] === Make Draft Simple Bid ===
+  
   ${username}=  Set Variable  ${ARGS[0]}
   ${tender_id}=  Set Variable  ${ARGS[1]}
   ${bid_data}=  Set Variable  ${ARGS[2]}
@@ -90,7 +79,7 @@ Make Bid Draft
   # Wait page reload
   Sleep  3
 
-
+  
 Make Bid
   [Arguments]  @{ARGS}
 #  ARG[0] - Newtend_Provider1
@@ -426,8 +415,7 @@ Confirm Bid
 
   Choise Bid  ${bid_id}
 
-  ${bool_confirm_bid}=  Run Keyword And Return Status  Choise Confirm Bid
-  Log To Console  [+] _Confirm bid status: ${bool_confirm_bid}
+  Make Award
 
   Sync Tender
 
@@ -457,3 +445,96 @@ Choise Confirm Bid
   Wait And Click  ${bid_accept}
   Log To Console  [+] Confirm bid
   Sleep  2
+
+Make Award
+  # click to popup download
+  Log To Console  [.] Make Award
+  ${locator.apply_decision}=  Set Variable  xpath=//*[@ng-click="decide('active')"]
+
+  Wait And Click  ${locator.apply_decision}
+
+  Sleep  2
+  ${radio_button_confirm}=  Set Variable  xpath=//input[@name="agree-qualified"]
+  ${exist_self_qualified}=  Run Keyword And Return Status  Get WebElement  ${radio_button_confirm}
+  Run Keyword If  ${exist_self_qualified}  Select Checkbox  ${radio_button_confirm}
+
+
+  ${radio_button_article17}=  Set Variable  xpath=//input[@name="agree-eligible"]
+  ${exist_button_article17}=  Run Keyword And Return Status  Get WebElement  ${radio_button_article17}
+  Run Keyword If  ${exist_self_qualified}  Select Checkbox  ${radio_button_article17}
+
+  Execute Javascript
+  ...  var element=document.querySelector("button[ng-click='accept()']");
+  ...  element.removeAttribute("disabled");
+
+  Wait And Click  xpath=//button[@ng-click="accept()"]
+  Log To Console  [+] Confirm bid
+  Sleep  2
+
+
+Make Bid For Esco
+  [Arguments]  @{ARGS}
+  Log To Console  [+] === Make Bid For Esco ===
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${bid_data}=  Set Variable  ${ARGS[2]}
+
+  # go to tender
+  Find Tender By Id  ${tender_id}
+  ${tender_internal_id}=  Custom Get Internal ID  -41  -9
+
+  # click to make bid
+  ${locator.button_popup_make_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
+  Wait And Click  ${locator.button_popup_make_bid}
+
+  # wait popup
+  ${locator.popup_make_bid}=  Set Variable  xpath=//div[@class="modal-content"]
+  Wait Until Element Is Visible  ${locator.popup_make_bid}
+
+  # click agree
+  ${locator.button_agree_with_publish}=  Set Variable  xpath=//input[@ng-model="agree.value"]
+  Select Checkbox  ${locator.button_agree_with_publish}
+
+  # click self qulified
+  ${locator.button_agree_selt_quliffied}=  Set Variable  xpath=//input[@ng-model="agree.selfQualified"]
+  Select Checkbox  ${locator.button_agree_selt_quliffied}
+
+  ${bid_with_lots}=  Run Keyword And Return Status  Get Webelements  xpath=//div[@ng-repeat="lot in lots track by $index"]
+  Log To Console  [ ] Bid with criteria: '${bid_with_lots}'
+  Run Keyword If  ${bid_with_lots}  Wait And Click  xpath=//button[@ng-show="!lot.lotValue"]
+
+  # процент платежей
+  ${data_yearlyPaymentsPercentage}=  Get From Dictionary  ${bid_data.data.lotValues[0].value}  yearlyPaymentsPercentage
+  ${data_yearlyPaymentsPercentage}=  multiply_float_and_return_string  ${data_yearlyPaymentsPercentage}
+  # TODO нужно перемножыть ${data_yearlyPaymentsPercentage} на 100
+  Wait And Type  xpath=//input[@name="yearlyPaymentsPercentage"]  ${data_yearlyPaymentsPercentage}
+
+  # длительность
+  ${input_years}=  Set Variable  xpath=//input[@ng-model="lot.value.contractDuration.years"]
+  ${contractDuration_years}=  Get From Dictionary  ${bid_data.data.lotValues[0].value.contractDuration}  years
+  ${contractDuration_years}=  change_number_to_string  ${contractDuration_years}
+  Log To Console  [.] contractDuration_years ${contractDuration_years}
+  Wait And Type  ${input_years}  ${contractDuration_years}
+
+
+  ${input_days}=  Set Variable  xpath=//input[@ng-model="lot.value.contractDuration.days"]
+  ${contractDuration_days}=  Get From Dictionary  ${bid_data.data.lotValues[0].value.contractDuration}  days
+  ${contractDuration_days}=  change_number_to_string  ${contractDuration_days}
+  Log To Console  [.] contractDuration_years ${contractDuration_days}
+  Wait And Type  ${input_days}  ${contractDuration_days}
+
+  # сокращение затрат
+  ${annualCostsReduction}=  Get From Dictionary  ${bid_data.data.lotValues[0].value}  annualCostsReduction
+  ${length_annualCostsReduction}=  Get Length  ${annualCostsReduction}
+
+  :FOR  ${item}  IN  ${length_annualCostsReduction}
+  \  Log To Console  ${item}:  ${annualCostsReduction[${annualCostsReduction}]}
+  \  Wait And Type  xpath=//input[@id="acr-${item}"]  ${annualCostsReduction[${annualCostsReduction}]}
+
+  # confirm bid
+  ${locator.place_a_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
+  Wait And Click  ${locator.place_a_bid}
+
+  # Wait page reload
+  Sleep  3

@@ -109,6 +109,7 @@ dict_units = {
     u'ПРОПОЗИЦІЇ': u'active.tendering',
     u'ПРЕКВАЛІФІКАЦІЯ (ПЕРІОД ОСКАРЖЕННЯ)': u'active.pre-qualification.stand-still',
     u'ПРОВЕДЕННЯ ПЕРЕГОВОРІВ': u'complete',
+    u'ОЧІКУВАННЯ ДРУГОГО ЕТАПУ': u'complete',
     
     # complaint status
     u'Очікує розгляду /':         u'pending',
@@ -412,3 +413,10 @@ def str_in_list(string_target, _list):
 
 def black_list_tender_for_feature():
     return [u'esco', u'competitiveDialogueEU', u'competitiveDialogueUA']
+
+def multiply_float_and_return_string(str_float):
+    numb = float(str(str_float))
+    return str(numb * 1000)
+
+def change_number_to_string(number):
+    return str(number)

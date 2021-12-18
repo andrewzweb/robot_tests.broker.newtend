@@ -61,6 +61,18 @@ Resource  ./bid/bid.robot
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
 
+Додати критерії в тендер другого етапу
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+
+# this for esco 02qualification
+Дискваліфікувати постачальника
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  # username
+  # tender_id
+  # number qualification 1
+
 
 ################################################################
 #                                                              #
@@ -162,7 +174,7 @@ Resource  ./bid/bid.robot
 ################################################################ 
 
 Пошук тендера по ідентифікатору
-  [Arguments]  ${username}  ${tender_id}
+  [Arguments]  ${username}  ${tender_id}  @{ARGS}
 
   # if tender
   Find Tender By Id  ${tender_id}  ${username}
@@ -219,7 +231,6 @@ Resource  ./bid/bid.robot
   Find Tender By Id  ${tender_id}
 
   # need singup before edit button appear
-  Run Keyword  SingUp Tender
   Sleep  3
   # go to edit
   Wait And Click  xpath=//a[@id="edit-tender-btn"]
@@ -465,10 +476,10 @@ Resource  ./bid/bid.robot
   Download Document  ${document_file}  "tender"  "bidders"
 
 Підтвердити підписання контракту
-  [Arguments]    ${username}  ${tender_uaid}  ${contract_num}
+  [Arguments]    ${username}  ${tender_id}  ${contract_num}
   Log To Console  [+] Confirm contract
   Log To Console  ARG 0 - ${username}
-  Log To Console  ARG 1 - ${tender_uaid}
+  Log To Console  ARG 1 - ${tender_id}
   Log To Console  ARG 2 - ${contract_num}
 
   # go to tender
@@ -490,6 +501,10 @@ Resource  ./bid/bid.robot
 Встановити дату підписання угоди
   [Arguments]  @{ARGS}
   Set Date Sing For Contract  @{ARGS}
+
+Встановити ціну за одиницю товару в контракті
+  [Arguments]  @{ARGS}
+  Log To Console  [+] Set price for item in contract
 
 ################################################################
 #                                                              #
@@ -836,59 +851,3 @@ Custom Get Internal ID
 #                                                              #
 ################################################################
 
-# //TODO for single item viewer
-Отримати інформацію із документа
-  [Arguments]  @{ARGS}
-  Print Args  ${ARGS}
-  Log To Console  [.] GET ingo from doc
-
-  ${username}=  Set Variable  ${ARGS[0]}
-  ${tender_id}=  Set Variable  ${ARGS[1]}
-  ${document_id}=  Set Variable  ${ARGS[2]}
-  ${document_field}=  Set Variable  ${ARGS[3]}
-  # username
-  # UA-2021-11-24-000226-c
-  # d-5934673d
-  # title
-
-Отримати документ
-  [Arguments]  @{ARGS}
-  Print Args  ${ARGS}
-  Log To Console  [.] GET ingo from doc
-
-  ${username}=  Set Variable  ${ARGS[0]}
-  ${tender_id}=  Set Variable  ${ARGS[1]}
-  ${document_id}=  Set Variable  ${ARGS[2]}
-  ${document_field}=  Set Variable  ${ARGS[3]}
-  # username
-  # UA-2021-11-24-000226-c
-  # d-5934673d
-
-Отримати інформацію про awards[0].complaintPeriod.endDate
-  [Arguments]  @{ARGS}
-  Print Args  ${ARGS}
-
-Отримати інформацію із пропозиції із поля lotValues[0].value.amount
-  [Arguments]  @{ARGS}
-  Print Args  ${ARGS}
-
-Перевести тендер на статус очікування обробки мостом
-  [Arguments]  @{ARGS}
-  Print Args  ${ARGS}
-
-  ${username}=  Set Variable  ${ARGS[0]}
-  ${tender_id}=  Set Variable  ${ARGS[1]}
-
-  Find Tender By Id  ${tender_id}
-  Go To Prequlification
-
-  Smart Wait  Wait Until Page Contains Element  xpath=//button[@ng-click="startSecondStageTender()"]
-  Wait And Click  xpath=//button[@ng-click="startSecondStageTender()"]
-  Sleep  5
-
-  Wait And Click  xpath=//button[@ng-click="start()"]
-
-  Go To Overview
-
-  Smart Wait  Wait Until Page Contains Element  xpath=//button[@ng-click="activateTender(tender)"]
-  Wait And Click  xpath=//button[@ng-click="activateTender(tender)"]

@@ -25,16 +25,21 @@ ${question_id}  q-f5a0a31d
 #Test me 3
 #  Test Feature
 
-Current test
-  Prapare Browser
-  Test Find Tender
-  [Teardown]  Close Browser
+#Current test
+#  Prapare Browser
+#  Test Find Tender
+#  [Teardown]  Close Browser
 
-#Test
+Test
+  ${numb}=  Set Variable  0.01255  
+  ${new}=  multiply_float_and_return_string  ${numb}
+  Log To Console  ${new}
 #  Test Black List Check  
 #  Test Black Two
 #  Test Black Two Tvise
+ 
 
+    
 *** Keywords ***
 
 Test Find Tender
