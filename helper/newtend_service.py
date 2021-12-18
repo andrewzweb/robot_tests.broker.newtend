@@ -45,7 +45,7 @@ def overwrite_procuringEntity_data(tender_data):
     except: pass
     return tender_data
 
-def overwrite_procuringEntity_for_plan(plan_data):
+def overwrite_procuringEntity_for_plan(tender_data):
     try:
         tender_data['data']['procuringEntity']['name'] = u"Newtend Test Owner"
         tender_data['data']['procuringEntity']['identifier']['id'] = u"1234567892"
@@ -60,14 +60,19 @@ def overwrite_procuringEntity_for_plan(plan_data):
     except: pass
     # contact point
     try:
-        tender_data['data']['procuringEntity']['contactPoint']['email'] = u"e_mail_test@bigmir.net"
         tender_data['data']['procuringEntity']['contactPoint']['faxNumber'] = u"088-111-22-33"
         tender_data['data']['procuringEntity']['contactPoint']['name'] = u"Newtend Test Owner"
         tender_data['data']['procuringEntity']['contactPoint']['telephone'] = u"+380991234560"
         tender_data['data']['procuringEntity']['contactPoint']['url'] = u"http://webpage.org.ua/"
     except: pass
-    return plan_data
+    return tender_data
 
+def overwrite_plan_data(plan_data):
+    # 2021-12-28T00:00:00+02:00
+    # 2021-12-27T23:00:00+03:00
+        tender_data['data']['procuringEntity']['contactPoint']['email'] = u"e_mail_test@bigmir.net"
+    
+    return plan_data
 
 def convert_enum_str_to_int(enum):
     enum = float(enum) * 100
