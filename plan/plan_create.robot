@@ -10,7 +10,6 @@ Create Plan
     [ARGUMENTS]  ${plan_user}  ${plan_data}  @{ARGUMENTS}
 
     ${plan_data}=  overwrite_procuringEntity_for_plan  ${plan_data}
-    #${plan_data}=  overwrite_plan_data  ${plan_data}
     ${plan_for_tender_type}=   Get From Dictionary   ${plan_data.data.tender}   procurementMethodType
 
     ${plan_budget_block}=   Get From Dictionary   ${plan_data.data}   budget
@@ -235,17 +234,6 @@ Publish Plan
   Sleep   5
   Wait Until Page Contains Element    id=planID
 
-Get Plan ID and HashID
-  Log To Console  [+] Get Plan ID and HashID
-  # set global var plan id hash for other tests
-  # for get page plan in site
-  ${plan_hash}=  Get Text  id=view-plan-id
-  Set Global Variable  ${data.plan_id_hash}  ${plan_hash}
-  # get id
-  ${plan_uaid}=   Get Text  id=planID
-  Set Global Variable  ${data.plan_id}  ${plan_uaid}
-  Wait Until Page Contains Element    id=sign-tender-btn
-
 Change Decsription
   [Arguments]   ${plan_data}
   Log To Console  [+] Change Decsription
@@ -277,3 +265,23 @@ Edit Plan Item Measure List
   Sleep  3
   ${select_measure_list}=  Set Variable  xpath=//select[@ng-model="item.unit"]
   Select From List By Label  ${select_measure_list}  ${plan_item_unit}
+
+Get Plan ID and HashID
+  Log To Console  [+] Get Plan ID and HashID
+  # set global var plan id hash for other tests
+  # for get page plan in site
+  ${plan_hash}=  Get Text  id=view-plan-id
+  Set Global Variable  ${data.plan_id_hash}  ${plan_hash}
+  # get id
+  ${plan_uaid}=   Get Text  id=planID
+  Set Global Variable  ${data.plan_id}  ${plan_uaid}
+  
+  Wait Until Page Contains Element    id=sign-tender-btn
+
+Put Plan In Global
+  [Arguments]  @{ARGS}  
+  ${username}=  Set Variable  ${ARGS[0]}
+  
+  ${plan_hash}=  Get Text  id=view-plan-id
+  ${plan_data}=  get_plan_data_from_cbd  ${plan_hash}
+  Set Global Variable  ${USERS.users['${username}'].tender_data.data}  ${plan_data}

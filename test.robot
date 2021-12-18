@@ -30,21 +30,21 @@ ${question_id}  q-f5a0a31d
 #  Test Find Tender
 #  [Teardown]  Close Browser
 
-Test
+Test 
+  ${date}=  Set Variable  2021-12-27T23:00:00+03:00
+  ${new_date}=  change_endDate_for_plan  ${date}
+  Log To Console  Date: ${new_date}
+
+
+*** Keywords ***
+
+Test Multiplu
   ${numb}=  Set Variable  0.01255  
   ${new}=  multiply_float_and_return_string  ${numb}
   Log To Console  ${new}
-#  Test Black List Check  
-#  Test Black Two
-#  Test Black Two Tvise
- 
-
-    
-*** Keywords ***
 
 Test Find Tender
   Find Tender By Id  ${tender_id}  ${username}
-
 
 Test Black List Check
   ${type}=  Set Variable  esco

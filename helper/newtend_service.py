@@ -18,10 +18,6 @@ def create_custom_guranteee(tender_data):
     tender_data['data']['guarantee'] = guarantee
     return tender_data
 
-def change_procuringEntity_identifier_id(tender_data):
-    tender_data['data']['procuringEntity']['identifier']['id'] = u"1234567892"
-    return tender_data
-
 def overwrite_procuringEntity_data(tender_data):
     try:
         tender_data['data']['procuringEntity']['name'] = u"newtend provider company"
@@ -49,7 +45,7 @@ def overwrite_procuringEntity_for_plan(tender_data):
     try:
         tender_data['data']['procuringEntity']['name'] = u"Newtend Test Owner"
         tender_data['data']['procuringEntity']['identifier']['id'] = u"1234567892"
-        tender_data['data']['procuringEntity']['identifier']['legalName'] = u"newtend owner company"
+        tender_data['data']['procuringEntity']['identifier']['legalName'] = u"Newtend Test Owner"
     except: pass
     # adress
     try:
@@ -70,9 +66,15 @@ def overwrite_procuringEntity_for_plan(tender_data):
 def overwrite_plan_data(plan_data):
     # 2021-12-28T00:00:00+02:00
     # 2021-12-27T23:00:00+03:00
-        tender_data['data']['procuringEntity']['contactPoint']['email'] = u"e_mail_test@bigmir.net"
-    
+    old_date = plan_data['data']['procuringEntity']['items'][0]['deliveryDate']['endDate']
+    new_date = change_endDate_for_plan(old_date)
+    plan_data['data']['procuringEntity']['items'][0]['deliveryDate']['endDate'] = new_date
     return plan_data
+
+def change_endDate_for_plan(date):
+    data = str(date)
+    new_date = data[:20] + "02:00"
+    return new_date
 
 def convert_enum_str_to_int(enum):
     enum = float(enum) * 100
@@ -427,7 +429,6 @@ def get_amount_for_bid(tender_data, tender_internal_id):
     except:
         pass
 
-
 def update_repo():
     #subprocess.call('sed  -i "71s/.*/robot_tests.broker.newtend       = git git@github.com:andrewzweb\/robot_tests.broker.newtend.gits/" buildout.cfg', shell=True, stdout=None)
     #subprocess.call('bin/develop update -f', shell=True)
@@ -449,3 +450,9 @@ def multiply_float_and_return_string(str_float):
 
 def change_number_to_string(number):
     return str(number)
+
+def get_plan_data_from_cbd(plan_hash_id):
+    url = "https://lb-api-staging.prozorro.gov.ua/api/2.5/plans/" + plan_hash_id
+    request = requests.get(url)
+    tender = json.loads(request.text)
+    return tender

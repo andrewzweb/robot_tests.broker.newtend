@@ -124,6 +124,7 @@ Resource  ./bid/bid.robot
 Пошук Плану По Ідентифікатору
   [Arguments]  ${username}  ${plan_uaid}
   Find Plan By UAID  ${plan_uaid}
+  #Put Plan In Global  ${username}
 
 Оновити сторінку з планом
   [Arguments]   ${username}    ${tender_uaid}
