@@ -128,7 +128,7 @@ Owner Change Status Complaint
   # open popup  
   Wait And Click  xpath=//button[@ng-click="resolution(complaint.id, complaint.awardId, complaint.qualificationId, complaint.cancellationId, true)"]
   Wait And Type  xpath=//textarea[@ng-model="message"]  confirm AMKU resolution for tender owner
-  Wait And Click  xpath=//button[@ng-click="sendAnswer()"]
+  Wait And Click    xpath=//button[@ng-click="sendAnswer()"]
   Sleep  5
 
 
