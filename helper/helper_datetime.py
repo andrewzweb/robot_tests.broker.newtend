@@ -138,4 +138,4 @@ def change_datetime(date_time_str, count_day=int(0), calc="plus"):
 
 def convert_date_to_valid_date(str_date):
     result_string = str_date[:10] + 'T' + str_date[11:] + '+02:00'
-    return result_string
+    return result_string.decode('utf-8', 'ignore')

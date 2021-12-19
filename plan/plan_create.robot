@@ -281,7 +281,7 @@ Get Plan ID and HashID
 Put Plan In Global
   [Arguments]  @{ARGS}  
   ${username}=  Set Variable  ${ARGS[0]}
-  
+
   ${plan_hash}=  Get Text  id=view-plan-id
   ${plan_data}=  get_plan_data_from_cbd  ${plan_hash}
   Set Global Variable  ${USERS.users['${username}'].tender_data.data}  ${plan_data}
