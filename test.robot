@@ -18,7 +18,7 @@ ${BROWSER}  chrome
 @{L2}  1  2  2  3
 ${date}   2021-11-07T22:59:27.999676+02:00
 ${question_id}  q-f5a0a31d
-
+${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 
 *** Test Cases ***
 
@@ -30,14 +30,25 @@ ${question_id}  q-f5a0a31d
 #  Test Find Tender
 #  [Teardown]  Close Browser
 
-Test 
-  ${date}=  Set Variable  2021-12-27T23:00:00+03:00
-  ${new_date}=  change_endDate_for_plan  ${date}
-  Log To Console  Date: ${new_date}
+#Test 
+#  ${date}=  Set Variable  2021-12-27T23:00:00+03:00
+#  ${new_date}=  change_endDate_for_plan  ${date}
+#  Log To Console  Date: ${new_date}
 
-
+Test
+    Test Plan
 *** Keywords ***
 
+Test Plan 
+  Log To Console  ${data.plan_id_hash}
+  ${plan_data}=  get_plan_data_from_cbd  ${data.plan_id_hash}
+  Log To Console  ${plan_data}
+  #${data}=  Get From Dictionary  ${plan_data.data}  items
+  #${data}=  Get From Dictionary  ${data}  items[0]
+  #${data}=  Get From Dictionary  ${data}  items
+
+  Log To Console  ${data}
+     
 Test Multiplu
   ${numb}=  Set Variable  0.01255  
   ${new}=  multiply_float_and_return_string  ${numb}

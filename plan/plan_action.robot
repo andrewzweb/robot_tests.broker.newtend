@@ -31,6 +31,8 @@ Find Plan By UAID
 
   Wait Until Keyword Succeeds  2 minute  30 seconds  Try Choice Plan From Searh List  ${plan_uaid}
 
+  ${plan_hash}=  Get Text  id=view-plan-id
+  Set Global Variable  ${data.plan_id_hash}  ${plan_hash}
 
 Try Choice Plan From Searh List
   [Arguments]  ${plan_uaid}
@@ -137,8 +139,6 @@ Try Choice Plan From Searh List
   Run Keyword And Return  _Return Element Text  ${locator.view_plan_customer_name}
 
 Отримати Планову інформацію про procuringEntity.identifier.scheme
-  # TODO: Front должен отрисовать это -> UA-EDR
-  #Run Keyword And Return  _Return Element Text  ${locator.view_plan_customer_name_scheme}
   [Return]  UA-EDR
 
 Отримати Планову інформацію про procuringEntity.identifier.id
@@ -167,22 +167,21 @@ Try Choice Plan From Searh List
   [Return]  ${raw_string}
 
 Отримати Планову інформацію про items[0].quantity
-  # TODO Конвертировать в флоат
   ${raw_text}=  _Return Element Text  ${locator.view_plan_item_quantity}
   ${result}=  string_convert_to_float  ${raw_text}
   [Return]  ${result}
 
 Отримати Планову інформацію про items[0].deliveryDate.endDate
-  # TODO Валидация данных даты
-  ${raw_date}=  Run Keyword  _Return Element Text  ${locator.view_plan_item_delivery_date}
-  ${result}=  convert_date_to_valid_date  ${raw_date}
-  [Return]  ${result}
+  #${raw_date}=  Run Keyword  _Return Element Text  ${locator.view_plan_item_delivery_date}
+  #${result}=  convert_date_to_valid_date  ${raw_date}
+  ${date}=  get_plan_data_from_cbd  ${data.plan_id_hash}
+  Log To Console  [.] End data: ${date}
+  [Return]  ${date}
 
 Отримати Планову інформацію про items[0].unit.name
   Run Keyword And Return  _Return Element Text  ${locator.view_plan_item_measure_name}
 
 Отримати Планову інформацію про items[0].classification.description
-  # TODO Разделить поле на
   ${raw_plan_classifier_description}=  Run Keyword  _Return Element Text  ${locator.view_plan_item_classificator_description}
   ${result}=  Get Substring  ${raw_plan_classifier_description}  13
   [Return]  ${result}

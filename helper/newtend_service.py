@@ -454,5 +454,6 @@ def change_number_to_string(number):
 def get_plan_data_from_cbd(plan_hash_id):
     url = "https://lb-api-staging.prozorro.gov.ua/api/2.5/plans/" + plan_hash_id
     request = requests.get(url)
-    tender = json.loads(request.text)
-    return tender
+    plan = json.loads(request.text)
+    plan_endDate =  plan['data']['items'][0]['deliveryDate']['endDate']
+    return plan_endDate

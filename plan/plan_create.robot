@@ -284,4 +284,5 @@ Put Plan In Global
 
   ${plan_hash}=  Get Text  id=view-plan-id
   ${plan_data}=  get_plan_data_from_cbd  ${plan_hash}
-  Set Global Variable  ${USERS.users['${username}'].tender_data.data}  ${plan_data}
+  #${plan_data}=  op_robot_tests.tests_files.service_keywords.Munchify  ${plan_data}
+  Set Global Variable  ${USERS.users['${username}'].tender_data}  ${plan_data}
