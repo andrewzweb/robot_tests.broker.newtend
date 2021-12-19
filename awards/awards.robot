@@ -75,6 +75,11 @@ Create Contract
   [Arguments]
   Log To Console  [.] Create Contract
 
+  # click to popup download
+  ${locator.apply_decision}=  Set Variable  xpath=//*[@ng-click="decide('active')"]
+  ${button_exist}=  Run Keyword And Return Status  Get WebElement  xpath=//*[@ng-click="decide('active')"]
+  Run Keyword If  ${button_exist}  Wait And Click  ${locator.apply_decision}
+
   ${locator.end_torgi}=  Set Variable  xpath=//button[@data-test_id="close_tender"]
   Wait Until Keyword Succeeds  5 minute  30 seconds  Wait And Click  ${locator.end_torgi}
 

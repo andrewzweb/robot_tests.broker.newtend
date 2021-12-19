@@ -8,11 +8,10 @@ Create Reporting Tender
   ${username}=     Set Variable  ${ARGS[0]}
   ${tender_data}=  Set Variable  ${ARGS[1]}
 
-  Log To Console  [.] Creating Tender with criteria
-
-  #${tender_data}=  custom_date  ${tender_data}  0  0  0  0  0  0
-  #${tender_data}=  change_minits_for_tests  ${tender_data}  0  3  7  10  11  13
-  ${tender_data}=  overwrite_procuringEntity_data  ${tender_data}
+  Log To Console  [.] Creating Tender Reporting
+  #${init_tender_data}=  overwrite_procuringEntity_data_for_owner  ${tender_data}
+  #${init_tender_data}=  Get From Dictionary  ${init_tender_data}  data
+  #Set Global Variable  ${USERS.users['${tender_owner}'].initial_data}  ${init_tender_data}
 
   Go To   ${url.tender_reporting}
 

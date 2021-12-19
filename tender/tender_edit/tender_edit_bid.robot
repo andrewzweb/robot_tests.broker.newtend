@@ -67,7 +67,7 @@ Create Suplier
   Sleep     2
   Wait And Click     xpath=//button[@ng-click="vm.createAward()"]
 
-Confirm Suplier
+Confirm Suplier Old
   [Arguments]  ${document_file}
 
   # accept bid
@@ -92,3 +92,30 @@ Confirm Suplier
   Wait And Click  xpath=//button[@ng-click="accept()"]
 
 
+Confirm Suplier
+  [Arguments]  ${document_file}
+
+  # accept bid
+  Wait And Click  xpath=//button[@ng-click="vm.decide(vm.award.id, 'active',vm.tender.procurementMethodType)"]
+
+
+Make Contract For Tender  
+  Wait And Click  xpath=//button[@data-test_id="close_tender"]  
+  
+  ${locator.input_contract_number}=  Set Variable  xpath=//input[@id="contractNumber"]
+  Wait And Type  ${locator.input_contract_number}  0
+
+  # change price
+  Wait And Type  id=contractValueAmount  960
+  Wait And Type  id=contractValueAmountNet  800
+
+  ${element_value_by_item}=  Get WebElements  id=itemUnitValueAmount
+  ${count_items}=  Get Length  ${element_value_by_item}
+
+  : FOR   ${index}  IN RANGE   ${count_items}
+  \   ${element}=  Set Variable  ${element_value_by_item[${index}]}
+  \   Wait And Type  xpath=//input[@name="${index}_itemUnitValueAmount"]  1
+
+  Wait And Click  xpath=//button[@ng-click="closeBids()"]
+  Log To Console  [+] Create Contract
+  Sleep  3
