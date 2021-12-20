@@ -128,7 +128,7 @@ Owner Change Status Complaint
   # open popup  
   Wait And Click  xpath=//button[@ng-click="resolution(complaint.id, complaint.awardId, complaint.qualificationId, complaint.cancellationId, true)"]
   Wait And Type  xpath=//textarea[@ng-model="message"]  confirm AMKU resolution for tender owner
-  Wait And Click    xpath=//button[@ng-click="sendAnswer()"]
+  Wait And Click  xpath=//button[@ng-click="sendAnswer()"]
   Sleep  5
 
 
@@ -323,7 +323,10 @@ Change Status To Complaint
   ${complaint_data}=  Set Variable  ${ARGS[4]}
   ${complaint_data}=  Get From Dictionary  ${complaint_data}  data
 
-  ${complaint_description}=  Get From Dictionary  ${complaint_data}  tendererAction
+  ${exist_complaint_data}=  Run Keyword And Return Status  Get From Dictionary  ${complaint_data}  tendererAction
+
+  ${complaint_description}=  Run Keyword If  ${exist_complaint_data}  Get From Dictionary  ${complaint_data}  tendererAction
+  ...  ELSE  Set Variable  My custom text to complaint and he should be long!!! Nice
   ${complaint_status}=  Get From Dictionary  ${complaint_data}  status
 
   Find Tender By Id  ${tender_id}
@@ -331,8 +334,18 @@ Change Status To Complaint
 
   Sleep  3
 
-  Wait And Click  xpath=//button[@ng-click="resolution(complaint.id, complaint.awardId, complaint.qualificationId, complaint.cancellationId, true)"]
+  ${exist_button_resolve}=  Run Keyword And Return Status  Get WebElement  xpath=//button[@ng-click="resolution(complaint.id, complaint.awardId, complaint.qualificationId, complaint.cancellationId, true)"]
+  Run Keyword If  ${exist_button_resolve}  Wait And Click  xpath=//button[@ng-click="resolution(complaint.id, complaint.awardId, complaint.qualificationId, complaint.cancellationId, true)"]
+  Run Keyword If  ${exist_button_resolve}  Log To Console  [.] Click button resolve
+
+  ${exist_button_mistaken}=  Run Keyword And Return Status  Get WebElement  xpath=//button[@ng-click="cancelComplaint(complaint.id, complaint.awardId, complaint.qualificationId, complaint.cancellationId, complaint.type)"]
+  Run Keyword If  ${exist_button_mistaken}  Wait And Click  xpath=//button[@ng-click="cancelComplaint(complaint.id, complaint.awardId, complaint.qualificationId, complaint.cancellationId, complaint.type)"]
+  Run Keyword If  ${exist_button_mistaken}  Log To Console  [.] Click button mistaken
 
   Wait And Type  xpath=//textarea[@ng-model="message"]   ${complaint_description}
 
-  Wait And Click  xpath=//button[@ng-click="sendAnswer()"]
+  Run Keyword If  ${exist_button_resolve}  Wait And Click  xpath=//button[@ng-click="sendAnswer()"]
+  Run Keyword If  ${exist_button_resolve}  Log To Console  [.] send answer
+
+  Run Keyword If  ${exist_button_mistaken}  Wait And Click  xpath=//button[@ng-click="cancelComplaint()"]
+  Run Keyword If  ${exist_button_mistaken}  Log To Console  [.] make cancel
