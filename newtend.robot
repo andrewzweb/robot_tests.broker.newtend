@@ -91,8 +91,7 @@ Resource  ./bid/bid.robot
   [Arguments]  ${user}  @{ARGUMENTS}
   [Documentation]  Відкрити браузер, створити об’єкт api wrapper, тощо
   ...      ${user} ==  username
-  ${result}=  update_repo
-  Log To Console  [${result}] Update
+  info_from_git
   Відкрити браузер  '${user}'
   Встановити розміри браузера  '${user}'
   Check user if him reg to login  ${user}

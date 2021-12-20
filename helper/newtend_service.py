@@ -454,9 +454,14 @@ def get_amount_for_bid(tender_data, tender_internal_id):
         pass
 
 def update_repo():
-    #subprocess.call('sed  -i "71s/.*/robot_tests.broker.newtend       = git git@github.com:andrewzweb\/robot_tests.broker.newtend.gits/" buildout.cfg', shell=True, stdout=None)
+    #subprocess.call('cd src/robot_tests.broker.newtend && pwd && last_commit=$(git log -n 1 --pretty=format:"[ %h ] %ar : %s") && echo $last_commit ', shell=True, stdout=None)
+    #subprocess.call('pwd', shell=True, stdout=None)
     #subprocess.call('bin/develop update -f', shell=True)
     return 'Succses!!!'
+
+def info_from_git():
+    subprocess.call('cd src/robot_tests.broker.newtend && pwd && last_commit=$(git log -n 1 --pretty=format:"[ %h ] %ar : %s") && echo $last_commit ', shell=True, stdout=None)
+
 
 def str_in_list(string_target, _list):
     result = False

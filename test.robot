@@ -36,9 +36,15 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 #  Log To Console  Date: ${new_date}
 
 Test
-    Test Plan
+    Test Git Info
+
+
 *** Keywords ***
 
+Test Git Info
+  ${info}=  update_repo
+  Log To Console  ${info}
+    
 Test Plan 
   Log To Console  ${data.plan_id_hash}
   ${plan_data}=  get_plan_data_from_cbd  ${data.plan_id_hash}
