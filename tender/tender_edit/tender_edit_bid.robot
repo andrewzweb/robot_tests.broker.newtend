@@ -12,7 +12,9 @@ Create suplier and add docs and confier him
   [Documentation]   Adding user into reporting procedure
 
   Find Tender By Id  ${tender_id}
+  Capture Page Screenshot
   Go To Auction
+  Capture Page Screenshot
 
   Create Suplier  ${tender_data}
   Confirm Suplier  ${document_file}
