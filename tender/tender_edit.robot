@@ -77,10 +77,8 @@ Find Tender By Id
   Sync Tender
 
   Go To  ${page_search_tender}
-  Wait Until Page Contains Element  ${locator.tender_search_input_field}
-  Wait Until Element Is Enabled  ${locator.tender_search_input_field}
-  Input Text  ${locator.tender_search_input_field}  ${tender_id}
-  Click Element  ${locator.tender_search_button}
+  Wait And Type  ${locator.tender_search_input_field}  ${tender_id}
+  Wait And Click  ${locator.tender_search_button}
   Sleep  3
 
   Wait Until Keyword Succeeds  8 minute  15 seconds  Try Choice Tender From Search List  ${tender_id}
@@ -90,12 +88,6 @@ Find Tender By Id
   ${tender_data}=  Run Keyword If  '${username}' != 'None'  newtend_get_tender  ${data.tender_internal_id}
   ${tender_data}=  Run Keyword If  '${username}' != 'None'  op_robot_tests.tests_files.service_keywords.Munchify  ${tender_data}
   Run Keyword If  '${username}' != 'None'  Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender_data}
-
-  # my version
-  #Set To Dictionary  ${USERS.users['${username}'].id_map}  ${tender_id}  ${data.tender_internal_id}
-
-  # like in client
-  #Set To Dictionary  ${USERS.users['Newtend_Provider1'].id_map}  ${tender_id}=${data.tender_internal_id}
 
 Sync Tender
   ${status}=  Run Keyword And Return Status  api_sync_tender  ${data.tender_internal_id}
