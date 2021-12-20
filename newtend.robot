@@ -762,7 +762,7 @@ Custom Get Internal ID
 Подати цінову пропозицію
   [Arguments]  @{ARGS}
   Log To Console  [+] Make price bid
-  Make bid  ${ARGS}
+  Make bid  @{ARGS}
 
 Подати цінову пропозицію в статусі draft
   [Arguments]  @{ARGS}

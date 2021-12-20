@@ -4,8 +4,8 @@ Resource  ../newtend.robot
 
 *** Keywords ***
 
-Make Bid Draft
-  [Arguments]  @{ARGS}
+Make Bid Draft 
+ [Arguments]  @{ARGS}
   Log To Console  [.] === Make DRAFT bid ===
 
   ${username}=  Set Variable  ${ARGS[0]}
@@ -121,6 +121,8 @@ Make Bid
   ${tender_id}=  Set Variable  ${ARGS[1]}
   ${bid_data}=  Set Variable  ${ARGS[2]}
 
+  Print Args  @{ARGS}
+  
   ${status_bid_with_value}=  Exist key in dict  ${bid_data.data}  value
   Log To Console  Bid not for lot : ${status_bid_with_value}
 
@@ -136,13 +138,11 @@ Make Bid
   # go to tender
   Find Tender By Id  ${tender_id}
 
-  # click to make bid
-  ${locator.button_popup_make_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
-  Wait And Click  ${locator.button_popup_make_bid}
+  # click to make bid 
+  Wait And Click  xpath=//button[@ng-click="placeBid()"]
 
   # wait popup
-  ${locator.popup_make_bid}=  Set Variable  xpath=//div[@class="modal-content"]
-  Wait Until Element Is Visible  ${locator.popup_make_bid}
+  Wait Until Element Is Visible  xpath=//div[@class="modal-content"]
 
   # click agree
   ${locator.button_agree_with_publish}=  Set Variable  xpath=//input[@ng-model="agree.value"]
@@ -152,6 +152,9 @@ Make Bid
   ${locator.button_agree_selt_quliffied}=  Set Variable  xpath=//input[@ng-model="agree.selfQualified"]
   Select Checkbox  ${locator.button_agree_selt_quliffied}
 
+  ${exist_article_17}=  Run Keyword And Return Status  Get WebElement  xpath=//input[@ng-model="agree.selfEligible"]
+  Run Keyword If  ${exist_article_17}  Select Checkbox  xpath=//input[@ng-model="agree.selfEligible"]
+  
   # choise from lots
   ${bid_with_lots}=  Run Keyword And Return Status  Get Webelements  xpath=//div[@ng-repeat="lot in lots track by $index"]
   Log To Console  [ ] Bid with criteria: '${bid_with_lots}'
@@ -160,11 +163,8 @@ Make Bid
 
   # есть ставка мультилотовая и у нее есть критерии то нужно эти критериии нажать потомучто дальше мы не
   # не поедем так сказать
-
-  ${element_dropdown_exist}=  Run Keyword And Return Status  Get WebElement  xpath=//a[@class="dropdown-toggle ng-binding"]
-  Run Keyword If  ${bid_with_lots} and ${element_dropdown_exist}  Wait And Click  xpath=//a[@class="dropdown-toggle ng-binding"]
-  Run Keyword If  ${bid_with_lots} and ${element_dropdown_exist}  Sleep  2
-  Run Keyword If  ${bid_with_lots} and ${element_dropdown_exist}  Wait And Click  xpath=//a[@id="feature_item_0_0_0"]  
+  ${status_feature_exist}=  Run Keyword And Return Status  Get WebElement  xpath=//select[@id="funder"]
+  Run Keyword If  ${status_feature_exist}  Select From List By Index  xpath=//select[@id="funder"]  1  
 
   # input count
   ${locator.input_bid_amount}=  Set Variable  xpath=//input[@name="amount"]
