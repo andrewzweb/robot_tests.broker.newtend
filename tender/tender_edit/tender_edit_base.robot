@@ -107,6 +107,8 @@ Create Feature
   \
   \  Run Keyword If  ${st1} and not ${status_speciat_tender}  Wait And Click  xpath=//a[@id="add-option-0-${number_enum}"]
 
+  Capture Page Screenshot
+
   # click to save features
   Wait And Click  ${locator.edit_feature_save_form}
   Sleep  5

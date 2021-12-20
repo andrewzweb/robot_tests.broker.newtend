@@ -25,18 +25,19 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 #Test me 3
 #  Test Feature
 
-#Current test
-#  Prapare Browser
-#  Test Find Tender
-#  [Teardown]  Close Browser
+Current test
+  Prapare Browser
+  Test Find Tender
+  Capture Page Screenshot
+  [Teardown]  Close Browser
 
 #Test 
 #  ${date}=  Set Variable  2021-12-27T23:00:00+03:00
 #  ${new_date}=  change_endDate_for_plan  ${date}
 #  Log To Console  Date: ${new_date}
 
-Test
-    Test Git Info
+#Test
+#    Test Git Info
 
 
 *** Keywords ***
