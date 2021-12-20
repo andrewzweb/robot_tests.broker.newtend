@@ -40,7 +40,10 @@ Create Defence Tender
   Sleep  2
   # === It's all in one popup window
 
-  #Edit Features  ${tender_data}
+  Edit NDS  ${tender_data}
+
+  ${bool_features_exist}=  Exist key in dict  ${tender_data.data}  features
+  Run Keyword If  ${bool_features_exist}  Edit Features  ${tender_data}
 
   Edit Date For Tender  ${tender_data}
 
