@@ -53,41 +53,49 @@ Edit Feasible Element
   Run Keyword If  ${key_exist} and ${locator_exist}  ${keyword}  ${locator}  ${data_key}
 
 Go To Overview
+  Log To Console  [+] Go to overview
   Wait Bar Open
   Wait And Click  xpath=//a[@ui-sref="tenderView.overview"]
   Wait Bar Close
 
 Go To Auction
+  Log To Console  [+] Go to auction
   Wait Bar Open
   Wait And Click  xpath=//a[@ui-sref="tenderView.auction"]
   Wait Bar Close
 
 Go To Document Of Tender
+  Log To Console  [+] Go to document
   Wait Bar Open
   Wait And Click  xpath=//a[@ui-sref="tenderView.documents"]
   Wait Bar Close
 
 Go To Questions Of Tender
+  Log To Console  [+] Go to question
   Wait Bar Open
   Wait And Click  xpath=//a[@ui-sref="tenderView.chat"]
   Wait Bar Close
 
 Go To Complaint
+  Log To Console  [+] Go to complaint
   Wait Bar Open
   Wait And Click  xpath=//a[@ui-sref="tenderView.complaint"]
   Wait Bar Close
 
 Go To Contracts
+  Log To Console  [+] Go to contract
   Wait Bar Open
   Wait And Click  xpath=//a[@ui-sref="tenderView.contracts()"]
   Wait Bar Close
 
 Go To Edit Tender
+  Log To Console  [+] Go to edit tender
   Wait Bar Open
   Wait And Click  xpath=//a[@id="edit-tender-btn"]
   Wait Bar Close
 
 Go To Prequlification
+  Log To Console  [+] Go to prequalification
   Wait Bar Open
   Wait And Click  xpath=//a[@ui-sref="tenderView.prequalification"]
   Wait Bar Close
@@ -96,7 +104,6 @@ Go To Create Bid
   # перейти в меню создание бида
   ${locator.button_popup_make_bid}=  Set Variable  xpath=//a[@ui-sref="tenderView.ownBid"]
   Wait And Click  ${locator.button_popup_make_bid}
-
 
 Print All Date
   [Arguments]  ${tender_data}
