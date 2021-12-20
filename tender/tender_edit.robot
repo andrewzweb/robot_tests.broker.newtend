@@ -76,6 +76,20 @@ Find Tender By Id
 
   Sync Tender
 
+  Sleep  3
+  ${browser_on_page}=  Run Keyword And Return Status  Get WebElement  xpath=//a[@class="ng-binding ng-scope"]
+  Log To Console  [${browser_on_page}] On page tendera?
+  #${tender_id_on_page}=  Run Keyword If  ${browser_on_page}  Get Text  xpath//a[@class="ng-binding ng-scope"]
+  #${correct_page}=  is_one_string_include_other_string  ${tender_id_on_page}  ${tender_id}
+  Run Keyword If  '${browser_on_page}' == 'False'  Action Get Tender  ${tender_id}
+  Run Keyword If  '${browser_on_page}' == 'True'  Go To Overview
+
+  #Action Get Tender  ${tender_id}
+  Save For Global  ${username}
+
+Action Get Tender
+  [Arguments]  ${tender_id}
+  Log To Console  [+] search tender
   Go To  ${page_search_tender}
   Wait And Type  ${locator.tender_search_input_field}  ${tender_id}
   Wait And Click  ${locator.tender_search_button}
@@ -83,6 +97,21 @@ Find Tender By Id
 
   Wait Until Keyword Succeeds  8 minute  15 seconds  Try Choice Tender From Search List  ${tender_id}
 
+Try Choice Tender From Search List
+  [Arguments]  ${tender_id}
+  Reload Page
+  ${data.tender_id}=  Set Variable  Convert To String  ${tender_id}
+  ${locator.link_to_tender}=  Set Variable  xpath=//a[@class="title ng-binding"]
+
+  ${can_click}=  Run Keyword And Return Status  Wait Until Element Is Visible  ${locator.link_to_tender}  20
+  Wait And Click  ${locator.link_to_tender}
+  Run Keyword If  '${can_click}' == False  Log To Console  [-] Can't see tender in search wait..
+  Run Keyword If  '${can_click}' == True   Log To Console  [+] See tender in search and click
+  Sleep  5
+  [Return]  ${can_click}
+
+Save For Global
+  [Arguments]  ${username}=None
   # try to fix error cant find data for competitive
   Run Keyword If  '${username}' != 'None'  Log To Console  [+] Username True
   ${tender_data}=  Run Keyword If  '${username}' != 'None'  newtend_get_tender  ${data.tender_internal_id}
@@ -93,24 +122,10 @@ Sync Tender
   ${status}=  Run Keyword And Return Status  api_sync_tender  ${data.tender_internal_id}
   Log To Console  [${status}] Sync tender id: ${data.tender_internal_id}
 
-
 Sync Contract
   ${status}=  Run Keyword And Return Status  api_sync_contract  ${data.contract_internal_id}
   Log To Console  [${status}] Sync contract id: ${data.contract_internal_id}
 
-
-Try Choice Tender From Search List
-  [Arguments]  ${tender_id}
-  Log To Console  [.] Try click to search tender
-  Reload Page
-  ${data.tender_id}=  Set Variable  Convert To String  ${tender_id}
-  ${locator.link_to_tender}=  Set Variable  xpath=//a[@class="title ng-binding"]
-  Wait Until Element Is Visible  ${locator.link_to_tender}  20
-  ${can_click}=  Run Keyword And Return Status  Click Element  ${locator.link_to_tender}
-  Run Keyword If  '${can_click}' == False  Log To Console  [-] Can't see tender in search wait..
-  Run Keyword If  '${can_click}' == True   Log To Console  [+] See tender in search and click
-  Sleep  5
-  [Return]  ${can_click}
 ################################################################
 #                                                              #
 #             Start Получить тендерную информацию              #
