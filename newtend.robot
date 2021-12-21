@@ -72,6 +72,14 @@ Resource  ./bid/bid.robot
   # tender_id
   # number qualification 1
 
+Отримати інформацію із пропозиції із поля lotValues[0].value.amount
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+
+# for esco
+Отримати інформацію про questions[0].title
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
 
 ################################################################
 #                                                              #
