@@ -46,6 +46,10 @@ Resource  ./bid/bid.robot
 #                                                              #
 ################################################################
 
+Змінити в тендері поле maxAwardsCount і зберегти
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+
 Отримати інформацію про qualifications[0].status
   [Arguments]  @{ARGS}
   ${result}=  Get Info About Qualification   qualifications[0].status   @{ARGS}
