@@ -207,7 +207,13 @@ Finish Qualification
   Hide Wallet
 
   ${button_approve}=  Set Variable  xpath=//button[@ng-click="approveQualifications()"]
-  Wait And Click  ${button_approve}
+  ${exits_first_variant}=  Run Keyword And Return Status  Get WebElements  xpath=//button[@ng-click="approveQualifications()"]
+  Run Keyword If  ${exits_first_variant}  Wait And Click  xpath=//button[@ng-click="approveQualifications()"]
+  Run Keyword If  ${exits_first_variant}  Log To Console  [Click] To button aprove qualification 1
+
+  ${exits_second_variant}=  Run Keyword And Return Status  Get WebElements  xpath=//button[@ng-click="approveQualifications(true)"]
+  Run Keyword If  ${exits_second_variant}  Wait And Click  xpath=//button[@ng-click="approveQualifications(true)"]
+  Run Keyword If  ${exits_second_variant}  Log To Console  [Click] To button aprove qualification 2
 
   Sleep  7
 
