@@ -46,6 +46,13 @@ Resource  ./bid/bid.robot
 #                                                              #
 ################################################################
 
+Затвердити постачальників
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  # go to auction
+  Go To Auction
+  Create Contract
+
 Змінити в тендері поле maxAwardsCount і зберегти
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
