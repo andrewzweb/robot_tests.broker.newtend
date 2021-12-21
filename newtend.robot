@@ -188,7 +188,9 @@ Resource  ./bid/bid.robot
   Sleep  2
 
   # make request and get tender data and put in global variable
-  Log To Console  Username ${username}
+  ${internal_id}=  Get Tender Internal Id
+  Log To Console  Tender ID: ${internal_id}
+
   Run Keyword If  '${username}' != 'Newtend_Owner'  Put Tender In Global Verable  ${username}
   Sleep  1
 
