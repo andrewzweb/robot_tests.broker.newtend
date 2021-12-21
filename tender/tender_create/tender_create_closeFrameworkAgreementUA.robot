@@ -13,7 +13,7 @@ Create Framework Agreement Tender
 
   Go To Plan And SingUp
 
-  Edit Argeement Duration  ${tender_data}
+  #Edit Argeement Duration  ${tender_data}
   
   Edit Tender Title and Description  ${tender_data}
 
@@ -41,6 +41,8 @@ Create Framework Agreement Tender
   Edit Date For Tender  ${tender_data}
 
   Publish tender
+
+  Choise Dont Add Document
 
   SingUp Tender
 
