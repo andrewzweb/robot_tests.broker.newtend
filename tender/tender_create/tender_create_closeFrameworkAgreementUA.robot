@@ -12,8 +12,6 @@ Create Framework Agreement Tender
   Log To Console  [.] Creating Create Framework Agreement Tender
 
   Go To Plan And SingUp
-
-  #Edit Argeement Duration  ${tender_data}
   
   Edit Tender Title and Description  ${tender_data}
 
@@ -39,6 +37,8 @@ Create Framework Agreement Tender
   Run Keyword If  ${bool_features_exist}  Edit Features  ${tender_data}
   
   Edit Date For Tender  ${tender_data}
+
+  Edit Argeement Duration  ${tender_data}
 
   Publish tender
 
