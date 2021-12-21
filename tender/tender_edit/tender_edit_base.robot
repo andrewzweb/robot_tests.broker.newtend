@@ -375,7 +375,7 @@ Edit Criteria
   ...    source: winner
   ...    title: Розмір та умови надання забезпечення виконання договору
 
-  CustomLog  [+] Edit Feature
+  CustomLog  [+] Edit Criteria
 
   ${procurementMethodType}=  Get From Dictionary   ${tender_data.data}   procurementMethodType
   ${criteria_items_data}=  Get From Dictionary  ${tender_data.data}  criteria
@@ -413,7 +413,7 @@ Edit Criteria
   \  If Exist Locator Click  ${locator.select_criteria_relatesTo}
   \  # obj ng-value="lot.id"
   \  ${locator.option_citeria_related_to_tender}=  Set Variable  xpath=//md-option[@ng-value="lot.id"]
-#  \  If Exist Locator Click  ${locator.option_citeria_related_to_tender}
+  \  #  \  If Exist Locator Click  ${locator.option_citeria_related_to_tender}
   \  ${locator_exist}=  Run Keyword And Return Status  Get WebElements  ${locator.option_citeria_related_to_tender}
   \  ${obj}=  Run Keyword If  ${locator_exist}  Get WebElements  ${locator.option_citeria_related_to_tender}
   \  Run Keyword If  ${locator_exist}  Focus  ${obj[-1]}
