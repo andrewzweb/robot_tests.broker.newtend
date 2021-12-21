@@ -46,7 +46,6 @@ Resource  ./bid/bid.robot
 #                                                              #
 ################################################################
 
-
 Отримати інформацію про qualifications[0].status
   [Arguments]  @{ARGS}
   ${result}=  Get Info About Qualification   qualifications[0].status   @{ARGS}

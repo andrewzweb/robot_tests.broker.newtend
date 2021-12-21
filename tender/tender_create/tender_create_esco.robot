@@ -71,6 +71,7 @@ Edit NBU Count Rate
   # NBUdiscountRate
   ${data.NBUdiscountRate}=  Get From Dictionary   ${tender_data.data}  NBUdiscountRate
   ${data.NBUdiscountRate}=  convert_quantity  ${data.NBUdiscountRate}
+  ${data.NBUdiscountRate}=  multiply_to_hundren  ${data.NBUdiscountRate}
   Wait And Type  ${locator.edit_esco_NBUdiscountRate}  ${data.NBUdiscountRate}
 
   # funding

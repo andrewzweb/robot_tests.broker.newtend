@@ -87,16 +87,25 @@ Create Contract
   Wait And Type  ${locator.input_contract_number}  0
 
   # change price
-  Wait And Type  id=contractValueAmount  960
-  Wait And Type  id=contractValueAmountNet  800
+  ${exist_amount}=  Run Keyword And Return Status  Get WebElement  id=contractValueAmount
+  Run Keyword If  ${exist_amount}  Wait And Type  id=contractValueAmount  960
 
-  ${element_value_by_item}=  Get WebElements  id=itemUnitValueAmount
-  ${count_items}=  Get Length  ${element_value_by_item}
+  ${exist_amountNet}=  Run Keyword And Return Status  Get WebElement  id=contractValueAmountNet
+  Run Keyword If  ${exist_amountNet}  Wait And Type  id=contractValueAmountNet  800
 
-  : FOR   ${index}  IN RANGE   ${count_items}
-  \   ${element}=  Set Variable  ${element_value_by_item[${index}]}
-  \   Wait And Type  xpath=//input[@name="${index}_itemUnitValueAmount"]  1
+  ${exist_contractValueAmountNet}=  Run Keyword And Return Status  Get WebElement  id=contractValueAmountNet
+  ${element_value_by_item}=  Run Keyword If  ${exist_contractValueAmountNet}  Get WebElements  id=itemUnitValueAmount
+  ${count_items}=  Run Keyword If  ${exist_contractValueAmountNet}  Get Length  ${element_value_by_item}
+
+  Run Keyword If  ${exist_contractValueAmountNet}  Edit Price By Item  ${element_value_by_item}  ${count_items}
 
   Wait And Click  xpath=//button[@ng-click="closeBids()"]
   Log To Console  [+] Create Contract
   Sleep  3
+
+Edit Price By Item
+  [Arguments]  ${element_value_by_item}  ${count_items}
+  : FOR   ${index}  IN RANGE   ${count_items}
+  \   ${element}=  Set Variable  ${element_value_by_item[${index}]}
+  \   Wait And Type  xpath=//input[@name="${index}_itemUnitValueAmount"]  1
+

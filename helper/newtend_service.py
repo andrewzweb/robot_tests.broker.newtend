@@ -132,6 +132,11 @@ def convert_to_float(budget):
     converted_text = float(budget)
     return converted_text
 
+def multiply_to_hundren(numb):
+    numb= float(str(numb))
+    result = numb * 100
+    return str(result)
+
 def string_convert_to_float(budget):
     converted_text = float(budget)
     return converted_text
