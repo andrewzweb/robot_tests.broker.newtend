@@ -22,8 +22,6 @@ Create OpenEU Tender
   Wait Until Element Is Visible  xpath=//div[@class="container"]/h3
   Add lots  ${tender_data}
 
-  #Edit Guarentee In Lot  ${tender_data}
-
   Add Item  ${tender_data}
 
   Edit Milestones  ${tender_data}
