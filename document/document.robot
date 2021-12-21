@@ -40,7 +40,10 @@ Download Document
   # for
   Select From List By Value  ${locator.document_for}  ${document_for}
   # choise type document
-  Select From List By Value  ${locator.document_type}  ${document_type}
+
+  ${exist_type}=  Run Keyword And Return Status  Get WebElement  ${locator.document_type}
+  Run Keyword If  ${exist_type}  Select From List By Value  ${locator.document_type}  ${document_type}
+
   # click to file input shows
   Wait And Click  ${locator.document_file_button}
   # choise type document
