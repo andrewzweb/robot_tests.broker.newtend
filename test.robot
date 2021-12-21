@@ -113,8 +113,8 @@ Test UI Feature
   \  #
   \  ${st1}=  Evaluate  ${number_enum} < ${count_enum}-1
   \  
-  \  Log To Console  ${num_enum}: ${st1} | ${status_speciat_tender}
-  \  Log To Console  ${procurementMethodType} | ${tender_type_with_different_default_count_features}
+  \  #Log To Console  ${num_enum}: ${st1} | ${status_speciat_tender}
+  \  #Log To Console  ${procurementMethodType} | ${tender_type_with_different_default_count_features}
   \
   \  Run Keyword If  ${st1} and not ${status_speciat_tender}  Wait And Click  xpath=//a[@id="add-option-0-${number_enum}"]
 
