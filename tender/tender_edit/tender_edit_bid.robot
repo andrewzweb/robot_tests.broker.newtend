@@ -108,8 +108,12 @@ Make Contract For Tender
   Wait And Type  ${locator.input_contract_number}  0
 
   # change price
-  Wait And Type  id=contractValueAmount  960
-  Wait And Type  id=contractValueAmountNet  800
+  # change price
+  ${exist_amount}=  Run Keyword And Return Status  Get WebElement  id=contractValueAmount
+  Run Keyword If  ${exist_amount}  Wait And Type  id=contractValueAmount  960
+
+  ${exist_amountNet}=  Run Keyword And Return Status  Get WebElement  id=contractValueAmountNet
+  Run Keyword If  ${exist_amountNet}  Wait And Type  id=contractValueAmountNet  800
 
   ${element_value_by_item}=  Get WebElements  id=itemUnitValueAmount
   ${count_items}=  Get Length  ${element_value_by_item}
