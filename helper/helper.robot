@@ -20,17 +20,17 @@ Wait And Change
   Input Text  ${locator}  ${value}
 
 Wait And Type
-  [Arguments]  ${locator}  ${value}
-  Wait Until Page Contains Element  ${locator}
-  Wait Until Element Is Enabled  ${locator}
+  [Arguments]  ${locator}  ${value}  ${wait_time}=30
+  Wait Until Page Contains Element  ${locator}  ${wait_time}
+  Wait Until Element Is Enabled  ${locator}  ${wait_time}
   Focus  ${locator}
   Input Text  ${locator}  ${value}
 
 Wait And Click
-  [Arguments]  ${locator}
-  Wait Until Element Is Enabled  ${locator}  20
+  [Arguments]  ${locator}  ${wait_time}=30
+  Wait Until Element Is Enabled  ${locator}  ${wait_time}
   Focus  ${locator}
-  Wait Until Element Is Visible  ${locator}  20
+  Wait Until Element Is Visible  ${locator}  ${wait_time}
   Click Element  ${locator}
 
 Exist key in dict
