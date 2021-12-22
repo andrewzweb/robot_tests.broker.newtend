@@ -9,18 +9,29 @@ Resource  ../../newtend.robot
 
 Create suplier and add docs and confier him
   [Arguments]   ${username}  ${tender_id}  ${tender_data}  ${document_file}
-  [Documentation]   Adding user into reporting procedure
+
+  Log To Console  [+] === Create suplier and add docs and confier him ===
 
   Find Tender By Id  ${tender_id}
-  Capture Page Screenshot
   Go To Auction
-  Capture Page Screenshot
 
   Create Suplier  ${tender_data}
-  Confirm Suplier  ${document_file}
+
+  ${procurementMethodType}=  Get From Dictionary  ${USERS.users['${tender_owner}'].initial_data.data}  procurementMethodType
+  Log To Console  [_] Type of Tender: ${procurementMethodType}
+
+  Capture Page Screenshot  custom-screenshot-{index}.png
+  # if its reporting
+  Run Keyword If  '${procurementMethodType}' != 'negotiation'  Confirm Suplier  ${document_file}
+
+  Capture Page Screenshot  custom-screenshot-{index}.png
+  # if negotiation
+  Run Keyword If  '${procurementMethodType}' == 'negotiation'  Confirm Suplier Old  ${document_file}
 
 Create Suplier
   [Arguments]  ${tender_data}
+
+  Log To Console  [+] Create Suplier
 
   # Getting information about participant
   ${supplier_name}=    Get From Dictionary     ${tender_data.data.suppliers[0].contactPoint}    name
@@ -81,18 +92,30 @@ Confirm Suplier Old
 
   # put in input
   Choose File  xpath=//input[@type="file"]  ${document_file}
+
+  Execute Javascript
+  ...  var element=document.querySelector("button[ng-click='upload()']");
+  ...  element.removeAttribute("disabled");
+
   # download doc
   Wait And Click  xpath=//button[@ng-click="upload()"]
   Sleep  10
+
+  Execute Javascript
+  ...  var element=document.querySelector("button[ng-click='sign()']");
+  ...  element.removeAttribute("disabled");
 
   # sing up
   Wait And Click  xpath=//button[@ng-click="sign()"]
   Wait And Click  xpath=//button[@ng-click="vm.sign()"]
   Sleep  3
 
+  Execute Javascript
+  ...  var element=document.querySelector("button[ng-click='accept()']");
+  ...  element.removeAttribute("disabled");
+
   # accept and close popup
   Wait And Click  xpath=//button[@ng-click="accept()"]
-
 
 Confirm Suplier
   [Arguments]  ${document_file}
