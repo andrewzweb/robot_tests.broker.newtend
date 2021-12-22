@@ -203,7 +203,7 @@ Add New Feature
   # click to save features
   Wait And Click  ${locator.edit_feature_save_form}
 
-  Sleep  4
+  Sleep  20
 
   Log  ${USERS.users['Newtend_Owner'].tender_data.data['features']}
 
