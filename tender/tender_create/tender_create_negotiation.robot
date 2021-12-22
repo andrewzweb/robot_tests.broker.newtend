@@ -11,9 +11,10 @@ Create Negotiation Tender
 
   Log To Console  [.] Creating Negotiation Tender
 
+  ${tender_data}=  overwrite_procuringEntity_data_for_owner  ${tender_data}
+
   # === prepare ====
   Go To Plan And SingUp
-
 
   # === creating ===
   Edit Tender Title and Description  ${tender_data}

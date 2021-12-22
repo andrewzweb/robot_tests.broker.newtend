@@ -43,24 +43,24 @@ def overwrite_procuringEntity_data(tender_data):
 
 def overwrite_procuringEntity_data_for_owner(tender_data):
     try:
-        tender_data['data']['procuringEntity']['name'] = u"newtend owner company"
-        tender_data['data']['procuringEntity']['identifier']['id'] = u"12312313123"
-        tender_data['data']['procuringEntity']['identifier']['legalName'] = u"newtend owner company"
+        tender_data['data']['procuringEntity']['name'] = u"Newtend Test Owner"
+        tender_data['data']['procuringEntity']['identifier']['id'] = u"1234567892"
+        tender_data['data']['procuringEntity']['identifier']['legalName'] = u"Newtend Test Owner"
     except: pass
     # adress
     try:
-        tender_data['data']['procuringEntity']['address']['postalCode'] = u"01453"
+        tender_data['data']['procuringEntity']['address']['postalCode'] = u"54100"
         tender_data['data']['procuringEntity']['address']['region'] = u"Київська область"
         tender_data['data']['procuringEntity']['address']['locality'] = u"Киев"
-        tender_data['data']['procuringEntity']['address']['streetAddress'] = u"Перемоги 1"
+        tender_data['data']['procuringEntity']['address']['streetAddress'] = u"переулок Ярославский 1/3"
     except: pass
     # contact point
     try:
         tender_data['data']['procuringEntity']['contactPoint']['email'] = u"e_mail_test@bigmir.net"
         tender_data['data']['procuringEntity']['contactPoint']['faxNumber'] = u"088-111-22-33"
-        tender_data['data']['procuringEntity']['contactPoint']['name'] = u"newtend owner company"
+        tender_data['data']['procuringEntity']['contactPoint']['name'] = u"Newtend Test Owner"
         tender_data['data']['procuringEntity']['contactPoint']['telephone'] = u"+380991234560"
-        tender_data['data']['procuringEntity']['contactPoint']['url'] = u"http://webpage.org.ua/"
+        tender_data['data']['procuringEntity']['contactPoint']['url'] = u"http://test_owner.ua/"
     except: pass
     return tender_data
 
