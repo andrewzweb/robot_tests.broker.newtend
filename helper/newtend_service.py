@@ -37,7 +37,7 @@ def overwrite_procuringEntity_data(tender_data):
         tender_data['data']['procuringEntity']['contactPoint']['faxNumber'] = u"088-111-22-33"
         tender_data['data']['procuringEntity']['contactPoint']['name'] = u"newtend owner company"
         tender_data['data']['procuringEntity']['contactPoint']['telephone'] = u"+380991234560"
-        tender_data['data']['procuringEntity']['contactPoint']['url'] = u"http://webpage.org.ua/"
+        tender_data['data']['procuringEntity']['contactPoint']['url'] = u"http://www.testowner.ua"
     except: pass
     return tender_data
 

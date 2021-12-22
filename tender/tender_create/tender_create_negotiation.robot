@@ -34,7 +34,7 @@ Create Negotiation Tender
   # In test data dont have lot
   # === In UI lot exist ====
   ${data.lot_price}=  Get From Dictionary  ${tender_data.data.value}  amount
-  ${data.lot_price}=  Convert To Integer  ${data.lot_price}
+  ${data.lot_price}=  change_number_to_string  ${data.lot_price}
   Wait And Type  ${locator.edit_lot_amount}  ${data.lot_price}
   
   ${data.lot_description}=  Get From Dictionary  ${tender_data.data}  description

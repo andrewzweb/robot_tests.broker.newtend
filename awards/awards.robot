@@ -107,5 +107,5 @@ Edit Price By Item
   [Arguments]  ${element_value_by_item}  ${count_items}
   : FOR   ${index}  IN RANGE   ${count_items}
   \   ${element}=  Set Variable  ${element_value_by_item[${index}]}
-  \   Wait And Type  xpath=//input[@name="${index}_itemUnitValueAmount"]  1
+  \   Wait And Type  xpath=//input[@name="${index}_itemUnitValueAmount"]  0.1
 
