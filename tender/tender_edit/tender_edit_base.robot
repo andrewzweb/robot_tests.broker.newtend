@@ -200,10 +200,15 @@ Add New Feature
   \  Sleep  2
   \  Run Keyword If  ${number_enum} < ${count_enum}-1  Wait And Click  xpath=//a[@id="add-option-1-${num_enum}"]
 
+  Capture Page Screenshot
   # click to save features
   Wait And Click  ${locator.edit_feature_save_form}
 
+  Capture Page Screenshot
+  
   Sleep  20
+
+  Capture Page Screenshot
 
   Log  ${USERS.users['Newtend_Owner'].tender_data.data['features']}
 
