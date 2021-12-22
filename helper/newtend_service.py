@@ -309,36 +309,6 @@ dict_units = {
     u"календарних": u"calendar"
 }
 
-dict_tender_status = {
-    # CANCELLATION_STATUS:
-    "DRAFT" : 'draft',                 # За замовчуванням. Скасування у стані формування.
-    "PENDING" : 'pending',             # Запит оформлюється.
-    "ACTIVE" : 'active',               # Скасування активоване.
-    "UNSUCCESSFUL" : 'unsuccessful',   # Невдале скасування
-
-    # status
-    "LOCAL_DRAFT" : 'local_draft',
-    "DRAFT" : 'draft',                 # черновик (для 2-х фазового комита)
-    "DRAFT_PENDING" : 'draft.pending',
-    "DRAFT_UNSUCCESSFUL" : 'draft.unsuccessful',
-    "ENQUIRIES" : 'active.enquiries',  # уточнение (две даты - начало и конец)
-    "TENDERING" : 'active.tendering',  # предложение - делают ставки  (две даты - начало и конец)
-    "AUCTION" : 'active.auction',      # аукцион - если 2 и более поставщиков сделали ставку
-    "QUALIFICATION" : 'active.qualification',  # квалификация - выбор победителя
-    "AWARDED" : 'active.awarded',  # рассмотрен -  если выбран победитель
-    "UNSUCCESSFUL" : 'unsuccessful',  # несостоявшийся  - никто не сделал ставку либо все ставки отменены
-    "COMPLETE" : 'complete',  # завершен - нажали кнопку закончить торги
-    "CANCELLED" : 'cancelled',  # отменен - нажали кнопку отменить
-    "STAGE2_PENDING" : 'active.stage2.pending',
-    "STAGE2_WAITING" : 'active.stage2.waiting',
-    "DRAFT_STAGE2" : 'draft.stage2',
-
-    "ACTIVE" : 'active',  # активный тендер для переговорной процедуры
-    "PRE_QUALIFICATION" : 'active.pre-qualification',  # предварительная квалификация (openEU)
-    "PRE_QUALIFICATION_STAND_STILL" : 'active.pre-qualification.stand-still',  # предварительная квалификация (openEU)
-    "QUALIFICATION_STAND_STILL" : 'active.qualification.stand-still',  # квалификация (closeFrameworkAgreementEU)
-}
-
 def check_its_plan(str_tender_or_plan):
     if 'UA-P-' in str_tender_or_plan:
         return True
