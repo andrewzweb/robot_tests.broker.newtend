@@ -5,7 +5,7 @@ Resource  ../newtend.robot
 *** Keywords ***
 
 Make Bid Draft 
- [Arguments]  @{ARGS}
+  [Arguments]  @{ARGS}
   Log To Console  [.] === Make DRAFT bid ===
 
   ${username}=  Set Variable  ${ARGS[0]}
