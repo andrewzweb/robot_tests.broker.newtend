@@ -307,11 +307,10 @@ Add Doc To Bid
   # choice file
   ${locator.input_download_file}=  Set Variable  xpath=//input[@type="file"]
   Choose File  ${locator.input_download_file}  ${document_file}
+  Sleep  3
 
   # select doc ralation for
-  ${locator.select_dropdown_document_type}=  Set Variable  xpath=//md-select[@ng-model="file.documentType"]
-  Wait And Click  ${locator.select_dropdown_document_type}
-  Sleep  2
+  Select From List By Value  xpath=//select[@ng-model="file.documentType"]  eligibilityDocuments
 
   # type:
   # value="technicalSpecifications"  - Технічні специфікації
@@ -321,9 +320,6 @@ Add Doc To Bid
   # value="billOfQuantity"  - Кошторис (розрахунок вартості)
   # value="evidence"  - Пояснення/обгрунтування
   # value="winningBid"  - Ціна за одиницю товару (послуги)
-
-  ${locator.select_type_option}=  Set Variable  xpath=//md-option[@value="eligibilityDocuments"]
-  Wait And Click  ${locator.select_type_option}
 
   ${locator.button_save_document}=  Set Variable  xpath=//button[@ng-click="saveDocumentsChanges()"]
   Wait And Click  ${locator.button_save_document}
