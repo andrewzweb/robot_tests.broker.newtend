@@ -134,13 +134,10 @@ Delete Feature
   \  Run Keyword If  ${is_need_element} == True    Wait And Click  xpath=//a[@id="remove_feature_${index}"]
   \  Exit For Loop IF  ${is_need_element} == True
 
-
   # close
   # click to save features
   Wait And Click  ${locator.edit_feature_save_form}
-  Sleep  3
-  Log  ${USERS.users['Newtend_Owner'].tender_data.data['features']}
-
+  Sleep  5
 
 
 Delete All Features
@@ -204,13 +201,10 @@ Add New Feature
   # click to save features
   Wait And Click  ${locator.edit_feature_save_form}
 
-  Capture Page Screenshot
-  
-  Sleep  20
+  Sleep  10
 
-  Capture Page Screenshot
+  Capture Page Screenshot  ${OUTPUTDIR}/custom-screenshot-{index}.png
 
-  Log  ${USERS.users['Newtend_Owner'].tender_data.data['features']}
 
 
 Edit Budget In Reporting

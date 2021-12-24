@@ -646,8 +646,9 @@ Resource  ./bid/bid.robot
   Find Tender By Id  ${tender_id}
   Go To Edit Tender
   Add New Feature  ${feature_date}
-  Sleep  10
+  Sleep  5
   Publish tender
+  Sleep  10
   
 Видалити неціновий показник
   [Arguments]  ${username}  ${tender_id}  ${feature_id}
