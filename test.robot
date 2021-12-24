@@ -23,12 +23,11 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 *** Test Cases ***
 
 #Test me 3
-#  Test Feature
+#  Test Get File From Cbd
 
 Current test
   Prapare Browser
-  Test Find Tender
-  Capture Page Screenshot
+  Test Get Text From File 
   [Teardown]  Close Browser
 
 #Test 
@@ -39,9 +38,30 @@ Current test
 #Test
 #    Test Git Info
 
-
 *** Keywords ***
 
+Test Get File From Cbd
+  ${url}=  Set Variable  https://public-docs-staging.prozorro.gov.ua/get/9c11c74ebcb444789e8b41e41ee32238?Signature=HXw0hzSmXYuA4fZ%2FbwoOAzy32xtoilL6aKpXBkpT2lmqikhpU5IaM3JaC51ytXBmVPBk9n0di%2BM5Hb0bx%2B85CA%3D%3D&KeyID=01b985cf
+  ${result}=  get_doc_from_cbd  ${url}
+  Log To Console  ${result}
+  
+Test Get Text From File
+  ${username}=  Set Variable  Owner
+  ${tender_id}=  Set Variable  UA-2021-12-23-000106-c
+  ${question_id}=  Set Variable  d-d0b72684
+  
+  ${result}=  Отримати документ  ${username}  ${tender_id}  ${question_id}
+  Log To Console  ${result}
+
+Test Get Title From Question
+  ${username}=  Set Variable  Owner
+  ${tender_id}=  Set Variable  UA-2021-12-23-000106-c
+  ${question_id}=  Set Variable  d-d0b72684
+  ${search_field}=  Set Variable  title
+  
+  ${result}=  Отримати інформацію із документа  ${username}  ${tender_id}  ${question_id}  ${search_field}
+  Log To Console  ${result}
+  
 Test Git Info
   ${info}=  update_repo
   Log To Console  ${info}

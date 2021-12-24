@@ -170,7 +170,8 @@ dict_units = {
     u'ПРЕКВАЛІФІКАЦІЯ (ПЕРІОД ОСКАРЖЕННЯ)': u'active.pre-qualification.stand-still',
     u'ПРОВЕДЕННЯ ПЕРЕГОВОРІВ': u'complete',
     u'ОЧІКУВАННЯ ДРУГОГО ЕТАПУ': u'complete',
-    
+    u'ЧЕРНЕТКА. ДРУГИЙ ЕТАП':  u'draft.stage2',
+
     # complaint status
     u'Очікує розгляду /':         u'pending',
     u'Залишено без розгляду /':   u'invalid',
@@ -437,7 +438,6 @@ def update_repo():
 def info_from_git():
     subprocess.call('cd src/robot_tests.broker.newtend && pwd && last_commit=$(git log -n 1 --pretty=format:"[ %h ] %ar : %s") && echo $last_commit ', shell=True, stdout=None)
 
-
 def str_in_list(string_target, _list):
     result = False
     for i in _list:
@@ -461,3 +461,15 @@ def get_plan_data_from_cbd(plan_hash_id):
     plan = json.loads(request.text)
     plan_endDate =  plan['data']['items'][0]['deliveryDate']['endDate']
     return plan_endDate
+
+def get_doc_from_cbd(url):
+    '''url -> filename'''
+    filename = 'tmp.docx'
+    request = requests.get(str(url), allow_redirects=True)
+    open(filename,'wb').write(request.content)
+    return filename
+
+def read_text_from_file(filename):
+    '''filename -> text'''
+    text = open(filename, 'r').read()
+    return text

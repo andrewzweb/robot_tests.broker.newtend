@@ -46,6 +46,92 @@ Resource  ./bid/bid.robot
 #                                                              #
 ################################################################
 
+Отримати інформацію із документа
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${doc_title}=  Set Variable  ${ARGS[2]}
+  ${search_field}=  Set Variable  ${ARGS[3]}
+
+  # username
+  # UA-2021-12-23-000106-c
+  #	d-d0b72684
+  # title
+
+  Find Tender By Id  ${tender_id}
+
+  Go To Document Of Tender
+  Sleep  3
+
+  ${doc_names}=  Get WebElements  xpath=//a
+
+  ${result}=  Set Variable  False
+  
+  :FOR  ${item}  IN  @{doc_names}
+  \  #Log To Console  ${item.text}
+  \  ${is_right}=  is_one_string_include_other_string  ${item.text}  ${doc_title}
+  \  Run Keyword If  ${is_right}  Log To Console  [${result}] ${doc_title} | ${item.text} 
+  \  ${result}=  Run Keyword If  ${is_right}  Set Variable ${item.text} 
+  
+  [Return]  ${result}
+
+Отримати документ
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  # username
+  # UA-2021-12-23-000106-c
+  #	d-d0b72684
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${doc_title}=  Set Variable  ${ARGS[2]}
+  
+  Find Tender By Id  ${tender_id}
+
+  Go To Document Of Tender
+  Sleep  3
+   
+  ${doc_names}=  Get WebElements  xpath=//a
+
+  ${href}=  Set Variable  False
+  
+  :FOR  ${item}  IN  @{doc_names}
+  \  #Log To Console  ${item.text}
+  \  ${is_right}=  is_one_string_include_other_string  ${item.text}  ${doc_title}
+  \  Run Keyword If  ${is_right}  Log To Console  ${item.get_attribute('href')}
+  \  ${href}=  Run Keyword If  ${is_right}  Set Variable  ${item.get_attribute('href')}
+  \  Exit For Loop IF  ${is_right}
+  
+  Log To Console  [.]_ href: ${href}
+  
+  ${filename}=  get_doc_from_cbd  ${href}
+  Log To Console  [.]_ filename: ${filename}
+  ${text}=  read_text_from_file  ${filename}
+  Log To Console  [.]_ text: ${text}
+  [Return]  ${text}
+  
+Отримати тендер другого етапу та зберегти його
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+
+  Smart Wait  Wait And Click  xpath=//button[@ng-click="activateTender(tender)"]
+  
+Перевести тендер на статус очікування обробки мостом
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  Smart Wait  Wait And Click  xpath=//button[@ng-click="startSecondStageTender()"]
+  Sleep  2
+  Wait And Click  xpath=//button[@ng-click="start()"]
+  Sleep  5
+  Wait And Click  xpath=//button[@ng-click="close()"]
+  Smart Wait  Wait And Click  xpath=//button[@ng-click="goTo2Stage()"]
+
+Активувати другий етап
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  
 Затвердити постачальників
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
