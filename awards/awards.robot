@@ -72,7 +72,7 @@ Add Quilificaton Comission Document
 
 
 Create Contract
-  [Arguments]
+  [Arguments]  ${username}
   Log To Console  [.] Create Contract
 
   # click to popup download
@@ -80,8 +80,12 @@ Create Contract
   ${button_exist}=  Run Keyword And Return Status  Get WebElement  xpath=//*[@ng-click="decide('active')"]
   Run Keyword If  ${button_exist}  Wait And Click  ${locator.apply_decision}
 
-  ${locator.end_torgi}=  Set Variable  xpath=//button[@data-test_id="close_tender"]
+  ${tender_type}=  Get Tender Type  ${username}
+
+  ${locator.end_torgi}=  Run Keyword If  ${tender_type} == 'closeFrameworkAgreementUA'  Set Variable  xpath=//button[@data-test_id="close_tender"]
+  ...    Set Variable  xpath=//button[@data-test_id="close_qualification"]
   Wait Until Keyword Succeeds  5 minute  30 seconds  Wait And Click  ${locator.end_torgi}
+
 
   ${locator.input_contract_number}=  Set Variable  xpath=//input[@id="contractNumber"]
   Wait And Type  ${locator.input_contract_number}  0
