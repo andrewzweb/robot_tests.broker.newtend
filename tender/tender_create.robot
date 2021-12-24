@@ -19,8 +19,6 @@ Create Tender
   ${tender_data}=  Set Variable  ${ARGUMENTS[1]}
   ${plan_id}=      Set Variable  ${ARGUMENTS[2]}
 
-  WrapLog  ${tender_data}
-
   ${tender_type}=   Get From Dictionary    ${tender_data.data}    procurementMethodType
   # check tender multilots or not
   ${if_key_in_dict}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${tender_data.data}  lots
