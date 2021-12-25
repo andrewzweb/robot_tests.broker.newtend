@@ -80,18 +80,24 @@ Create Suplier
   Sleep     2
   Wait And Click     xpath=//button[@ng-click="vm.createAward()"]
 
+
 Confirm Suplier Old
   [Arguments]  ${document_file}
 
+  Log To Console  [+]__ Confirm Suplier Old
+  Log To Console  [+]__ Doc name: '${document_file}'
+
   # accept bid
   Wait And Click  xpath=//button[@ng-click="vm.decide(vm.award.id, 'active',vm.tender.procurementMethodType)"]
-
+  Sleep  2
   # download doc
   # clit to button for add document
   Wait And Click  xpath=//div[@ng-model="file"]
+  Sleep  2
 
   # put in input
   Choose File  xpath=//input[@type="file"]  ${document_file}
+  Sleep  5
 
   Execute Javascript
   ...  var element=document.querySelector("button[ng-click='upload()']");
@@ -99,7 +105,7 @@ Confirm Suplier Old
 
   # download doc
   Wait And Click  xpath=//button[@ng-click="upload()"]
-  Sleep  10
+  Sleep  5
 
   Execute Javascript
   ...  var element=document.querySelector("button[ng-click='sign()']");
@@ -108,7 +114,7 @@ Confirm Suplier Old
   # sing up
   Wait And Click  xpath=//button[@ng-click="sign()"]
   Wait And Click  xpath=//button[@ng-click="vm.sign()"]
-  Sleep  3
+  # Sleep  3
 
   Execute Javascript
   ...  var element=document.querySelector("button[ng-click='accept()']");
