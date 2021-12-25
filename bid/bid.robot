@@ -558,7 +558,7 @@ Activate bid
 
   Sleep  5
 
-  Wait And Click  xpath=//button[@ng-click="publishBid()"]
+  Wait And Click  xpath=//button[@ng-click="activateBid()"]
 
   Sleep  5
 
