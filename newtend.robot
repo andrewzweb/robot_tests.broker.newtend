@@ -909,10 +909,12 @@ Custom Get Internal ID
 
 Змінити цінову пропозицію
   [Arguments]  @{ARGS}
-  Print Args  @{ARGS}
-  #Chagenge bid
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${what_change}=  Set Variable  ${ARGS[2]}
+  ${expected_result}=  Set Variable  ${ARGS[3]}
 
-# --- add doc in bid ---
+  Run Keyword If  '${what_change}' == 'status' and '${expected_result}' == 'active'  Activate bid  @{ARGS}
 
 Завантажити документ в ставку
   [Arguments]  @{ARGS}

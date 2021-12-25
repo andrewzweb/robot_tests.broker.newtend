@@ -534,3 +534,32 @@ Make Bid For Esco
 
   # Wait page reload
   Sleep  3
+
+Activate bid
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+
+  # usernameUpload Doc In Second Time
+  # UA-2021-12-25-000004-c
+  # status
+  # active
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${what_change}=  Set Variable  ${ARGS[2]}
+  ${expected_result}=  Set Variable  ${ARGS[3]}
+
+  Log To Console  [.] Activate bid
+
+  Find Tender By Id  ${tender_id}
+
+  # go to own bid
+  Wait And Click  xpath=//a[@ui-sref="tenderView.ownBid"]
+
+  Sleep  5
+
+  Wait And Click  xpath=//button[@ng-click="publishBid()"]
+
+  Sleep  5
+
+  Log To Console  [+] Activate bid
