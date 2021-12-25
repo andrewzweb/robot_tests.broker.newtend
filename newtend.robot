@@ -46,6 +46,31 @@ Resource  ./bid/bid.robot
 #                                                              #
 ################################################################
 
+Отримати інформацію запитання із поля answer
+  [Arguments]  @{ARGS}
+
+  # username
+  #	UA-2021-12-25-000003-c
+  #	q-4e3150e9
+  # answer
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${quesion_id}=  Set Variable  ${ARGS[2]}
+  ${field}=  Set Variable  ${ARGS[3]}
+
+  Log To Console  [+] Get answer to question
+
+  Find Tender By Id  ${tender_id}
+
+  Go To Questions Of Tender
+  Sleep  3
+
+  Wait Until Keyword Succeeds  8 minute  20 s  Get Text   xpath=//span[@class="answer-description ng-binding"]
+  ${answer_to_question}=  Get Text   xpath=//span[@class="answer-description ng-binding"]
+  [return]  ${answer_to_question}
+
+
 Отримати інформацію із документа
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
