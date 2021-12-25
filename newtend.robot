@@ -135,9 +135,10 @@ Resource  ./bid/bid.robot
 Затвердити постачальників
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
+  ${username}=  Set Variable  ${ARGS[0]}
   # go to auction
   Go To Auction
-  Create Contract
+  Create Contract  ${username}
 
 Змінити в тендері поле maxAwardsCount і зберегти
   [Arguments]  @{ARGS}
@@ -594,7 +595,8 @@ Resource  ./bid/bid.robot
   # go to auction
   Go To Auction
 
-  Create Contract
+  Create Contract  ${username}
+
 
 Завантажити документ в угоду
   [Arguments]  @{ARGS}
