@@ -92,11 +92,11 @@ Confirm Suplier Old
   Sleep  2
   # download doc
   # clit to button for add document
-  Wait And Click  xpath=//div[@ng-model="file"]
-  Sleep  2
+  #Wait And Click  xpath=//div[@ng-model="file"]
+  #Sleep  2
 
   # put in input
-  Choose File  xpath=//input[@type="file"]  ${document_file}
+  Choose File  xpath=//input[@data-id="bid_file_update"]  ${document_file}
   Sleep  5
 
   Execute Javascript
@@ -108,17 +108,13 @@ Confirm Suplier Old
   Sleep  5
 
   Execute Javascript
-  ...  var element=document.querySelector("button[ng-click='sign()']");
+  ...  var element=document.querySelector("button[ng-click='accept()']");
   ...  element.removeAttribute("disabled");
 
   # sing up
-  Wait And Click  xpath=//button[@ng-click="sign()"]
-  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
+  #Wait And Click  xpath=//button[@ng-click="sign()"]
+  #Wait And Click  xpath=//button[@ng-click="vm.sign()"]
   # Sleep  3
-
-  Execute Javascript
-  ...  var element=document.querySelector("button[ng-click='accept()']");
-  ...  element.removeAttribute("disabled");
 
   # accept and close popup
   Wait And Click  xpath=//button[@ng-click="accept()"]

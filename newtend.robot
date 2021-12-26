@@ -608,7 +608,7 @@ Resource  ./bid/bid.robot
   Download Document  ${document_file}  "tender"  "bidders"
 
 Підтвердити підписання контракту
-  [Arguments]    ${username}  ${tender_id}  ${contract_num}
+  [Arguments]  ${username}  ${tender_id}  ${contract_num}
   Log To Console  [+] Confirm contract
   Log To Console  ARG 0 - ${username}
   Log To Console  ARG 1 - ${tender_id}
