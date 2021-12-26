@@ -173,7 +173,7 @@ Wait Bar Close
   Run Keyword And Return Status  Click Element  ${locator.side_bar_panel}
   Sleep  2
 
- Change Value In Attribute
+Change Value In Attribute
   [Arguments]  ${attr_value}
   Execute Javascript
   ...  var element=document.querySelector("input[ng-model='item.unit.code']");
