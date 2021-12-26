@@ -678,7 +678,11 @@ Resource  ./bid/bid.robot
   Capture Page Screenshot
   Publish tender
   Capture Page Screenshot
-  Sleep  10
+  Sleep  5
+  Capture Page Screenshot
+  Sleep  5
+  Capture Page Screenshot
+  Sleep  5
   Capture Page Screenshot
   
 Видалити неціновий показник
