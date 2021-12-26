@@ -675,15 +675,7 @@ Resource  ./bid/bid.robot
   Add New Feature  ${feature_date}
   Capture Page Screenshot
   Sleep  5
-  Capture Page Screenshot
   Publish tender
-  Capture Page Screenshot
-  Sleep  5
-  Capture Page Screenshot
-  Sleep  5
-  Capture Page Screenshot
-  Sleep  5
-  Capture Page Screenshot
   
 Видалити неціновий показник
   [Arguments]  ${username}  ${tender_id}  ${feature_id}

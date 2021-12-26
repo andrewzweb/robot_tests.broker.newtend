@@ -290,8 +290,14 @@ Set Created Tender ID In Global Variable
 Publish tender
   CustomLog  [+] Publish tender
   # Save tender
-  Focus             ${locator.button_publish}
-  Click Element     ${locator.button_publish}
+  Wait And CLick  ${locator.button_publish}
+  Capture Page Screenshot
+  Sleep  5
+  Capture Page Screenshot
+  Sleep  5
+  Capture Page Screenshot
+  Sleep  5
+  Capture Page Screenshot
 
 Змінити в тендері поле tenderPeriod.endDate і зберегти
   [Arguments]  ${date}
