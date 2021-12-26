@@ -186,6 +186,7 @@ Add New Feature
   \  ${num_enum}=  Convert To Integer  ${number_enum}
   \  ${enum_title}=   Get From Dictionary  ${data_enum[${number_enum}]}   title
   \  ${enum_value}=   Get From Dictionary  ${data_enum[${number_enum}]}   value
+  \  Log To Console  [.] Enum value: ${enum_value}
   \  ${enum_value}=   convert_enum_str_to_int  ${enum_value}
   \  ${edit_feature_enum_title}=  Get WebElement  xpath=//input[@name="option_1_${number_enum}"]
   \  Wait And Type  ${edit_feature_enum_title}  ${enum_title}
