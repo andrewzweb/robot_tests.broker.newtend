@@ -132,7 +132,7 @@ Resource  ./bid/bid.robot
   
   Log To Console  [.]_ href: ${href}
   
-  ${filename}=  get_doc_from_cbd  ${href}
+  ${filename}=  get_doc_from_cbd  ${href}  ${OUTPUT_DIR}
   Log To Console  [.]_ filename: ${filename}
   ${text}=  read_text_from_file  ${filename}
   Log To Console  [.]_ text: ${text}

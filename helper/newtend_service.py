@@ -462,14 +462,15 @@ def get_plan_data_from_cbd(plan_hash_id):
     plan_endDate =  plan['data']['items'][0]['deliveryDate']['endDate']
     return plan_endDate
 
-def get_doc_from_cbd(url):
+def get_doc_from_cbd(url, output_dir):
     '''url -> filename'''
     filename = 'tmp.docx'
     request = requests.get(str(url), allow_redirects=True)
-    open(filename,'wb').write(request.content)
+    open(output_dir + "/" + filename,'wb').write(request.content)
     return filename
 
 def read_text_from_file(filename):
     '''filename -> text'''
     text = open(filename, 'r').read()
+    text = text.decode("utf-8")
     return text
