@@ -82,7 +82,7 @@ Create Contract
 
   ${tender_type}=  Get Tender Type  ${username}
 
-  ${locator.end_torgi}=  Run Keyword If  ${tender_type} == 'closeFrameworkAgreementUA'  Set Variable  xpath=//button[@data-test_id="close_tender"]
+  ${locator.end_torgi}=  Run Keyword If  '${tender_type}' == 'closeFrameworkAgreementUA'  Set Variable  xpath=//button[@data-test_id="close_tender"]
   ...    Set Variable  xpath=//button[@data-test_id="close_qualification"]
   Wait Until Keyword Succeeds  5 minute  30 seconds  Wait And Click  ${locator.end_torgi}
 
