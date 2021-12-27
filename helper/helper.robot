@@ -208,6 +208,6 @@ Hide Wallet
   Execute Javascript    window.document.getElementById('wallet-menu').style.display = "None";
 
 Get Tender Type
- [Arguments]  ${username}
- ${type}=  Get From Dictionary  ${USERS.users['${username}'].tender_data.data}  procurementMethodType
- [Return]  ${type}
+  [Arguments]  ${username}
+  ${type}=  Get From Dictionary  ${USERS.users['${username}'].tender_data.data}  procurementMethodType
+  [Return]  ${type}
