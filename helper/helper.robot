@@ -54,6 +54,7 @@ Edit Feasible Element
 
 Go To Overview
   Log To Console  [+] Go to overview
+  Reload Page
   Wait Bar Open
   Wait And Click  xpath=//a[@ui-sref="tenderView.overview"]
   Wait Bar Close
