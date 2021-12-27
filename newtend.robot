@@ -46,6 +46,26 @@ Resource  ./bid/bid.robot
 #                                                              #
 ################################################################
 
+Отримати інформацію про questions[0].answer
+  [Arguments]  @{ARGS}
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${quesion_id}=  Set Variable  ${ARGS[2]}
+
+  Find Tender By Id  ${tender_id}
+
+  Go To Questions Of Tender
+
+  Sleep  5
+
+  ${elements}=  Get WebElements  xpath//span[@class="answer-description ng-binding"]
+
+  ${text}=  Get Text  ${elements[0]}
+
+  [Return]  ${text}
+
+
 Отримати інформацію запитання із поля answer
   [Arguments]  @{ARGS}
 
