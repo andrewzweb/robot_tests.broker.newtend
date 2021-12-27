@@ -692,11 +692,10 @@ Resource  ./bid/bid.robot
   #Delete All Features
   Publish tender
 
-
-  Log To Console  Internal ID: ${data.tender_internal_id}
-  ${tender}=  Return Tender Obj  ${data.tender_internal_id}
-  Log  ${tender}
-  Set To Dictionary  ${USERS.users['Newtend_Owner'].tender_data.data}  features=${tender['data']['features']}
+  #Log To Console  Internal ID: ${data.tender_internal_id}
+  #${tender}=  Return Tender Obj  ${data.tender_internal_id}
+  #Log  ${tender}
+  #Set To Dictionary  ${USERS.users['Newtend_Owner'].tender_data.data}  features=${tender['data']['features']}
 
 Get Internal ID
   #https://autotest.newtend.com/opc/provider/tender/f5926f5a8d8a4350b7eb92d471729f74/overview
