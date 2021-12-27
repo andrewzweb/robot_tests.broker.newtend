@@ -248,7 +248,7 @@ Edit Bid Criteria
 
 SingUp Bid
   Wait Until Page Contains Element  xpath=//button[@ng-click="confirm()"]  60
-  Sleep 10
+  Sleep  10
   Wait And Click  xpath=//button[@ng-click="confirm()"]
   Wait And Click  xpath=//button[@ng-click="vm.sign()"]
 
