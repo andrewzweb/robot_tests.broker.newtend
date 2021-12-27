@@ -99,6 +99,7 @@ Resource  ./bid/bid.robot
   \  ${is_right}=  is_one_string_include_other_string  ${item.text}  ${doc_title}
   \  Run Keyword If  ${is_right}  Log To Console  [${result}] ${doc_title} | ${item.text} 
   \  ${result}=  Run Keyword If  ${is_right}  Set Variable  ${item.text}
+  \  Exit For Loop IF  ${is_right}
   
   [Return]  ${result}
 
