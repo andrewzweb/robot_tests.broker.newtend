@@ -113,3 +113,33 @@ Edit Price By Item
   \   ${element}=  Set Variable  ${element_value_by_item[${index}]}
   \   Wait And Type  xpath=//input[@name="${index}_itemUnitValueAmount"]  0.1
 
+
+Cancel qualification for owner
+  [Arguments]  @{ARGS}
+
+  Print Args  @{ARGS}
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${bid_index}=  Set Variable  ${ARGS[2]}
+
+  Find Tender By Id  ${tender_id}
+  Go To Auction
+
+  ${bid_hash_id}=  api_get_bids_hash  ${internal_tender_id}  0
+  Log To Console  [+] Get Award ID: ${bid_hash_id}
+
+  ${award_elements}=  Get WebElements  xpath=//div[@ng-repeat="bid in tenderBids"]
+  ${award_count}=  Get Length  ${award_elements}
+  Log To Console  [i] Count Award: ${award_count}
+
+  :FOR  ${index}  IN RANGE  ${award_count}
+  \  ${number}=  plus_one  ${index}
+  \  ${current_award_id}=  Get Element Attribute  xpath=//div[@ng-repeat="bid in tenderBids"][${number}]@data-lot_bid_id
+  \  Log To Console  [+] Current Award ID: ${current_award_id}
+  \  ${is_need_element}=  is_one_string_include_other_string  ${current_award_id}  ${bid_hash_id}
+  \  Log To Console  [ ] click ${index}? : ${is_need_element}
+  \  ${result}=  Run Keyword If  ${is_need_element} == True  Wait And Click  xpath=//div[@ng-repeat="bid in tenderBids"][${number}]
+  \  Exit For Loop IF  ${is_need_element} == True
+
+  Wait And Click  xpath=//button[@ng-click="cancel('cancelled')"]

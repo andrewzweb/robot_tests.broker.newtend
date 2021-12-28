@@ -891,7 +891,7 @@ Custom Get Internal ID
 
 Скасування рішення кваліфікаційної комісії
   [Arguments]  @{ARGS}
-  Print Args  @{ARGS}
+  Cancel qualification for owner  @{ARGS}
 
 Отримати інформацію про mainProcurementCategory
   [Arguments]    @{ARGS}

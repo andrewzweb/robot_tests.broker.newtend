@@ -474,3 +474,9 @@ def read_text_from_file(filename):
     text = open(filename, 'r').read()
     text = text.decode("utf-8")
     return text
+
+def api_get_bids_hash(tender_internal_id, number):
+    tender = newtend_get_tender(tender_internal_id)
+    result = tender['data']['bids'][int(number)]['id']
+    return str(result)
+

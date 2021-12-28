@@ -27,7 +27,7 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 
 Current test
   Prapare Browser
-  Test Get Text From File 
+  Test Cancel Qulification From Owner
   [Teardown]  Close Browser
 
 #Test 
@@ -39,6 +39,15 @@ Current test
 #    Test Git Info
 
 *** Keywords ***
+
+Test Cancel Qulification From Owner
+
+  Set Global Variable  ${internal_tender_id}  c0a9f50e10554a5386dd6b56675971ac
+  ${username}=  Set Variable  NewTend_Owner
+  ${tender_id}=  Set Variable  UA-2021-12-28-000133-d
+  ${bid_index}=  Set Variable  0
+
+  Cancel qualification for owner  ${username}  ${tender_id}  ${bid_index}
 
 Test Get File From Cbd
   ${url}=  Set Variable  https://public-docs-staging.prozorro.gov.ua/get/9c11c74ebcb444789e8b41e41ee32238?Signature=HXw0hzSmXYuA4fZ%2FbwoOAzy32xtoilL6aKpXBkpT2lmqikhpU5IaM3JaC51ytXBmVPBk9n0di%2BM5Hb0bx%2B85CA%3D%3D&KeyID=01b985cf
