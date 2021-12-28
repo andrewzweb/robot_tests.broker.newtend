@@ -952,7 +952,7 @@ Custom Get Internal ID
   ${what_change}=  Set Variable  ${ARGS[2]}
   ${expected_result}=  Set Variable  ${ARGS[3]}
 
-  Run Keyword If  '${what_change}' == 'status' and '${expected_result}' == 'active'  Activate bid  @{ARGS}
+  Run Keyword If  '${what_change}' == 'status'  Activate bid  @{ARGS}
 
 Завантажити документ в ставку
   [Arguments]  @{ARGS}
