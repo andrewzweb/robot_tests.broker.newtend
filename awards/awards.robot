@@ -50,17 +50,21 @@ Add Quilificaton Comission Document
   Wait And Click  ${locator.apply_decision}
 
   # click to add
-  ${locator.add_file}=  Set Variable  xpath=//*[@ng-model="file"]
-  Wait And Click  ${locator.add_file}
+  #${locator.add_file}=  Set Variable  xpath=//*[@ng-model="file"]
+  #Wait And Click  ${locator.add_file}
 
   # add file
   Sleep  2
   ${locator.input_add_file}=  Set Variable  xpath=//*[@type="file"]
   Choose File  ${locator.input_add_file}  ${document_file}
 
-  ${locator.upload_file}=  Set Variable  xpath=//*[@ng-click="upload()"]
-  Wait And Click  ${locator.upload_file}
+  Execute Javascript
+  ...  var element=document.querySelector("button[ng-click='upload()']");
+  ...  element.removeAttribute("disabled");
 
+  ${locator.upload_file}=  Set Variable  xpath=//button[@ng-click="upload()"]
+  Wait And Click  ${locator.upload_file}
+  
   Sleep  5
 
   ${locator.close_popup}=  Set Variable  xpath=//div[@class="modal-footer layout-row"]/div[2]/button

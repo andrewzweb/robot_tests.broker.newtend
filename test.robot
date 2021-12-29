@@ -11,7 +11,7 @@ Library  OperatingSystem
 
 *** Variables ***
 ${tender_id}  UA-2021-12-10-000295-c
-${data.tender_internal_id}  466ad39d94af47c6b06ab34207a45679
+${data.tender_internal_id}  48836fc1bd6f4d81acddbebd7dc540f0
 ${username}  Newtend_Owner
 ${OUTPUT_DIR}  .
 ${BROWSER}  chrome
@@ -27,10 +27,10 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 
 Current test
   Prapare Browser
-  Test Cancel Qulification From Owner
+  Test Add Doc To Qualification
   [Teardown]  Close Browser
 
-#Test 
+#Test
 #  ${date}=  Set Variable  2021-12-27T23:00:00+03:00
 #  ${new_date}=  change_endDate_for_plan  ${date}
 #  Log To Console  Date: ${new_date}
@@ -39,6 +39,16 @@ Current test
 #    Test Git Info
 
 *** Keywords ***
+
+Test Add Doc To Qualification
+  Set Global Variable  ${data.internal_tender_id}  48836fc1bd6f4d81acddbebd7dc540f0
+  ${username}=  Set Variable  username
+  ${document_file}=  Set Variable  /home/andrew/workspace/work/robot_tests/test.txt
+  ${tender_id}=  Set Variable  UA-2021-12-29-000080-d
+  ${bid_index}=  Set Variable  0
+  
+  Add Doc To Qualification  ${username}  ${document_file}  ${tender_id}  ${bid_index}
+
 
 Test Cancel Qulification From Owner
 
