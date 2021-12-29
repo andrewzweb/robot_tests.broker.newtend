@@ -162,3 +162,5 @@ Download Document To Contract
 
   Wait And Click  xpath=//button[@ng-click="upload()"]
 
+Create Contract For Negotiation
+  Wait And Click  xpath//button[@ng-click="vm.decide(vm.award.id, 'active',vm.tender.procurementMethodType)"]
