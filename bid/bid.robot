@@ -526,8 +526,8 @@ Make Bid For Esco
   ${length_annualCostsReduction}=  Get Length  ${annualCostsReduction}
 
   :FOR  ${item}  IN  ${length_annualCostsReduction}
-  \  Log To Console  ${item}:  ${annualCostsReduction[${annualCostsReduction}]}
-  \  Wait And Type  xpath=//input[@id="acr-${item}"]  ${annualCostsReduction[${annualCostsReduction}]}
+  \  Log To Console  ${item}:  ${annualCostsReduction[${item}]}
+  \  Wait And Type  xpath=//input[@id="acr-${item}"]  ${annualCostsReduction[${item}]}
 
   # confirm bid
   ${locator.place_a_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
