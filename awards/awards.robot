@@ -23,18 +23,18 @@ Choise Bid
   [Arguments]  ${bid_index}
   Sleep  2
 
-  ${bid_hash_id}=  api_get_first_award_id  ${data.tender_internal_id}  ${bid_index}
-  Log To Console  [+] Get Award ID: ${bid_hash_id}
+  ${bid_hash_id}=  api_get_bids_hash  ${data.tender_internal_id}  ${bid_index}
+  Log To Console  [+] Get Bid ID: ${bid_hash_id}
 
-  ${award_elements}=  Get WebElements  xpath=//div[@ng-repeat="bid in tenderBids"]
-  ${award_count}=  Get Length  ${award_elements}
-  Log To Console  [i] Count Award: ${award_count}
+  ${bids_elements}=  Get WebElements  xpath=//div[@ng-repeat="bid in tenderBids"]
+  ${bids_count}=  Get Length  ${bids_elements}
+  Log To Console  [i] Count Award: ${bids_count}
 
-  :FOR  ${index}  IN RANGE  ${award_count}
+  :FOR  ${index}  IN RANGE  ${bids_count}
   \  ${number}=  plus_one  ${index}
-  \  ${current_award_id}=  Get Element Attribute  xpath=//div[@ng-repeat="bid in tenderBids"][${number}]@data-lot_bid_id
-  \  Log To Console  [+] Current Award ID: ${current_award_id}
-  \  ${is_need_element}=  is_one_string_include_other_string  ${current_award_id}  ${bid_hash_id}
+  \  ${current_bid_id}=  Get Element Attribute  xpath=//div[@ng-repeat="bid in tenderBids"][${number}]@data-lot_bid_id
+  \  Log To Console  [+] Current Bid ID: ${current_bid_id}
+  \  ${is_need_element}=  is_one_string_include_other_string  ${current_bid_id}  ${bid_hash_id}
   \  Log To Console  [ ] click ${index}? : ${is_need_element}
   \  ${result}=  Run Keyword If  ${is_need_element} == True  Wait And Click  xpath=//div[@ng-repeat="bid in tenderBids"][${number}]
   \  Exit For Loop IF  ${is_need_element} == True
