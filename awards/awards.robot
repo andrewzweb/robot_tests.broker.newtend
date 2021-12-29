@@ -89,6 +89,9 @@ Create Contract
   ${button_exist}=  Run Keyword And Return Status  Get WebElement  xpath=//*[@ng-click="decide('active')"]
   Run Keyword If  ${button_exist}  Wait And Click  ${locator.apply_decision}
 
+  # get tender
+  Get Tender From Api  ${username}  -42  -8
+
   ${tender_type}=  Get Tender Type  ${username}
 
   ${locator.end_torgi}=  Run Keyword If  '${tender_type}' == 'closeFrameworkAgreementUA'  Set Variable  xpath=//button[@data-test_id="close_qualification"]
