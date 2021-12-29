@@ -90,11 +90,13 @@ Confirm Suplier Old
   # accept bid
   Wait And Click  xpath=//button[@ng-click="vm.decide(vm.award.id, 'active',vm.tender.procurementMethodType)"]
   Sleep  2
-  # download doc
-  # clit to button for add document
-  #Wait And Click  xpath=//div[@ng-model="file"]
-  #Sleep  2
 
+  # download doc
+  # lifehack
+  Execute Javascript
+  ...  var element=document.querySelector("input[data-id='bid_file_update']");
+  ...  element.click();
+  
   # put in input
   Choose File  xpath=//input[@data-id="bid_file_update"]  ${document_file}
   Sleep  5
