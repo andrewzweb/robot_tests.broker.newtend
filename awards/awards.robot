@@ -48,14 +48,19 @@ Add Quilificaton Comission Document
   # click to popup download
   ${locator.apply_decision}=  Set Variable  xpath=//*[@ng-click="decide('active')"]
   Wait And Click  ${locator.apply_decision}
+  Sleep  3
 
   # click to add
-  #${locator.add_file}=  Set Variable  xpath=//*[@ng-model="file"]
+  Execute Javascript
+  ...  var element=document.querySelector("input[data-id='bid_file_update']");
+  ...  element.click();
+
+  #${locator.add_file}=  Set Variable  xpath=//input[@data-id="bid_file_update"]
   #Wait And Click  ${locator.add_file}
 
   # add file
   Sleep  2
-  ${locator.input_add_file}=  Set Variable  xpath=//*[@type="file"]
+  ${locator.input_add_file}=  Set Variable  xpath=//input[@type="file"]
   Choose File  ${locator.input_add_file}  ${document_file}
 
   Execute Javascript
