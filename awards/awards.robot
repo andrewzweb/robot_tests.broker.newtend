@@ -90,9 +90,9 @@ Create Contract
   Run Keyword If  ${button_exist}  Wait And Click  ${locator.apply_decision}
 
   # get tender
-  Get Tender From Api  ${username}  -40  -8
+  Get Tender From Api  ${username}  49  81
   ${tender_type}=  Get From Dictionary  ${USERS.users['${username}'].tender_data.data}  procurementMethodType
-  Log To Console  [.] type ${type}
+  Log To Console  [.] type ${tender_type}
 
   ${locator.end_torgi}=  Run Keyword If  '${tender_type}' == 'closeFrameworkAgreementUA'  Set Variable  xpath=//button[@data-test_id="close_qualification"]
   ...  ELSE  Set Variable  xpath=//button[@data-test_id="close_tender"]

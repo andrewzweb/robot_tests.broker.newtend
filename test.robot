@@ -22,12 +22,9 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 
 *** Test Cases ***
 
-#Test me 3
-#  Test Get File From Cbd
-
 Current test
   Prapare Browser
-  Test Add Doc To Qualification
+  Test Get Doc From CDB
   [Teardown]  Close Browser
 
 #Test
@@ -35,10 +32,24 @@ Current test
 #  ${new_date}=  change_endDate_for_plan  ${date}
 #  Log To Console  Date: ${new_date}
 
-#Test
-#    Test Git Info
-
+    
 *** Keywords ***
+
+Test Get Doc From CDB
+
+  ${username}=  Set Variable  Newtend_Owner
+  ${tender_id}=  Set Variable  UA-2021-12-30-000072-d
+  ${document_title}=  Set Variable  d-9dc52187
+
+  ${result}=  Отримати документ  ${username}  ${tender_id}  ${document_title}
+  Log To Console  ${result}
+
+  
+Test Get Internal ID From URL
+    ${url}=  Set Variable  https://autotest.newtend.com/opc/provider/tender/0fd4828ff78b4fc8b8ca217194e10af0/auction
+    ${result}=  Get Substring  ${url}  49  81
+    Log To Console  ${result}
+    Should Be Equal   ${result}  0fd4828ff78b4fc8b8ca217194e10af0
 
 Test Add Doc To Qualification
   Set Global Variable  ${data.internal_tender_id}  48836fc1bd6f4d81acddbebd7dc540f0
