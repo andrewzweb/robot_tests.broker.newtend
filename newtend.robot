@@ -52,7 +52,7 @@ Resource  ./bid/bid.robot
   Print Args  @{ARGS}
   Go To Questions Of Tender
   Sleep  5
-  ${elements}=  Get WebElements  xpath//span[@class="answer-description ng-binding"]
+  ${elements}=  Get WebElements  xpath=//span[@class="answer-description ng-binding"]
   ${text}=  Get Text  ${elements[0]}
   [Return]  ${text}
 
@@ -77,7 +77,7 @@ Resource  ./bid/bid.robot
   Go To Questions Of Tender
   Sleep  3
 
-  Wait Until Keyword Succeeds  8 minute  20 s  Get Text   xpath=//span[@class="answer-description ng-binding"]
+  Wait Until Keyword Succeeds  8 minute  20 s  Get Text  xpath=//span[@class="answer-description ng-binding"]
   ${answer_to_question}=  Get Text   xpath=//span[@class="answer-description ng-binding"]
   [return]  ${answer_to_question}
 
