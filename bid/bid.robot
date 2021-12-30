@@ -556,10 +556,15 @@ Activate bid
   Sleep  5
 
   ${press_button_activate}=  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="activateBid()"]
-  ${press_button_publish}=  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="placeBid()"]
+  ${press_button_publish}=  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="publishBid()"]
 
   Log To Console  [+] Activate: ${press_button_activate} | Publish: ${press_button_publish}
 
-  Sleep  5
+  Sleep  10
 
+  Run Keyword If  '${press_button_publish}' == 'True'  Wait And Click  xpath=//button[@ng-click="confirm()"]
+
+  Run Keyword If  '${press_button_publish}' == 'True'  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
+
+  Sleep  10
   Log To Console  [+] Activate bid
