@@ -641,17 +641,3 @@ Edit NDS Negotiation
   Run Keyword If  '${lot_nds}' == 'True'  Focus  xpath=//input[@id="with-nds"]
   Run Keyword If  '${lot_nds}' == 'True'  Select Checkbox  xpath=//input[@id="with-nds"]
 
-
-Get Tender From Api
-  [Arguments]  ${username}  ${start}=-41 ${end}=-9
-
-  ${now_url}=  Get Location
-  ${internal_id}=  Get Substring  ${now_url}  ${start}  ${end}
-  Log To Console  [+] Get Tender Internal Id: ${internal_id}
-
-  ${raw_tender_data}=  Return Tender Obj  ${internal_id}
-  ${tender_data}=  Get From Dictionary  ${raw_tender_data}  data
-  #Log To Console  ${tender_data}
-  ${convert_tender_data}=  op_robot_tests.tests_files.service_keywords.Munchify  ${tender_data}
-  Set To Dictionary  ${USERS.users['${username}'].tender_data}   data=${convert_tender_data}
-  Log To Console  [+] Put Tender Data Api In Storage

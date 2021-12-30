@@ -1,4 +1,4 @@
-** Settings ***
+*** Settings ***
 Resource  ./tender_edit/tender_edit_base.robot
 Resource  ./tender_edit/tender_edit_bid.robot
 Resource  ./tender_edit/tender_edit_lot.robot
@@ -112,6 +112,7 @@ Try Choice Tender From Search List
 
 Save For Global
   [Arguments]  ${username}=None
+  Log To Console  [+] Save For Global
   # try to fix error cant find data for competitive
   Run Keyword If  '${username}' != 'None'  Log To Console  [+] Username True
   ${tender_data}=  Run Keyword If  '${username}' != 'None'  newtend_get_tender  ${data.tender_internal_id}
