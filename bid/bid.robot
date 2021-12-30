@@ -178,6 +178,8 @@ Make Bid
   # Wait page reload
   Sleep  3
 
+  Save Criteria In Bid And Publish Bid
+  
 
 Edit Bid Criteria
   [Arguments]    @{ARGS}
@@ -241,18 +243,10 @@ Edit Bid Criteria
   \  # заполняем если элемент подходит
   \  Run Keyword If  '${number}' != 'None'  Edit Criteria Item  ${criteria_data}  ${number}  ${current_element_id}
 
-  Log To Console  [+] Save criteria
-  Save Criteria In Bid And Publish Bid
-  ${status}=  Run Keyword And Return Status   Wait Until Page Contains Element  xpath=//button[@ng-click="confirm()"]  60
-  Run Keyword If  ${status}  SingUp Bid
+  Wait And Click  xpath=//button[@ng-click="saveCriteriaChanges()"]
 
-SingUp Bid
-  Wait Until Page Contains Element  xpath=//button[@ng-click="confirm()"]  60
-  Sleep  10
-  Click Element  xpath=//button[@ng-click="confirm()"]
-  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
 
- Edit Criteria Item
+Edit Criteria Item
   [Arguments]    @{ARGS}
   ${data_list}=  Set Variable  ${ARGS[0]}
   ${number}=  Set Variable  ${ARGS[1]}
@@ -287,12 +281,14 @@ SingUp Bid
   
 
 Save Criteria In Bid And Publish Bid
-  #--- end
-  Wait And Click  xpath=//button[@ng-click="saveCriteriaChanges()"]
-  Sleep  5
   Wait And Click  xpath=//button[@ng-click="publishBid()"]
   Sleep  5
+  Wait Until Page Contains Element  xpath=//button[@ng-click="confirm()"]  60
+  Sleep  10
+  Click Element  xpath=//button[@ng-click="confirm()"]
+  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
 
+  
 Add Doc To Bid
   [Arguments]  ${username}  ${document_file}
 
