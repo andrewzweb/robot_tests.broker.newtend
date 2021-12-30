@@ -559,10 +559,10 @@ Activate bid
 
   Sleep  5
 
-  ${exist_button_activate}=  Run Keyword And Return Status  Get WebElement  xpath=//button[@ng-click="activateBid()"]
-  Log To Console  [${exist_button_activate}] Button activate press?
+  ${press_button_activate}=  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="activateBid()"]
+  ${press_button_publish}=  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="placeBid()"]
 
-  Run Keyword If  '${exist_button_activate}' == 'True'  Wait And Click  xpath=//button[@ng-click="activateBid()"]
+  Log To Console  [+] Activate: ${press_button_activate} | Publish: ${press_button_publish}
 
   Sleep  5
 
