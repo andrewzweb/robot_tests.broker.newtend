@@ -138,7 +138,7 @@ Cancel qualification for owner
   Find Tender By Id  ${tender_id}
   Go To Auction
 
-  ${bid_hash_id}=  api_get_bids_hash  ${internal_tender_id}  0
+  ${bid_hash_id}=  api_get_bids_hash  ${data.tender_internal_id}  0
   Log To Console  [+] Get Award ID: ${bid_hash_id}
 
   ${award_elements}=  Get WebElements  xpath=//div[@ng-repeat="bid in tenderBids"]
