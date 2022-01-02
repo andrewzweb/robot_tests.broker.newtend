@@ -34,6 +34,7 @@ Make Draft Simple Bid
   # click to make bid
   ${locator.button_popup_make_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
   Wait And Click  ${locator.button_popup_make_bid}
+  Sleep  3
 
   # wait popup
   ${locator.popup_make_bid}=  Set Variable  xpath=//div[@class="modal-content"]
@@ -140,6 +141,7 @@ Make Bid
 
   # click to make bid 
   Wait And Click  xpath=//button[@ng-click="placeBid()"]
+  Sleep  3
 
   # wait popup
   Wait Until Element Is Visible  xpath=//div[@class="modal-content"]
