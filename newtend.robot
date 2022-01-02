@@ -194,10 +194,12 @@ Resource  ./bid/bid.robot
 Отримати інформацію про enquiryPeriod.clarificationsUntil
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
+  Fail Because Not Implemented
 
 Додати критерії в тендер другого етапу
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
+  Fail Because Not Implemented
 
 # this for esco 02qualification
 Дискваліфікувати постачальника
@@ -206,15 +208,21 @@ Resource  ./bid/bid.robot
   # username
   # tender_id
   # number qualification 1
+  Fail Because Not Implemented
 
 Отримати інформацію із пропозиції із поля lotValues[0].value.amount
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
 
+  ${budget_amount}=  Get Text  xpath=//span[@id="tender_budget_value_amount"]
+  ${budget_amount}=  convert_budget_amount  ${budget_amount}
+  [Return]  ${budget_amount}
+
 # for esco
 Отримати інформацію про questions[0].title
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
+  Fail Because Not Implemented
 
 ################################################################
 #                                                              #

@@ -24,17 +24,24 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 
 Current test
   Prapare Browser
-  Test Get Doc From CDB
+
+  Test Get Budget Amount
   [Teardown]  Close Browser
 
 #Test
 #  ${date}=  Set Variable  2021-12-27T23:00:00+03:00
 #  ${new_date}=  change_endDate_for_plan  ${date}
 #  Log To Console  Date: ${new_date}
-
     
 *** Keywords ***
 
+Test Get Budget Amount
+  ${tender_id}=  Set Variable  UA-2021-12-30-000223-c
+  Find Tender By Id  ${tender_id}
+  ${result}=  Отримати інформацію із пропозиції із поля lotValues[0].value.amount  1
+
+  Log To Console  ${result}
+  
 Test Get Doc From CDB
 
   ${username}=  Set Variable  Newtend_Owner

@@ -480,3 +480,9 @@ def api_get_bids_hash(tender_internal_id, number):
     result = tender['data']['bids'][int(number)]['id']
     return str(result)
 
+def convert_budget_amount(amount):
+    amount = str(amount)
+    amount = amount.replace(' ', '')
+    amount = amount.replace(',', '.')
+    amount = float(amount)
+    return amount
