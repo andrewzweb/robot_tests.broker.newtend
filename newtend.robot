@@ -402,8 +402,8 @@ Resource  ./bid/bid.robot
   # новая функциональность для коректного отображения контракта тендера
   # и ждет синхронизации
   #Run Keyword If  '${TEST_NAME}' == 'Відображення статусу підписаної угоди з постачальником переговорної процедури'  Smart Wait  Wait Until Page Contains Element  xpath=//a[@ng-repeat="contract in contracts"]
-  Go To Overview
-  Put Tender In Global Verable  ${username}
+  #Go To Overview
+  #Put Tender In Global Verable  ${username}
 
 Отримати інформацію із лоту
   [Arguments]  @{ARGUMENTS}
