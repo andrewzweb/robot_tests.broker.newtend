@@ -178,7 +178,7 @@ Make Bid
   # Wait page reload
   Sleep  3
 
-  ${tender_type}=  Get Tender Type
+  ${tender_type}=  Get Tender Type  ${username}
   Run Keyword If  '${tender_type}' != 'simple.defense'  Save Criteria In Bid And Publish Bid
   
 
