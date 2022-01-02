@@ -334,8 +334,8 @@ Resource  ./bid/bid.robot
   ${internal_id}=  Get Tender Internal Id
   Log To Console  Tender ID: ${internal_id}
 
-  Run Keyword If  '${username}' != 'Newtend_Owner'  Put Tender In Global Verable  ${username}
-  Sleep  1
+  Put Tender In Global Verable  ${username}
+  Sleep  2
 
 Створити тендер
   [Arguments]  ${username}  ${tender_data}  ${plan_uaid}  ${criteria_guarantee}=None  ${criteria_lot}=None  ${criteria_llc}=None
