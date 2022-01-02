@@ -290,7 +290,7 @@ Set Created Tender ID In Global Variable
 Publish tender
   CustomLog  [+] Publish tender
   # Save tender
-  Wait And CLick  ${locator.button_publish}
+  Wait And CLick  xpath=//button[@ng-click="publish()"]
   Capture Page Screenshot
   Sleep  5
   Capture Page Screenshot

@@ -395,12 +395,14 @@ Resource  ./bid/bid.robot
   Sleep  5
 
 Оновити сторінку з тендером
-  [Arguments]  @{ARGUMENTS}
+  [Arguments]  @{ARGS}
   Reload Page
 
+  ${username}=  Set Variable  ${ARGS[0]}
   # новая функциональность для коректного отображения контракта тендера
   # и ждет синхронизации
-  Run Keyword If  '${TEST_NAME}' == 'Відображення статусу підписаної угоди з постачальником переговорної процедури'  Smart Wait  Wait Until Page Contains Element  xpath=//a[@ng-repeat="contract in contracts"]
+  #Run Keyword If  '${TEST_NAME}' == 'Відображення статусу підписаної угоди з постачальником переговорної процедури'  Smart Wait  Wait Until Page Contains Element  xpath=//a[@ng-repeat="contract in contracts"]
+  Put Tender In Global Verable  ${username}
 
 Отримати інформацію із лоту
   [Arguments]  @{ARGUMENTS}
