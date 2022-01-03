@@ -22,17 +22,20 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 
 *** Test Cases ***
 
-Current test
-  Prapare Browser
+#Current test
+  #Prapare Browser
 
-  Test Get Budget Amount
-  [Teardown]  Close Browser
+  #Test Get Budget Amount
+  #[Teardown]  Close Browser
 
 #Test
 #  ${date}=  Set Variable  2021-12-27T23:00:00+03:00
 #  ${new_date}=  change_endDate_for_plan  ${date}
 #  Log To Console  Date: ${new_date}
-    
+
+Test More
+  Log To Console  ${TEST_NAME}
+
 *** Keywords ***
 
 Test Get Budget Amount

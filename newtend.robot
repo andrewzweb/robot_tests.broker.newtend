@@ -327,7 +327,8 @@ Resource  ./bid/bid.robot
   [Arguments]  ${username}  ${tender_id}  @{ARGS}
 
   Log To Console  Test name: ${TEST_NAME}
-  Run Keyword If  'contract' in ${TEST_NAME} and '${contract_wait}' == True  Log To Console  Run Contract Await
+  Run Keyword If  'contract' in ${TEST_NAME} and '${contract_wait}' == True  Log To Console  [+] Contract wait
+  Run Keyword If  'contract' in ${TEST_NAME} and '${contract_wait}' == True  Sleep  300
   Run Keyword If  'contract' in ${TEST_NAME} and '${contract_wait}' == True  Set Global Variable  ${contract_wait} False
 
   # if tender
