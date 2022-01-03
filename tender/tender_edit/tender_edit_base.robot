@@ -618,6 +618,7 @@ Put Tender In Global Verable
   #Log To Console  ${tender_data}
   ${convert_tender_data}=  op_robot_tests.tests_files.service_keywords.Munchify  ${tender_data}
   Set To Dictionary  ${USERS.users['${username}'].tender_data}   data=${convert_tender_data}
+  Set To Dictionary  ${USERS.users['${username}'].initial_data}   data=${convert_tender_data}
   #Set To Dictionary  ${USERS.users['${username}'].initial_data}  tender_data=${raw_tender_data}
   #Set Global Variable  ${USERS.users['${username}'].data}  ${tender_data}
   Log To Console  [+] Put Tender Data Api In Storage
