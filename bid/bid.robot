@@ -174,15 +174,15 @@ Make Bid
   Wait And Type  ${locator.input_bid_amount}  ${bid_amount}
 
   # confirm bid
-  ${locator.place_a_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
-  Wait And Click  ${locator.place_a_bid}
+  #${locator.place_a_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
+  #Wait And Click  ${locator.place_a_bid}
 
   # Wait page reload
   Sleep  3
 
-  ${tender_type}=  Get Tender Type  ${username}
-  Run Keyword If  '${tender_type}' != 'simple.defense'  Log To Console  [True] simple.defense
-  Run Keyword If  '${tender_type}' != 'simple.defense'  Save Criteria In Bid And Publish Bid
+  #${tender_type}=  Get Tender Type  ${username}
+  #Run Keyword If  '${tender_type}' != 'simple.defense'  Log To Console  [True] simple.defense
+  #Run Keyword If  '${tender_type}' != 'simple.defense'  Save Criteria In Bid And Publish Bid
 
 
 Edit Bid Criteria
@@ -568,6 +568,10 @@ Activate bid
   Sleep  5
 
   ${press_button_activate}=  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="activateBid()"]
+
+  Sleep  3
+  Reload Page
+
   ${press_button_publish}=  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="publishBid()"]
 
   Log To Console  [+] Activate: ${press_button_activate} | Publish: ${press_button_publish}
