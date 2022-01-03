@@ -369,9 +369,9 @@ Resource  ./bid/bid.robot
   # main action
   Create Tender  ${username}  ${tender_data}  ${plan_uaid}
 
-  ${id}=  Set Variable  ${g_data.current_tender_id}
-  Log To Console  [+] Create Tender ID: ${id}
-  Get Internal ID
+  ${internal_id}=  Get Tender Internal Id
+  Log To Console  Tender ID: ${internal_id}
+  Put Tender In Global Verable  ${username}
   [Return]  ${id}
 
 Підготувати дані для оголошення тендера
@@ -401,13 +401,7 @@ Resource  ./bid/bid.robot
 Оновити сторінку з тендером
   [Arguments]  @{ARGS}
   Reload Page
-
   ${username}=  Set Variable  ${ARGS[0]}
-  # новая функциональность для коректного отображения контракта тендера
-  # и ждет синхронизации
-  #Run Keyword If  '${TEST_NAME}' == 'Відображення статусу підписаної угоди з постачальником переговорної процедури'  Smart Wait  Wait Until Page Contains Element  xpath=//a[@ng-repeat="contract in contracts"]
-  #Go To Overview
-  #Put Tender In Global Verable  ${username}
 
 Отримати інформацію із лоту
   [Arguments]  @{ARGUMENTS}
