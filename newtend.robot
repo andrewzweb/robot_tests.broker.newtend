@@ -326,6 +326,10 @@ Resource  ./bid/bid.robot
 Пошук тендера по ідентифікатору
   [Arguments]  ${username}  ${tender_id}  @{ARGS}
 
+  Log To Console  Test name: ${TEST_NAME}
+  Run Keyword If  'contract' in ${TEST_NAME} and '${contract_wait}' == True  Log To Console  Run Contract Await
+  Run Keyword If  'contract' in ${TEST_NAME} and '${contract_wait}' == True  Set Global Variable  ${contract_wait} False
+
   # if tender
   Find Tender By Id  ${tender_id}  ${username}
   Sleep  2
