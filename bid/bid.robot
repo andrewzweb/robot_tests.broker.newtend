@@ -556,6 +556,8 @@ Activate bid
   # go to own bid
   Wait And Click  xpath=//a[@ui-sref="tenderView.ownBid"]
 
+  Capture Page Screenshot
+
   Sleep  5
 
   ${press_button_activate}=  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="activateBid()"]
@@ -565,9 +567,16 @@ Activate bid
 
   Sleep  10
 
+  Capture Page Screenshot
+
   Run Keyword If  '${press_button_publish}' == 'True'  Wait And Click  xpath=//button[@ng-click="confirm()"]
 
   Run Keyword If  '${press_button_publish}' == 'True'  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
 
+  Capture Page Screenshot
+
   Sleep  10
+
+  Capture Page Screenshot
+
   Log To Console  [+] Activate bid
