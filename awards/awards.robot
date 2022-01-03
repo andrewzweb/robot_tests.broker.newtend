@@ -154,4 +154,5 @@ Cancel qualification for owner
   \  ${result}=  Run Keyword If  ${is_need_element} == True  Wait And Click  xpath=//div[@ng-repeat="bid in tenderBids"][${number}]
   \  Exit For Loop IF  ${is_need_element} == True
 
+  Hide Wallet
   Wait And Click  xpath=//button[@ng-click="cancel('cancelled')"]
