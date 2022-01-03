@@ -570,9 +570,11 @@ Activate bid
 
   Capture Page Screenshot
 
-  Run Keyword If  '${press_button_publish}' == 'True'  Wait And Click  xpath=//button[@ng-click="confirm()"]
-
-  Run Keyword If  '${press_button_publish}' == 'True'  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
+  ${status}=  Run Keyword If  '${press_button_publish}' == 'True'  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="confirm()"]
+  Log To Console  [${status}] Press confirm
+  
+  ${status}=  Run Keyword If  '${press_button_publish}' == 'True'  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
+  Log To Console  [${status}] Press confirm
 
   Capture Page Screenshot
 
