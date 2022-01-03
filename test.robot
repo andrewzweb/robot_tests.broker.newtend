@@ -22,22 +22,50 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 
 *** Test Cases ***
 
-#Current test
-  #Prapare Browser
-
-  #Test Get Budget Amount
-  #[Teardown]  Close Browser
+Current test
+  Prapare Browser
+  Test Esco Bid
+  [Teardown]  Close Browser
 
 #Test
 #  ${date}=  Set Variable  2021-12-27T23:00:00+03:00
 #  ${new_date}=  change_endDate_for_plan  ${date}
 #  Log To Console  Date: ${new_date}
 
-Test More
-  Log To Console  ${TEST_NAME}
+#Test More
+#  Log To Console  ${TEST_NAME}
 
 *** Keywords ***
 
+Test Esco Bid
+
+  Go To  https://autotest.newtend.com/opc/provider/tender/cca2e90855af45a186eba8cb720fa067/overview
+
+  Sleep  4
+  Wait And Click  xpath=//button[@ng-click="placeBid()"]
+
+  ${locator.button_agree_with_publish}=  Set Variable  xpath=//input[@ng-model="agree.value"]
+  Select Checkbox  ${locator.button_agree_with_publish}
+
+  # click self qulified
+  ${locator.button_agree_selt_quliffied}=  Set Variable  xpath=//input[@ng-model="agree.selfQualified"]
+  Select Checkbox  ${locator.button_agree_selt_quliffied}
+
+  Wait And Click  xpath=//button[@ng-show="!lot.lotValue"]
+
+  ${annualCostsReduction}=  Create List  11.12  1  2  3  4
+  ${length_annualCostsReduction}=  Get Length  ${annualCostsReduction}
+  
+  :FOR  ${item}  IN RANGE  ${length_annualCostsReduction}
+  \  ${numb}=  Convert To String  ${item}
+  \  ${status}=  Run Keyword And Return Status  Clear Element Text  xpath=//input[@id="acr-${numb}"]
+  \  ${number}=  Convert To String  ${annualCostsReduction[${item}]}
+  \  Log To Console  ${number}
+  \  ${status}=  Run Keyword And Return Status  Input Text  xpath=//input[@id="acr-${numb}"]  ${number}
+  \  Log To Console  [${status}] ${annualCostsReduction[${item}]}
+  \  Sleep  1
+
+  
 Test Get Budget Amount
   ${tender_id}=  Set Variable  UA-2021-12-30-000223-c
   Find Tender By Id  ${tender_id}
@@ -316,7 +344,7 @@ Prapare Browser
   ${pass}=  Set Variable  testowner0
   ${login2}=  Set Variable  test.provider1@gmail.com
   ${pass2}=  Set Variable  test.provider1
-  Custom Login  ${login}  ${pass}
+  Custom Login  ${login2}  ${pass2}
 
 Edit Tender
   Find Tender By Id  ${tender_id}

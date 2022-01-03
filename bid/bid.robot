@@ -524,10 +524,16 @@ Make Bid For Esco
   # сокращение затрат
   ${annualCostsReduction}=  Get From Dictionary  ${bid_data.data.lotValues[0].value}  annualCostsReduction
   ${length_annualCostsReduction}=  Get Length  ${annualCostsReduction}
+  #Log To Console  [.] count annualCosts: ${length_annualCostsReduction}
 
-  :FOR  ${item}  IN  ${length_annualCostsReduction}
-  \  Log To Console  ${item}:  ${annualCostsReduction[${item}]}
-  \  Wait And Type  xpath=//input[@id="acr-${item}"]  ${annualCostsReduction[${item}]}
+  
+  :FOR  ${item}  IN RANGE  ${length_annualCostsReduction}
+  \  ${numb}=  Convert To String  ${item}
+  \  ${status}=  Run Keyword And Return Status  Clear Element Text  xpath=//input[@id="acr-${numb}"]
+  \  ${number}=  Convert To String  ${annualCostsReduction[${item}]}
+  \  Log To Console  ${number}
+  \  ${status}=  Run Keyword And Return Status  Input Text  xpath=//input[@id="acr-${numb}"]  ${number}
+  \  Log To Console  [${status}] ${annualCostsReduction[${item}]}
 
   # confirm bid
   ${locator.place_a_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
