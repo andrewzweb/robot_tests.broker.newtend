@@ -181,8 +181,9 @@ Make Bid
   Sleep  3
 
   ${tender_type}=  Get Tender Type  ${username}
+  Run Keyword If  '${tender_type}' != 'simple.defense'  Log To Console  [True] simple.defense
   Run Keyword If  '${tender_type}' != 'simple.defense'  Save Criteria In Bid And Publish Bid
-  
+
 
 Edit Bid Criteria
   [Arguments]    @{ARGS}
