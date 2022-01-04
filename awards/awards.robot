@@ -23,9 +23,11 @@ Choise Bid
   [Arguments]  ${index}  ${username}
   Sleep  2
 
-  ${tender_type}=  Get Tender Type  ${username}
 
-  ${hash_id}=  Run Keyword If  '${tender_type}' == 'aboveThresholdUA'  api_get_bid_id_from_award  ${data.tender_internal_id}  ${bid_index}  
+  ${tender_type}=  Get Tender Type  ${username}
+  ${white_list_of_tenders}=  Create List  esco  competitiveDialogueUA  competitiveDialogueUA
+
+  ${hash_id}=  Run Keyword If  '${procurementMethodType}' not in ${white_list_of_tenders}  api_get_bid_id_from_award  ${data.tender_internal_id}  ${bid_index}  
   ...   ELSE  api_get_bids_hash  ${data.tender_internal_id}  ${bid_index}
 
   Log To Console  [+] Get Bid ID: ${hash_id}
