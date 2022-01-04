@@ -20,9 +20,8 @@ Add Doc To Qualification
   Reload Page
 
 Choise Bid
-  [Arguments]  ${index}  ${username}
+  [Arguments]  ${bid_index}  ${username}
   Sleep  2
-
 
   ${tender_type}=  Get Tender Type  ${username}
   ${white_list_of_tenders}=  Create List  esco  competitiveDialogueUA  competitiveDialogueUA
