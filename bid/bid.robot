@@ -174,8 +174,8 @@ Make Bid
   Wait And Type  ${locator.input_bid_amount}  ${bid_amount}
 
   # confirm bid
-  #${locator.place_a_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
-  #Wait And Click  ${locator.place_a_bid}
+  ${locator.place_a_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
+  Wait And Click  ${locator.place_a_bid}
 
   # Wait page reload
   Sleep  3
