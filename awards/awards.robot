@@ -13,18 +13,42 @@ Add Doc To Qualification
 
   Sleep  5
 
-  Choise Bid  ${bid_index}
+  Choise Bid  ${bid_index}  ${username}
 
   Add Quilificaton Comission Document  ${document_file}
 
   Reload Page
 
 Choise Bid
-  [Arguments]  ${bid_index}
+  [Arguments]  ${index}  ${username}
   Sleep  2
 
-  ${bid_hash_id}=  api_get_bids_hash  ${data.tender_internal_id}  ${bid_index}
-  Log To Console  [+] Get Bid ID: ${bid_hash_id}
+  ${tender_type}=  Get Tender Type  ${username}
+
+  ${hash_id}=  Run Keyword If  '${tender_type}' == 'aboveThresholdUA'  api_get_bid_id_from_award  ${data.tender_internal_id}  ${bid_index}  
+  ...   ELSE  api_get_bids_hash  ${data.tender_internal_id}  ${bid_index}
+
+  Log To Console  [+] Get Bid ID: ${hash_id}
+
+  ${bids_elements}=  Get WebElements  xpath=//div[@ng-repeat="bid in tenderBids"]
+  ${bids_count}=  Get Length  ${bids_elements}
+  Log To Console  [i] Count Award: ${bids_count}
+
+  :FOR  ${index}  IN RANGE  ${bids_count}
+  \  ${number}=  plus_one  ${index}
+  \  ${current_bid_id}=  Get Element Attribute  xpath=//div[@ng-repeat="bid in tenderBids"][${number}]@data-lot_bid_id
+  \  Log To Console  [+] Current Bid ID: ${current_bid_id}
+  \  ${is_need_element}=  is_one_string_include_other_string  ${current_bid_id}  ${hash_id}
+  \  Log To Console  [ ] click ${index}? : ${is_need_element}
+  \  ${result}=  Run Keyword If  ${is_need_element} == True  Wait And Click  xpath=//div[@ng-repeat="bid in tenderBids"][${number}]
+  \  Exit For Loop IF  ${is_need_element} == True
+
+Choise Bid By Qualification
+  [Arguments]  ${qualification_index}
+  Sleep  2
+
+  ${qualification_hash_id}=  api_get_bids_hash  ${data.tender_internal_id}  ${qualification_index}
+  Log To Console  [+] Get Bid ID: ${qualification_hash_id}
 
   ${bids_elements}=  Get WebElements  xpath=//div[@ng-repeat="bid in tenderBids"]
   ${bids_count}=  Get Length  ${bids_elements}
@@ -38,7 +62,6 @@ Choise Bid
   \  Log To Console  [ ] click ${index}? : ${is_need_element}
   \  ${result}=  Run Keyword If  ${is_need_element} == True  Wait And Click  xpath=//div[@ng-repeat="bid in tenderBids"][${number}]
   \  Exit For Loop IF  ${is_need_element} == True
-
 
 Add Quilificaton Comission Document
   [Arguments]  ${document_file}

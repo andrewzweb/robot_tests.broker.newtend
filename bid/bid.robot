@@ -410,7 +410,7 @@ Confirm Bid
 
   Sleep  5
 
-  Choise Bid  ${bid_id}
+  Choise Bid  ${bid_id}  ${username}
 
   Make Award
 

@@ -46,6 +46,11 @@ Resource  ./bid/bid.robot
 #                                                              #
 ################################################################
 
+Отримати інформацію із contracts[0].status
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+
+
 Отримати інформацію про questions[0].answer
   [Arguments]  @{ARGS}
 
@@ -404,8 +409,11 @@ Resource  ./bid/bid.robot
   Run Keyword And Return  Отримати лотову інформацію про ${ARGUMENTS[3]}    ${ARGUMENTS[2]}
 
 Отримати інформацію із тендера
-  [Arguments]  @{ARGUMENTS}
-  Run Keyword And Return  Отримати інформацію про ${ARGUMENTS[2]}
+  [Arguments]  ${username}  ${tender_uaid}  ${field_name}
+
+  Run Keyword And Return If  '${field_name}' == 'contracts[0].status' or '${field_name}' == 'contracts[1].status'   Отримати інформацію із contracts[0].status
+
+  Run Keyword And Return  Отримати інформацію про ${field_name}
 
 Отримати інформацію із предмету
   [Arguments]  @{ARGUMENTS}
