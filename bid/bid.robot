@@ -567,18 +567,20 @@ Activate bid
 
   Sleep  5
 
-  ${press_button_activate}=  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="activateBid()"]
-
-  Sleep  3
-  Reload Page
+  # need sing up before
+  Wait And Click  xpath=[@ng-click="signBid(currentBid)"]
+  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
+  Capture Page Screenshot
 
   ${press_button_publish}=  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="publishBid()"]
-
+  ${press_button_activate}=  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="activateBid()"]
   Log To Console  [+] Activate: ${press_button_activate} | Publish: ${press_button_publish}
-
-  Sleep  10
-
+  Sleep  3
+  Reload Page
   Capture Page Screenshot
+  Sleep  5
+  Capture Page Screenshot
+  Sleep  5
 
   ${status}=  Run Keyword If  '${press_button_publish}' == 'True'  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="confirm()"]
   Log To Console  [${status}] Press confirm
@@ -587,9 +589,9 @@ Activate bid
   Log To Console  [${status}] Press confirm
 
   Capture Page Screenshot
-
-  Sleep  10
-
+  Sleep  5
+  Capture Page Screenshot
+  Sleep  5
   Capture Page Screenshot
 
   Log To Console  [+] Activate bid
