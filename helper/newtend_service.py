@@ -362,7 +362,7 @@ def api_get_bid_id_from_award(tender_internal_id, numb):
     result = False
     tender = newtend_get_tender(tender_internal_id)
     numb = int(numb)
-    result = tender['data']['award'][numb]['bid_id']
+    result = tender['data']['awards'][numb]['bid_id']
     return result
 
 def api_get_tenderPeriod_end_date(tender_internal_id):
