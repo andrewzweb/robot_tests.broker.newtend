@@ -180,10 +180,6 @@ Make Bid
   # Wait page reload
   Sleep  3
 
-  #${tender_type}=  Get Tender Type  ${username}
-  #Run Keyword If  '${tender_type}' != 'simple.defense'  Log To Console  [True] simple.defense
-  #Run Keyword If  '${tender_type}' != 'simple.defense'  Save Criteria In Bid And Publish Bid
-
 
 Edit Bid Criteria
   [Arguments]    @{ARGS}
@@ -542,6 +538,12 @@ Make Bid For Esco
   # Wait page reload
   Sleep  3
 
+SingUp Bid
+  # need sing up before
+  Wait And Click  xpath=[@ng-click="signBid(currentBid)"]
+  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
+  Capture Page Screenshot
+  
 Activate bid
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
@@ -566,12 +568,6 @@ Activate bid
   Capture Page Screenshot
 
   Sleep  5
-
-  # need sing up before
-  Wait And Click  xpath=[@ng-click="signBid(currentBid)"]
-  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
-  Capture Page Screenshot
-
   ${press_button_publish}=  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="publishBid()"]
   ${press_button_activate}=  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="activateBid()"]
   Log To Console  [+] Activate: ${press_button_activate} | Publish: ${press_button_publish}
