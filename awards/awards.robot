@@ -26,7 +26,7 @@ Choise Bid
   ${tender_type}=  Get Tender Type  ${username}
   ${white_list_of_tenders}=  Create List  esco  competitiveDialogueUA  competitiveDialogueUA
 
-  ${hash_id}=  Run Keyword If  '${tender_type}' not in ${white_list_of_tenders}  api_get_bid_id_from_award  ${data.tender_internal_id}  ${bid_index}  
+  ${hash_id}=  Run Keyword If  '${tender_type}' in ${white_list_of_tenders}  api_get_bid_id_from_award  ${data.tender_internal_id}  ${bid_index}
   ...   ELSE  api_get_bids_hash  ${data.tender_internal_id}  ${bid_index}
 
   Log To Console  [+] Get Bid ID: ${hash_id}

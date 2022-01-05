@@ -463,8 +463,8 @@ def black_list_tender_for_feature():
     return [u'esco', u'competitiveDialogueEU', u'competitiveDialogueUA']
 
 def multiply_float_and_return_string(str_float):
-    numb = float(str(str_float))
-    return str(numb * 1000)
+    numb = float(str(str_float)) * 100
+    return str(numb).replace(".",",")[:5]
 
 def change_number_to_string(number):
     return str(number)

@@ -22,21 +22,26 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 
 *** Test Cases ***
 
-Current test
-  Prapare Browser
-  Test Esco Bid
-  [Teardown]  Close Browser
+#Current test
+#  Prapare Browser
+#  Test Esco Bid
+#  [Teardown]  Close Browser
 
 #Test
 #  ${date}=  Set Variable  2021-12-27T23:00:00+03:00
 #  ${new_date}=  change_endDate_for_plan  ${date}
 #  Log To Console  Date: ${new_date}
 
-#Test More
-#  Log To Console  ${TEST_NAME}
+Test More
+  Test Multiplu w
 
 *** Keywords ***
 
+Test Multiplu w
+  ${numb}=  Set Variable  0.12345
+  ${result}=  multiply_float_and_return_string  ${numb}
+  Log To Console  ${result}
+  
 Test Esco Bid
 
   Go To  https://autotest.newtend.com/opc/provider/tender/cca2e90855af45a186eba8cb720fa067/overview

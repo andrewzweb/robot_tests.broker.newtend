@@ -527,9 +527,11 @@ Make Bid For Esco
   \  ${numb}=  Convert To String  ${item}
   \  ${status}=  Run Keyword And Return Status  Clear Element Text  xpath=//input[@id="acr-${numb}"]
   \  ${number}=  Convert To String  ${annualCostsReduction[${item}]}
-  \  Log To Console  ${number}
+  \  #Log To Console  ${number}
   \  ${status}=  Run Keyword And Return Status  Input Text  xpath=//input[@id="acr-${numb}"]  ${number}
-  \  Log To Console  [${status}] ${annualCostsReduction[${item}]}
+  \  #Log To Console  [${status}] ${annualCostsReduction[${item}]}
+
+  Sleep  189
 
   # confirm bid
   ${locator.place_a_bid}=  Set Variable  xpath=//button[@ng-click="placeBid()"]
