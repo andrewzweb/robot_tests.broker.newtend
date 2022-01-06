@@ -171,6 +171,8 @@ Cancel Cancelled Tender
 
   Sleep  10
 
+  Sync Tender
+
 Cancel Cancelled Lot
   [Arguments]  @{ARGS}
   Log To Console  [+] Cancel Cancelled Lot
