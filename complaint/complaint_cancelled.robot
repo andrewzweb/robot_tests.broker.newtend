@@ -159,6 +159,10 @@ Cancel Cancelled Tender
   ${tender_id}=  Set Variable  ${ARGS[1]}
   ${canncelled_item}=  Set Variable  ${ARGS[2]}
 
+  Sync Tender
+
+  Sleep  10
+
   Find Tender By Id  ${tender_id}
 
   Smart Wait  Get WebElement  xpath=//button[@ng-click="recoverTender(pendingTenderCancellation.id)"]
