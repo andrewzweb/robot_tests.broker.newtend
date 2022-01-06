@@ -22,21 +22,25 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 
 *** Test Cases ***
 
-#Current test
-#  Prapare Browser
-#  Test Esco Bid
-#  [Teardown]  Close Browser
+Current test
+  Prapare Browser
+  Test Cancel Cancelled Tender
+  [Teardown]  Close Browser
 
 #Test
 #  ${date}=  Set Variable  2021-12-27T23:00:00+03:00
 #  ${new_date}=  change_endDate_for_plan  ${date}
 #  Log To Console  Date: ${new_date}
 
-Test More
-  Test Multiplu w
-
 *** Keywords ***
 
+Test Cancel Cancelled Tender
+  ${username}=  Set Variable  Newtend_Owner
+  ${tender_id}=  Set Variable  UA-2022-01-06-000087-d
+
+  Cancel Cancelled Tender  ${username}  ${tender_id}  0
+
+    
 Test Multiplu w
   ${numb}=  Set Variable  0.12345
   ${result}=  multiply_float_and_return_string  ${numb}
@@ -349,7 +353,7 @@ Prapare Browser
   ${pass}=  Set Variable  testowner0
   ${login2}=  Set Variable  test.provider1@gmail.com
   ${pass2}=  Set Variable  test.provider1
-  Custom Login  ${login2}  ${pass2}
+  Custom Login  ${login}  ${pass}
 
 Edit Tender
   Find Tender By Id  ${tender_id}

@@ -165,9 +165,16 @@ Cancel Cancelled Tender
 
   Find Tender By Id  ${tender_id}
 
-  Smart Wait  Get WebElement  xpath=//button[@ng-click="recoverTender(pendingTenderCancellation.id)"]
+  Sleep  60
+  Reload Page
 
-  Wait And Click  xpath=//button[@ng-click="recoverTender(pendingTenderCancellation.id)"]
+  ${cancel_tender}=  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="recoverTender(pendingTenderCancellation.id)"]
+
+  ${lots_head}=  Get WebElements  xpath=//v-pane-header
+  ${cancel_lot_1}=  Run Keyword And Return Status  Wait And Click  ${lots_head[0]}
+  ${cancel_lot_2}=  Run Keyword And Return Status  Wait And Click  xpath=//button[@ng-click="recoverTender(lot.cancellations[0].id)"]
+
+  Log To Console  [+] Cancel tender: ${cancel_tender} | Cancel Lot: ${cancel_lot_1} ${cancel_lot_1}
 
   Sleep  10
 
