@@ -22,18 +22,29 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 
 *** Test Cases ***
 
-Current test
-  Prapare Browser
-  Test Cancel Cancelled Tender
-  [Teardown]  Close Browser
+#Current test
+#  Prapare Browser
+#  Test Cancel Cancelled Tender
+#  [Teardown]  Close Browser
 
-#Test
+Test
+  Test AND statement
 #  ${date}=  Set Variable  2021-12-27T23:00:00+03:00
 #  ${new_date}=  change_endDate_for_plan  ${date}
 #  Log To Console  Date: ${new_date}
 
+    
 *** Keywords ***
 
+Test AND statement
+
+  ${length_args}=  Set Variable  5
+  
+  Run Keyword If  ${length_args} == 5  Run Keywords
+  ...  Log To Console  1
+  ...  AND  Log To Console  2
+  ...  AND  Log To Console  3
+    
 Test Cancel Cancelled Tender
   ${username}=  Set Variable  Newtend_Owner
   ${tender_id}=  Set Variable  UA-2022-01-06-000087-d

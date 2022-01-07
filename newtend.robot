@@ -951,6 +951,10 @@ Custom Get Internal ID
 
   ${result}=  Run Keyword And Return  Отримати інформацію із пропозиції із поля ${field}
 
+  ${bid_id_put}=  Run Keyword And Return Status  api_get_bids_hash  ${data.tender_internal_id}  0
+  ${bid_id}=  Run Keyword If  ${bid_id_put}  api_get_bids_hash  ${data.tender_internal_id}  0
+  Log To Console  [${bid_id_put}]  Put Bid Id In Global
+  Run Keyword If  ${bid_id_put}  Set Global Variable  ${USERS.users['${username}'].bid_id  ${bid_id}
   [Return]  ${result}
 
 Отримати інформацію із пропозиції із поля value.amount
