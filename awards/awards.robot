@@ -126,18 +126,20 @@ Create Contract
   ${locator.input_contract_number}=  Set Variable  xpath=//input[@id="contractNumber"]
   Wait And Type  ${locator.input_contract_number}  0
 
+  ${white_list_of_tenders}=  Create List  esco
+
   # change price
   ${exist_amount}=  Run Keyword And Return Status  Get WebElement  id=contractValueAmount
-  Run Keyword If  ${exist_amount}  Wait And Type  id=contractValueAmount  960
+  Run Keyword If  ${exist_amount} and '${tender_type}' not in ${white_list_of_tenders}   Wait And Type  id=contractValueAmount  960
 
   ${exist_amountNet}=  Run Keyword And Return Status  Get WebElement  id=contractValueAmountNet
-  Run Keyword If  ${exist_amountNet}  Wait And Type  id=contractValueAmountNet  800
+  Run Keyword If  ${exist_amountNet} and '${tender_type}' not in ${white_list_of_tenders}   Wait And Type  id=contractValueAmountNet  800
 
   ${exist_contractValueAmountNet}=  Run Keyword And Return Status  Get WebElement  id=contractValueAmountNet
   ${element_value_by_item}=  Run Keyword If  ${exist_contractValueAmountNet}  Get WebElements  id=itemUnitValueAmount
   ${count_items}=  Run Keyword If  ${exist_contractValueAmountNet}  Get Length  ${element_value_by_item}
 
-  Run Keyword If  ${exist_contractValueAmountNet}  Edit Price By Item  ${element_value_by_item}  ${count_items}
+  Run Keyword If  ${exist_contractValueAmountNet} and '${tender_type}' not in ${white_list_of_tenders}  Edit Price By Item  ${element_value_by_item}  ${count_items}
 
   Wait And Click  xpath=//button[@ng-click="closeBids()"]
   Log To Console  [+] Create Contract
