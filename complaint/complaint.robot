@@ -113,9 +113,8 @@ Complaint change status
   ${length_agrs}=  Get Length  ${ARGS}
   Log To Console  [${length_agrs}] Length Args
 
-  ${username}=  Run Keyword If  ${length_agrs} == 4  Set Variable  ${ARGS[0]}
-  ...  ELSE  Set Variable  ${ARGS[0]}
-
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
   ${complaint_data}=  Run Keyword If  ${length_agrs} == 4  Set Variable  ${ARGS[3]}
   ...  ELSE  Set Variable  ${ARGS[4]}
 
