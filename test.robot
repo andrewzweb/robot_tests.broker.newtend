@@ -22,19 +22,28 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 
 *** Test Cases ***
 
-#Current test
-#  Prapare Browser
-#  Test Cancel Cancelled Tender
-#  [Teardown]  Close Browser
+Current test
+  Prapare Browser
+  Test Write Minimal
+  [Teardown]  Close Browser
 
-Test
-  Test AND statement
+#Test
+#  Test AND statement
 #  ${date}=  Set Variable  2021-12-27T23:00:00+03:00
 #  ${new_date}=  change_endDate_for_plan  ${date}
 #  Log To Console  Date: ${new_date}
 
     
 *** Keywords ***
+
+Test Write Minimal
+  ${numb}=  Set Variable  0.02376
+  ${data_key}=  multiply_float_and_return_string  ${numb}
+
+  Go To  https://autotest.newtend.com/opc/provider/create-tender/multilot/esco/plan/72ee79ca009a4cff8f6f1404b1226af7
+  Wait And Click  xpath=//input[@id="lot-id-0"]
+  Wait And Type  ${locator.edit_lot_minimalStepPercentage}  ${data_key}
+  Sleep  15
 
 Test AND statement
 
