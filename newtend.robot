@@ -210,10 +210,7 @@ Resource  ./bid/bid.robot
 Дискваліфікувати постачальника
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
-  # username
-  # tender_id
-  # number qualification 1
-  Fail Because Not Implemented
+  Disqualify Award  @{ARGS}
 
 Отримати інформацію із пропозиції із поля lotValues[0].value.amount
   [Arguments]  @{ARGS}
