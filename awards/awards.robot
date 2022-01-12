@@ -195,7 +195,7 @@ Disqualify Award
   Find Tender By Id  ${tender_id}
   Go To Auction
 
-  Choise Bid  ${bid_id}  ${username}
+  Choise Bid  ${bid_index}  ${username}
 
   Sleep  3
   
