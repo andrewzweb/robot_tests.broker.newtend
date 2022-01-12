@@ -185,6 +185,7 @@ Resource  ./bid/bid.robot
 Змінити в тендері поле maxAwardsCount і зберегти
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
+  Fail Not Implemented
 
 Отримати інформацію про qualifications[0].status
   [Arguments]  @{ARGS}
