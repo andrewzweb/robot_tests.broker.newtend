@@ -59,7 +59,9 @@ Edit Lot MinimalStep Amount
   ${key_exist}=  Run Keyword And Return Status
   ...  Dictionary Should Contain Key  ${lot.minimalStep}   amount
   ${lot_step}=  Run Keyword If  ${key_exist}  Get From Dictionary  ${lot.minimalStep}   amount
-  ${valid_lot_step}=    Run Keyword If  ${key_exist}  convert_budget  ${lot_step}
+  Log To Console  [ ] Lot minimal step ${lot_step}
+  ${valid_lot_step}=  Run Keyword If  ${key_exist}  convert_budget  ${lot_step}
+  Log To Console  [ ] Lot minimal step after valid ${valid_lot_step}
   ${locator_exist}=  Run Keyword And Return Status  Get WebElement  ${locator.edit_lot_step}
   Run Keyword If  ${key_exist} and ${locator_exist}  Wait And Type  ${locator.edit_lot_step}  ${valid_lot_step}
 
