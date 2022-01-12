@@ -32,11 +32,17 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 #  ${date}=  Set Variable  2021-12-27T23:00:00+03:00
 #  ${new_date}=  change_endDate_for_plan  ${date}
 #  Log To Console  Date: ${new_date}
-
+Test Me
+  Test check status
     
 *** Keywords ***
 
-Test Multiplu w
+Test check status
+  ${test_suit_name}=  Set Variable  Tests Files.03Contract Signing
+  Run Keyword If  'Contract Signing' in '${test_suit_name}'  Log To Console  [+] Contract wait
+  Run Keyword If  'contract_signing' in '${test_suit_name}'  Log To Console  [+] Contract wait 2
+
+Test Multiplu w2
   ${numb}=  Set Variable  0.12345
   ${result}=  multiply_float_and_return_string  ${numb}
   Log To Console  ${result}
