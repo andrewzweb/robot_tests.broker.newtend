@@ -70,8 +70,11 @@ Edit Lot MinimalStepPercentage
   Log To Console  [+] Edit Lot MinimalStepPercentage
   ${key_exist}=  Run Keyword And Return Status  Dictionary Should Contain Key  ${lot}  minimalStepPercentage
   ${data_key}=  Run Keyword If  ${key_exist}  Get From Dictionary  ${lot}  minimalStepPercentage
+  Log To Console  [.] minimalStepPercentage: ${data_key}
   ${data_key}=  Run Keyword If  ${key_exist}  multiply_float_and_return_string  ${data_key}
+  Log To Console  [.] minimalStepPercentage: ${data_key}
   ${locator_exist}=  Run Keyword And Return Status  Get WebElement  ${locator.edit_lot_minimalStepPercentage}
+  Log To Console  [.] minimalStepPercentage locator exits: ${locator_exist}
   Run Keyword If  ${key_exist} and ${locator_exist}  Wait And Type  ${locator.edit_lot_minimalStepPercentage}  ${data_key}
 
 Edit Lot YearlyPaymentsPercentageRange
