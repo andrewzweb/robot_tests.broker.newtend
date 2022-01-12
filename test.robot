@@ -22,10 +22,10 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 
 *** Test Cases ***
 
-Current test
-  Prapare Browser
-  Test Write Minimal
-  [Teardown]  Close Browser
+#Current test
+#  Prapare Browser
+#  Test Write Minimal
+#  [Teardown]  Close Browser
 
 #Test
 #  Test AND statement
@@ -35,6 +35,12 @@ Current test
 
     
 *** Keywords ***
+
+Test Multiplu w
+  ${numb}=  Set Variable  0.12345
+  ${result}=  multiply_float_and_return_string  ${numb}
+  Log To Console  ${result}
+
 
 Test Write Minimal
   ${numb}=  Set Variable  0.02376
