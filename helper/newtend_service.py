@@ -466,6 +466,10 @@ def multiply_float_and_return_string(str_float):
     numb = float(str(str_float)) * 100
     return str(numb).replace(".",",")[:5]
 
+def multiply_float_and_return_string_for_esco(str_float):
+    numb = float(str(str_float)) * 100
+    return str(numb)[:5]
+
 def change_number_to_string(number):
     return str(number)
 
