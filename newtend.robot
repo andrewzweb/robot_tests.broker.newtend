@@ -404,8 +404,8 @@ Resource  ./bid/bid.robot
   Reload Page
 
   Log To Console  [i] Test name: ${SUITE NAME} | ${TEST_NAME}
-  Run Keyword If  'Contract Signing' in '${SUITE NAME}' Log To Console  [+] Contract wait
-  Run Keyword If  'Contract Signing' in '${SUITE NAME}' Sleep  300
+  Run Keyword If  'Contract Signing' in '${SUITE NAME}'  Log To Console  [+] Contract wait
+  Run Keyword If  'Contract Signing' in '${SUITE NAME}'  Sleep  300
 
 Отримати інформацію із лоту
   [Arguments]  @{ARGUMENTS}
