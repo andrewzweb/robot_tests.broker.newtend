@@ -499,9 +499,10 @@ Make Bid For Esco
 
   # процент платежей
   ${data_yearlyPaymentsPercentage}=  Get From Dictionary  ${bid_data.data.lotValues[0].value}  yearlyPaymentsPercentage
-  ${data_yearlyPaymentsPercentage}=  multiply_float_and_return_string  ${data_yearlyPaymentsPercentage}
-  # TODO нужно перемножыть ${data_yearlyPaymentsPercentage} на 100
-  Wait And Type  xpath=//input[@name="yearlyPaymentsPercentage"]  ${data_yearlyPaymentsPercentage}
+  Log To Console  [.] Year: ${data_yearlyPaymentsPercentage}
+  ${data_yearlyPaymentsPercentage_valid}=  multiply_float_and_return_string_for_esco  ${data_yearlyPaymentsPercentage}
+  Log To Console  [.] Year After: ${data_yearlyPaymentsPercentage_valid}
+  Wait And Type  xpath=//input[@name="yearlyPaymentsPercentage"]  ${data_yearlyPaymentsPercentage_valid}
 
   # длительность
   ${input_years}=  Set Variable  xpath=//input[@ng-model="lot.value.contractDuration.years"]
