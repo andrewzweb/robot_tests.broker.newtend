@@ -195,7 +195,24 @@ Disqualify Award
   Find Tender By Id  ${tender_id}
   Go To Auction
 
-  Choise Bid  ${bid_index}  ${username}
+
+  ${hash_id}=  api_get_bids_hash  ${data.tender_internal_id}  ${bid_index}
+  #...   ELSE  api_get_bids_hash  ${data.tender_internal_id}  ${bid_index}
+
+  Log To Console  [+] Get Bid ID: ${hash_id}
+
+  ${bids_elements}=  Get WebElements  xpath=//div[@ng-repeat="bid in tenderBids"]
+  ${bids_count}=  Get Length  ${bids_elements}
+  Log To Console  [i] Count Award: ${bids_count}
+
+  :FOR  ${index}  IN RANGE  ${bids_count}
+  \  ${number}=  plus_one  ${index}
+  \  ${current_bid_id}=  Get Element Attribute  xpath=//div[@ng-repeat="bid in tenderBids"][${number}]@data-lot_bid_id
+  \  Log To Console  [+] Current Bid ID: ${current_bid_id}
+  \  ${is_need_element}=  is_one_string_include_other_string  ${current_bid_id}  ${hash_id}
+  \  Log To Console  [ ] click ${index}? : ${is_need_element}
+  \  ${result}=  Run Keyword If  ${is_need_element} == True  Wait And Click  xpath=//div[@ng-repeat="bid in tenderBids"][${number}]
+  \  Exit For Loop IF  ${is_need_element} == True
 
   Sleep  3
   
