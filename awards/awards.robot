@@ -187,7 +187,8 @@ Cancel qualification for owner
 Disqualify Award
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
-
+  Log To Console  [+] Disqualify Award
+  
   ${username}=  Set Variable  ${ARGS[0]}
   ${tender_id}=  Set Variable  ${ARGS[1]}
   ${bid_index}=  Set Variable  ${ARGS[2]}
@@ -217,7 +218,17 @@ Disqualify Award
   Sleep  3
   
   Hide Wallet
-
   Wait And Click  xpath=//button[@ng-click="decide('unsuccessful')"]
 
-  Sleep  5
+  Sleep  3
+  Select Checkbox  xpath=//input[@id="reason2"]
+
+  Wait And Type  xpath=//textarea[@id="description"]  Reason for decline award.
+
+  Execute Javascript
+  ...  var element=document.querySelector("button[ng-click='disapprove()']");
+  ...  element.removeAttribute("disabled");
+
+  Wait And Click  xpath=//button[@ng-click="disapprove()"]
+  
+  Sleep  10
