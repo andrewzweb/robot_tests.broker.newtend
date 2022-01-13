@@ -76,10 +76,10 @@ Find Tender By Id
 
   Sync Tender
 
-  Log To Console  [i] Test name: ${SUITE NAME} | ${TEST_NAME}
-  Run Keyword If  'contract_signing' in '${SUITE NAME}' and '${contract_wait}' == True  Log To Console  [+] Contract wait
-  Run Keyword If  'contract_signing' in '${SUITE NAME}' and '${contract_wait}' == True  Sleep  300
-  Run Keyword If  'contract_signing' in '${SUITE NAME}' and '${contract_wait}' == True  Set Global Variable  ${contract_wait} False
+  #Log To Console  [i] Test name: ${SUITE NAME} | ${TEST_NAME}
+  #Run Keyword If  'contract_signing' in '${SUITE NAME}' and '${contract_wait}' == True  Log To Console  [+] Contract wait
+  #Run Keyword If  'contract_signing' in '${SUITE NAME}' and '${contract_wait}' == True  Sleep  300
+  #Run Keyword If  'contract_signing' in '${SUITE NAME}' and '${contract_wait}' == True  Set Global Variable  ${contract_wait} False
 
   Sleep  3
   ${browser_on_page}=  Run Keyword And Return Status  Get WebElement  xpath=//a[@class="ng-binding ng-scope"]
