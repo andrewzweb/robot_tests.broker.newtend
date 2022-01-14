@@ -203,7 +203,8 @@ Finish Qualification
   Go To Prequlification
   #Wait Tender Status  'active.qualification'
 
-  Sleep  3
+  Sleep  50
+  Reload Page
   Hide Wallet
 
   ${button_approve}=  Set Variable  xpath=//button[@ng-click="approveQualifications()"]
