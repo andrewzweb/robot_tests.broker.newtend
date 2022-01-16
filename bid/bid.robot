@@ -291,7 +291,7 @@ Save Criteria In Bid And Publish Bid
   
 Add Doc To Bid
   [Arguments]  ${username}  ${document_file}
-
+  
   Log To Console  [.] === Add doc in bid ===
 
   # закртыть меню которое показывает деньги на счету
@@ -308,15 +308,6 @@ Add Doc To Bid
 
   # select doc ralation for
   Select From List By Value  xpath=//select[@ng-model="file.documentType"]  eligibilityDocuments
-
-  # type:
-  # value="technicalSpecifications"  - Технічні специфікації
-  # value="qualificationDocuments"  - Документи, що підтверджують кваліфікацію
-  # value="eligibilityDocuments"  - Документи, що підтверджують відповідність
-  # value="commercialProposal"  - Цінова пропозиція
-  # value="billOfQuantity"  - Кошторис (розрахунок вартості)
-  # value="evidence"  - Пояснення/обгрунтування
-  # value="winningBid"  - Ціна за одиницю товару (послуги)
 
   ${locator.button_save_document}=  Set Variable  xpath=//button[@ng-click="saveDocumentsChanges()"]
   Wait And Click  ${locator.button_save_document}

@@ -504,3 +504,17 @@ def convert_budget_amount(amount):
     amount = amount.replace(',', '.')
     amount = float(amount)
     return amount
+
+def api_get_agreements_from_tender(tender_internal_id):
+    agreement_data = False
+    tender_data = newtend_get_tender(tender_internal_id)
+
+    url = "https://lb-api-staging.prozorro.gov.ua/api/0/tenders/" + tender_internal_id + '/agreements'
+    request = requests.get(url)
+    data = json.loads(request.text)
+    return data
+
+def api_get_contracts_from_agreeements(tender_internal_id):
+    data = api_get_agreements_from_tender(tender_internal_id)
+    clean_data = data['data'][0]['contracts'][0]
+    return clean_data

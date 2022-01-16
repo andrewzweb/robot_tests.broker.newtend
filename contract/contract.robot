@@ -164,3 +164,16 @@ Download Document To Contract
 
 Create Contract For Negotiation
   Wait And Click  xpath//button[@ng-click="vm.decide(vm.award.id, 'active',vm.tender.procurementMethodType)"]
+
+
+Create Contract For AgreementsUA Tender
+  [Arguments]  @{ARGS}
+  ${username}=  Set Variable  ${ARGS[0]}
+
+  Sleep  600
+
+  ${contract_data}=  api_get_contracts_from_agreeements  ${data.tender_internal_id}
+  ${valid_data}=  op_robot_tests.tests_files.service_keywords.Munchify  ${contract_data}
+
+  Set To Dictionary  ${USERS.users['${username}']}  agreement_data=${valid_data}
+  Log  ${USERS.users['${tender_owner}'].agreement_data}

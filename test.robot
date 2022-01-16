@@ -33,9 +33,19 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 #  ${new_date}=  change_endDate_for_plan  ${date}
 #  Log To Console  Date: ${new_date}
 Test Me
-  Test check status
+  Test Get Contract From Agreements
     
 *** Keywords ***
+
+Test Get Contract From Agreements
+  Set Global Variable  ${data.tender_internal_id}  83859f1914dd49659684a325a4fd1297
+  ${data}=  api_get_contracts_from_agreeements  ${data.tender_internal_id}
+  Log To Console  ${data}
+
+Tets Get Agreements Data
+  Set Global Variable  ${data.tender_internal_id}  83859f1914dd49659684a325a4fd1297
+  ${data}=  api_get_agreements_from_tender  ${data.tender_internal_id}
+  Log To Console  ${data}
 
 Test check status
   ${test_suit_name}=  Set Variable  Tests Files.03Contract Signing

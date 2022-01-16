@@ -180,7 +180,10 @@ Resource  ./bid/bid.robot
   ${username}=  Set Variable  ${ARGS[0]}
   # go to auction
   Go To Auction
-  Create Contract  ${username}
+
+  ${tender_type}=  Get Tender Type  ${username}
+  Run Keyword If  '${tender_type}' != 'closeFrameworkAgreementUA'  Run Keyword  Create Contract  ${username}
+  ...  Create Contract For AgreementsUA Tender  @{ARGS}
 
 Змінити в тендері поле maxAwardsCount і зберегти
   [Arguments]  @{ARGS}
