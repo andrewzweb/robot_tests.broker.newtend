@@ -172,9 +172,11 @@ Create Contract For AgreementsUA Tender
 
   Log To Console  [.] Create Contract For AgreementsUA Tender
 
-  Log To Console  [.] Sleep 14 min
+  Wait And Click  xpath=//button[data-test_id="close_qualification"]
+
+  Log To Console  [.] Sleep 12 min
   Sleep  720
-  Log To Console  [+] Sleep 14 min
+  Log To Console  [+] Sleep 12 min
 
   ${contract_data}=  api_get_contracts_from_agreeements  ${data.tender_internal_id}
   ${valid_data}=  op_robot_tests.tests_files.service_keywords.Munchify  ${contract_data}
