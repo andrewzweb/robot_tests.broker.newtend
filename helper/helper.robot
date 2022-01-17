@@ -59,6 +59,13 @@ Go To Overview
   Wait And Click  xpath=//a[@ui-sref="tenderView.overview"]
   Wait Bar Close
 
+Go To Agreements
+  Log To Console  [+] Go to overview
+  Reload Page
+  Wait Bar Open
+  Wait And Click  xpath=//a[@ui-sref="tenderView.agreements"]
+  Wait Bar Close
+
 Go To Auction
   Log To Console  [+] Go to auction
   Wait Bar Open

@@ -170,10 +170,84 @@ Create Contract For AgreementsUA Tender
   [Arguments]  @{ARGS}
   ${username}=  Set Variable  ${ARGS[0]}
 
-  Sleep  600
+  Log To Console  [.] Create Contract For AgreementsUA Tender
+
+  Log To Console  [.] Sleep 14 min
+  Sleep  720
+  Log To Console  [+] Sleep 14 min
 
   ${contract_data}=  api_get_contracts_from_agreeements  ${data.tender_internal_id}
   ${valid_data}=  op_robot_tests.tests_files.service_keywords.Munchify  ${contract_data}
 
   Set To Dictionary  ${USERS.users['${username}']}  agreement_data=${valid_data}
   Log  ${USERS.users['${tender_owner}'].agreement_data}
+
+  Log To Console  [+] Create Contract For AgreementsUA Tender
+
+Set Price For Agreements
+  [Arguments]  @{ARGS}
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${agreement_data}=  Set Variable  ${ARGS[2]}
+
+  Log To Console  [.] Set Price For Agreements
+
+  Find Tender By Id  ${tender_id}
+
+  Go To Agreements
+
+  Choise Agreement  @{ARGS}
+
+  Set Price  ${agreement_data}
+
+  Log To Console  [+] Set Price For Agreements
+
+Choise Agreement
+  [Arguments]  @{ARGS}
+
+  Log To Console  [.] _Choise Agreement
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${agreement_data}=  Set Variable  ${ARGS[2]}
+
+  # get id what we find
+  ${hash_id}=  Get From Dictionary  ${agreement_data.data.supliers[0]}  name
+
+  Log To Console  [+] Get Agreement User: ${hash_id}
+
+  ${agreement_contract_elements}=  Get WebElements  xpath=//div[@ng-repeat="contract in agreement.contracts track by $index"]
+  ${agreement_contract_count}=  Get Length  ${agreement_contract_elements}
+  Log To Console  [i] Count Agreement: ${agreement_contract_count}
+
+  :FOR  ${index}  IN RANGE  ${agreement_contract_count}
+  \  ${number}=  plus_one  ${index}
+  \  ${current_agreement_id}=  Get Text  xpath=//div[@ng-repeat="contract in agreement.contracts track by $index"][${number}]
+  \  # Get Element Attribute  xpath=//div[@ng-repeat="contract in agreement.contracts track by $index"][${number}]@data-agreement_id
+  \  Log To Console  [i] Current Agreement: ${current_agreement_id}
+  \  ${is_need_element}=  is_one_string_include_other_string   ${current_agreement_id}  ${hash_id}
+  \  Log To Console  [ ] click ${index}? : ${is_need_element}
+  \  ${result}=  Run Keyword If  ${is_need_element} == True  Wait And Click  xpath=//div[@ng-repeat="contract in agreement.contracts track by $index"][${number}]/div/div/button[@ui-sref="tenderView.agreements.one.contracts({contractId: contract.id})"]
+  \  Exit For Loop IF  ${is_need_element} == True
+  Sleep  5
+  Log To Console  [+] _Choise Agreement
+
+
+Set Price
+  [Arguments]  ${agreement_data}
+
+  Log To Console  [.] __Set Price To Agreement
+  ${price}=   Get From Dictionary  ${agreement_data.data.unitPrices[0].value}  amount
+  ${with_nds}=   Get From Dictionary  ${agreement_data.data.unitPrices[0].value}  valueAddedTaxIncluded
+
+  #${price}=   Set Variable  199
+  #${with_nds}=   Set Variable  False
+
+  Wait And Type  xpath=//input[@id="amount"]  ${price}
+
+  Run Keyword If  '${with_nds}' == 'True'  Select Checkbox  xpath=//input[@id="with-nds"]
+  Run Keyword If  '${with_nds}' == 'False'  Unselect Checkbox  xpath=//input[@id="with-nds"]
+
+  Wait And Click  xpath=//button[@ng-click="changeUnitPrice()"]
+
+  Log To Console  [+] __Set Price To Agreement

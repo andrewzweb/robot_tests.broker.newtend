@@ -516,5 +516,6 @@ def api_get_agreements_from_tender(tender_internal_id):
 
 def api_get_contracts_from_agreeements(tender_internal_id):
     data = api_get_agreements_from_tender(tender_internal_id)
+    print(data['data'][0])
     clean_data = data['data'][0]['contracts'][0]
     return clean_data

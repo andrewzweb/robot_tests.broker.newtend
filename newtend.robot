@@ -664,9 +664,11 @@ Resource  ./bid/bid.robot
   [Arguments]  @{ARGS}
   Set Date Sing For Contract  @{ARGS}
 
-Встановити ціну за одиницю товару в контракті
+Встановити ціну за одиницю для контракту
   [Arguments]  @{ARGS}
-  Log To Console  [+] Set price for item in contract
+  Log To Console  [+] Встановити ціну за одиницю для контракту
+  Set Price For Agreements  @{ARGS}
+
 
 ################################################################
 #                                                              #

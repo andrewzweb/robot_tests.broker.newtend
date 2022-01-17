@@ -22,20 +22,29 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 
 *** Test Cases ***
 
-#Current test
-#  Prapare Browser
-#  Test Write Minimal
-#  [Teardown]  Close Browser
+Current test
+  Prapare Browser
+  Tets Choise Agreement
+  [Teardown]  Close Browser
 
 #Test
 #  Test AND statement
 #  ${date}=  Set Variable  2021-12-27T23:00:00+03:00
 #  ${new_date}=  change_endDate_for_plan  ${date}
 #  Log To Console  Date: ${new_date}
-Test Me
-  Test Get Contract From Agreements
+
+#Test Me
+#  Test Get Contract From Agreements
     
 *** Keywords ***
+
+Tets Choise Agreement
+  ${tender_id}=  Set Variable  UA-2022-01-17-000056-d
+
+  Find Tender By Id  ${tender_id}
+  Go To Agreements
+  Choise Agreement  username  tender_id  agreements_data
+  Set Price  some_data
 
 Test Get Contract From Agreements
   Set Global Variable  ${data.tender_internal_id}  83859f1914dd49659684a325a4fd1297
