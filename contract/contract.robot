@@ -172,11 +172,14 @@ Create Contract For AgreementsUA Tender
 
   Log To Console  [.] Create Contract For AgreementsUA Tender
 
-  Wait And Click  xpath=//button[data-test_id="close_qualification"]
+  Sleep  60
+  Reload Page
 
-  Log To Console  [.] Sleep 12 min
-  Sleep  720
-  Log To Console  [+] Sleep 12 min
+  Wait And Click  xpath=//button[@data-test_id="close_qualification"]
+
+  Log To Console  [.] Sleep 16 min
+  Sleep  1040
+  Log To Console  [+] Sleep 16 min
 
   ${contract_data}=  api_get_contracts_from_agreeements  ${data.tender_internal_id}
   ${valid_data}=  op_robot_tests.tests_files.service_keywords.Munchify  ${contract_data}
@@ -213,8 +216,10 @@ Choise Agreement
   ${tender_id}=  Set Variable  ${ARGS[1]}
   ${agreement_data}=  Set Variable  ${ARGS[2]}
 
+  Log To Console  ${agreement_data.data}
+
   # get id what we find
-  ${hash_id}=  Get From Dictionary  ${agreement_data.data.supliers[0]}  name
+  ${hash_id}=  Get From Dictionary  ${agreement_data.data.suppliers[0]}  name
 
   Log To Console  [+] Get Agreement User: ${hash_id}
 
@@ -253,3 +258,34 @@ Set Price
   Wait And Click  xpath=//button[@ng-click="changeUnitPrice()"]
 
   Log To Console  [+] __Set Price To Agreement
+
+
+Create Agrements
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
+  ${agreement_data}=  Set Variable  ${ARGS[2]}
+
+  ${start_date}=  Get From Dictionary  ${agreement_data}  startDate
+  ${end_date}=  Get From Dictionary  ${agreement_data}  endDate
+
+  Find Tender By Id  ${tender_id}
+
+  Go To Agreements
+
+  Wait And Click  xpath=//button[@ng-click="activate()"]
+
+  Wait And Type  xpath=//input[@name="agreementNumber"]  001
+
+  ${inputs}=  Get WebElements  xpath=//input[@ng-model="vm.ngModel"]
+
+  Execute Javascript
+  ...  var element=document.querySelector("input[ng-model='vm.ngModel']");
+  ...  element.removeAttribute("disabled");
+  ...  element.removeAttribute("readonly");
+
+  Wait And Type  ${inputs[0]}  ${start_date}
+  
+  Wait And Type  ${inputs[1]}  ${end_date}

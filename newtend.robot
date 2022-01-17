@@ -46,6 +46,12 @@ Resource  ./bid/bid.robot
 #                                                              #
 ################################################################
 
+
+Зареєструвати угоду
+  [Arguments]  @{ARGS}
+  Create Agrements  @{ARGS}
+
+
 Отримати інформацію із contracts[0].status
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
@@ -178,7 +184,10 @@ Resource  ./bid/bid.robot
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
   ${username}=  Set Variable  ${ARGS[0]}
+  ${tender_id}=  Set Variable  ${ARGS[1]}
   # go to auction
+
+  Find Tender By Id  ${tender_id}
   Go To Auction
 
   ${tender_type}=  Get Tender Type  ${username}
