@@ -22,10 +22,22 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 
 *** Test Cases ***
 
-Current test
-  Prapare Browser
-  Tets Choise Agreement
-  [Teardown]  Close Browser
+#Current test
+#  Prapare Browser
+#  Tets Choise Agreement
+#  [Teardown]  Close Browser
+
+Tets NM    
+  ${date}=  Set Variable  2022-01-18T18:01:30.710485+02:00
+  ${valid}=  Get Substring  ${date}  0  10
+  Log To Console  ${valid}
+
+  ${now}=  Get Current Date
+  Log To Console  ${now}
+  ${valid}=  Get Substring  ${now}  11  13
+  Log To Console  ${valid}
+  ${valid}=  Get Substring  ${now}  14  16
+  Log To Console  ${valid}
 
 #Test
 #  Test AND statement

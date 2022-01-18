@@ -269,12 +269,17 @@ Create Agrements
   ${agreement_data}=  Set Variable  ${ARGS[2]}
 
   ${start_date}=  Get From Dictionary  ${agreement_data}  startDate
+  ${start_date}=  Get Substring  ${start_date}  0  10
   ${end_date}=  Get From Dictionary  ${agreement_data}  endDate
+  ${end_date}=  Get Substring  ${end_date}  0  10
 
   Find Tender By Id  ${tender_id}
 
   Go To Agreements
 
+  Sleep  3
+  Hide Wallet
+  
   Wait And Click  xpath=//button[@ng-click="activate()"]
 
   Wait And Type  xpath=//input[@name="agreementNumber"]  001
@@ -282,10 +287,34 @@ Create Agrements
   ${inputs}=  Get WebElements  xpath=//input[@ng-model="vm.ngModel"]
 
   Execute Javascript
-  ...  var element=document.querySelector("input[ng-model='vm.ngModel']");
+  ...  var element=document.querySelector("input[id='input-date-agreement_from']");
   ...  element.removeAttribute("disabled");
   ...  element.removeAttribute("readonly");
 
-  Wait And Type  ${inputs[0]}  ${start_date}
+  Execute Javascript
+  ...  var element=document.querySelector("input[id='input-date-agreement_to']");
+  ...  element.removeAttribute("disabled");
+  ...  element.removeAttribute("readonly");
+
+    Execute Javascript
+  ...  var element=document.querySelector("input[id='input-date-agreement_sign_date']");
+  ...  element.removeAttribute("disabled");
+  ...  element.removeAttribute("readonly");
+
+  Wait And Type  xpath=//input[@id="input-date-agreement_from"]  ${start_date}
   
-  Wait And Type  ${inputs[1]}  ${end_date}
+  Wait And Type  xpath=//input[@id="input-date-agreement_to"]  ${end_date}
+
+  Wait And Type  xpath=//input[@id="input-date-agreement_sign_date"]  ${start_date}  
+  
+  ${now}=  Get Current Date
+  ${now_hour}=  Get Substring  ${now}  11  13
+  ${now_minute}=  Get Substring  ${now}  14  16
+  
+  Wait And Type  xpath=//input[@ng-change="updateHours()"]  ${now_hour}
+  Wait And Type  xpath=//input[@ng-change="updateMinutes()"]  ${now_minute}
+
+  Wait And Click  xpath=//button[@ng-click="submit(true)"]
+  Sleep  90
+
+  

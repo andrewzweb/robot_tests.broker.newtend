@@ -215,9 +215,8 @@ dict_units = {
     u'ACTIVE PURCHASE': u'pending',
     u'Активна закупівля': u'pending',
     u'Активная закупка': u'pending',
-    u'COMPLETED': u'active',
-    u'ЗАВЕРШЕН': u'active',
-    u'ЗАВЕРШЕНО': u'active',
+    u'ЗАВЕРШЕН': u'complete',
+    u'ЗАВЕРШЕНО': u'complete',
 
     # plan status
     u"ЧЕРНЕТКА": u"draft",
