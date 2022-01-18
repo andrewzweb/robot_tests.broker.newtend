@@ -137,8 +137,11 @@ Create Contract
 
 
   ${exist_contractValueAmountNet}=  Run Keyword And Return Status  Get WebElement  id=contractValueAmountNet
-  ${element_value_by_item}=  Run Keyword If  ${exist_contractValueAmountNet} and '${tender_type}' != 'esco' Get WebElements  id=itemUnitValueAmount
-  ${count_items}=  Run Keyword If  ${exist_contractValueAmountNet} and '${tender_type}' != 'esco'  Get Length  ${element_value_by_item}
+  ${is_esco}=  Run Keyword If  '${tender_type}' != 'esco'  Set Variable  True
+  ...  ELSE  Set Variable  False
+  
+  ${element_value_by_item}=  Run Keyword If  ${exist_contractValueAmountNet} and ${is_esco}  Get WebElements  id=itemUnitValueAmount
+  ${count_items}=  Run Keyword If  ${exist_contractValueAmountNet} and ${is_esco}  Get Length  ${element_value_by_item}
 
   Run Keyword If  ${exist_contractValueAmountNet} and '${tender_type}' not in ${white_list_of_tenders}  Edit Price By Item  ${element_value_by_item}  ${count_items}
 
