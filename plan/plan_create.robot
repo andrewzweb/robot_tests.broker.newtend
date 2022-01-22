@@ -228,11 +228,9 @@ Edit Plan Items
 
 Publish Plan
   Log To Console  [+] Publish Plan
-  Wait Until Element Is Enabled  id=submit-btn
-  Focus  id=submit-btn
-  Click Element     id=submit-btn
+  Wait And Click  id=submit-btn
   Sleep   5
-  Wait Until Page Contains Element    id=planID
+  Wait Until Page Contains Element  id=planID
 
 Change Decsription
   [Arguments]   ${plan_data}
@@ -272,6 +270,9 @@ Get Plan ID and HashID
   # for get page plan in site
   ${plan_hash}=  Get Text  id=view-plan-id
   Set Global Variable  ${data.plan_id_hash}  ${plan_hash}
+
+  Log To Console  [+] Plan ID: ${plan_hash}
+
   # get id
   ${plan_uaid}=   Get Text  id=planID
   Set Global Variable  ${data.plan_id}  ${plan_uaid}
