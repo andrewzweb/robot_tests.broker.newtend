@@ -64,11 +64,9 @@ Change Language to UKR
 
   # Change Language to Ukr in the UI
   ${locator.change_language}=  Set Variable  xpath=//a[@ng-click="vm.setLanguage('uk')"]
-
+  ${status_change_language}=  Run Keyword And Return Status  Wait And Click  ${locator.change_language}
+  Log To Console  [${status_change_language}] Change language to UKR
   # becouse sometimes test drops here and await dont help
-  Wait Until Page Contains Element  ${locator.change_language}  
-  Focus  ${locator.change_language}
-  Click Element  ${locator.change_language}
   Sleep  2
 
 Change user data
