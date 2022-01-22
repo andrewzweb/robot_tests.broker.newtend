@@ -155,7 +155,7 @@ SingUp Contract
 SingUp Plan
   # click singup plan
   Log To Console  [+] SingUp Plan
-  Wait And Click  ${locator.singup_plan_button_form}
+  Wait And Click  xpath=//button[@id="sign-tender-btn"]
   Wait And Click  xpath=//button[@ng-click="vm.sign()"]
   #SingUp Entity
 
@@ -164,5 +164,5 @@ Check Lot Stash Is Open
   Run Keyword If  ${status_get_milestone_code} == False    Wait And Click  ${locator.view_lot_accordeon}
 
 Go To Create OpenEU
-  Go To  https://autotest.newtend.com/opc/provider/create-tender/multilot/aboveThresholdEU/plan/${data.plan_internal_id}
+  Go To  ${HOST}/opc/provider/create-tender/multilot/aboveThresholdEU/plan/${data.plan_internal_id}
 

@@ -8,6 +8,8 @@ from helper_datetime import *
 import json
 import requests
 
+run_local = True
+
 def create_custom_guranteee(tender_data):
     #    guarantee:
     #      amount: 59846969.56
@@ -370,11 +372,14 @@ def api_get_tenderPeriod_end_date(tender_internal_id):
     return result
 
 def api_sync_tender(internal_id):
-    response = requests.get('https://autotest.newtend.com/api/v2/sync_tender/%s/' % (internal_id))
+    if run_local:
+        response = requests.get('http://localhost:8000/api/v2/sync_tender/%s/' % (internal_id))
+    else:
+        response = requests.get('https://autotest.newtend.com/api/v2/sync_tender/%s/' % (internal_id))
     return response.status_code
 
 def api_sync_contract(internal_id):
-    response = requests.get('https://autotest.newtend.com/api/v2/sync_contract/%s/' % (internal_id))
+    response = requests.get('https:/autotest.newtend.com/api/v2/sync_contract/%s/' % (internal_id))
     return response.status_code
 
 def api_get_complaint(tender_internal_id):

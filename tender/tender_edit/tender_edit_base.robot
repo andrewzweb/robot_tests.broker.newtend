@@ -498,7 +498,7 @@ Input Custom Date
   Log To Console  Hash: ${tender_hash_id}
 
   # go to edit
-  ${url_tender_edit}=  Set Variable   https://autotest.newtend.com/opc/provider/tender/${tender_hash_id}/edit
+  ${url_tender_edit}=  Set Variable   ${HOST}/opc/provider/tender/${tender_hash_id}/edit
   Go To  ${url_tender_edit}
 
   # change date

@@ -28,13 +28,12 @@ Create Plan
     Run Keyword If  '${plan_for_tender_type}' != 'esco'  Edit Plan Budget  ${plan_data}
     Edit Plan Milestones  ${plan_data}
     Edit Plan Items  ${plan_data}
-    # Change Decsription  ${plan_data}
+
     Publish Plan
     Get Plan ID and HashID
     SingUp Plan
-    ${tender_uaid}=  Set Variable  ${data.plan_id}
-    # return id plan
-    [Return]  ${tender_uaid}
+
+    [Return]  ${data.plan_id}
 
 add_financer_press
     # Adding one more financer inside Planning creation
@@ -60,7 +59,7 @@ set_dk_dkpp
   Sleep   3
 
 Go To Page Create Plan
-  Go To   https://autotest.newtend.com/opc/provider/plans/create
+  Go To   ${HOST}/opc/provider/plans/create
   Wait Until Page Contains Element    id=plan-description     20
     
   
@@ -275,6 +274,7 @@ Get Plan ID and HashID
 
   # get id
   ${plan_uaid}=   Get Text  id=planID
+  Log To Console  [+] Plan UAID: ${plan_uaid}
   Set Global Variable  ${data.plan_id}  ${plan_uaid}
   
   Wait Until Page Contains Element    id=sign-tender-btn

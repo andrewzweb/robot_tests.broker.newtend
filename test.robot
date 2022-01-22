@@ -27,17 +27,17 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 #  Tets Choise Agreement
 #  [Teardown]  Close Browser
 
-Tets NM    
-  ${date}=  Set Variable  2022-01-18T18:01:30.710485+02:00
-  ${valid}=  Get Substring  ${date}  0  10
-  Log To Console  ${valid}
+#Tets NM    
+#  ${date}=  Set Variable  2022-01-18T18:01:30.710485+02:00
+#  ${valid}=  Get Substring  ${date}  0  10
+#  Log To Console  ${valid}
 
-  ${now}=  Get Current Date
-  Log To Console  ${now}
-  ${valid}=  Get Substring  ${now}  11  13
-  Log To Console  ${valid}
-  ${valid}=  Get Substring  ${now}  14  16
-  Log To Console  ${valid}
+#  ${now}=  Get Current Date
+#  Log To Console  ${now}
+#  ${valid}=  Get Substring  ${now}  11  13
+#  Log To Console  ${valid}
+#  ${valid}=  Get Substring  ${now}  14  16
+#  Log To Console  ${valid}
 
 #Test
 #  Test AND statement
@@ -47,7 +47,14 @@ Tets NM
 
 #Test Me
 #  Test Get Contract From Agreements
-    
+
+Test Me 2
+  Set Global Variable  ${path}  path
+
+  ${var}=  Set Variable  ${path}/me
+
+  Log To Console  ${var}
+  
 *** Keywords ***
 
 Tets Choise Agreement

@@ -262,6 +262,8 @@ Resource  ./bid/bid.robot
   Check user if him reg to login  ${user}
   Change Language to UKR
   Add Cookie  autotest  1  domain=autotest.newtend.com  expiry=2022-12-30 16:21:35
+  Add Cookie  autotest  1  domain=localhost:8000  expiry=2022-12-30 16:21:35
+  Add Cookie  autotest  1  domain=localhost  expiry=2022-12-30 16:21:35
 
 ################################################################
 #                                                              #

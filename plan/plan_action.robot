@@ -52,7 +52,7 @@ Try Choice Plan From Searh List
 
 Знайти и перейти до плану закупівлі
   [Arguments]  ${user}  ${tender_id}  @{data}
-  Go To  https://autotest.newtend.com/opc/provider/plans/all/?pageNum=1&query=${tender_id}&status=&procurementMethodType=&amount_gte=&amount_lte=&createReport=&create_gte=&create_lte=&tp_gte=&tp_lte=
+  Go To  ${HOST}/opc/provider/plans/all/?pageNum=1&query=${tender_id}&status=&procurementMethodType=&amount_gte=&amount_lte=&createReport=&create_gte=&create_lte=&tp_gte=&tp_lte=
   Wait Until Page Contains Element  xpath=//a[@class="row tender-info ng-scope"]    20
   ${plan_raw}=  Get Webelement  xpath=//span[contains(text(), '${tender_uaid}')]
   Click Element  ${plan_raw}
@@ -60,7 +60,7 @@ Try Choice Plan From Searh List
 
 Перейти на сторінку редактування плану закупівлі
   [Arguments]  ${plan_id_hash}
-  Go To  https://autotest.newtend.com/opc/provider/plans/${plan_id_hash}/edit
+  Go To  ${HOST}/opc/provider/plans/${plan_id_hash}/edit
 
 ################################################################
 #                                                              #
