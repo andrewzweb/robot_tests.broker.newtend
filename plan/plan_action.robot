@@ -29,7 +29,7 @@ Find Plan By UAID
   # click to search
   Click Element  ${locator.button_search_plan}
 
-  Wait Until Keyword Succeeds  2 minute  30 seconds  Try Choice Plan From Searh List  ${plan_uaid}
+  Wait Until Keyword Succeeds  5 minute  30 seconds  Try Choice Plan From Searh List  ${plan_uaid}
 
   ${plan_hash}=  Get Text  id=view-plan-id
   Set Global Variable  ${data.plan_id_hash}  ${plan_hash}
