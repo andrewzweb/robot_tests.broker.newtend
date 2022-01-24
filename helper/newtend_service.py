@@ -174,6 +174,18 @@ dict_units = {
     u'ОЧІКУВАННЯ ДРУГОГО ЕТАПУ': u'complete',
     u'ЧЕРНЕТКА. ДРУГИЙ ЕТАП':  u'draft.stage2',
 
+    # tender status ru
+    u'НЕСОСТОЯЛСЯ':  u'draft.unsuccessful',
+    u"АУКЦИОН": u'active.auction',
+    u'КВАЛИФИКАЦИЯ': u'active.qualification',
+    u'ПРЕКВАЛИФИКАЦИЯ':  u'active.pre-qualification',
+    u'УТОЧНЕНИЯ': u'active.enquiries',
+    u'ПРЕДЛОЖЕНИЯ': u'active.tendering',
+    u'ПРЕКВАЛИФИКАЦИЯ (ПЕРИОД ОБЖАЛОВАНИЯ)': u'active.pre-qualification.stand-still',
+    u'ПРОВЕДЕНИЯ ПЕРЕГОВОРОВ': u'complete',
+    u'ОЖИДАНИЕ ВТОРОГО ЭТАПА': u'complete',
+    u'ЧЕРНОВИК. ВТОРОЙ ЭТАП':  u'draft.stage2',
+    
     # complaint status
     u'Очікує розгляду /':         u'pending',
     u'Залишено без розгляду /':   u'invalid',
