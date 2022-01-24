@@ -31,7 +31,7 @@ Create Plan
 
     Publish Plan
     Get Plan ID and HashID
-    SingUp Plan
+    #SingUp Plan
 
     [Return]  ${data.plan_id}
 
@@ -60,6 +60,7 @@ set_dk_dkpp
 
 Go To Page Create Plan
   Go To   ${HOST}/opc/provider/plans/create
+  Log To Console  [.] GO TO: ${HOST}/opc/provider/plans/create
   Wait Until Page Contains Element    id=plan-description     20
     
   
