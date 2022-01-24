@@ -46,7 +46,39 @@ Resource  ./bid/bid.robot
 #                                                              #
 ################################################################
 
+Отримати тендер другого етапу та зберегти його
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
 
+  ${response}=  newtend_get_tender  ${data.tender_internal_id}
+  Set To Dictionary ${USERS.users['${username}']}, second_stage_data=${response}
+  # stage 2 step 1
+
+Додати критерії в тендер другого етапу
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  Add Criteria To Second Stage
+  # stage 2 step 2
+
+
+Активувати другий етап
+  [Arguments]  @{ARGS}
+  Print Args  @{ARGS}
+  # stage 2 step 3
+
+  # activate tender
+  Wait And Click  xpath=//button[@ng-click="activateTender(tender)"]
+  Sleep  5
+  Capture Page Screenshot
+  Sleep  5
+  Capture Page Screenshot
+
+  # collct new data
+  ${tender}=  newtend_get_tender  ${data.tender_internal_id}
+  Log  ${tender}
+  Set To Dictionary  ${USERS.users['Newtend_Owner'].tender_data}  data=${tender['data']}
+  Set To Dictionary  ${USERS.users['Newtend_Owner'].tender_data.data}  features=${tender['data']['features']}
+  
 Зареєструвати угоду
   [Arguments]  @{ARGS}
   Create Agrements  @{ARGS}
@@ -159,12 +191,7 @@ Resource  ./bid/bid.robot
   ${text}=  read_text_from_file  ${filename}
   Log To Console  [.]_ text: ${text}
   [Return]  ${text}
-  
-Отримати тендер другого етапу та зберегти його
-  [Arguments]  @{ARGS}
-  Print Args  @{ARGS}
 
-  Smart Wait  Wait And Click  xpath=//button[@ng-click="activateTender(tender)"]
   
 Перевести тендер на статус очікування обробки мостом
   [Arguments]  @{ARGS}
@@ -176,10 +203,6 @@ Resource  ./bid/bid.robot
   Wait And Click  xpath=//button[@ng-click="close()"]
   Smart Wait  Wait And Click  xpath=//button[@ng-click="goTo2Stage()"]
 
-Активувати другий етап
-  [Arguments]  @{ARGS}
-  Print Args  @{ARGS}
-  
 Затвердити постачальників
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
@@ -214,11 +237,7 @@ Resource  ./bid/bid.robot
   Print Args  @{ARGS}
   Fail Because Not Implemented
 
-Додати критерії в тендер другого етапу
-  [Arguments]  @{ARGS}
-  Print Args  @{ARGS}
-  Fail Because Not Implemented
-
+  
 # this for esco 02qualification
 Дискваліфікувати постачальника
   [Arguments]  @{ARGS}
