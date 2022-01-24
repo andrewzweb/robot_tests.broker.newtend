@@ -13,7 +13,7 @@ ${locator.login_action}      xpath=//button[@ng-click="vm.loginUser()"]
   ${alias}=   Catenate   SEPARATOR=   role_    ${ARGUMENTS[0]}
   Set Global Variable   ${BROWSER_ALIAS}   ${alias}
   ${broswer}=  Open Browser
-  ...      ${USERS.users[${ARGUMENTS[0]}].homepage}
+  ...      ${HOST}
   ...      ${USERS.users[${ARGUMENTS[0]}].browser}
   ...      alias=${BROWSER_ALIAS}
   [Return]
