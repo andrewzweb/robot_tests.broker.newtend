@@ -114,7 +114,7 @@ def get_now_date():
 
 def date_now_plus_minutes(minutes_count=0):
     now = get_now_date()
-    result = change_minute_in_date(now, 0, int(minutes_count), plus=True)
+    result = change_minute_in_date(now, int(minutes_count), True)
     return result
 
 def convert_string_date_to_obj(date_time_string):
