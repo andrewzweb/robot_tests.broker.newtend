@@ -11,7 +11,7 @@ Library  OperatingSystem
 
 *** Variables ***
 ${tender_id}  UA-2021-12-10-000295-c
-${data.tender_internal_id}  48836fc1bd6f4d81acddbebd7dc540f0
+${data.tender_internal_id}  2bc84faf9fa744989fe0e4226806b0e4
 ${username}  Newtend_Owner
 ${OUTPUT_DIR}  .
 ${BROWSER}  chrome
@@ -19,12 +19,15 @@ ${BROWSER}  chrome
 ${date}   2021-11-07T22:59:27.999676+02:00
 ${question_id}  q-f5a0a31d
 ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
+${test_data}   9
 
 *** Test Cases ***
-
 #Current test
 #  Prapare Browser
-#  Tets Choise Agreement
+#  Go To  http://localhost:8000/opc/provider/tender/9e71f44e999f4d8590471c81ce1353f5/edit
+#  Sleep  5
+#  Test Change Time In Two Stage
+#  Sleep  19
 #  [Teardown]  Close Browser
 
 #Tets NM    
@@ -48,14 +51,28 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 #Test Me
 #  Test Get Contract From Agreements
 
-Test Me 2
-  Set Global Variable  ${path}  path
+#Test Me 2
+  #Set Global Variable  ${path}  path
+  #${var}=  Set Variable  ${path}/me
+  #Log To Console  ${var}
 
-  ${var}=  Set Variable  ${path}/me
+Test MEEE
+  ${test_data}=  Create Dictionary
+  ${tender}=  newtend_get_tender  ${data.tender_internal_id}
+  Log To Console  ${tender['data']['features']}
+  Set To Dictionary  ${test_data}  features=${tender['data']['features']}
 
-  Log To Console  ${var}
-  
 *** Keywords ***
+
+Test Change Time In Two Stage
+  ${date_time_plus_10_min}=  date_now_plus_minutes  10
+  ${hour}=  Get Substring  ${date_time_plus_10_min}  11  13
+  ${min}=  Get Substring  ${date_time_plus_10_min}  14  16
+  Log To Console  [ ] Hour ${hour} | Min: ${min}
+
+  Focus  xpath=//input[@ng-change="updateHours()"]
+  Wait And Type  xpath=//input[@ng-change="updateHours()"]  ${hour}
+  Wait And Type  xpath=//input[@ng-change="updateMinutes()"]  ${min}
 
 Tets Choise Agreement
   ${tender_id}=  Set Variable  UA-2022-01-17-000056-d
@@ -414,16 +431,26 @@ Test Me
 
 
 Prapare Browser
-  Open Browser  https://autotest.newtend.com/  ${BROWSER}
+  #${HOST_STAGE}=  Set Variable  https://autotest.newtend.com/
+  ${HOST_LOCAL}=  Set Variable  http://localhost:8000/
+  ${HOST}=  Set Variable  ${HOST_LOCAL}
+  Open Browser  ${HOST}  ${BROWSER}
   Set Window Size  1024  764
   Set Window Position  0  0
-  Add Cookie  autotest  1  domain=autotest.newtend.com  expiry=2021-11-30 16:21:35
+  Add Cookie  autotest  1  domain=autotest.newtend.com  expiry=2022-11-30 16:21:35
+  Add Cookie  autotest  1  domain=localhost:8000  expiry=2022-11-30 16:21:35
+  Add Cookie  autotest  1  domain=localhost  expiry=2022-11-30 16:21:35
 
-  ${login}=  Set Variable  test.owner@gmail.com
-  ${pass}=  Set Variable  testowner0
-  ${login2}=  Set Variable  test.provider1@gmail.com
-  ${pass2}=  Set Variable  test.provider1
-  Custom Login  ${login}  ${pass}
+  ${owner_local_login}=  Set Variable  newtend.owner@gmail.com
+  ${owner_local_pass}=  Set Variable  testowner
+  ${owner_stage_login}=  Set Variable  test.owner@gmail.com
+  ${owner_stage_pass}=  Set Variable  testowner0
+  ${provider_stage_login}=  Set Variable  test.provider1@gmail.com
+  ${provider_stage_pass}=  Set Variable  test.provider1
+
+  Run Keyword If  '${HOST}' == '${HOST_LOCAL}'  Custom Login  ${owner_local_login}  ${owner_local_pass}
+  ...  ELSE  Custom Login  ${owner_local_login}  ${owner_stage_login}  ${owner_stage_pass}
+
 
 Edit Tender
   Find Tender By Id  ${tender_id}
