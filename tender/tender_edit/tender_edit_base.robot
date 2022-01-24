@@ -642,3 +642,33 @@ Edit NDS Negotiation
   Run Keyword If  '${lot_nds}' == 'True'  Focus  xpath=//input[@id="with-nds"]
   Run Keyword If  '${lot_nds}' == 'True'  Select Checkbox  xpath=//input[@id="with-nds"]
 
+
+Change Time In Two Stage
+  ${date_time_plus_10_min}=  date_now_plus_minutes  15
+  ${hour}=  Get Substring  ${date_time_plus_10_min}  11  13
+  ${min}=  Get Substring  ${date_time_plus_10_min}  14  16
+  Log To Console  [ ] Hour ${hour} | Min: ${min}
+
+  Focus  xpath=//input[@ng-change="updateHours()"]
+  Wait And Type  xpath=//input[@ng-change="updateHours()"]  ${hour}
+  Wait And Type  xpath=//input[@ng-change="updateMinutes()"]  ${min}
+
+
+Add Criteria To Second Stage
+  # edit tender
+  Wait And Click  xpath=//a[@id="edit-tender-btn"]
+  Sleep  5
+  Capture Page Screenshot
+
+  # === change time ===
+  Change Time In Two Stage
+  Capture Page Screenshot
+
+  # === publish ===
+  Wait And Click  xpath=//button[@ng-click="publish()"]
+  Sleep  5
+  Capture Page Screenshot
+  Sleep  5
+  Capture Page Screenshot
+
+
