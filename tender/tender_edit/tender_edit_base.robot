@@ -644,7 +644,7 @@ Edit NDS Negotiation
 
 
 Change Time In Two Stage
-  ${date_time_plus_10_min}=  date_now_plus_minutes  15
+  ${date_time_plus_10_min}=  date_now_plus_minutes  31
   ${hour}=  Get Substring  ${date_time_plus_10_min}  11  13
   ${min}=  Get Substring  ${date_time_plus_10_min}  14  16
   Log To Console  [ ] Hour ${hour} | Min: ${min}

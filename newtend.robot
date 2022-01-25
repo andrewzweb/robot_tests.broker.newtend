@@ -49,9 +49,10 @@ Resource  ./bid/bid.robot
 Отримати тендер другого етапу та зберегти його
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
-
+  ${username}=  Set Variable  ${ARGS[0]}
   ${response}=  newtend_get_tender  ${data.tender_internal_id}
-  Set To Dictionary ${USERS.users['${username}']}, second_stage_data=${response}
+  ${tender_data}=  op_robot_tests.tests_files.service_keywords.Munchify  ${response}
+  Set To Dictionary  ${USERS.users['${username}']}  second_stage_data=${tender_data}
   # stage 2 step 1
 
 Додати критерії в тендер другого етапу

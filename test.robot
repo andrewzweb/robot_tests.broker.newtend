@@ -59,8 +59,8 @@ ${test_data}   9
 Test MEEE
   ${test_data}=  Create Dictionary
   ${tender}=  newtend_get_tender  ${data.tender_internal_id}
-  Log To Console  ${tender['data']['features']}
-  Set To Dictionary  ${test_data}  features=${tender['data']['features']}
+  #${tender}=  op_robot_tests.tests_files.service_keywords.Munchify  ${tender}
+  Log To Console  ${tender['data']}
 
 *** Keywords ***
 
