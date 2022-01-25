@@ -73,23 +73,16 @@ Add meats to tender
 Find Tender By Id
   [Arguments]  ${tender_id}  ${username}=None
   Log To Console  [+] Find Tender id: ${tender_id} | username: '${username}'
-
   Sync Tender
-
-  #Log To Console  [i] Test name: ${SUITE NAME} | ${TEST_NAME}
-  #Run Keyword If  'contract_signing' in '${SUITE NAME}' and '${contract_wait}' == True  Log To Console  [+] Contract wait
-  #Run Keyword If  'contract_signing' in '${SUITE NAME}' and '${contract_wait}' == True  Sleep  300
-  #Run Keyword If  'contract_signing' in '${SUITE NAME}' and '${contract_wait}' == True  Set Global Variable  ${contract_wait} False
-
-  Sleep  3
+  Sleep  2
   ${browser_on_page}=  Run Keyword And Return Status  Get WebElement  xpath=//a[@class="ng-binding ng-scope"]
-  Log To Console  [${browser_on_page}] On page tendera?
-  #${tender_id_on_page}=  Run Keyword If  ${browser_on_page}  Get Text  xpath//a[@class="ng-binding ng-scope"]
-  #${correct_page}=  is_one_string_include_other_string  ${tender_id_on_page}  ${tender_id}
-  Run Keyword If  '${browser_on_page}' == 'False'  Action Get Tender  ${tender_id}
-  Run Keyword If  '${browser_on_page}' == 'True'  Go To Overview
-
-  #Action Get Tender  ${tender_id}
+  ${tender_id_on_page}=  Run Keyword If  ${browser_on_page}  Get Text  xpath=//a[@class="ng-binding ng-scope"]
+  
+  Run Keyword If  '${browser_on_page}' == 'False' and '${tender_id_on_page}' != '${tender_id}'  Action Get Tender  ${tender_id}
+  Run Keyword If  '${browser_on_page}' == 'False' and '${tender_id_on_page}' != '${tender_id}'  Log To Console  [.] _Go To New Tender: ${tender_id}
+  Run Keyword If  '${browser_on_page}' == 'True' and '${tender_id_on_page}' == '${tender_id}'  Go To Overview
+  Run Keyword If  '${browser_on_page}' == 'True' and '${tender_id_on_page}' == '${tender_id}'  Log To Console  [.] _Stay on same tender: ${tender_id}
+  
   Save For Global  ${username}
 
 Action Get Tender

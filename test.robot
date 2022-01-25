@@ -22,13 +22,15 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 ${test_data}   9
 
 *** Test Cases ***
-#Current test
-#  Prapare Browser
-#  Go To  http://localhost:8000/opc/provider/tender/9e71f44e999f4d8590471c81ce1353f5/edit
-#  Sleep  5
-#  Test Change Time In Two Stage
-#  Sleep  19
-#  [Teardown]  Close Browser
+Current test
+  Prapare Browser
+  Find Tender By Id  UA-2021-12-10-000295-c
+  Log To Console  ====================================
+  Find Tender By Id  UA-2021-12-10-000295-c
+  Log To Console  ====================================
+  Find Tender By Id  UA-2022-01-25-000111-c.2
+  Log To Console  ====================================
+  [Teardown]  Close Browser
 
 #Tets NM    
 #  ${date}=  Set Variable  2022-01-18T18:01:30.710485+02:00
@@ -56,11 +58,11 @@ ${test_data}   9
   #${var}=  Set Variable  ${path}/me
   #Log To Console  ${var}
 
-Test MEEE
-  ${test_data}=  Create Dictionary
-  ${tender}=  newtend_get_tender  ${data.tender_internal_id}
-  #${tender}=  op_robot_tests.tests_files.service_keywords.Munchify  ${tender}
-  Log To Console  ${tender['data']}
+#Test MEEE
+#  ${test_data}=  Create Dictionary
+#  ${tender}=  newtend_get_tender  ${data.tender_internal_id}
+#  ${tender}=  op_robot_tests.tests_files.service_keywords.Munchify  ${tender}
+#  Log To Console  ${tender['data']}
 
 *** Keywords ***
 
