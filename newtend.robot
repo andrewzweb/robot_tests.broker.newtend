@@ -49,6 +49,7 @@ Resource  ./bid/bid.robot
 Отримати тендер другого етапу та зберегти його
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
+  Log To Console  [+] === Get Tender 2 stage and save them ===
   ${username}=  Set Variable  ${ARGS[0]}
   ${response}=  newtend_get_tender  ${data.tender_internal_id}
   ${tender_data}=  op_robot_tests.tests_files.service_keywords.Munchify  ${response}
@@ -58,14 +59,15 @@ Resource  ./bid/bid.robot
 Додати критерії в тендер другого етапу
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
+  Log To Console  [+] === Add Criteria To Second Stage ===
   Add Criteria To Second Stage
-  # stage 2 step 2
-
+j  # stage 2 step 2
 
 Активувати другий етап
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
   # stage 2 step 3
+  Log To Console  [+] === Activate Second Stage ===
 
   # activate tender
   Wait And Click  xpath=//button[@ng-click="activateTender(tender)"]

@@ -655,20 +655,27 @@ Change Time In Two Stage
 
 
 Add Criteria To Second Stage
+
+  Log To Console  [.] Go To Edit Tender
   # edit tender
   Wait And Click  xpath=//a[@id="edit-tender-btn"]
   Sleep  5
+  Log To Console  [+] Go To Edit Tender
   Capture Page Screenshot
 
+  Log To Console  [.] Change Time
   # === change time ===
   Change Time In Two Stage
   Capture Page Screenshot
+  Log To Console  [+] Change Time
 
   # === publish ===
+  Log To Console  [.] Save Tender 2 stage
   Wait And Click  xpath=//button[@ng-click="publish()"]
   Sleep  5
   Capture Page Screenshot
   Sleep  5
   Capture Page Screenshot
+  Log To Console  [+] Save Tender 2 stage
 
 
