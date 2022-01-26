@@ -22,48 +22,20 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 ${test_data}   9
 
 *** Test Cases ***
-Current test
-  Prapare Browser
-  Find Tender By Id  UA-2021-12-10-000295-c
-  Log To Console  ====================================
-  Find Tender By Id  UA-2021-12-10-000295-c
-  Log To Console  ====================================
-  Find Tender By Id  UA-2022-01-25-000111-c.2
-  Log To Console  ====================================
-  [Teardown]  Close Browser
+#Current test
+#  Prapare Browser
+#  [Teardown]  Close Browser
 
-#Tets NM    
-#  ${date}=  Set Variable  2022-01-18T18:01:30.710485+02:00
-#  ${valid}=  Get Substring  ${date}  0  10
-#  Log To Console  ${valid}
+Tets Get ID
+  ${url_autotest}=  Set Variable  https://autotest.newtend.com/opc/provider/tender/7a40b2d0a7cf49e79e41452601ef6381/overview
+  ${url_local}=  Set Variable  http://localhost:8000/opc/provider/tender/7a40b2d0a7cf49e79e41452601ef6381/overview
+  
+  ${result_local}=  Get Substring  ${url_local}  -41  -9
+  ${result_autotest}=  Get Substring  ${url_autotest}  -41  -9
 
-#  ${now}=  Get Current Date
-#  Log To Console  ${now}
-#  ${valid}=  Get Substring  ${now}  11  13
-#  Log To Console  ${valid}
-#  ${valid}=  Get Substring  ${now}  14  16
-#  Log To Console  ${valid}
-
-#Test
-#  Test AND statement
-#  ${date}=  Set Variable  2021-12-27T23:00:00+03:00
-#  ${new_date}=  change_endDate_for_plan  ${date}
-#  Log To Console  Date: ${new_date}
-
-#Test Me
-#  Test Get Contract From Agreements
-
-#Test Me 2
-  #Set Global Variable  ${path}  path
-  #${var}=  Set Variable  ${path}/me
-  #Log To Console  ${var}
-
-#Test MEEE
-#  ${test_data}=  Create Dictionary
-#  ${tender}=  newtend_get_tender  ${data.tender_internal_id}
-#  ${tender}=  op_robot_tests.tests_files.service_keywords.Munchify  ${tender}
-#  Log To Console  ${tender['data']}
-
+  Should Be Equal  7a40b2d0a7cf49e79e41452601ef6381  ${result_local}
+  Should Be Equal  7a40b2d0a7cf49e79e41452601ef6381  ${result_autotest}
+  
 *** Keywords ***
 
 Test Change Time In Two Stage

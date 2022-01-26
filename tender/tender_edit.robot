@@ -77,12 +77,13 @@ Find Tender By Id
   Sleep  2
   ${browser_on_page}=  Run Keyword And Return Status  Get WebElement  xpath=//a[@class="ng-binding ng-scope"]
   ${tender_id_on_page}=  Run Keyword If  ${browser_on_page}  Get Text  xpath=//a[@class="ng-binding ng-scope"]
+
+  Log To Console  [${browser_on_page}] browser_on_page ${tender_id_on_page}
   
-  Run Keyword If  '${browser_on_page}' == 'False' and '${tender_id_on_page}' != '${tender_id}'  Action Get Tender  ${tender_id}
-  Run Keyword If  '${browser_on_page}' == 'False' and '${tender_id_on_page}' != '${tender_id}'  Log To Console  [.] _Go To New Tender: ${tender_id}
-  Run Keyword If  '${browser_on_page}' == 'True' and '${tender_id_on_page}' == '${tender_id}'  Go To Overview
-  Run Keyword If  '${browser_on_page}' == 'True' and '${tender_id_on_page}' == '${tender_id}'  Log To Console  [.] _Stay on same tender: ${tender_id}
-  
+  Run Keyword If  '${tender_id_on_page}' != '${tender_id}'  Action Get Tender  ${tender_id}
+  Run Keyword If  '${tender_id_on_page}' != '${tender_id}'  Log To Console  [.] _Go To New Tender: ${tender_id}
+
+  Go To Overview
   Save For Global  ${username}
 
 Action Get Tender
