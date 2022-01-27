@@ -535,3 +535,20 @@ def api_get_contracts_from_agreeements(tender_internal_id):
     print(data['data'][0])
     clean_data = data['data'][0]['contracts'][0]
     return clean_data
+
+def newtend_get_agreement(agreement_internal_id):
+    """
+    input agreement_internal_id
+
+    return python dict with agreement
+
+    make request to api and get agreement data
+    url like
+    https://lb-api-staging.prozorro.gov.ua/api/0/agreements/bd861e500f344165bb3ac0b8301292f8
+    """
+
+    url = "https://lb-api-staging.prozorro.gov.ua/api/0/agreements/" + agreement_internal_id
+    request = requests.get(url)
+    tender = json.loads(request.text)
+    return tender
+

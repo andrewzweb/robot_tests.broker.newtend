@@ -22,13 +22,24 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 ${test_data}   9
 
 *** Test Cases ***
-Test Me Now
-  Prapare Browser
-  Test Framework Agreement Contract Sing
-  [Teardown]  Close Browser
+#Test Me Now
+#  Prapare Browser
+#  Test Framework Agreement Contract Sing
+#  [Teardown]  Close Browser
 
-  
 *** Keywords ***
+
+Test agreement path
+  ${agreement_id}=  Set Variable  8e0afa3d5fd54addb01b35cda4322c61
+  ${path_to_agreement}=  Set Variable  ${HOST}/opc/provider/agreement/${agreement_id}
+  Log To Console  ${path_to_agreement}
+
+Test Get Agreement From Url
+  Log To Console  kkkkkk
+  ${url}=  Set Variable  http://localhost:8000/opc/provider/tender/e96381895d824152884b0d0dded35497/agreements/8e0afa3d5fd54addb01b35cda4322c61
+  ${agreement_id}=  Get Agreement From Url  ${url}
+  Log To Console  AGREMENT ${agreement_id}
+  Should Be Equal  ${agreement_id}  8e0afa3d5fd54addb01b35cda4322c61
 
 Test Framework Agreement Contract Sing
   Go To  http://localhost:8000/opc/provider/tender/ca89936234c34618ac7b520844ad0ead/agreements/ab67c64ba0904b20a0724834ad9db0ec
