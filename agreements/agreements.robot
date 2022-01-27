@@ -36,11 +36,11 @@ Save Agreement In Global
 
   ${agreement_data}=  newtend_get_agreement  ${agreement_id}
 
-  ${agreement_data}=  op_robot_tests.tests_files.service_keywords.Munchify  ${agreement_data}
-  Set Global Variable  ${USERS.users['${username}'].agreement_data}  ${agreement_data}
-
+  ${valid_agreement_data}=  op_robot_tests.tests_files.service_keywords.Munchify  ${agreement_data}
+  Set To Dictionary  ${USERS.users['${username}']}   agreement_data=${valid_agreement_data}
+  
   Log  ${USERS.users['${username}'].agreement_data}
-  Log  ${USERS.users['${username}'].data}
+  Log  ${USERS.users['${username}'].agreement_data.data}
   Log To Console  [+] __Save Agreement In Global: ${agreement_id}
 
 Get Info From Agreement
