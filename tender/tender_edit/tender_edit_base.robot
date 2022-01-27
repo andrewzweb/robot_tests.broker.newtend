@@ -1,4 +1,4 @@
-** Settings ***
+*** Settings ***
 Resource  ../../newtend.robot
 
 *** Variables ***

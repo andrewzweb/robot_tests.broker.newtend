@@ -22,10 +22,61 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 ${test_data}   9
 
 *** Test Cases ***
-#Current test
-#  Prapare Browser
-#  [Teardown]  Close Browser
+Test Me Now
+  Prapare Browser
+  Test Framework Agreement Contract Sing
+  [Teardown]  Close Browser
 
+  
+*** Keywords ***
+
+Test Framework Agreement Contract Sing
+  Go To  http://localhost:8000/opc/provider/tender/ca89936234c34618ac7b520844ad0ead/agreements/ab67c64ba0904b20a0724834ad9db0ec
+
+    Sleep  3
+  Hide Wallet
+  
+  Wait And Click  xpath=//button[@ng-click="activate()"]
+
+  Wait And Type  xpath=//input[@name="agreementNumber"]  001
+
+  ${inputs}=  Get WebElements  xpath=//input[@ng-model="vm.ngModel"]
+
+  Execute Javascript
+  ...  var element=document.querySelector("input[id='input-date-agreement_from']");
+  ...  element.removeAttribute("disabled");
+  ...  element.removeAttribute("readonly");
+
+  Execute Javascript
+  ...  var element=document.querySelector("input[id='input-date-agreement_to']");
+  ...  element.removeAttribute("disabled");
+  ...  element.removeAttribute("readonly");
+
+    Execute Javascript
+  ...  var element=document.querySelector("input[id='input-date-agreement_sign_date']");
+  ...  element.removeAttribute("disabled");
+  ...  element.removeAttribute("readonly");
+
+  Wait And Type  xpath=//input[@id="input-date-agreement_from"]  2022-01-27
+  
+  Wait And Type  xpath=//input[@id="input-date-agreement_to"]  2022-01-27
+
+  Wait And Type  xpath=//input[@id="input-date-agreement_sign_date"]  2022-01-27
+
+  ${now}=  Get Current Date
+  ${now_hour}=  Get Substring  ${now}  11  13
+  ${now_minute}=  Get Substring  ${now}  14  16
+  
+  Wait And Type  xpath=//input[@ng-change="updateHours()"]  ${now_hour}
+  Wait And Type  xpath=//input[@ng-change="updateMinutes()"]  ${now_minute}
+  
+  Log To Console  [+] All Done !!!
+  Log To Console  [.] Wait You check 15s
+  Sleep  10
+  Log To Console  [.] Left 5s
+  Sleep  5
+  
+  
 Tets Get ID
   ${url_autotest}=  Set Variable  https://autotest.newtend.com/opc/provider/tender/7a40b2d0a7cf49e79e41452601ef6381/overview
   ${url_local}=  Set Variable  http://localhost:8000/opc/provider/tender/7a40b2d0a7cf49e79e41452601ef6381/overview
@@ -35,8 +86,6 @@ Tets Get ID
 
   Should Be Equal  7a40b2d0a7cf49e79e41452601ef6381  ${result_local}
   Should Be Equal  7a40b2d0a7cf49e79e41452601ef6381  ${result_autotest}
-  
-*** Keywords ***
 
 Test Change Time In Two Stage
   ${date_time_plus_10_min}=  date_now_plus_minutes  10

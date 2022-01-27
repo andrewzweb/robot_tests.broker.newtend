@@ -38,7 +38,25 @@ Resource  ./complaint/complaint.robot
 # bids
 Resource  ./bid/bid.robot
 
+# bids
+Resource  ./agreements/agreements.robot
+
 *** Keywords ***
+
+Отримати доступ до угоди
+  [Arguments]  @{ARGS}
+  Get Agreement  @{ARGS}
+
+Завантажити документ в рамкову угоду
+  [Arguments]  @{ARGS}
+  Download Doc In Agreement  @{ARGS}
+
+Внести зміну в угоду
+  [Arguments]  @{ARGS}
+  Change Agreement  @{ARGS}
+
+Застосувати зміну для угоди
+  Apply Chenges Agreement  @{ARGS}
 
 ################################################################
 #                                                              #
@@ -399,10 +417,10 @@ j  # stage 2 step 2
   [Return]  ${id}
 
 Створити тендер другого етапу
-  [Arguments]  ${username}  ${tender_data}  ${plan_uaid}
+  [Arguments]  @{ARGS}
 
   # main action
-  Create Tender  ${username}  ${tender_data}  ${plan_uaid}
+  Create Tender  @{ARGS}
 
   ${internal_id}=  Get Tender Internal Id
   Log To Console  Tender ID: ${internal_id}
