@@ -21,6 +21,8 @@ Find Agreement
   ${path_to_agreement}=  Set Variable  ${HOST}/opc/provider/agreement/${agreement_id}
   Go To  ${path_to_agreement}
 
+  Set Global Variable  ${data.agreement_internal_id}  ${agreement_id}
+  
   Save Agreement In Global  ${username}  ${agreement_id}
 
   Log To Console  [+] ===== Find Agreement =====
@@ -38,11 +40,21 @@ Save Agreement In Global
 
   ${valid_agreement_data}=  op_robot_tests.tests_files.service_keywords.Munchify  ${agreement_data}
   Set To Dictionary  ${USERS.users['${username}']}   agreement_data=${valid_agreement_data}
-  
+
   Log  ${USERS.users['${username}'].agreement_data}
   Log  ${USERS.users['${username}'].agreement_data.data}
   Log To Console  [+] __Save Agreement In Global: ${agreement_id}
+j
+Update Agreement
+  [Arguments]  @{ARGS}
+  Log To Console  \n [ ] ===== Update Agreement =====
+  Print Args  @{ARGS}
 
+  #${username}=  Set Variable  ${ARGS[0]}
+  #${url}=  Get Location
+  #Save Agreement In Global  ${username}  ${data.agreement_internal_id}
+  Fail
+  
 Get Info From Agreement
   [Arguments]  @{ARGS}
   Log To Console  \n [ ] ===== Get Info From Agreement =====
@@ -144,17 +156,52 @@ Apply Chenges Agreement
   [Arguments]  @{ARGS}
   Log To Console  \n [ ] ===== Apply Chenges Agreement =====
   Print Args  @{ARGS}
-  
-  # ====
-  # args3 - active
-  # 
-  # ===
-  # args3 - cancelled
-  #   
-  # =====
 
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${agreement_id}=  Set Variable  ${ARGS[1]}
+  ${agreement_date}=  Set Variable  ${ARGS[2]}
+  ${agreement_status}=  Set Variable  ${ARGS[3]}
+
+  Run Keyword If  '${agreement_status}' == 'active'  Activate Changes  ${agreement_date}
+  Run Keyword If  '${agreement_status}' == 'cancelled'  Canceled Changes  ${agreement_date}
+
+Canceled Changes
+  [Arguments]  @{ARGS}
+  Wait And Click  xpath=//button[@ng-click="vm.cancelChanges()"]
+  
+Activate Changes
+  [Arguments]  @{ARGS}
+  # 2022-01-27T22:08:13.176963+02:00	
+  Wait And Click  xpath=//button[@ng-click="vm.confirmChanges()"]
+
+  # TODO
+  # Choise data
+
+  Wait And Click  xpath=//button[@ng-click="save()"]
+  
 Get Agreement From Url
   [Arguments]  ${url}
   ${clear_agreement_id}=  Get Substring  ${url}  -32
   Log To Console  [ ] Agreement: ${clear_agreement_id}
   [Return]  ${clear_agreement_id}
+
+
+Add Doc To Changes
+  [Arguments]  @{ARGS}
+
+  # open popup  
+  Wait And Click  xpath=//button[@ng-click="vm.uploadDocuments(false)"]
+
+  Select From List by Value  xpath=//select[@ng-model="document.documentType"]  contractAnnexe
+
+  Wait And Click  xpath=//div[@ng-model="file"]
+
+  Choose File  xpath=//input[@type="file"]  ${agreement_doc}
+
+  Sleep  5
+
+  Execute Javascript
+  ...  var element=document.querySelector("button[ng-click='upload()']");
+  ...  element.removeAttribute("disabled");
+  
+  Wait And Click  xpath=//button[@ng-click="upload()"]

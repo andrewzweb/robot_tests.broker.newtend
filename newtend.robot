@@ -66,11 +66,16 @@ Resource  ./agreements/agreements.robot
   Change Agreement  @{ARGS}
 
 Застосувати зміну для угоди
+  [Arguments]  @{ARGS}
   Apply Chenges Agreement  @{ARGS}
 
 Отримати інформацію із угоди
   [Arguments]  @{ARGS}
   Get Info From Agreement  @{ARGS}
+
+Оновити властивості угоди
+  [Arguments]  @{ARGS}
+  Update Agreement  @{ARGS}
 
 ################################################################
 #                                                              #
