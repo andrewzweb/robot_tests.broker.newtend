@@ -29,6 +29,12 @@ ${test_data}   9
 
 *** Keywords ***
 
+Test Get Agreement Modification
+  ${data}=  newtend_get_agreement  8e0afa3d5fd54addb01b35cda4322c61
+  Log To Console  ======
+  Log To Console  ${data}
+  Log To Console  ======
+
 Test agreement path
   ${agreement_id}=  Set Variable  8e0afa3d5fd54addb01b35cda4322c61
   ${path_to_agreement}=  Set Variable  ${HOST}/opc/provider/agreement/${agreement_id}

@@ -247,6 +247,11 @@ dict_units = {
     u"Очікується кваліфікація": u"pending",
     u"Пропозицію відхилено": u"unsuccessful",
 
+    # --- quallification ru ---
+    u"Предложение пряйнято": u"active",
+    u"Ожидается квалификация": u"pending",
+    u"Предложение отменено": u"unsuccessful",
+
     # --- classifier ---
     u"DC 021:2015 classifier": u"ДК021",
     u"Классификатор ДК 021:2015": u"ДК021",

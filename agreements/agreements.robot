@@ -44,16 +44,73 @@ Save Agreement In Global
   Log  ${USERS.users['${username}'].agreement_data}
   Log  ${USERS.users['${username}'].agreement_data.data}
   Log To Console  [+] __Save Agreement In Global: ${agreement_id}
-j
+
 Update Agreement
   [Arguments]  @{ARGS}
   Log To Console  \n [ ] ===== Update Agreement =====
   Print Args  @{ARGS}
 
-  #${username}=  Set Variable  ${ARGS[0]}
-  #${url}=  Get Location
-  #Save Agreement In Global  ${username}  ${data.agreement_internal_id}
-  Fail
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${agreement_id}=  Set Variable  ${ARGS[1]}
+  ${agreement_data}=  Set Variable  ${ARGS[2]}
+
+  Reload Page 
+  Hide Wallet
+
+  ${is_addend}=  Run Keyword And Return Status  Get From Dictionary  ${agreement_data.data.modifications[0]}  addend
+  Run Keyword If  ${is_addend}  Log To Console  [ ] Action: addend
+  Run Keyword If  ${is_addend}  Update Agreement Addend  ${agreement_data}
+
+  ${is_factor}=  Run Keyword And Return Status  Get From Dictionary  ${agreement_data.data.modifications[0]}  factor
+  Run Keyword If  ${is_factor}  Log To Console  [ ] Action: factor
+  Run Keyword If  ${is_factor}  Update Agreement Factor  ${agreement_data}
+
+  Sleep  5
+  # get form api
+  
+  Save Agreement In Global  ${username}  ${data.agreement_internal_id}
+
+Update Agreement Addend
+  [Arguments]  ${agreement_data}
+
+  Log To Console  [.] __ Update Agreement Addend
+
+  ${addend_value}=  Get From Dictionary  ${agreement_data.data.modifications[0]}  addend
+  ${valid_addend_value}=  Convert To String  ${addend_value}
+  
+  # open popup
+  Wait And Click  xpath=//button[@ng-click="vm.openModalPending()"]
+
+  # open accordeon
+  Wait And Click  xpath=//div[@ng-click="toogleItemInfo(item, $index)"]
+  Sleep  2
+
+  Wait And Type  xpath=//input[@data-test_id="0_changes_uah"]  ${valid_addend_value}
+
+  Wait And Click  xpath=//button[@ng-click="setChanges()"]
+
+  Log To Console  [+] __ Update Agreement Addend
+
+
+Update Agreement Factor
+  [Arguments]  ${agreement_data}
+  Log To Console  [.] __ Update Agreement Factor
+
+  ${factor_value}=  Get From Dictionary  ${agreement_data.data.modifications[0]}  factor
+  ${valid_factor_value}=  Convert To String  ${factor_value}
+  
+  # open popup
+  Wait And Click  xpath=//button[@ng-click="vm.openModalPending()"]
+
+  # open accordeon
+  Wait And Click  xpath=//div[@ng-click="toogleItemInfo(item, $index)"]
+
+  Wait And Type  xpath=//input[@data-test_id="0_changes_percent"]   ${valid_factor_value}
+
+  Wait And Click  xpath=//button[@ng-click="setChanges()"]
+
+  Log To Console  [+] __ Update Agreement Factor
+
   
 Get Info From Agreement
   [Arguments]  @{ARGS}
@@ -100,33 +157,21 @@ Download Doc In Agreement
 
 Change Agreement
   [Arguments]  @{ARGS}
-  Log To Console  \n [ ] ===== Change Agreement =====
+  Log To Console  \n [ ] ===== Add Agreement =====
   Print Args  @{ARGS}
 
-  # args1 - user
-  # args2 - tender_id
-  #
-  # args3 -
-  # ====
-  # Можливість внести зміну до угоди taxRate
-  #
-  # data:
-  #  rationale: Накрашувати спонаджувати четверговий пошкарубитися баришок хобза муничитися
-  #      поратування ушнипитися оленя підсмалити головистий порозгризати змерлий.
-  #  rationaleType: taxRate
-  #  rationale_en: Cum aspernatur velit quod rerum dolore odio illo.
-  #  rationale_ru: Вэртырэм либриз эа мыдиокрым пэртинакёа луптатум вэрыар.
-  #
-  # =====
-  # Можливість внести зміну до угоди thirdParty
-  #
-  # data:
-  #  rationale: Обрубка осмолювати гупалка оповідь побабіти дітки наємець закут.
-  #  rationaleType: thirdParty
-  #  rationale_en: Officiis tempore adipisci consectetur sit reiciendis provident asperiores
-  #      id assumenda inventore a.
-  #  rationale_ru: Жкаывола фалля рэгяонэ шапэрэт витюпырата ючю чонэт янтэрэсщэт мыа
-  #      ылоквюэнтиам квюандо.
+  Log To Console  [.] Test name: ${TEST_NAME}
+  
+  Run Keyword If  '${TEST_NAME}' == "Можливість внести зміну до угоди partyWithdrawal"  Change Agreement thirdParty  @{ARGS}
+  Run Keyword If  '${TEST_NAME}' == "Можливість внести зміну до угоди partyWithdrawal"  Log To Console  [+] its thirdParty
+
+  Run Keyword If  '${TEST_NAME}' != "Можливість внести зміну до угоди partyWithdrawal"  Change Agreement Default  @{ARGS}
+  Run Keyword If  '${TEST_NAME}' != "Можливість внести зміну до угоди partyWithdrawal"  Log To Console  [-] its not thirdParty
+
+  Log To Console  \n [+] ===== Add Agreement =====
+
+Change Agreement Default
+  [Arguments]  @{ARGS}
 
   ${username}=  Set Variable  ${ARGS[0]}
   ${agreement_id}=  Set Variable  ${ARGS[1]}
@@ -150,8 +195,41 @@ Change Agreement
 
   Wait And Click  xpath=//button[@ng-click="setChanges()"]
 
-  Sleep  10
+  Sleep  5
 
+  Reload Page
+
+  Sleep  5
+
+Change Agreement thirdParty
+  [Arguments]  @{ARGS}
+
+  ${username}=  Set Variable  ${ARGS[0]}
+  ${agreement_id}=  Set Variable  ${ARGS[1]}
+  ${agreement_data}=  Set Variable  ${ARGS[2]}
+
+  ${agreement_rationale}=  Get From Dictionary  ${agreement_data.data}  rationale
+  ${agreement_rationale_ru}=  Get From Dictionary  ${agreement_data.data}  rationale_en
+  ${agreement_rationale_en}=  Get From Dictionary  ${agreement_data.data}  rationale_ru
+
+  Hide Wallet
+
+  Sleep  3
+
+  Wait And Click  xpath=//button[@ng-click="vm.openModal('userWithdrawall')"]
+
+  Wait And Type  xpath=//textarea[@ng-model="rationale_ru"]  ${agreement_rationale}
+  Wait And Type  xpath=//textarea[@ng-model="rationale_en"]  ${agreement_rationale_en}
+
+  Wait And Click  xpath=//button[@ng-click="setChanges()"]
+
+  Sleep  5
+
+  Reload Page
+
+  Sleep  5
+  
+    
 Apply Chenges Agreement
   [Arguments]  @{ARGS}
   Log To Console  \n [ ] ===== Apply Chenges Agreement =====
@@ -165,6 +243,9 @@ Apply Chenges Agreement
   Run Keyword If  '${agreement_status}' == 'active'  Activate Changes  ${agreement_date}
   Run Keyword If  '${agreement_status}' == 'cancelled'  Canceled Changes  ${agreement_date}
 
+  Save Agreement In Global  ${username}  ${data.agreement_internal_id}
+
+
 Canceled Changes
   [Arguments]  @{ARGS}
   Wait And Click  xpath=//button[@ng-click="vm.cancelChanges()"]
@@ -174,10 +255,15 @@ Activate Changes
   # 2022-01-27T22:08:13.176963+02:00	
   Wait And Click  xpath=//button[@ng-click="vm.confirmChanges()"]
 
+  ${agreement_date}=  Set Variable  ${ARGS[0]}
+  Log To Console  [ ] Dates: ${agreement_date}
+
   # TODO
   # Choise data
 
   Wait And Click  xpath=//button[@ng-click="save()"]
+
+  Wait And Click  xpath=//button[@ng-click="vm.sign()"]
   
 Get Agreement From Url
   [Arguments]  ${url}

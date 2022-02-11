@@ -77,6 +77,10 @@ Resource  ./agreements/agreements.robot
   [Arguments]  @{ARGS}
   Update Agreement  @{ARGS}
 
+Завантажити документ для зміни у рамковій угоді
+  [Arguments]  @{ARGS}
+  Download Doc In Agreement  @{ARGS}
+
 ################################################################
 #                                                              #
 #                    END Agreement                             #
@@ -85,7 +89,7 @@ Resource  ./agreements/agreements.robot
 
 ################################################################
 #                                                              #
-#             In work                                          #
+#                   In work                                    #
 #                                                              #
 ################################################################
 
@@ -104,7 +108,7 @@ Resource  ./agreements/agreements.robot
   Print Args  @{ARGS}
   Log To Console  [+] === Add Criteria To Second Stage ===
   Add Criteria To Second Stage
-j  # stage 2 step 2
+  # stage 2 step 2
 
 Активувати другий етап
   [Arguments]  @{ARGS}
@@ -281,8 +285,6 @@ j  # stage 2 step 2
 Отримати інформацію про enquiryPeriod.clarificationsUntil
   [Arguments]  @{ARGS}
   Print Args  @{ARGS}
-  Fail Because Not Implemented
-
   
 # this for esco 02qualification
 Дискваліфікувати постачальника
@@ -327,6 +329,7 @@ j  # stage 2 step 2
   Check user if him reg to login  ${user}
   Change Language to UKR
   Add Cookie  autotest  1  domain=autotest.newtend.com  expiry=2022-12-30 16:21:35
+  Add Cookie  autotest  1  domain=95.158.13.22  expiry=2022-12-30 16:21:35
   Add Cookie  autotest  1  domain=localhost:8000  expiry=2022-12-30 16:21:35
   Add Cookie  autotest  1  domain=localhost  expiry=2022-12-30 16:21:35
 
@@ -443,7 +446,7 @@ j  # stage 2 step 2
 
 Створити тендер другого етапу
   [Arguments]  @{ARGS}
-
+  ${username}=  Set Variable  ${ARGS[0]}
   # main action
   Create Tender  @{ARGS}
 

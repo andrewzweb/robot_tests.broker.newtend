@@ -17,7 +17,8 @@ Create Tender
 
   ${username}=     Set Variable  ${ARGUMENTS[0]}
   ${tender_data}=  Set Variable  ${ARGUMENTS[1]}
-  ${plan_id}=      Set Variable  ${ARGUMENTS[2]}
+  ${exist_3_variable}=  Run Keyword And Return Status  Set Variable  ${ARGUMENTS[2]}
+  ${plan_id}=  Run Keyword If  ${exist_3_variable}  Set Variable  ${ARGUMENTS[2]}
 
   ${tender_type}=   Get From Dictionary    ${tender_data.data}    procurementMethodType
   # check tender multilots or not
