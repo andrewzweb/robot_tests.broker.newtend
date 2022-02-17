@@ -11,7 +11,7 @@ Library  OperatingSystem
 
 *** Variables ***
 ${tender_id}  UA-2021-12-10-000295-c
-${data.tender_internal_id}  2bc84faf9fa744989fe0e4226806b0e4
+${data.tender_internal_id}  7e00551a060a4d4d80a5546eb6e14a78
 ${username}  Newtend_Owner
 ${OUTPUT_DIR}  .
 ${BROWSER}  chrome
@@ -22,12 +22,18 @@ ${data.plan_id_hash}  f188c1dc156342819b3f437603d65138
 ${test_data}   9
 
 *** Test Cases ***
-#Test Me Now
-#  Prapare Browser
-#  Test Framework Agreement Contract Sing
-#  [Teardown]  Close Browser
+Test Me Now
+  Prapare Browser
+  Test Framework Agreement Selection Change Date
+  [Teardown]  Close Browser
+
 
 *** Keywords ***
+
+Test Framework Agreement Selection Change Date
+  Find Tender By Id   UA-2022-02-17-000256-c  
+  Change EndTender Time In Selection Date
+  
 
 Test Get Agreement Modification
   ${data}=  newtend_get_agreement  8e0afa3d5fd54addb01b35cda4322c61
@@ -477,9 +483,9 @@ Prapare Browser
   Open Browser  ${HOST}  ${BROWSER}
   Set Window Size  1024  764
   Set Window Position  0  0
-  Add Cookie  autotest  1  domain=autotest.newtend.com  expiry=2022-11-30 16:21:35
-  Add Cookie  autotest  1  domain=localhost:8000  expiry=2022-11-30 16:21:35
-  Add Cookie  autotest  1  domain=localhost  expiry=2022-11-30 16:21:35
+  #Add Cookie  autotest  1  domain=autotest.newtend.com  expiry=2022-11-30 16:21:35
+  #Add Cookie  autotest  1  domain=localhost:8000  expiry=2022-11-30 16:21:35
+  #Add Cookie  autotest  1  domain=localhost  expiry=2022-11-30 16:21:35
 
   ${owner_local_login}=  Set Variable  newtend.owner@gmail.com
   ${owner_local_pass}=  Set Variable  testowner

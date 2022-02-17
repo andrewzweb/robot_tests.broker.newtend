@@ -38,7 +38,13 @@ Create Tender
   Run Keyword If   '${tender_type}' == 'competitiveDialogueEU'  Create CompetitiveDialogueEU Tender  @{ARGUMENTS}
   Run Keyword If   '${tender_type}' == 'competitiveDialogueUA'  Create CompetitiveDialogueUA Tender  @{ARGUMENTS}
   Run Keyword If   '${tender_type}' == 'esco'  Create Esco Tender  @{ARGUMENTS}
+  Run Keyword If   '${tender_type}' == 'closeFrameworkAgreementSelectionUA'  Create CloseFrameworkAgreementSelectionUA  @{ARGUMENTS}
 
   ${id}=  Set Variable  ${g_data.current_tender_id}
   Log To Console  [+] Create Tender ID: ${id}
   [Return]  ${id}
+
+
+
+
+

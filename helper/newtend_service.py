@@ -173,6 +173,7 @@ dict_units = {
     u'ПРОВЕДЕННЯ ПЕРЕГОВОРІВ': u'complete',
     u'ОЧІКУВАННЯ ДРУГОГО ЕТАПУ': u'complete',
     u'ЧЕРНЕТКА. ДРУГИЙ ЕТАП':  u'draft.stage2',
+    u'ПЕРІОД ЗАПРОШЕННЯ': u'active.enquiries',
 
     # tender status ru
     u'НЕСОСТОЯЛСЯ':  u'draft.unsuccessful',
@@ -185,7 +186,7 @@ dict_units = {
     u'ПРОВЕДЕНИЯ ПЕРЕГОВОРОВ': u'complete',
     u'ОЖИДАНИЕ ВТОРОГО ЭТАПА': u'complete',
     u'ЧЕРНОВИК. ВТОРОЙ ЭТАП':  u'draft.stage2',
-    
+
     # complaint status
     u'Очікує розгляду /':         u'pending',
     u'Залишено без розгляду /':   u'invalid',
