@@ -315,6 +315,11 @@ Create Agrements
   Wait And Type  xpath=//input[@ng-change="updateMinutes()"]  ${now_minute}
 
   Wait And Click  xpath=//button[@ng-click="submit(true)"]
+  Sleep  30
+
+  Reload Page
+  Wait And Click  xpath=//button[@ng-click="activate()"]
+  Wait And Click  xpath=//button[@ng-click="submit()"]
+  
   Sleep  90
 
-  
