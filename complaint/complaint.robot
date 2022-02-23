@@ -335,6 +335,8 @@ Change Status To Complaint
   Find Tender By Id  ${tender_id}
   Go To Complaint
 
+  Sleep  30
+  Reload Page
   Sleep  3
 
   ${exist_button_resolve}=  Run Keyword And Return Status  Get WebElement  xpath=//button[@ng-click="resolution(complaint.id, complaint.awardId, complaint.qualificationId, complaint.cancellationId, true)"]
